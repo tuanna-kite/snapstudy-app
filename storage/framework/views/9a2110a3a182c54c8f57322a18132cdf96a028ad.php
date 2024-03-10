@@ -15,4 +15,4 @@
     </section>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/errors/404.blade.php ENDPATH**/ ?>
+<?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/errors/404.blade.php ENDPATH**/ ?>

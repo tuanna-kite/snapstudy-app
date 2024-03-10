@@ -15,14 +15,14 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"/>
-    {{-- <link rel="stylesheet" href="/assets/default/css/app.css"> --}}
+    
     <link rel="stylesheet" href="/assets/default/css/global.css">
 </head>
 
 <body>
 <!-- Navigation Bar -->
 z
-@if (!empty($authUser))
+<?php if(!empty($authUser)): ?>
     <nav class="w-100 navbar navbar-expand navbar-light bg-light fixed-top border-bottom">
 
 
@@ -31,10 +31,10 @@ z
             <a class="navbar-brand" href="#">
                 <img src="/assets/default/image/snaps-logo.png" alt="Logo"/>
             </a>
-            @include('web.default.includes.top_nav')
+            <?php echo $__env->make('web.default.includes.top_nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </nav>
-@else
+<?php else: ?>
     <nav class="w-100 navbar navbar-expand navbar-light bg-light fixed-top border-bottom">
         <div class="container">
             <!-- Logo -->
@@ -47,7 +47,7 @@ z
             </form>
         </div>
     </nav>
-@endif
+<?php endif; ?>
 
 
 <!-- Hero Section with Carousel -->
@@ -159,13 +159,7 @@ z
                             <span>Management - Change</span>
                         </a>
                     </li>
-                    {{-- <li class="col-lg-3 col-md-4">
-            <a href="">
-                <img src="/assets/default/image/icons/icon-1.png" alt=""
-                    class="img-fluid img-thumbnail major-icon" />
-                <span>Blockchain Enabled Business</span>
-            </a>
-        </li> --}}
+                    
                     <li class="col-lg-3 col-md-4">
                         <a href="classes?schoolOptions%5B%5D=IT">
                             <img src="/assets/default/image/icons/icon-1.png" alt=""
@@ -965,7 +959,7 @@ z
             </div>
         </div>
         <div class="row justify-content-center">
-            @foreach ($webinar as $trening)
+            <?php $__currentLoopData = $webinar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $trening): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-10 col-md-6 col-lg-3 my-3 my-lg-0">
                     <div class="border rounded-3 doc-outline-wrapper" style="height:335px">
 
@@ -974,19 +968,21 @@ z
 
                         <div class="px-3 py-3">
                                 <span class="px-3 py-2 mb-3 rounded-3">
-                                    {{ $trening->category->title }}
+                                    <?php echo e($trening->category->title); ?>
+
                                 </span>
-                            <a href="{{ $trening->getUrl() }}">
-                                <h4 class="mb-3">{{ clean($trening->title, 'title') }}</h4>
+                            <a href="<?php echo e($trening->getUrl()); ?>">
+                                <h4 class="mb-3"><?php echo e(clean($trening->title, 'title')); ?></h4>
                             </a>
                             <h5>RMIT University</h5>
                             <p class="meta-seo">
-                                {{ $trening->seo_description }}
+                                <?php echo e($trening->seo_description); ?>
+
                             </p>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
@@ -1132,3 +1128,4 @@ z
 </body>
 
 </html>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/pages/home.blade.php ENDPATH**/ ?>

@@ -100,4 +100,4 @@
         <a href="/register" class="py-5 px-10 text-dark-blue font-14"><?php echo e(trans('auth.register')); ?></a>
     </div>
 <?php endif; ?>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>

@@ -96,4 +96,4 @@
 
 </body>
 </html>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/admin/auth/auth_layout.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/admin/auth/auth_layout.blade.php ENDPATH**/ ?>

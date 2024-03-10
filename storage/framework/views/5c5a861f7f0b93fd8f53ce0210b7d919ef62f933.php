@@ -46,4 +46,4 @@ $navBtnText = $navbarButton->title;
 <?php $__env->startPush('scripts_bottom'); ?>
 <script src="/assets/default/js/parts/navbar.min.js"></script>
 <?php $__env->stopPush(); ?>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/web/default/includes/navbar.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/includes/navbar.blade.php ENDPATH**/ ?>

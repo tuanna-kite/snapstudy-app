@@ -14,4 +14,4 @@
         <i class="fa <?php echo e(!empty($btnIcon) ? $btnIcon : 'fa-times'); ?>" aria-hidden="true"></i>
     <?php endif; ?>
 </button>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/admin/includes/delete_button.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/admin/includes/delete_button.blade.php ENDPATH**/ ?>

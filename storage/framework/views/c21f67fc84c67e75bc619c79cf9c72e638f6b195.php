@@ -94,4 +94,4 @@ unset($__errorArgs, $__bag); ?>
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.auth.auth_layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/admin/auth/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.auth.auth_layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/admin/auth/login.blade.php ENDPATH**/ ?>

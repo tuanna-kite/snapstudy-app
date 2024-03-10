@@ -53,4 +53,4 @@
 <?php echo getSeoMetas('extra_meta_tags'); ?>
 
 
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/web/default/includes/metas.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/includes/metas.blade.php ENDPATH**/ ?>

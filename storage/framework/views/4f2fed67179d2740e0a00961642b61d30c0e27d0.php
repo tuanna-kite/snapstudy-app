@@ -10,4 +10,4 @@
     };
 </script>
 <script src="/assets/default/vendors/pace-loading/pace.min.js"></script>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/admin/includes/preloading.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/admin/includes/preloading.blade.php ENDPATH**/ ?>

@@ -40,4 +40,4 @@
     <script src="/assets/default/vendors/flagstrap/js/jquery.flagstrap.min.js"></script>
     <script src="/assets/default/js/parts/top_nav_flags.min.js"></script>
 <?php $__env->stopPush(); ?>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/admin/includes/navbar/language.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/admin/includes/navbar/language.blade.php ENDPATH**/ ?>

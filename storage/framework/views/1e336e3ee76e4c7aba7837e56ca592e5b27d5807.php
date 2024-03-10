@@ -57,4 +57,4 @@
         </div>
     </div>
 </div>
-<?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/web/default/includes/notification-dropdown.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/includes/notification-dropdown.blade.php ENDPATH**/ ?>

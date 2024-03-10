@@ -53,4 +53,4 @@
     <link href="/assets/default/vendors/flagstrap/css/flags.css" rel="stylesheet">
     <script src="/assets/default/vendors/flagstrap/js/jquery.flagstrap.min.js"></script>
     <script src="/assets/default/js/parts/top_nav_flags.min.js"></script>
-<?php $__env->stopPush(); ?><?php /**PATH /home/admin/domains/snapstudy.edu.vn/public_html/resources/views/web/default/includes/top_nav.blade.php ENDPATH**/ ?>
+<?php $__env->stopPush(); ?><?php /**PATH /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/resources/views/web/default/includes/top_nav.blade.php ENDPATH**/ ?>

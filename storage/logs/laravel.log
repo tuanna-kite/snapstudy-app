@@ -1,0 +1,87 @@
+[2024-03-12 13:23:41] local.ERROR: View [<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="http:..127.0.0.1:8000.css.app.css" rel="stylesheet">
+
+    <title>Document<.title>
+<.head>
+<body>
+
+<.body>
+<.html>] not found. {"exception":"[object] (InvalidArgumentException(code: 0): View [<!doctype html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\"
+          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">
+    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
+    <link href=\"http:..127.0.0.1:8000.css.app.css\" rel=\"stylesheet\">
+
+    <title>Document<.title>
+<.head>
+<body>
+
+<.body>
+<.html>] not found. at /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php:137)
+[stacktrace]
+#0 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php(79): Illuminate\\View\\FileViewFinder->findInPaths('<!doctype html>...', Array)
+#1 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/View/Factory.php(137): Illuminate\\View\\FileViewFinder->find('<!doctype html>...')
+#2 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(87): Illuminate\\View\\Factory->make('<!doctype html>...', Array)
+#3 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/ViewController.php(41): Illuminate\\Routing\\ResponseFactory->view(Object(Illuminate\\View\\View), Array, 200, Array)
+#4 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/ViewController.php(58): Illuminate\\Routing\\ViewController->__invoke(view: Object(Illuminate\\View\\View), data: Array, status: 200, headers: Array)
+#5 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\\Routing\\ViewController->callAction('__invoke', Array)
+#6 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Routing\\ViewController), '__invoke')
+#7 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\\Routing\\Route->runController()
+#8 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\\Routing\\Route->run()
+#9 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#10 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/app/Http/Middleware/DebugBar.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#11 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\\Http\\Middleware\\DebugBar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#12 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/app/Http/Middleware/UserLocale.php(44): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#13 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\\Http\\Middleware\\UserLocale->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#14 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#19 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#22 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#29 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#30 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#31 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#32 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#33 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#34 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(66): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/fruitcake/laravel-cors/src/HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#52 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#53 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/public/index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#54 /Users/tuanna.kite/workspace/laravel-app/snapstudy-app/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('/Users/tuanna.k...')
+#55 {main}
+"} 

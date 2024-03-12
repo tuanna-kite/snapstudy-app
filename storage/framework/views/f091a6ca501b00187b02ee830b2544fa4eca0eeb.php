@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="/assets/default/css/app.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-
     <?php if($isRtl): ?>
         <link rel="stylesheet" href="/assets/default/css/rtl-app.css">
     <?php endif; ?>

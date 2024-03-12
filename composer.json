@@ -59,6 +59,7 @@
         "spatie/laravel-google-calendar": "^3.6",
         "ssheduardo/redsys-laravel": "^1.4",
         "stripe/stripe-php": "^10.17",
+        "tinymce/tinymce": "^6.8",
         "toshy/bunnynet-php": "^3.3",
         "twilio/sdk": "^7.5",
         "tymon/jwt-auth": "^2.0",

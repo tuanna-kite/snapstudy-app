@@ -1,6 +1,10 @@
 const mix = require('laravel-mix');
 
-
+mix.copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce');
+mix.js("resources/js/app.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [
+        require("tailwindcss"),
+    ]);
 
 mix
     .js('resources/js/app.js', 'public/assets/default/js')
@@ -163,6 +167,6 @@ mix
     .js('resources/js/admin/ai_content_create_template.js', 'public/assets/default/js/admin/ai_content_create_template.min.js')
     .js('resources/js/admin/ai_content_settings.js', 'public/assets/default/js/admin/ai_content_settings.min.js')
     .js('resources/js/admin/ai_contents_lists.js', 'public/assets/default/js/admin/ai_contents_lists.min.js')
-    .js('resources/js/admin/related_courses.js', 'public/assets/default/js/admin/related_courses.min.js')
+    // .js('resources/js/admin/related_courses.js', 'public/assets/default/js/admin/related_courses.min.js')
     ;
 

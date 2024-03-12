@@ -12,20 +12,16 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"/>
     
     <link rel="stylesheet" href="/assets/default/css/global.css">
 </head>
 
 <body>
 <!-- Navigation Bar -->
-z
 <?php if(!empty($authUser)): ?>
     <nav class="w-100 navbar navbar-expand navbar-light bg-light fixed-top border-bottom">
-
-
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
@@ -961,13 +957,10 @@ z
         <div class="row justify-content-center">
             <?php $__currentLoopData = $webinar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $trening): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-10 col-md-6 col-lg-3 my-3 my-lg-0">
-                    <div class="border rounded-3 doc-outline-wrapper" style="height:335px">
-
+                    <div class="border rounded-3 doc-outline-wrapper" style="height:320px">
                         <img src="/assets/default/image/doc-img.png" alt="doc-image"/>
-
-
                         <div class="px-3 py-3">
-                                <span class="px-3 py-2 mb-3 rounded-3">
+                                <span class="px-3 py-2 mb-3 rounded-3 font-14">
                                     <?php echo e($trening->category->title); ?>
 
                                 </span>

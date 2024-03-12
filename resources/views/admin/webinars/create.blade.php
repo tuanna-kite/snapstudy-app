@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/assets/default/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/bootstrap-tagsinput/bootstrap-tagsinput.min.css">
     <link rel="stylesheet" href="/assets/vendors/summernote/summernote-bs4.min.css">
-    <link href="/assets/default/vendors/sortable/jquery-ui.min.css" />
+    <link href="/assets/default/vendors/sortable/jquery-ui.min.css"/>
     <style>
         .bootstrap-timepicker-widget table td input {
             width: 35px !important;
@@ -26,7 +26,7 @@
             </h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a
-                        href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
+                            href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
                 </div>
                 <div class="breadcrumb-item active">
                     <a href="{{ getAdminPanelUrl() }}/webinars">{{ trans('admin/main.classes') }}</a>
@@ -37,15 +37,13 @@
         </div>
 
         <div class="section-body">
-
             <div class="row">
                 <div class="col-12 ">
                     <div class="card">
                         <div class="card-body">
-
                             <form method="post"
-                                action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}"
-                                id="webinarForm" class="webinar-form">
+                                  action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}"
+                                  id="webinarForm" class="webinar-form">
                                 {{ csrf_field() }}
                                 <section>
                                     <h2 class="section-title after-line">{{ trans('public.basic_information') }}</h2>
@@ -57,17 +55,17 @@
                                                 <div class="form-group">
                                                     <label class="input-label">{{ trans('auth.language') }}</label>
                                                     <select name="locale"
-                                                        class="form-control {{ !empty($webinar) ? 'js-edit-content-locale' : '' }}">
+                                                            class="form-control {{ !empty($webinar) ? 'js-edit-content-locale' : '' }}">
                                                         @foreach ($userLanguages as $lang => $language)
                                                             <option value="{{ $lang }}"
-                                                                @if (mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>
+                                                                    @if (mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>
                                                                 {{ $language }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('locale')
-                                                        <div class="invalid-feedback">
-                                                            {{ $message }}
-                                                        </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                     @enderror
                                                 </div>
                                             @else
@@ -78,35 +76,35 @@
                                                 <label class="input-label d-block">{{ trans('panel.course_type') }}</label>
 
                                                 <select name="type"
-                                                    class="custom-select @error('type')  is-invalid @enderror">
+                                                        class="custom-select @error('type')  is-invalid @enderror">
                                                     <option value="webinar"
-                                                        @if (!empty($webinar) and $webinar->isWebinar() or old('type') == \App\Models\Webinar::$webinar) selected @endif>
+                                                            @if (!empty($webinar) and $webinar->isWebinar() or old('type') == \App\Models\Webinar::$webinar) selected @endif>
                                                         {{ trans('webinars.webinar') }}</option>
                                                     <option value="course"
-                                                        @if (!empty($webinar) and $webinar->isCourse() or old('type') == \App\Models\Webinar::$course) selected @endif>
+                                                            @if (!empty($webinar) and $webinar->isCourse() or old('type') == \App\Models\Webinar::$course) selected @endif>
                                                         {{ trans('product.video_course') }}</option>
                                                     <option value="text_lesson"
-                                                        @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>
+                                                            @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>
                                                         {{ trans('product.text_course') }}</option>
                                                 </select>
 
                                                 @error('type')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.title') }}</label>
                                                 <input type="text" name="title"
-                                                    value="{{ !empty($webinar) ? $webinar->title : old('title') }}"
-                                                    class="form-control @error('title')  is-invalid @enderror"
-                                                    placeholder="" />
+                                                       value="{{ !empty($webinar) ? $webinar->title : old('title') }}"
+                                                       class="form-control @error('title')  is-invalid @enderror"
+                                                       placeholder=""/>
                                                 @error('title')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
@@ -123,26 +121,26 @@
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('admin/main.class_url') }}</label>
                                                 <input type="text" name="slug"
-                                                    value="{{ !empty($webinar) ? $webinar->slug : old('slug') }}"
-                                                    class="form-control @error('slug')  is-invalid @enderror"
-                                                    placeholder="" />
+                                                       value="{{ !empty($webinar) ? $webinar->slug : old('slug') }}"
+                                                       class="form-control @error('slug')  is-invalid @enderror"
+                                                       placeholder=""/>
                                                 <div class="text-muted text-small mt-1">
                                                     {{ trans('admin/main.class_url_hint') }}</div>
                                                 @error('slug')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
                                             @if (!empty($webinar) and $webinar->creator->isOrganization())
                                                 <div class="form-group mt-15 ">
                                                     <label
-                                                        class="input-label d-block">{{ trans('admin/main.organization') }}</label>
+                                                            class="input-label d-block">{{ trans('admin/main.organization') }}</label>
 
                                                     <select name="organ_id" data-search-option="just_organization_role"
-                                                        class="form-control search-user-select2"
-                                                        data-placeholder="{{ trans('search_organization') }}">
+                                                            class="form-control search-user-select2"
+                                                            data-placeholder="{{ trans('search_organization') }}">
                                                         <option value="{{ $webinar->creator->id }}" selected>
                                                             {{ $webinar->creator->full_name }}</option>
                                                     </select>
@@ -150,9 +148,9 @@
                                             @endif
 
                                             <input type="hidden" name="teacher_id" value="{{ Auth::user()->id }}"
-                                                id="">
-                                                <input type="hidden" name="creator_id" value="{{ Auth::user()->id }}"
-                                                id="">
+                                                   id="">
+                                            <input type="hidden" name="creator_id" value="{{ Auth::user()->id }}"
+                                                   id="">
                                             {{-- <div class="form-group mt-15 ">
                                                 <label class="input-label d-block">{{ trans('admin/main.select_a_instructor') }}</label>
 
@@ -177,14 +175,14 @@
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.seo_description') }}</label>
                                                 <input type="text" name="seo_description"
-                                                    value="{{ !empty($webinar) ? $webinar->seo_description : old('seo_description') }}"
-                                                    class="form-control @error('seo_description')  is-invalid @enderror" />
+                                                       value="{{ !empty($webinar) ? $webinar->seo_description : old('seo_description') }}"
+                                                       class="form-control @error('seo_description')  is-invalid @enderror"/>
                                                 <div class="text-muted text-small mt-1">
                                                     {{ trans('admin/main.seo_description_hint') }}</div>
                                                 @error('seo_description')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
@@ -192,24 +190,25 @@
                                                 <label class="input-label">{{ trans('public.thumbnail_image') }}</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <button type="button" class="input-group-text admin-file-manager"
-                                                            data-input="thumbnail" data-preview="holder">
+                                                        <button type="button"
+                                                                class="input-group-text admin-file-manager"
+                                                                data-input="thumbnail" data-preview="holder">
                                                             <i class="fa fa-upload"></i>
                                                         </button>
                                                     </div>
                                                     <input type="text" name="thumbnail" id="thumbnail"
-                                                        value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
-                                                        class="form-control @error('thumbnail')  is-invalid @enderror" />
+                                                           value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
+                                                           class="form-control @error('thumbnail')  is-invalid @enderror"/>
                                                     <div class="input-group-append">
                                                         <button type="button" class="input-group-text admin-file-view"
-                                                            data-input="thumbnail">
+                                                                data-input="thumbnail">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     </div>
                                                     @error('thumbnail')
-                                                        <div class="invalid-feedback">
-                                                            {{ $message }}
-                                                        </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -285,7 +284,7 @@
                                                     @enderror
                                                 </div>
                                             </div> --}}
-                                            
+
                                         </div>
                                     </div>
 
@@ -293,12 +292,13 @@
                                         <div class="col-12">
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.description') }}</label>
-                                                <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror"
-                                                    placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
+                                                <textarea id="summernote" name="description"
+                                                          class="form-control @error('description')  is-invalid @enderror"
+                                                          placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
                                                 @error('description')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -309,8 +309,6 @@
                                     <h2 class="section-title after-line">{{ trans('public.additional_information') }}</h2>
                                     <div class="row">
                                         <div class="col-12 col-md-6">
-
-
                                             {{-- <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.capacity') }}</label>
                                                 <input type="number" name="capacity"
@@ -417,14 +415,13 @@
                                                 </div>
                                             @endif --}}
 
-                                            <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                    for="supportSwitch">{{ trans('panel.support') }}</label>
+                                                       for="supportSwitch">{{ trans('panel.support') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="support" class="custom-control-input"
-                                                        id="supportSwitch"
-                                                        {{ !empty($webinar) && $webinar->support ? 'checked' : '' }}>
+                                                           id="supportSwitch"
+                                                            {{ !empty($webinar) && $webinar->support ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="supportSwitch"></label>
                                                 </div>
                                             </div>
@@ -443,27 +440,28 @@
                                             </div> --}}
 
                                             <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                                    class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class="cursor-pointer"
-                                                    for="downloadableSwitch">{{ trans('home.downloadable') }}</label>
+                                                       for="downloadableSwitch">{{ trans('home.downloadable') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="downloadable"
-                                                        class="custom-control-input" id="downloadableSwitch"
-                                                        {{ !empty($webinar) && $webinar->downloadable ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="downloadableSwitch"></label>
+                                                           class="custom-control-input" id="downloadableSwitch"
+                                                            {{ !empty($webinar) && $webinar->downloadable ? 'checked' : '' }}>
+                                                    <label class="custom-control-label"
+                                                           for="downloadableSwitch"></label>
                                                 </div>
                                             </div>
 
                                             <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                                    class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                    for="partnerInstructorSwitch">{{ trans('public.partner_instructor') }}</label>
+                                                       for="partnerInstructorSwitch">{{ trans('public.partner_instructor') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="partner_instructor"
-                                                        class="custom-control-input" id="partnerInstructorSwitch"
-                                                        {{ !empty($webinar) && $webinar->partner_instructor ? 'checked' : '' }}>
+                                                           class="custom-control-input" id="partnerInstructorSwitch"
+                                                            {{ !empty($webinar) && $webinar->partner_instructor ? 'checked' : '' }}>
                                                     <label class="custom-control-label"
-                                                        for="partnerInstructorSwitch"></label>
+                                                           for="partnerInstructorSwitch"></label>
                                                 </div>
                                             </div>
 
@@ -479,40 +477,37 @@
                                                 </div>
                                             </div> --}}
 
-                                            <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                    for="subscribeSwitch">{{ trans('public.subscribe') }}</label>
+                                                       for="subscribeSwitch">{{ trans('public.subscribe') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="subscribe" class="custom-control-input"
-                                                        id="subscribeSwitch"
-                                                        {{ !empty($webinar) && $webinar->subscribe ? 'checked' : '' }}>
+                                                           id="subscribeSwitch"
+                                                            {{ !empty($webinar) && $webinar->subscribe ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="subscribeSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                    for="privateSwitch">{{ trans('webinars.private') }}</label>
+                                                       for="privateSwitch">{{ trans('webinars.private') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="private" class="custom-control-input"
-                                                        id="privateSwitch"
-                                                        {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }}>
+                                                           id="privateSwitch"
+                                                            {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="privateSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div
-                                                class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                    for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
+                                                       for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="enable_waitlist"
-                                                        class="custom-control-input" id="enable_waitlistSwitch"
-                                                        {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }}>
+                                                           class="custom-control-input" id="enable_waitlistSwitch"
+                                                            {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }}>
                                                     <label class="custom-control-label"
-                                                        for="enable_waitlistSwitch"></label>
+                                                           for="enable_waitlistSwitch"></label>
                                                 </div>
                                             </div>
 
@@ -533,13 +528,13 @@
                                                 <label class="input-label">{{ trans('public.price') }}
                                                     ({{ $currency }})</label>
                                                 <input type="text" name="price"
-                                                    value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
-                                                    class="form-control @error('price')  is-invalid @enderror"
-                                                    placeholder="{{ trans('public.0_for_free') }}" />
+                                                       value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
+                                                       class="form-control @error('price')  is-invalid @enderror"
+                                                       placeholder="{{ trans('public.0_for_free') }}"/>
                                                 @error('price')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
@@ -548,13 +543,13 @@
                                                     <label class="input-label">{{ trans('update.organization_price') }}
                                                         ({{ $currency }})</label>
                                                     <input type="number" name="organization_price"
-                                                        value="{{ (!empty($webinar) and $webinar->organization_price) ? convertPriceToUserCurrency($webinar->organization_price) : old('organization_price') }}"
-                                                        class="form-control @error('organization_price')  is-invalid @enderror"
-                                                        placeholder="" />
+                                                           value="{{ (!empty($webinar) and $webinar->organization_price) ? convertPriceToUserCurrency($webinar->organization_price) : old('organization_price') }}"
+                                                           class="form-control @error('organization_price')  is-invalid @enderror"
+                                                           placeholder=""/>
                                                     @error('organization_price')
-                                                        <div class="invalid-feedback">
-                                                            {{ $message }}
-                                                        </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                     @enderror
                                                     <p class="font-12 text-gray mt-1">-
                                                         {{ trans('update.organization_price_hint') }}</p>
@@ -589,9 +584,9 @@
                                             <div class="form-group mt-15">
                                                 <label class="input-label d-block">{{ trans('public.tags') }}</label>
                                                 <input type="text" name="tags" data-max-tag="5"
-                                                    value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
-                                                    class="form-control inputtags"
-                                                    placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)" />
+                                                       value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
+                                                       class="form-control inputtags"
+                                                       placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)"/>
                                             </div>
 
 
@@ -599,8 +594,8 @@
                                                 <label class="input-label">{{ trans('public.category') }}</label>
 
                                                 <select id="categories"
-                                                    class="custom-select @error('category_id')  is-invalid @enderror"
-                                                    name="category_id" required>
+                                                        class="custom-select @error('category_id')  is-invalid @enderror"
+                                                        name="category_id" required>
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_category') }}</option>
                                                     @foreach ($categories as $category)
@@ -608,22 +603,22 @@
                                                             <optgroup label="{{ $category->title }}">
                                                                 @foreach ($category->subCategories as $subCategory)
                                                                     <option value="{{ $subCategory->id }}"
-                                                                        {{ (!empty($webinar) and $webinar->category_id == $subCategory->id) ? 'selected' : '' }}>
+                                                                            {{ (!empty($webinar) and $webinar->category_id == $subCategory->id) ? 'selected' : '' }}>
                                                                         {{ $subCategory->title }}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         @else
                                                             <option value="{{ $category->id }}"
-                                                                {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
+                                                                    {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
                                                                 {{ $category->title }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
 
                                                 @error('category_id')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
                                                 @enderror
                                             </div>
 
@@ -631,7 +626,7 @@
                                     </div>
 
                                     <div class="form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}"
-                                        id="categoriesFiltersContainer">
+                                         id="categoriesFiltersContainer">
                                         <span class="input-label d-block">{{ trans('public.category_filters') }}</span>
                                         <div id="categoriesFiltersCard" class="row mt-3">
 
@@ -640,22 +635,22 @@
                                                     <div class="col-12 col-md-3">
                                                         <div class="webinar-category-filters">
                                                             <strong
-                                                                class="category-filter-title d-block">{{ $filter->title }}</strong>
+                                                                    class="category-filter-title d-block">{{ $filter->title }}</strong>
                                                             <div class="py-10"></div>
 
                                                             @foreach ($filter->options as $option)
                                                                 <div
-                                                                    class="form-group mt-3 d-flex align-items-center justify-content-between">
+                                                                        class="form-group mt-3 d-flex align-items-center justify-content-between">
                                                                     <label class="text-gray font-14"
-                                                                        for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
+                                                                           for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
                                                                     <div class="custom-control custom-checkbox">
                                                                         <input type="checkbox" name="filters[]"
-                                                                            value="{{ $option->id }}"
-                                                                            {{ !empty($webinarFilterOptions) && in_array($option->id, $webinarFilterOptions) ? 'checked' : '' }}
-                                                                            class="custom-control-input"
-                                                                            id="filterOptions{{ $option->id }}">
+                                                                               value="{{ $option->id }}"
+                                                                               {{ !empty($webinarFilterOptions) && in_array($option->id, $webinarFilterOptions) ? 'checked' : '' }}
+                                                                               class="custom-control-input"
+                                                                               id="filterOptions{{ $option->id }}">
                                                                         <label class="custom-control-label"
-                                                                            for="filterOptions{{ $option->id }}"></label>
+                                                                               for="filterOptions{{ $option->id }}"></label>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
@@ -1054,11 +1049,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button type="button" id="saveAndPublish"
-                                            class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
+                                                class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
                                             <button type="button" id="saveReject"
-                                                class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
+                                                    class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
 
                                             @include('admin.includes.delete_button', [
                                                 'url' =>

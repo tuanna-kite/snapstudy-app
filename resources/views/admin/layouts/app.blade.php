@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 @php
     $rtlLanguages = !empty($generalSettings['rtl_languages']) ? $generalSettings['rtl_languages'] : [];
@@ -34,6 +35,18 @@
 
         {!! getThemeColorsSettings(true) !!}
     </style>
+
+    {{--  TinyMCE Editor  --}}
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: 'code table lists image fullscreen',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | image | fullscreen',
+            images_file_types: 'jpg,svg,webp,png',
+            height: 600
+        });
+    </script>
 </head>
 <body class="@if($isRtl) rtl @endif">
 
@@ -65,7 +78,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('public.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ trans('public.close') }}</button>
                 </div>
             </div>
         </div>

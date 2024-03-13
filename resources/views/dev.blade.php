@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1 class="text-3xl font-bold underline">
-    Hello world
+    Hello worl
 </h1>
 </body>
 </html>

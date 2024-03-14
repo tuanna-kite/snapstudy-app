@@ -13,6 +13,9 @@
             <button class="p-2 rounded-full transparent focus:outline-none" onclick="handleClick()">
                 <img src="img/avatar.png" alt="" width="48" height="48">
             </button>
+            <button class="p-2 rounded-full transparent focus:outline-none" onclick="handleClick()">
+              <img src="img/avatar.png" alt="" width="48" height="48">
+          </button>
         </div>
     </div>
 </nav>

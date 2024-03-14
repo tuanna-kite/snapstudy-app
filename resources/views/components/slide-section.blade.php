@@ -1,10 +1,16 @@
 <!-- Slider main container -->
 <section class="mt-20">
-    <div class="swiper-container w-full">
+    <div class="section-container w-full overflow-hidden">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="img/hero_section.png" alt="slide-img" class="w-full max-w-full"></div>
-            <div class="swiper-slide"><img src="img/hero_section.png" alt="slide-img" class="w-full max-w-full"></div>
-            <div class="swiper-slide"><img src="img/hero_section.png" alt="slide-img" class="w-full max-w-full"></div>
+            <div class="swiper-slide">
+                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+            </div>
+            <div class="swiper-slide">
+                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+            </div>
+            <div class="swiper-slide">
+                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+            </div>
         </div>
         {{-- <!-- Add Pagination -->
         <div class="swiper-pagination"></div> --}}
@@ -15,7 +21,7 @@
 </section>
 
 <script>
-    var swiper = new Swiper('.swiper-container', {
+    var swiper = new Swiper('.section-container', {
         // Optional parameters
         direction: 'horizontal',
         loop: true,

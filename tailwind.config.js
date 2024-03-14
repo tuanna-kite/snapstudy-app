@@ -12,13 +12,13 @@ export default {
             },
             colors: {
                 'primary.main': '#032482',
-                'primary.light': '#F5F6FA',
+                'primary.light': '#E3E7F4',
                 'primary.lighter': '#F5F6FA',
-
 
                 // Text Color
                 'text.light.primary': '#212B36',
-                'text.light.secondary': '#637381'
+                'text.light.secondary': '#637381',
+                'text.light.disabled': '#919EAB'
             },
         },
     },

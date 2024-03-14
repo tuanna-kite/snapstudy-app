@@ -838,11 +838,8 @@ video {
 .w-full {
   width: 100%;
 }
-.max-w-full {
-  max-width: 100%;
-}
 .max-w-screen-sm {
-  max-width: 640px;
+  max-width: 560px;
 }
 .max-w-full {
   max-width: 100%;
@@ -942,13 +939,9 @@ video {
 .border-0 {
   border-width: 0px;
 }
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
 .bg-primary\.light {
   --tw-bg-opacity: 1;
-  background-color: rgb(245 246 250 / var(--tw-bg-opacity));
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .bg-transparent {
   background-color: transparent;

@@ -1,4 +1,5 @@
 {
+    "/js/app.js": "/js/app.js",
     "/assets/default/js/app.js": "/assets/default/js/app.js",
     "/assets/default/agora/message.min.js": "/assets/default/agora/message.min.js",
     "/assets/default/agora/stream.min.js": "/assets/default/agora/stream.min.js",
@@ -133,7 +134,6 @@
     "/assets/default/js/admin/ai_content_create_template.min.js": "/assets/default/js/admin/ai_content_create_template.min.js",
     "/assets/default/js/admin/ai_content_settings.min.js": "/assets/default/js/admin/ai_content_settings.min.js",
     "/assets/default/js/admin/ai_contents_lists.min.js": "/assets/default/js/admin/ai_contents_lists.min.js",
-    "/js/app.js": "/js/app.js",
     "/assets/default/learning_page/styles.css": "/assets/default/learning_page/styles.css",
     "/assets/default/agora/agora.css": "/assets/default/agora/agora.css",
     "/assets/default/css/rtl-app.css": "/assets/default/css/rtl-app.css",

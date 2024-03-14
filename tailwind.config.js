@@ -19,7 +19,8 @@ export default {
 
                 // Text Color
                 'text.light.primary': '#212B36',
-                'text.light.secondary': '#637381'
+                'text.light.secondary': '#637381',
+                'text.light.disabled': '#919EAB'
             },
         },
     },

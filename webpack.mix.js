@@ -1,11 +1,5 @@
 const mix = require('laravel-mix');
 
-mix.copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce');
-mix.js("resources/js/app.js", "public/js")
-    .postCss("resources/css/app.css", "public/css", [
-        require("tailwindcss"),
-    ]);
-
 mix
     .js('resources/js/app.js', 'public/assets/default/js')
     //
@@ -170,3 +164,8 @@ mix
     // .js('resources/js/admin/related_courses.js', 'public/assets/default/js/admin/related_courses.min.js')
     ;
 
+mix.copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce');
+mix.js("resources/js/app.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [
+        require("tailwindcss"),
+    ]);

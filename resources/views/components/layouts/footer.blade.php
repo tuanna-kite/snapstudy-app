@@ -1,25 +1,102 @@
-<section id="footer-banner" class="w-full flex justify-center">
-    <div class="py-8 md:py-0 relative flex-1 flex justify-between flex-col md:flex-row items-center rounded-2xl px-10 bg-primary.light"
-         style="max-width: 1200px">
-        <div class="flex flex-col md:w-3/5 w-full">
-            <h3 class="text-primary.main text-2xl font-semibold">
-                Get ahead to achieve your academic goals with SNAPS
-            </h3>
-            <p class="my-6 text-primary.main">
-                Sign up now to receive a <span>free trial</span> and <span>30% discount</span> for the first
-                purchase
-            </p>
-            <a href="https://snapstudy.edu.vn/register">
-                <button class="bg-primary.main text-white rounded-full px-4"
-                        style="text-transform: uppercase; max-width: 240px; height: 54px">
-                    Register for free
-                </button>
+<footer>
+    <div class='flex flex-col gap-4 py-16 md:flex-row container mx-auto'>
+        <div class="flex-1">
+            <a href="#">
+                <img src="img/logo/logo.png" alt="Logo">
             </a>
+            <ul class="mt-4">
+                <li class="text-sm font-medium text-text.light.primary">
+                    <a href="#">
+                        Company name
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.primary">
+                    <a href="#">
+                        Company number: 024682213
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="w-full mt-5 md:mt-0 md:w-fit flex justify-end">
-            <img class="w-9/12 md:w-full" style="max-width: 360px; height: 100%"
-                 src="{{asset('assets/default/image/footer-3d.png')}}"
-                 alt="footer-3d"/>
+        <div class="flex-1 pt-4">
+            <span class="text-base font-semibold text-text.light.primary">
+                SNAPS
+            </span>
+            <ul class="flex flex-col gap-2 mt-3">
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        About
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        What We Offer
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="flex-1 pt-4">
+            <span class="text-base font-semibold text-text.light.primary">
+                MORE
+            </span>
+            <ul class="flex flex-col gap-2 mt-3">
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        About
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        What We Offer
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="flex-1 pt-4">
+            <span class="text-base font-semibold text-text.light.primary">
+                HELP
+            </span>
+            <ul class="flex flex-col gap-2 mt-3">
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        Frequently asked questions
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        Terms of use
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        Regulations on document sales policy
+                    </a>
+                </li>
+                <li class="text-sm font-medium text-text.light.secondary">
+                    <a href="#">
+                        Payment Guide
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-</section>
+    <div style="border-top:1px solid #637381">
+        <div class="container mx-auto py-6 flex flex-col-reverse items-center gap-4 md:justify-between md:flex-row">
+            <div>
+                <span class="text-sm font-medium text-text.light.secondary">
+                    © 2024 Snaps. All rights reserved.
+                </span>
+            </div>
+            <ul class="flex gap-4">
+                <li>
+                    <img src="img/logo/facebook.png" alt="fb" width="32" height="32">
+                </li>
+                <li>
+                    <img src="img/logo/youtube.png" alt="fb" width="32" height="32">
+                </li>
+                <li>
+                    <img src="img/logo/instagram.png" alt="fb" width="32" height="32">
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>

@@ -1,7 +1,7 @@
 @props(['cardProps'])
 
-<a href="{{ $cardProps['href'] }}">
-    <div class="min-w-48 flex gap-3 items-center  rounded-xl bg-white hover:bg-primary.light">
+<button class='menubtn' data-target="{{ $cardProps['href'] }}">
+    <div class="min-w-48 flex gap-3 p-0.5 items-center rounded-xl  hover:bg-primary.light">
         <div class="p-4 bg-white rounded-xl">
             <x-icon :name="$cardProps['icon']" width="24" height="24" />
         </div>
@@ -11,4 +11,9 @@
             </span>
         </div>
     </div>
-</a>
+</button>
+
+<div class="min-w-48 -mt-1 hidden" id="{{ $cardProps['href'] }}">
+    <x-slidebar.sub-card  />
+    <x-slidebar.sub-card class="-mt-3" />
+</div>

@@ -14,13 +14,18 @@ export default {
                 'primary.light': '#E3E7F4',
                 'primary.lighter': '#F5F6FA',
 
+
                 // Secondary
                 'secondary.main': '#C92D39',
 
                 // Text Color
                 'text.light.primary': '#212B36',
                 'text.light.secondary': '#637381',
-                'text.light.disabled': '#919EAB'
+                'text.light.disabled': '#919EAB',
+
+                // Grey
+                "light-neutral": "#F4F6F8",
+                "grey-300": "#DFE3E8"
             },
         },
     },

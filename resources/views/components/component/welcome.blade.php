@@ -10,7 +10,7 @@
             </p>
             <button
                 class="mt-24 flex items-center bg-primary.main py-3 px-5 rounded-xl font-medium text-base text-white hover:opacity-90">
-                View all events <x-icon name="end-icon" />
+                View all events <x-component.icon name="end-icon" />
             </button>
         </div>
         <ul class="py-6 px-8 rounded-3xl bg-primary.lighter flex justify-between relative z-10">

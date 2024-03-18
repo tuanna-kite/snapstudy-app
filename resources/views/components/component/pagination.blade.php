@@ -5,10 +5,10 @@
         </p>
         <div class="flex items-center gap-2">
             <button class="p-2">
-                <x-icon name='icon-left' width="20" height="20" />
+                <x-component.icon name='icon-left' width="20" height="20" />
             </button>
             <button class="p-2">
-                <x-icon name='icon-right' width="20" height="20" />
+                <x-component.icon name='icon-right' width="20" height="20" />
             </button>
         </div>
     </div>

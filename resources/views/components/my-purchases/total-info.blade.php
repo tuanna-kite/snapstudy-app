@@ -6,6 +6,6 @@
         <span class="font-medium text-xs text-text.light.disabled">
             Continue Shopping
         </span>
-        <x-icon  name='icon-right' width="18" height="18" />
+        <x-component.icon  name='icon-right' width="18" height="18" />
     </a>
 </div>

@@ -13,7 +13,7 @@
                  flex flex-col justify-center items-center
                 gap-2
             ">
-                <x-icon name="icon_camera" />
+                <x-component.icon name="icon_camera" />
                 <span class="text-white font-normal text-xs">
                     Update Photo
                 </span>

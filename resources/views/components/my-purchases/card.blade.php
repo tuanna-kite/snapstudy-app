@@ -7,7 +7,7 @@
             <span class="font-semibold text-base text-primary.main">
                 210,000 VNĐ
             </span>
-            <x-icon name="ic_trash" width="24" height="24" />
+            <x-component.icon name="ic_trash" width="24" height="24" />
         </div>
     </div>
     <div class="flex items-center gap-12">

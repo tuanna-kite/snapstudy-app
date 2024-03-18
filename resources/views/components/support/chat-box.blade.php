@@ -3,7 +3,7 @@
 <div {{ $attributes->merge(['class' => 'flex gap-4 items-start bg-white']) }}>
     @if ($displayChatIcon)
         <div class="p-3 rounded-full bg-primary.lighter">
-            <x-icon name="note-favorite" />
+            <x-component.icon name="note-favorite" />
         </div>
     @endif
     <div class="space-y-2">

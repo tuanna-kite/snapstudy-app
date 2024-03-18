@@ -3,7 +3,7 @@
 <button class='menubtn' data-target="{{ $cardProps['href'] }}">
     <div class="min-w-48 flex gap-3 p-0.5 items-center rounded-xl  hover:bg-primary.light">
         <div class="p-4 bg-white rounded-xl">
-            <x-icon :name="$cardProps['icon']" width="24" height="24" />
+            <x-component.icon :name="$cardProps['icon']" width="24" height="24" />
         </div>
         <div>
             <span class="font-semibold text-sm text-text.light.disabled ">

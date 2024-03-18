@@ -1,5 +1,5 @@
 <!-- Slider main container -->
-<section class="mt-20">
+<section class="">
     <div class="section-container w-full overflow-hidden">
         <div class="swiper-wrapper">
             <div class="swiper-slide">

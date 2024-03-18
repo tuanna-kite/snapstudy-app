@@ -1,4 +1,4 @@
-<footer>
+<footer class="bg-primary.light">
     <div class='flex flex-col gap-4 py-16 md:flex-row container mx-auto'>
         <div class="flex-1">
             <a href="#">

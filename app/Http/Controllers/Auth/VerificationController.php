@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use App\Mixins\RegistrationBonus\RegistrationBonusAccounting;
 use App\Models\Affiliate;
 use App\Models\Verification;
@@ -10,6 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Mail;
 
 class VerificationController extends Controller
 {
@@ -55,7 +57,7 @@ class VerificationController extends Controller
                 if (!empty($verification->mobile)) {
                     $verification->sendSMSCode();
                 } else {
-                    $verification->sendEmailCode();
+                    Mail::to($verification['email'])->send(new SendMail($verification));
                 }
 
                 return redirect('/verification');
@@ -111,7 +113,7 @@ class VerificationController extends Controller
             if ($username == 'mobile') {
                 $verification->sendSMSCode();
             } else {
-                $verification->sendEmailCode();
+                Mail::to($data['email'])->send(new SendMail($data));
             }
 
             return [

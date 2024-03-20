@@ -1,7 +1,7 @@
 <article class="flex flex-col justify-center shadow-lg px-5 py-6 rounded-2xl bg-white space-y-4">
     <a class="text-primary.main p-2 bg-primary.lighter w-fit rounded-md">Business Foundation</a>
     <a href="#" class="flex items-center space-x-2">
-        <img src="{{asset('img/rmit-logo.png')}}" alt="rmit-logo" width="40px" height="40px">
+        <img src="{{asset('img/logo/rmit-logo.png')}}" alt="rmit-logo" width="40px" height="40px">
         <span>RMIT University</span>
     </a>
     <a class="text-primary.main font-semibold text-lg uppercase">Assignment 3: Individual Essay</a>

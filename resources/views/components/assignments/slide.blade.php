@@ -39,8 +39,12 @@
     var swiper = new Swiper('.assignment-container', {
         slidesPerView: '1',
         centeredSlides: true,
-        speed: 2000,
+        speed: 1000,
         loop: true,
+        autoplay: {
+            delay: 2000, // milliseconds
+            disableOnInteraction: false, // enable interaction to stop autoplay
+        },
         breakpoints: {
             1024: {
                 slidesPerView: 3,

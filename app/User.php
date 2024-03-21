@@ -23,6 +23,7 @@ use App\Models\Role;
 use App\Models\Follow;
 use App\Models\Sale;
 use App\Models\Section;
+use App\Models\Verification;
 use App\Models\Webinar;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -64,6 +65,10 @@ class User extends Authenticatable
     private $user_group;
     private $userInfo;
 
+    public function verification()
+    {
+        return $this->hasOne(Verification::class);
+    }
 
     static function getAdmin()
     {
@@ -100,7 +105,8 @@ class User extends Authenticatable
     {
         if (self::isAdmin()) {
             if (!isset($this->permissions)) {
-                $sections_id = Permission::where('role_id', '=', $this->role_id)->where('allow', true)->pluck('section_id')->toArray();
+                $sections_id = Permission::where('role_id', '=', $this->role_id)->where('allow',
+                    true)->pluck('section_id')->toArray();
                 $this->permissions = Section::whereIn('id', $sections_id)->pluck('name')->toArray();
             }
             return in_array($section_name, $this->permissions);
@@ -149,7 +155,7 @@ class User extends Authenticatable
 
     public function getProfileUrl()
     {
-        return '/users/' . $this->id . '/profile';
+        return '/users/'.$this->id.'/profile';
     }
 
     public function getLevelOfTrainingAttribute()
@@ -159,7 +165,7 @@ class User extends Authenticatable
 
         if (!empty($bit) and is_string($bit)) { // in host with mariaDB
             try {
-                $tmp = (int)bin2hex($bit);
+                $tmp = (int) bin2hex($bit);
 
                 if (is_numeric($tmp) and $tmp > 0 and $tmp <= 7) {
                     $bit = $tmp;
@@ -436,7 +442,7 @@ class User extends Authenticatable
         $financialSettings = getFinancialSettings();
 
         if (!empty($financialSettings) and !empty($financialSettings['commission'])) {
-            $commission = (int)$financialSettings['commission'];
+            $commission = (int) $financialSettings['commission'];
         }
 
         $getUserGroup = $this->getUserGroup();
@@ -742,7 +748,7 @@ class User extends Authenticatable
                         ->first();
 
                     if (!empty($subscribeSale)) {
-                        $usedDays = (int)diffTimestampDay(time(), $subscribeSale->created_at);
+                        $usedDays = (int) diffTimestampDay(time(), $subscribeSale->created_at);
 
                         if ($usedDays <= $subscribe->days) {
                             if (!empty($sale->webinar_id)) {
@@ -851,11 +857,11 @@ class User extends Authenticatable
                 if ($region->id == $this->country_id) {
                     $address .= $region->title;
                 } elseif ($region->id == $this->province_id) {
-                    $address .= ', ' . $region->title;
+                    $address .= ', '.$region->title;
                 } elseif ($region->id == $this->city_id) {
-                    $address .= ', ' . $region->title;
+                    $address .= ', '.$region->title;
                 } elseif ($region->id == $this->district_id) {
-                    $address .= ', ' . $region->title;
+                    $address .= ', '.$region->title;
                 }
             }
         }

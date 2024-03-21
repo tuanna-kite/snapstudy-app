@@ -245,7 +245,7 @@ class SaleController extends Controller
                 'order',
 
                 'buyer' => function ($query) {
-                    $query->select('id', 'full_name');
+                    $query->select('id', 'full_name', 'email');
                 },
                 'webinar' => function ($query) {
                     $query->with([

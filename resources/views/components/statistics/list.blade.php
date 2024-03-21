@@ -27,10 +27,12 @@
     ];
 @endphp
 
-<ul class="flex gap-8 flex-col md:flex-row">
-    @foreach ($listStatistic as $item)
+<section>
+    <ul class="flex gap-8 flex-col md:flex-row">
+        @foreach ($listStatistic as $item)
         <li>
             <x-statistics.card :data="$item" />
         </li>
-    @endforeach
-</ul>
+        @endforeach
+    </ul>
+</section>

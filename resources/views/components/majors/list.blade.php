@@ -56,7 +56,7 @@
 @endphp
 
 
-<div>
+<section>
     <ul class="flex flex-wrap justify-center gap-4">
         @foreach ($listMajor as $item)
             <li>
@@ -64,4 +64,4 @@
             </li>
         @endforeach
     </ul>
-</div>
+</section>

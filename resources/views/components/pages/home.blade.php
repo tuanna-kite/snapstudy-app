@@ -1,6 +1,4 @@
-<div class="" style="min-height: 200vh">
-    {{-- Header --}}
-    <x-layouts.navbar />
+<x-layouts.home-layout>
 
     {{-- Slide --}}
     <x-component.slide-section />
@@ -117,6 +115,4 @@
         <x-layouts.footer-banner />
     </div>
 
-    {{-- Footer --}}
-    <x-layouts.footer />
-</div>
+</x-layouts.home-layout>

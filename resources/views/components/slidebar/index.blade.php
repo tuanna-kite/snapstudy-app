@@ -33,12 +33,12 @@
     ];
 @endphp
 
-<nav class="p-8 h-screen w-64 rounded-2xl bg-white">
-    <img src="img/logo/logo.png" alt="logo-snaps">
-    <ul class="flex flex-col gap-3 mt-10">
+<nav class="p-2 md:p-8 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
+    <img src="img/logo/logo.png" alt="logo-snaps" width="130" height="50">
+    <ul class="flex flex-col gap-3 mt-10 w-full" x-data="{ openTab: null }">
         @foreach ($listMenu as $menu)
-            <li>
-                <x-slidebar.card :cardProps="$menu" />
+            <li class="w-full">
+                <x-slidebar.card :menuItem="$menu" />
             </li>
             @if ($loop->index === 4)
                 <hr class="border-t-1 border-gray-300">
@@ -46,28 +46,3 @@
         @endforeach
     </ul>
 </nav>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var toggleButtons = document.querySelectorAll('.menubtn');
-        toggleButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var targetId = button.getAttribute('data-target');
-                var childDiv = button.querySelector('div')
-                var targetDiv = document.getElementById(targetId);
-
-                if (targetDiv.classList.contains('hidden')) {
-                    console.log('in', targetId)
-                    childDiv.classList.add('bg-primary.light')
-                    targetDiv.classList.remove('hidden');
-                } else {
-                    console.log('out', targetId)
-                    targetDiv.classList.add('hidden');
-                    childDiv.classList.remove('bg-primary.light')
-
-                }
-            });
-        });
-    });
-</script>

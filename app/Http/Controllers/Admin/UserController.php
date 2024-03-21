@@ -135,16 +135,16 @@ class UserController extends Controller
 
         $organizations = User::select('id', 'full_name', 'created_at')
             ->where('role_name', Role::$organization)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('users.created_at', 'desc')
             ->get();
 
 
         $query = $this->filters($query, $request);
 
         if ($is_export_excel) {
-            $users = $query->orderBy('created_at', 'desc')->get();
+            $users = $query->orderBy('users.created_at', 'desc')->get();
         } else {
-            $users = $query->orderBy('created_at', 'desc')
+            $users = $query->orderBy('users.created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -289,7 +289,7 @@ class UserController extends Controller
         $role_id = $request->get('role_id');
         $organization_id = $request->get('organization_id');
 
-        $query = fromAndToDateFilter($from, $to, $query, 'created_at');
+        $query = fromAndToDateFilter($from, $to, $query, 'users.created_at');
 
        if (!empty($full_name)) {
             $query->where(function($query) use ($full_name) {

@@ -149,7 +149,7 @@ class WebinarController extends Controller
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
 
-        $query = fromAndToDateFilter($from, $to, $query, 'created_at');
+        $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
 
 //        dd($query->get());
 

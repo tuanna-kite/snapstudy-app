@@ -78,13 +78,13 @@ class RegisterController extends Controller
             'formFields' => $formFields
         ];
 
-        return view(getTemplate() . '.auth.register', $data);
+        return view(getTemplate().'.auth.register', $data);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param array $data
+     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -92,13 +92,13 @@ class RegisterController extends Controller
         $registerMethod = getGeneralSettings('register_method') ?? 'mobile';
 
         if (!empty($data['mobile']) and !empty($data['country_code'])) {
-            $data['mobile'] = ltrim($data['country_code'], '+') . ltrim($data['mobile'], '0');
+            $data['mobile'] = ltrim($data['country_code'], '+').ltrim($data['mobile'], '0');
         }
 
         $rules = [
             'country_code' => ($registerMethod == 'mobile') ? 'required' : 'nullable',
-            'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable') . '|numeric|unique:users',
-            'email' => (($registerMethod == 'email') ? 'required' : 'nullable') . '|email|max:255|unique:users',
+            'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable').'|numeric|unique:users',
+            'email' => (($registerMethod == 'email') ? 'required' : 'nullable').'|email|max:255|unique:users',
             'term' => 'required',
             'full_name' => 'required|string|min:3',
             'password' => 'required|string|min:6|confirmed',
@@ -116,13 +116,13 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param array $data
+     * @param  array  $data
      * @return
      */
     protected function create(array $data)
     {
         if (!empty($data['mobile']) and !empty($data['country_code'])) {
-            $data['mobile'] = ltrim($data['country_code'], '+') . ltrim($data['mobile'], '0');
+            $data['mobile'] = ltrim($data['country_code'], '+').ltrim($data['mobile'], '0');
         }
 
         $referralSettings = getReferralSettings();
@@ -142,12 +142,15 @@ class RegisterController extends Controller
             if ($data['account_type'] == Role::$teacher) {
                 $roleName = Role::$teacher;
                 $roleId = Role::getTeacherRoleId();
-            } else if ($data['account_type'] == Role::$organization) {
-                $roleName = Role::$organization;
-                $roleId = Role::getOrganizationRoleId();
+            } else {
+                if ($data['account_type'] == Role::$organization) {
+                    $roleName = Role::$organization;
+                    $roleId = Role::getOrganizationRoleId();
+                }
             }
         }
 
+        // Create User
         $user = User::create([
             'role_name' => $roleName,
             'role_id' => $roleId,
@@ -179,6 +182,14 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+//        Remove if user register but unverified
+        if ($request->get('email')) {
+            $existedEmail = User::where('email', $request->get('email'))->first();
+            if ($existedEmail && $existedEmail->verification && !$existedEmail->verification->verified_at) {
+                $existedEmail->delete();
+            }
+        }
+
         $validate = $this->validator($request->all());
 
         if ($validate->fails()) {
@@ -220,7 +231,7 @@ class RegisterController extends Controller
         $data = $request->all();
 
         if (!empty($data['mobile']) and !empty($data['country_code'])) {
-            $data['mobile'] = $data['country_code'] . ltrim($data['mobile'], '0');
+            $data['mobile'] = $data['country_code'].ltrim($data['mobile'], '0');
         }
 
 
@@ -248,7 +259,7 @@ class RegisterController extends Controller
 
         $value = $request->get($registerMethod);
         if ($registerMethod == 'mobile') {
-            $value = $request->get('country_code') . ltrim($request->get('mobile'), '0');
+            $value = $request->get('country_code').ltrim($request->get('mobile'), '0');
         }
 
         $referralCode = $request->get('referral_code', null);

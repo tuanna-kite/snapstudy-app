@@ -345,17 +345,16 @@ class WebinarController extends Controller
     {
         $this->authorize('admin_webinars_create');
         $user = Auth::user()->id;
-
-
-        $this->validate($request, [
+        $request->validate([
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
             'slug' => 'max:255|unique:webinars,slug',
-            'thumbnail' => 'required',
+//            'thumbnail' => 'required',
             // 'image_cover' => 'required',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
-            // 'description' => 'required',
+            'description' => 'required',
+            'content' => 'required',
             // 'duration' => 'required|numeric'
             // 'start_date' => 'required_if:type,webinar',
             // 'capacity' => 'required_if:type,webinar',
@@ -394,7 +393,6 @@ class WebinarController extends Controller
 
         $data['organization_price'] = !empty($data['organization_price']) ? convertPriceToDefaultCurrency($data['organization_price']) : null;
         $webinar = Webinar::create([
-
             // 'image_cover' => $data['image_cover'],
             // 'video_demo' => $data['video_demo'],
             // 'video_demo_source' => $data['video_demo'] ? $data['video_demo_source'] : null,
@@ -411,21 +409,20 @@ class WebinarController extends Controller
             'teacher_id' => $data['teacher_id'],
             'creator_id' => $data['creator_id'],
             'category_id' => $data['category_id'],
-            'thumbnail' => $data['thumbnail'],
+            'thumbnail' => $data['thumbnail'] ?? null,
             'price' => $data['price'],
-            'support' => !empty($data['support']) ? true : false,
-            'downloadable' => !empty($data['downloadable']) ? true : false,
-            'partner_instructor' => !empty($data['partner_instructor']) ? true : false,
-            'subscribe' => !empty($data['subscribe']) ? true : false,
-            'private' => !empty($data['private']) ? true : false,
-            'forum' => !empty($data['forum']) ? true : false,
+            'support' => !empty($data['support']),
+            'downloadable' => !empty($data['downloadable']),
+            'partner_instructor' => !empty($data['partner_instructor']),
+            'subscribe' => !empty($data['subscribe']),
+            'private' => !empty($data['private']),
+            'forum' => !empty($data['forum']),
             'enable_waitlist' => (!empty($data['enable_waitlist'])),
             'organization_price' => $data['organization_price'] ?? null,
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
             'status' => Webinar::$pending,
             'created_at' => time(),
             'updated_at' => time(),
-
         ]);
 
         if ($webinar) {
@@ -434,10 +431,10 @@ class WebinarController extends Controller
                 'locale' => mb_strtolower($data['locale']),
                 'title' => $data['title'],
                 'description' => $data['description'],
+                'content' => $data['content'],
                 'seo_description' => $data['seo_description'],
             ]);
         }
-
 
         return redirect(getAdminPanelUrl().'/webinars/'.$webinar->id.'/edit?locale='.$data['locale']);
     }
@@ -505,6 +502,10 @@ class WebinarController extends Controller
 
         $locale = $request->get('locale', app()->getLocale());
         storeContentLocale($locale, $webinar->getTable(), $webinar->id);
+        $webinarTrans = WebinarTranslation::where([
+            'locale' => mb_strtolower($locale),
+            'webinar_id' => $id
+        ])->first();
 
         $categories = Category::where('parent_id', null)
             ->with('subCategories')
@@ -535,6 +536,7 @@ class WebinarController extends Controller
             'webinarPartnerTeacher' => $webinar->webinarPartnerTeacher,
             'webinarTags' => $tags,
             'defaultLocale' => getDefaultLocale(),
+            'content' => $webinarTrans->content
         ];
 
         return view('admin.webinars.create', $data);
@@ -554,9 +556,10 @@ class WebinarController extends Controller
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
             'slug' => 'max:255|unique:webinars,slug,'.$webinar->id,
-            'thumbnail' => 'required',
+//            'thumbnail' => 'required',
             // 'image_cover' => 'required',
             'description' => 'required',
+            'content' => 'required',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
         ];
@@ -719,7 +722,8 @@ class WebinarController extends Controller
             ], [
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'seo_description' => $data['seo_description'],
+                'content' => $data['content'],
+                'seo_description' => $data['seo_description']
             ]);
         }
 

@@ -25,7 +25,7 @@
                     </div>
                     <div>
                         <button
-                            class="flex items-center gap-1 rounded-full border py-0.5 px-2 border-text.light.disabled text-text.light.disabled"
+                            class="flex items-center gap-1 rounded-full border py-0.5 px-2 border-border-disabled text-text.light.disabled"
                             @click="clearAll()">
                             <span class="font-medium text-xs">Clear All</span>
                             <x-component.material-icon name="close" style="font-size:18px !important" />

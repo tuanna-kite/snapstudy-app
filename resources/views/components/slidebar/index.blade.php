@@ -34,7 +34,7 @@
 @endphp
 
 <nav class="p-2 md:p-8 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
-    <img src="img/logo/logo.png" alt="logo-snaps" width="130" height="50">
+    {{ $slot }}
     <ul class="flex flex-col gap-3 mt-10 w-full" x-data="{ openTab: null }">
         @foreach ($listMenu as $menu)
             <li class="w-full">

@@ -18,7 +18,7 @@
                         </h2>
                         <div>
                             <button
-                                class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-text.light.disabled text-text.light.disabled"
+                                class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled"
                                 @click="clearAll()">
                                 <span class="font-medium text-xs">Clear All</span>
                                 <x-component.material-icon name="close" style="font-size:18px !important" />
@@ -27,26 +27,20 @@
                     </div>
                 </x-pages.assignment-list.filter.form>
             </div>
-            <div class="w-full md:w-3/4 flex flex-col items-center md:flex-row md:justify-between flex-wrap gap-6">
-                <div class="md:max-w-80">
+            <div class="w-full md:w-3/4 grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+                <div>
                     <x-documents.document-card />
                 </div>
-                <div class="md:max-w-80">
+                <div>
                     <x-documents.document-card />
                 </div>
-                <div class="md:max-w-80">
+                <div>
                     <x-documents.document-card />
                 </div>
-                <div class="md:max-w-80">
+                <div>
                     <x-documents.document-card />
                 </div>
-                <div class="md:max-w-80">
-                    <x-documents.document-card />
-                </div>
-                <div class="md:max-w-80">
-                    <x-documents.document-card />
-                </div>
-                <div class="md:max-w-80">
+                <div>
                     <x-documents.document-card />
                 </div>
             </div>

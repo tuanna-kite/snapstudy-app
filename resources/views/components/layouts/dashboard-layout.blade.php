@@ -1,14 +1,16 @@
 @props(['title'])
 
-<div>
+<div class="bg-primary.lighter min-h-[100vh]">
     {{-- sidebar --}}
-    <div class="h-screen p-5 hidden lg:block lg:fixed ">
-        <x-slidebar.index />
+    <div class="h-screen p-5 hidden lg:block lg:fixed">
+        <x-slidebar.index>
+            <img src="img/logo/logo.png" alt="logo-snaps" width="130" height="50">
+        </x-slidebar.index>
     </div>
     {{-- content --}}
-    <div class="pl-10 pt-10 pr-10 lg:pl-[296px] ">
+    <div class="p-2 md:p-5 lg:pl-[296px] min-h-[100vh] flex flex-col">
         <x-layouts.header-dashboard :title="$title" />
-        <div class="mt-10">
+        <div class="mt-10 flex-1 flex flex-col">
             {{ $slot }}
         </div>
     </div>

@@ -12,8 +12,7 @@
         <label for="price" class="text-sm font-semibold">Type</label>
     @endif
     <div class="">
-        <select id="cars" name="cars" class="w-full border border-solid rounded-xl p-4"
-            style="border-color: #DFE3E8">
+        <select id="cars" name="cars" class="w-full border border-grey-300 rounded-xl p-[18px]">
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="fiat">Fiat</option>

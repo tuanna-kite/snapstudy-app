@@ -1,4 +1,4 @@
-<div class="relative px-4" style="background: #F02D00" id="card">
+<div class="relative" style="background: #F02D00" id="card">
     <div class="container mx-auto py-4 flex justify-between items-center text-white">
         <p class="font-bold text-2xl ">
             All syllabus 144,000đ

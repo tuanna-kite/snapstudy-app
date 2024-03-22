@@ -32,7 +32,7 @@
     </div>
 
     {{-- Jump Start --}}
-    <div class="px-4 py-16 md:py-32 space-y-12 container mx-auto">
+    <div class=" py-16 md:py-32 space-y-12 container mx-auto">
         <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center uppercase">
             JUMPSTART YOUR SUCCESS <br />
             FOR THE UPCOMING ASSIGNMENT
@@ -58,7 +58,7 @@
     </div>
 
     {{-- Start Learning Courses --}}
-    <div class="py-10 md:py-24 space-y-10 container mx-auto px-4">
+    <div class="py-10 md:py-24 space-y-10 container mx-auto ">
         <div class="space-y-2 ">
             <div class="flex items-center justify-between">
                 <h1 class="font-bold text-xl md:text-4xl lg:text-5xl text-primary.main">
@@ -80,7 +80,7 @@
     </div>
 
     {{-- Student Result --}}
-    <div class="px-4 mt-10 md:mt-24 flex flex-col gap-4 md:flex-row items-center justify-between container mx-auto">
+    <div class=" mt-10 md:mt-24 flex flex-col gap-4 md:flex-row items-center justify-between container mx-auto">
         <div class="space-y-6 md:space-y-12 w-full md:w-1/2">
             <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main">
                 Students' Results <br /> with SNAPS
@@ -98,7 +98,7 @@
     </div>
 
     {{-- Testimonials --}}
-    <div class="container px-4 mx-auto space-y-12 mt-10 md:mt-24">
+    <div class="container  mx-auto space-y-12 mt-10 md:mt-24">
         <div class="text-center space-y-1">
             <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main uppercase">
                 The Community we are in
@@ -111,7 +111,7 @@
     </div>
 
     {{-- Advertisement --}}
-    <div class="my-16 px-4">
+    <div class="my-16 ">
         <x-layouts.footer-banner />
     </div>
 

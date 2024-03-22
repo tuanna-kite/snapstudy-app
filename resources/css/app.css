@@ -5,3 +5,11 @@
 #footer-banner span {
     @apply text-secondary.main font-semibold uppercase
 }
+
+@media screen and (max-width:640px) {
+    .container{
+        width:100%;
+        padding-left:24px;
+        padding-right:24px;
+    }
+}

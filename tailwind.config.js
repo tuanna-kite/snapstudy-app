@@ -28,6 +28,7 @@ export default {
 
                 // Grey
                 "light-neutral": "#F4F6F8",
+                "light-gray": "#EBEDF5",
                 "grey-300": "#DFE3E8"
             },
         },

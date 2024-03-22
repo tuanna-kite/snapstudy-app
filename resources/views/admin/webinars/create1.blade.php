@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/assets/default/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/bootstrap-tagsinput/bootstrap-tagsinput.min.css">
     <link rel="stylesheet" href="/assets/vendors/summernote/summernote-bs4.min.css">
-    <link href="/assets/default/vendors/sortable/jquery-ui.min.css"/>
+    <link href="/assets/default/vendors/sortable/jquery-ui.min.css" />
     <style>
         .bootstrap-timepicker-widget table td input {
             width: 35px !important;
@@ -19,12 +19,7 @@
     </style>
 @endpush
 
-
-
 @section('content')
-    @php
-
-            @endphp
     <section class="section">
         <div class="section-header">
             <h1>{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }} {{ trans('admin/main.class') }}
@@ -40,11 +35,14 @@
                 </div>
             </div>
         </div>
+
         <div class="section-body">
+
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 ">
                     <div class="card">
                         <div class="card-body">
+
                             <form method="post"
                                 action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}"
                                 id="webinarForm" class="webinar-form">
@@ -54,7 +52,6 @@
 
                                     <div class="row">
                                         <div class="col-12 col-md-5">
-
                                             @if (!empty(getGeneralSettings('content_translate')))
                                                 <div class="form-group">
                                                     <label class="input-label">{{ trans('auth.language') }}</label>
@@ -287,7 +284,7 @@
                                                     @enderror
                                                 </div>
                                             </div> --}}
-
+                                            
                                         </div>
                                     </div>
 
@@ -307,7 +304,7 @@
                                     </div>
                                 </section>
 
-                                <div>
+                                <section class="mt-3">
                                     <h2 class="section-title after-line">{{ trans('public.additional_information') }}</h2>
                                     <div class="row">
                                         <div class="col-12 col-md-6">
@@ -508,26 +505,40 @@
                                             <div
                                                 class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class=""
-                                                       for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
+                                                    for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="enable_waitlist"
-                                                           class="custom-control-input" id="enable_waitlistSwitch"
-                                                            {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }}>
+                                                        class="custom-control-input" id="enable_waitlistSwitch"
+                                                        {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }}>
                                                     <label class="custom-control-label"
-                                                           for="enable_waitlistSwitch"></label>
+                                                        for="enable_waitlistSwitch"></label>
                                                 </div>
                                             </div>
+
+                                            {{-- <div class="form-group mt-15">
+                                                <label class="input-label">{{ trans('update.access_days') }}</label>
+                                                <input type="text" name="access_days"
+                                                    value="{{ !empty($webinar) ? $webinar->access_days : old('access_days') }}"
+                                                    class="form-control @error('access_days')  is-invalid @enderror" />
+                                                @error('access_days')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                <p class="mt-1">- {{ trans('update.access_days_input_hint') }}</p>
+                                            </div> --}}
+
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.price') }}
                                                     ({{ $currency }})</label>
                                                 <input type="text" name="price"
-                                                       value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
-                                                       class="form-control @error('price')  is-invalid @enderror"
-                                                       placeholder="{{ trans('public.0_for_free') }}"/>
+                                                    value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
+                                                    class="form-control @error('price')  is-invalid @enderror"
+                                                    placeholder="{{ trans('public.0_for_free') }}" />
                                                 @error('price')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
 
@@ -577,16 +588,17 @@
                                             <div class="form-group mt-15">
                                                 <label class="input-label d-block">{{ trans('public.tags') }}</label>
                                                 <input type="text" name="tags" data-max-tag="5"
-                                                       value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
-                                                       class="form-control inputtags"
-                                                       placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)"/>
+                                                    value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
+                                                    class="form-control inputtags"
+                                                    placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)" />
                                             </div>
+
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.category') }}</label>
 
                                                 <select id="categories"
-                                                        class="custom-select @error('category_id')  is-invalid @enderror"
-                                                        name="category_id" required>
+                                                    class="custom-select @error('category_id')  is-invalid @enderror"
+                                                    name="category_id" required>
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_category') }}</option>
                                                     @foreach ($categories as $category)
@@ -594,25 +606,24 @@
                                                             <optgroup label="{{ $category->title }}">
                                                                 @foreach ($category->subCategories as $subCategory)
                                                                     <option value="{{ $subCategory->id }}"
-                                                                            {{ (!empty($webinar) and $webinar->category_id == $subCategory->id) ? 'selected' : '' }}>
+                                                                        {{ (!empty($webinar) and $webinar->category_id == $subCategory->id) ? 'selected' : '' }}>
                                                                         {{ $subCategory->title }}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         @else
                                                             <option value="{{ $category->id }}"
-                                                                    {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
+                                                                {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
                                                                 {{ $category->title }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
 
                                                 @error('category_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -723,52 +734,324 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </section> --}}
 
-                                {{--Content Field--}}
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group mt-15">
-                                            <label class="input-label">Nội dung tài liệu</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <button type="button" class="input-group-text admin-file-manager"
-                                                            data-input="thumbnail" data-preview="holder">
-                                                        <i class="fa fa-upload"></i>
-                                                    </button>
-                                                </div>
-                                                <input type="text" name="thumbnail" id="thumbnail"
-                                                       value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
-                                                       class="form-control @error('thumbnail')  is-invalid @enderror"/>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="input-group-text admin-file-view"
-                                                            data-input="thumbnail">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
-                                                </div>
-                                                @error('thumbnail')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
+
+                                    @include('admin.webinars.create_includes.contents')
+
+
+                                    {{-- <section class="mt-30">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="section-title after-line">{{ trans('public.prerequisites') }}</h2>
+                                            <button id="webinarAddPrerequisites" type="button"
+                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_prerequisites') }}</button>
+                                        </div>
+
+                                        <div class="row mt-10">
+                                            <div class="col-12">
+                                                @if (!empty($prerequisites) and !$prerequisites->isEmpty())
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped text-center font-14">
+
+                                                            <tr>
+                                                                <th>{{ trans('public.title') }}</th>
+                                                                <th class="text-left">{{ trans('public.instructor') }}
+                                                                </th>
+                                                                <th>{{ trans('public.price') }}</th>
+                                                                <th>{{ trans('public.publish_date') }}</th>
+                                                                <th>{{ trans('public.forced') }}</th>
+                                                                <th></th>
+                                                            </tr>
+
+                                                            @foreach ($prerequisites as $prerequisite)
+                                                                @if (!empty($prerequisite->prerequisiteWebinar->title))
+                                                                    <tr>
+                                                                        <th>{{ $prerequisite->prerequisiteWebinar->title }}
+                                                                        </th>
+                                                                        <td class="text-left">
+                                                                            {{ $prerequisite->prerequisiteWebinar->teacher->full_name }}
+                                                                        </td>
+                                                                        <td>{{ handlePrice($prerequisite->prerequisiteWebinar->price) }}
+                                                                        </td>
+                                                                        <td>{{ dateTimeFormat($prerequisite->prerequisiteWebinar->created_at, 'j F Y | H:i') }}
+                                                                        </td>
+                                                                        <td>{{ $prerequisite->required ? trans('public.yes') : trans('public.no') }}
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <button type="button"
+                                                                                data-prerequisite-id="{{ $prerequisite->id }}"
+                                                                                data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
+                                                                                class="edit-prerequisite btn-transparent text-primary mt-1"
+                                                                                data-toggle="tooltip" data-placement="top"
+                                                                                title="{{ trans('admin/main.edit') }}">
+                                                                                <i class="fa fa-edit"></i>
+                                                                            </button>
+
+                                                                            @include(
+                                                                                'admin.includes.delete_button',
+                                                                                [
+                                                                                    'url' =>
+                                                                                        getAdminPanelUrl() .
+                                                                                        '/prerequisites/' .
+                                                                                        $prerequisite->id .
+                                                                                        '/delete',
+                                                                                    'btnClass' => ' mt-1',
+                                                                                ]
+                                                                            )
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+
+                                                        </table>
+                                                    </div>
+                                                @else
+                                                    @include('admin.includes.no-result', [
+                                                        'file_name' => 'comment.png',
+                                                        'title' => trans('public.prerequisites_no_result'),
+                                                        'hint' => trans('public.prerequisites_no_result_hint'),
+                                                    ])
+                                                @endif
                                             </div>
-                                            <textarea name="content"
-                                                      class="form-control @error('content')  is-invalid @enderror"
-                                                      placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($content)) ? $content : old('content') !!}</textarea>
-                                            @error('content')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
+                                        </div>
+                                    </section>  --}}
+
+                                    {{-- <section class="mt-30">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="section-title after-line">{{ trans('public.faq') }}</h2>
+                                            <button id="webinarAddFAQ" type="button"
+                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_faq') }}</button>
+                                        </div>
+
+                                        <div class="row mt-10">
+                                            <div class="col-12">
+                                                @if (!empty($faqs) and !$faqs->isEmpty())
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped text-center font-14">
+
+                                                            <tr>
+                                                                <th>{{ trans('public.title') }}</th>
+                                                                <th>{{ trans('public.answer') }}</th>
+                                                                <th></th>
+                                                            </tr>
+
+                                                            @foreach ($faqs as $faq)
+                                                                <tr>
+                                                                    <th>{{ $faq->title }}</th>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                            class="js-get-faq-description btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
+                                                                        <input type="hidden"
+                                                                            value="{{ $faq->answer }}" />
+                                                                    </td>
+
+                                                                    <td class="text-right">
+                                                                        <button type="button"
+                                                                            data-faq-id="{{ $faq->id }}"
+                                                                            data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
+                                                                            class="edit-faq btn-transparent text-primary mt-1"
+                                                                            data-toggle="tooltip" data-placement="top"
+                                                                            title="{{ trans('admin/main.edit') }}">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </button>
+
+                                                                        @include(
+                                                                            'admin.includes.delete_button',
+                                                                            [
+                                                                                'url' =>
+                                                                                    getAdminPanelUrl() .
+                                                                                    '/faqs/' .
+                                                                                    $faq->id .
+                                                                                    '/delete',
+                                                                                'btnClass' => ' mt-1',
+                                                                            ]
+                                                                        )
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                        </table>
+                                                    </div>
+                                                @else
+                                                    @include('admin.includes.no-result', [
+                                                        'file_name' => 'faq.png',
+                                                        'title' => trans('public.faq_no_result'),
+                                                        'hint' => trans('public.faq_no_result_hint'),
+                                                    ])
+                                                @endif
                                             </div>
-                                            @enderror
+                                        </div>
+                                    </section>
+
+                                    @foreach (\App\Models\WebinarExtraDescription::$types as $webinarExtraDescriptionType)
+                                        <section class="mt-30">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h2 class="section-title after-line">
+                                                    {{ trans('update.' . $webinarExtraDescriptionType) }}</h2>
+                                                <button id="add_new_{{ $webinarExtraDescriptionType }}" type="button"
+                                                    class="btn btn-primary btn-sm mt-3">{{ trans('update.add_' . $webinarExtraDescriptionType) }}</button>
+                                            </div>
+
+                                            @php
+                                                $webinarExtraDescriptionValues = $webinar->webinarExtraDescription->where('type', $webinarExtraDescriptionType);
+                                            @endphp
+
+                                            <div class="row mt-10">
+                                                <div class="col-12">
+                                                    @if (!empty($webinarExtraDescriptionValues) and count($webinarExtraDescriptionValues))
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped text-center font-14">
+
+                                                                <tr>
+                                                                    @if ($webinarExtraDescriptionType == \App\Models\WebinarExtraDescription::$COMPANY_LOGOS)
+                                                                        <th>{{ trans('admin/main.icon') }}</th>
+                                                                    @else
+                                                                        <th>{{ trans('public.title') }}</th>
+                                                                    @endif
+                                                                    <th></th>
+                                                                </tr>
+
+                                                                @foreach ($webinarExtraDescriptionValues as $extraDescription)
+                                                                    <tr>
+                                                                        @if ($webinarExtraDescriptionType == \App\Models\WebinarExtraDescription::$COMPANY_LOGOS)
+                                                                            <td>
+                                                                                <img src="{{ $extraDescription->value }}"
+                                                                                    class="webinar-extra-description-company-logos"
+                                                                                    alt="">
+                                                                            </td>
+                                                                        @else
+                                                                            <td>{{ $extraDescription->value }}</td>
+                                                                        @endif
+
+                                                                        <td class="text-right">
+                                                                            <button type="button"
+                                                                                data-item-id="{{ $extraDescription->id }}"
+                                                                                data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
+                                                                                class="edit-extraDescription btn-transparent text-primary mt-1"
+                                                                                data-toggle="tooltip" data-placement="top"
+                                                                                title="{{ trans('admin/main.edit') }}">
+                                                                                <i class="fa fa-edit"></i>
+                                                                            </button>
+
+                                                                            @include(
+                                                                                'admin.includes.delete_button',
+                                                                                [
+                                                                                    'url' =>
+                                                                                        getAdminPanelUrl() .
+                                                                                        '/webinar-extra-description/' .
+                                                                                        $extraDescription->id .
+                                                                                        '/delete',
+                                                                                    'btnClass' => ' mt-1',
+                                                                                ]
+                                                                            )
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </table>
+                                                        </div>
+                                                    @else
+                                                        @include('admin.includes.no-result', [
+                                                            'file_name' => 'faq.png',
+                                                            'title' => trans(
+                                                                "update.{$webinarExtraDescriptionType}_no_result"),
+                                                            'hint' => trans(
+                                                                "update.{$webinarExtraDescriptionType}_no_result_hint"),
+                                                        ])
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </section>
+                                    @endforeach
+
+                                    <section class="mt-30">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="section-title after-line">{{ trans('public.quiz_certificate') }}
+                                            </h2>
+                                            <button id="webinarAddQuiz" type="button"
+                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_quiz') }}</button>
+                                        </div>
+                                        <div class="row mt-10">
+                                            <div class="col-12">
+                                                @if (!empty($webinarQuizzes) and !$webinarQuizzes->isEmpty())
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped text-center font-14">
+
+                                                            <tr>
+                                                                <th>{{ trans('public.title') }}</th>
+                                                                <th>{{ trans('public.questions') }}</th>
+                                                                <th>{{ trans('public.total_mark') }}</th>
+                                                                <th>{{ trans('public.pass_mark') }}</th>
+                                                                <th>{{ trans('public.certificate') }}</th>
+                                                                <th></th>
+                                                            </tr>
+
+                                                            @foreach ($webinarQuizzes as $webinarQuiz)
+                                                                <tr>
+                                                                    <th>{{ $webinarQuiz->title }}</th>
+                                                                    <td>{{ $webinarQuiz->quizQuestions->count() }}</td>
+                                                                    <td>{{ $webinarQuiz->quizQuestions->sum('grade') }}
+                                                                    </td>
+                                                                    <td>{{ $webinarQuiz->pass_mark }}</td>
+                                                                    <td>{{ $webinarQuiz->certificate ? trans('public.yes') : trans('public.no') }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                            data-webinar-quiz-id="{{ $webinarQuiz->id }}"
+                                                                            data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
+                                                                            class="edit-webinar-quiz btn-transparent text-primary mt-1"
+                                                                            data-toggle="tooltip" data-placement="top"
+                                                                            title="{{ trans('admin/main.edit') }}">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </button>
+
+                                                                        @include(
+                                                                            'admin.includes.delete_button',
+                                                                            [
+                                                                                'url' =>
+                                                                                    getAdminPanelUrl() .
+                                                                                    '/webinar-quiz/' .
+                                                                                    $webinarQuiz->id .
+                                                                                    '/delete',
+                                                                                'btnClass' => ' mt-1',
+                                                                            ]
+                                                                        )
+                                                                    </td>
+                                                            @endforeach
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                @else
+                                                    @include('admin.includes.no-result', [
+                                                        'file_name' => 'cert.png',
+                                                        'title' => trans('public.quizzes_no_result'),
+                                                        'hint' => trans('public.quizzes_no_result_hint'),
+                                                    ])
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </section> --}}
+                                @endif
+
+                                {{-- <section class="mt-3">
+                                    <h2 class="section-title after-line">{{ trans('public.message_to_reviewer') }}</h2>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group mt-15">
+                                                <textarea name="message_for_reviewer" rows="10" class="form-control">{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : old('message_for_reviewer') }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                {{--Submit--}}
+                                </section> --}}
+
+                                {{-- <input type="hidden" name="draft" value="no" id="forDraft" /> --}}
+
                                 <div class="row">
                                     <div class="col-12">
                                         <button type="button" id="saveAndPublish"
-                                            class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
+                                                class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
                                             <button type="button" id="saveReject"
@@ -785,6 +1068,8 @@
                                     </div>
                                 </div>
                             </form>
+
+
                             @include('admin.webinars.modals.prerequisites')
                             @include('admin.webinars.modals.quizzes')
                             @include('admin.webinars.modals.ticket')
@@ -796,13 +1081,13 @@
                             @include('admin.webinars.modals.testLesson')
                             @include('admin.webinars.modals.assignment')
                             @include('admin.webinars.modals.extra_description')
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 @endsection
 
 @push('scripts_bottom')

@@ -395,7 +395,6 @@ class WebinarController extends Controller
 
         $data['organization_price'] = !empty($data['organization_price']) ? convertPriceToDefaultCurrency($data['organization_price']) : null;
         $webinar = Webinar::create([
-
             // 'image_cover' => $data['image_cover'],
             // 'video_demo' => $data['video_demo'],
             // 'video_demo_source' => $data['video_demo'] ? $data['video_demo_source'] : null,
@@ -426,7 +425,6 @@ class WebinarController extends Controller
             'status' => Webinar::$pending,
             'created_at' => time(),
             'updated_at' => time(),
-
         ]);
 
         if ($webinar) {

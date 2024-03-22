@@ -79,7 +79,7 @@ class SaleController extends Controller
         }
 
         if (!empty($student_ids)) {
-            $data['students'] = User::select('id', 'full_name')
+            $data['students'] = User::select('id', 'full_name', 'email')
                 ->whereIn('id', $student_ids)->get();
         }
 

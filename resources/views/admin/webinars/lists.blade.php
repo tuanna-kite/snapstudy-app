@@ -245,8 +245,8 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped font-14 ">
+                            <div class="table-responsive" style="min-height: 300px">
+                                <table class="table table-striped font-14">
                                     <tr>
                                         <th>#</th>
                                         <th>{{trans('admin/main.id')}}</th>

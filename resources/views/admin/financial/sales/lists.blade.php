@@ -228,6 +228,7 @@
                                             <td class="text-left">
                                                 {{ !empty($sale->buyer) ? $sale->buyer->full_name : '' }}
                                                 <div class="text-primary text-small font-600-bold">ID : {{  !empty($sale->buyer) ? $sale->buyer->id : '' }}</div>
+                                                <p style="font-size: small">{{$sale->buyer->email}}</p>
                                             </td>
 
                                             <td class="text-left">

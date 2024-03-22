@@ -20,16 +20,16 @@
 <div class="assignment-container overflow-hidden">
     <div class="swiper-wrapper">
         <div class="swiper-slide">
-            <x-assignments.card title='RMIT' />
+            <x-pages.home.assignments.card title='RMIT' />
         </div>
         <div class="swiper-slide">
-            <x-assignments.card title="Vin School" />
+            <x-pages.home.assignments.card title="Vin School" />
         </div>
         <div class="swiper-slide">
-            <x-assignments.card title="Hust" />
+            <x-pages.home.assignments.card title="Hust" />
         </div>
         <div class="swiper-slide">
-            <x-assignments.card title="NEU" />
+            <x-pages.home.assignments.card title="NEU" />
         </div>
         <!-- Add more slides as needed -->
     </div>

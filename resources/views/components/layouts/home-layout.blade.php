@@ -2,8 +2,9 @@
     {{-- Header --}}
     <x-layouts.navbar />
 
-    {{ $slot }}
-
+    <div class="bg-primary.lighter">
+        {{ $slot }}
+    </div>
     {{-- Footer --}}
     <x-layouts.footer />
 </div>

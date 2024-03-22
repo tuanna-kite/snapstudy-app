@@ -1,7 +1,7 @@
 <x-layouts.home-layout>
 
     {{-- Slide --}}
-    <x-component.slide-section />
+    <x-pages.home.slide />
 
     {{-- Search Document --}}
     <div class="flex flex-col gap-8 p-4 md:p-12 md:flex-row">
@@ -13,12 +13,12 @@
                 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
                 Search for outlines that fit your major
             </h1>
-            <x-majors.list />
+            <x-pages.home.majors />
             <h1
                 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
                 We have solutions for all your assessments and test questions
             </h1>
-            <x-statistics.list />
+            <x-pages.home.statistics />
         </div>
         <div class="w-full md:w-1/4 flex flex-col gap-4">
             <img src="img/banner1.png" alt="banner1" class="w-full md:max-w-96">
@@ -28,7 +28,7 @@
 
     {{-- Video Tutorial --}}
     <div class="mt-24">
-        <x-component.video-tutorial />
+        <x-pages.home.video-tutorial />
     </div>
 
     {{-- Jump Start --}}
@@ -38,7 +38,7 @@
             FOR THE UPCOMING ASSIGNMENT
         </h1>
         <div class="">
-            <x-assignments.slide />
+            <x-pages.home.assignments.slide />
         </div>
     </div>
 
@@ -107,7 +107,7 @@
                 Over 3000 students have already joined the SNAPS Community
             </p>
         </div>
-        <x-testimonials.list />
+        <x-pages.home.testimonials />
     </div>
 
     {{-- Advertisement --}}

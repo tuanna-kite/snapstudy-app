@@ -60,7 +60,7 @@
     <ul class="flex flex-wrap justify-center gap-4">
         @foreach ($listMajor as $item)
             <li>
-                <x-majors.card iconName='business-foundation' :major='$item' />
+                <x-pages.home.majors.card iconName='business-foundation' :major='$item' />
             </li>
         @endforeach
     </ul>

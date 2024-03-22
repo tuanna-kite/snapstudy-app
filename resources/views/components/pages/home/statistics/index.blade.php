@@ -31,7 +31,7 @@
     <ul class="flex gap-8 flex-col md:flex-row">
         @foreach ($listStatistic as $item)
         <li>
-            <x-statistics.card :data="$item" />
+            <x-pages.home.statistics.card :data="$item" />
         </li>
         @endforeach
     </ul>

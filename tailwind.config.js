@@ -8,8 +8,7 @@ export default {
     theme: {
         extend: {
             screens: {
-                'md': '900px',
-                'lg': '1440px'
+
             },
             colors: {
                 // Primary
@@ -29,7 +28,9 @@ export default {
                 // Grey
                 "light-neutral": "#F4F6F8",
                 "light-gray": "#EBEDF5",
-                "grey-300": "#DFE3E8"
+                "grey-300": "#DFE3E8",
+                "grey-400": "#C4CDD5",
+
             },
         },
     },

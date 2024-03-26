@@ -26,46 +26,51 @@
                 </p>
             </div>
         </div>
-        <div class='container mx-auto py-16 space-y-16'>
+        <div class='container mx-auto py-16 space-y-16' x-data="{ scrolled: false }"
+            @scroll.window="scrolled = (window.scrollY > document.getElementById('targetDiv').offsetTop + document.getElementById('targetDiv').offsetHeight)">
             {{-- Table Content --}}
-            <div class="">
-                <div x-data="{ openTab: 1 }">
-                    <div class="border border-grey-300 rounded-2xl">
-                        <div class="px-6 py-3 bg-primary.main rounded-t-2xl flex justify-between items-center text-white"
-                            x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
-                            <h6 class="font-bold text-xl">
-                                Table of contents
-                            </h6>
-                            <x-component.material-icon name="expand_more" x-show="openTab === null" />
-                            <x-component.material-icon name="expand_less" x-show="openTab === 1" />
-                        </div>
-                        <div class="px-6 py-4" x-show="openTab === 1">
-                            <ol class="list-none list-inside space-y-2">
-                                <li>
-                                    <a href="#" class="font-normal text-base text-primary.main">
-                                        Assessment Recap
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="font-normal text-base text-primary.main">
-                                        Definition
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="font-normal text-base text-primary.main">
-                                        Detail outline
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="font-normal text-base text-primary.main">
-                                        Assessment Conclusion
-                                    </a>
-                                </li>
-                            </ol>
-                        </div>
+            <div x-data="{ openTab: 1 }" id="targetDiv" class="bg-white">
+                <div class="border border-grey-300 rounded-2xl">
+                    <div class="px-6 py-3 bg-primary.main rounded-t-2xl flex justify-between items-center text-white"
+                        x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
+                        <h6 class="font-bold text-xl">
+                            Table of contents
+                        </h6>
+                        <x-component.material-icon name="expand_more" x-show="openTab === null" />
+                        <x-component.material-icon name="expand_less" x-show="openTab === 1" />
+                    </div>
+                    <div class="px-6 py-4" x-show="openTab === 1">
+                        <ol class="list-none list-inside space-y-2">
+                            <li>
+                                <a href="#" class="font-normal text-base text-primary.main">
+                                    Assessment Recap
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="font-normal text-base text-primary.main">
+                                    Definition
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="font-normal text-base text-primary.main">
+                                    Detail outline
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="font-normal text-base text-primary.main">
+                                    Assessment Conclusion
+                                </a>
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </div>
+            {{-- Mini Btn  --}}
+            <div x-show='scrolled'>
+                <x-pages.course-detail.button-cnt/>
+            </div>
+            {{-- <button id="scrollBtn" class="fixed z-10 bottom-4 right-4 px-4 py-2 rounded bg-gray-800 text-white shadow-md;"
+                x-show="scrolled">Table of Content</button> --}}
             {{-- Content --}}
             <div class="space-y-6">
                 <h3 class="font-bold text-3xl text-primary.main">
@@ -111,6 +116,114 @@
                             II. Definition
                         </h4>
                         <p class="font-normal text-base">
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
+
+                            Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
+                            fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
+                            Ullamcorper
+                            nascetur nisi amet tempor in nulla nisi. Egestas vel venenatis bibendum venenatis. Aliquam
+                            in
+                            dui ultricies tortor.
                             Lorem ipsum dolor sit amet consectetur. Ut leo eget ut ultricies vitae tempus est. Elit a eu
                             fermentum eu nibh elit euismod. Nibh tristique eleifend varius tellus curabitur mi.
                             Ullamcorper

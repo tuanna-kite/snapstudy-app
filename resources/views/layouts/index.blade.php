@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,16 @@
     {{-- Swiper --}}
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <style>
+        @media screen and (max-width:640px) {
+            .container {
+                width: 100%;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>

@@ -6,6 +6,6 @@
         <x-component.material-icon name="notifications_none" />
     </button>
     <button class="p-2 rounded-full" onclick="handleClick()">
-        <img src="img/logo/avatar.png" alt="" width="48" height="48">
+        <img src="{{ asset('img/logo/avatar.png') }}" alt="" width="48" height="48">
     </button>
 </div>

@@ -5,7 +5,7 @@
         <span class="font-normal text-xs text-primary.main">Business Foundation</span>
     </div>
     <div class="flex items-center gap-2">
-        <img src="img/logo/rmit-logo.png" alt="logo-rmit" width="32" height="32">
+        <img src="{{ asset('img/logo/rmit-logo.png') }}" alt="logo-rmit" width="32" height="32">
         <span class="font-semibold text-sm text-text.light.primary">
             {{ $title }}
         </span>

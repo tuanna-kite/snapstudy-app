@@ -1,5 +1,5 @@
 @php
-    $isLoggedIn = false;
+    $isLoggedIn = true;
 @endphp
 
 <header>
@@ -7,7 +7,7 @@
     <nav class="sticky top-0 z-10 bg-white shadow">
         <div class="container mx-auto flex justify-between items-center h-20">
             <a href="#">
-                <img src="img/logo/logo.png" alt="Logo">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo">
             </a>
             @if ($isLoggedIn)
                 <x-component.group-icon />

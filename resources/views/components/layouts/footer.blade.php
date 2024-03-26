@@ -2,7 +2,7 @@
     <div class='flex flex-col px-4 gap-4 py-16 md:flex-row container mx-auto'>
         <div class="flex-1">
             <a href="#">
-                <img src="img/logo/logo.png" alt="Logo">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo">
             </a>
             <ul class="mt-4">
                 <li class="text-sm font-medium text-text.light.primary">
@@ -88,13 +88,13 @@
             </div>
             <ul class="flex gap-4">
                 <li>
-                    <img src="img/logo/facebook.png" alt="fb" width="32" height="32">
+                    <img src="{{ asset('img/logo/facebook.png') }}" alt="fb" width="32" height="32">
                 </li>
                 <li>
-                    <img src="img/logo/youtube.png" alt="fb" width="32" height="32">
+                    <img src="{{ asset('img/logo/youtube.png') }}" alt="ytb" width="32" height="32">
                 </li>
                 <li>
-                    <img src="img/logo/instagram.png" alt="fb" width="32" height="32">
+                    <img src="{{ asset('img/logo/instagram.png') }}" alt="ins" width="32" height="32">
                 </li>
             </ul>
         </div>

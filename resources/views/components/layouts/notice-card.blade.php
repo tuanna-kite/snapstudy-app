@@ -25,7 +25,7 @@
         </ul>
     </div>
     <button class="absolute right-4 top-1/2 transform -translate-y-1/2" id='closeBtn'>
-        <span class="text-white">
+        <span class="text-white text-2xl">
             x
         </span>
     </button>

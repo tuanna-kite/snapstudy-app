@@ -1,7 +1,7 @@
 <div class="p-6 rounded-3xl gap-4 bg-white">
     <div class="flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <img src="img/logo/avatar.png" alt="" width="48" height="48">
+            <img src="{{ asset('img/logo/avatar.png') }}" alt="" width="48" height="48">
             <div>
                 <div>
                     <span class="font-semibold text-base text-text.light.primary">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div>
-            <img src="img/logo/quotes.png" alt="quotes" width="38" height="32">
+            <img src="{{ asset('img/logo/quotes.png') }}" alt="quotes" width="38" height="32">
         </div>
     </div>
     <div class='mt-4'>

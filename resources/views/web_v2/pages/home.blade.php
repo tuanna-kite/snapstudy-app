@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('web_v2.layouts.index')
 
 @section('title','Home Page')
 
@@ -52,7 +52,7 @@
                     SIGN UP NOW TO PURCHASE THE DETAILED <br />
                     INSTRUCTION AT 199,000 VND
                 </p>
-                <a href="#" class="mt-4 lg:mt-0">
+                <a href="{{ route('register') }}" class="mt-4 lg:mt-0">
                     <div class="rounded-full px-5 py-2 bg-secondary.main">
                         <span class="uppercase font-medium text-sm md:text-base text-white">Sign up for free trial</span>
                     </div>
@@ -67,7 +67,7 @@
                     <h1 class="font-bold text-xl md:text-4xl lg:text-5xl text-primary.main">
                         Start learning with Top Trending Outlines
                     </h1>
-                    <a href="#" class="flex items-center">
+                    <a href="{{ route('classes') }}" class="flex items-center">
                         <span class="font-medium text-xs md:text-base text-text.light.secondary">View all
                         </span>
                         <x-component.icon name="icon-right" />
@@ -78,7 +78,8 @@
                 </p>
             </div>
             <div>
-                <x-documents.document-grid />
+
+                <x-documents.document-grid :webinar="$webinar"/>
             </div>
         </div>
 

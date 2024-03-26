@@ -45,8 +45,8 @@ class ClassesController extends Controller
 
         $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
         $sort = $request->get('sort', null);
-        
-       
+
+
         if (empty($sort) or $sort == 'newest') {
             $webinarsQuery = $webinarsQuery->orderBy("{$this->tableName}.created_at", 'desc');
         }
@@ -69,7 +69,7 @@ class ClassesController extends Controller
             // 'subjects' => $subjects
 
         ];
-        return view(getTemplate() . '.pages.classes', $data);
+        return view('web_v2.pages.course-list', $data);
     }
 
     public function handleFilters($request, $query)
@@ -86,7 +86,7 @@ class ClassesController extends Controller
         $search = $request->get('search');
         $majorOptions = $request->get('majorOptions', []);
         $subjectOptions = $request->get('subjectOptions', []);
-       
+
 
         $query->whereHas('teacher', function ($query) {
             $query->where('status', 'active')
@@ -98,7 +98,7 @@ class ClassesController extends Controller
                         });
                 });
         });
-       
+
         if ($this->tableName == 'webinars') {
             // school
             if (!empty($schoolOptions) and is_array($schoolOptions)) {
@@ -115,7 +115,7 @@ class ClassesController extends Controller
                 });
             }
 
-           
+
 
             // if (!empty($upcoming) and $upcoming == 'on') {
             //     $query->whereNotNull('start_date')
@@ -129,8 +129,8 @@ class ClassesController extends Controller
             // if (!empty($typeOptions) and is_array($typeOptions)) {
             //     $query->whereIn("{$this->tableName}.type", $typeOptions);
             // }
-               
-           
+
+
 
             // if (!empty($moreOptions) and is_array($moreOptions)) {
             //     if (in_array('subscribe', $moreOptions)) {

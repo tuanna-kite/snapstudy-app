@@ -1,6 +1,6 @@
 @props(['major'])
 
-<a href="#">
+<a href="{{ $major['link'] }}">
     <div class="flex items-center w-48 bg-primary.light p-2 gap-2 rounded-2xl">
         <div>
             <x-component.icon :name="$major['icon']" width=48 height=48 />

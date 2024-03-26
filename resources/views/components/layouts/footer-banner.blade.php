@@ -9,7 +9,7 @@
                 Sign up now to receive a <span>free trial</span> and <span>30% discount</span> for the first
                 purchase
             </p>
-            <a href="https://snapstudy.edu.vn/register">
+            <a href="{{ route('register') }}">
                 <button class="bg-primary.main text-white rounded-full px-4"
                     style="text-transform: uppercase; max-width: 240px; height: 54px">
                     Register for free

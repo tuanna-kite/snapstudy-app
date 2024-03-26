@@ -69,7 +69,7 @@ class NotificationsController extends Controller
             'notifications' => $notifications
         ];
 
-        return view(getTemplate() . '.panel.notifications.index', $data);
+        return view('web_v2.pages.notification', $data);
     }
 
     public function saveStatus($id)

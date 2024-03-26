@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('web_v2.layouts.index')
 
 @section('title', 'Course Page')
 
@@ -33,21 +33,13 @@
                     </x-pages.assignment-list.filter.form>
                 </div>
                 <div class="w-full md:w-3/4 grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-                    <div>
-                        <x-documents.document-card />
-                    </div>
-                    <div>
-                        <x-documents.document-card />
-                    </div>
-                    <div>
-                        <x-documents.document-card />
-                    </div>
-                    <div>
-                        <x-documents.document-card />
-                    </div>
-                    <div>
-                        <x-documents.document-card />
-                    </div>
+                    @foreach ($webinars as $trending)
+                        <div>
+                            <x-documents.document-card :trending="$trending"/>
+                        </div>
+                    @endforeach
+
+
                 </div>
             </div>
             <div class="mt-32">

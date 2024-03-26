@@ -30,9 +30,9 @@
             {{-- Table Content --}}
             <div class="">
                 <div x-data="{ openTab: 1 }">
-                    <div class="border border-grey-300 rounded-2xl"
-                        x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
-                        <div class="px-6 py-3 bg-primary.main rounded-t-2xl flex justify-between items-center text-white">
+                    <div class="border border-grey-300 rounded-2xl">
+                        <div class="px-6 py-3 bg-primary.main rounded-t-2xl flex justify-between items-center text-white"
+                            x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
                             <h6 class="font-bold text-xl">
                                 Table of contents
                             </h6>

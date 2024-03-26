@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'dev');
+Route::view('/', 'pages.dashboard.my-setting');
 
 //Route::group(['prefix' => 'my_api', 'namespace' => 'Api\Panel', 'middleware' => 'signed', 'as' => 'my_api.web.'], function () {
 //    Route::get('checkout/{user}', 'CartController@webCheckoutRender')->name('checkout');

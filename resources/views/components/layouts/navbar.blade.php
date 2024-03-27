@@ -2,7 +2,7 @@
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
      x-on:scroll.window="
        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-       isScrolled = currentScroll > lastScrollTop && currentScroll > 80;
+       isScrolled = currentScroll > lastScrollTop && currentScroll > 80 || currentScroll > 200;
        lastScrollTop = currentScroll;
      "
      :class="{'transition-transform duration-300 ease-in-out transform -translate-y-full': isScrolled, 'transition-transform duration-300 ease-in-out transform translate-y-0' :!isScrolled }"
@@ -13,9 +13,12 @@
         </a>
 
         @if (auth()->check())
-            <x-component.group-icon />
+            <a href="/panel" class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
+                <span class="font-medium text-sm text-white">Dashboard</span>
+            </a>
         @else
-            <a href="{{ route('login') }}" class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
+            <a href="{{ route('login') }}"
+               class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
                 <span class="font-medium text-sm text-white">Login</span>
             </a>
         @endif

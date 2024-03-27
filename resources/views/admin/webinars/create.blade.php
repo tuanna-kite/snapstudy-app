@@ -583,7 +583,6 @@
                                             </div>
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.category') }}</label>
-
                                                 <select id="categories"
                                                         class="custom-select @error('category_id')  is-invalid @enderror"
                                                         name="category_id" required>
@@ -726,6 +725,62 @@
                                     </div>
                                 </div>
 
+                                {{--Table contents Field--}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mt-15">
+                                            <label class="input-label">Mục lục</label>
+                                            <textarea name="table_contents"
+                                                      class="form-control @error('table_contents')  is-invalid @enderror"
+                                                      placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($table_contents)) ? $table_contents : old('table_contents') !!}</textarea>
+                                            @error('content')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--Preview Field--}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mt-15">
+                                            <label class="input-label">Preview</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <button type="button" class="input-group-text admin-file-manager"
+                                                            data-input="thumbnail" data-preview="holder">
+                                                        <i class="fa fa-upload"></i>
+                                                    </button>
+                                                </div>
+                                                <input type="text" name="thumbnail" id="thumbnail"
+                                                       value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
+                                                       class="form-control @error('thumbnail')  is-invalid @enderror"/>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="input-group-text admin-file-view"
+                                                            data-input="thumbnail">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                                @error('thumbnail')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <textarea name="preview_content"
+                                                      class="form-control @error('preview_content')  is-invalid @enderror"
+                                                      placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($preview_content)) ? $preview_content : old('preview_content') !!}</textarea>
+                                            @error('content')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{--Content Field--}}
                                 <div class="row">
                                     <div class="col-12">
@@ -764,6 +819,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 {{--Submit--}}
                                 <div class="row">
                                     <div class="col-12">

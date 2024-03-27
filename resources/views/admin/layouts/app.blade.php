@@ -163,7 +163,7 @@
 </script>
 
 <!-- Place the first <script> tag in your HTML's <head> -->
-<script src="https://cdn.tiny.cloud/1/8mkg9v8whf8cy0r8589h2cvrm67v8gw6xzf1k9ey6c4shsea/tinymce/7/tinymce.min.js"
+<script src="https://cdn.tiny.cloud/1/s1zy2pbcws8mg66ii9iy9m626jk2i9goxtv4xaxsedb1g7ba/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
 
 <!-- Place the following <script> and <textarea> tags your HTML's <body> -->

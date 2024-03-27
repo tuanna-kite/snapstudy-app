@@ -72,8 +72,6 @@
         <div class="row courses-mjj">
             <div class="col-12 col-lg-8">
                 <div class="course-content-body user-select-none">
-
-
                     <div class="mt-35">
                         <ul class="nav nav-tabs d-flex align-items-center justify-content-between search-courese-mj"
                             id="tabs-tab" role="tablist">

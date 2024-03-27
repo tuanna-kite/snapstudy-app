@@ -74,6 +74,8 @@ class ClassesController extends Controller
 
     public function handleFilters($request, $query)
     {
+        // dd($request->subjectOptions);
+
         $upcoming = $request->get('upcoming', null);
         $isFree = $request->get('free', null);
         $withDiscount = $request->get('discount', null);
@@ -106,6 +108,12 @@ class ClassesController extends Controller
                     $query->whereIn('slug', $schoolOptions);
                 });
             }
+            if (!empty($subjectOptions) and is_array($subjectOptions)) {
+                $query->whereHas('category', function ($query) use ($subjectOptions) {
+                    $query->whereIn('slug', $subjectOptions);
+                });
+            }
+
 
             if (!empty($search) && is_array($search)) {
                 $query->whereHas($this->tableName, function ($query) use ($search) {

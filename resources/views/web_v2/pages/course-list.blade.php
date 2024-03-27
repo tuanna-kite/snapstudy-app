@@ -15,6 +15,7 @@
                 </div>
             </div>
             <div class="flex gap-6">
+                {{-- Filter Sidebar --}}
                 <div class="w-1/4 hidden md:block">
                     <x-pages.assignment-list.filter.form>
                         <div class="flex items-center justify-between">
@@ -22,28 +23,27 @@
                                 Filter By
                             </h2>
                             <div>
-                                <button
-                                    class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled"
-                                    @click="clearAll()">
-                                    <span class="font-medium text-xs">Clear All</span>
+                                <button id='clearOptionBtn'
+                                    class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
+                                    <span class="font-medium text-xs" onclick="clearAll()">Clear All</span>
                                     <x-component.material-icon name="close" style="font-size:18px !important" />
                                 </button>
                             </div>
                         </div>
                     </x-pages.assignment-list.filter.form>
                 </div>
+                {{-- List Courses --}}
                 <div class="w-full md:w-3/4 grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
                     @foreach ($webinars as $trending)
-                        <div>
-                            <x-documents.document-card :trending="$trending"/>
+                        <div class="{{ count($webinars) <= 4 ? 'max-h-72 flex' : 'flex' }}">
+                            <x-documents.document-card :trending="$trending" />
                         </div>
                     @endforeach
-
-
                 </div>
             </div>
             <div class="mt-32">
-                <x-pages.assignment-list.pagination />
+                {{-- <x-pages.assignment-list.pagination /> --}}
+                {{ $webinars->appends(request()->input())->links('components.pagination.index') }}
             </div>
 
         </div>

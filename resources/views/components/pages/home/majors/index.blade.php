@@ -2,57 +2,57 @@
     $listMajor = [
         [
             'link' => '/classes?schoolOptions%5B%5D=Business-Foundation',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon0',
             'content' => 'Business Foundation',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Digital+Marketing',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon10',
             'content' => 'Digital Marketing',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Professional+Communication',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon1',
             'content' => 'Professional Communication',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Economics+-+Finance',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon2',
             'content' => 'Economics Finance',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Logistics+and+Supply+Chain',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon3',
             'content' => 'Logistics Supply Chain',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=People+%26+Organisation',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon4',
             'content' => 'People & Organisation',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Global-Business',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon5',
             'content' => 'Global - Business',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Management+%26+Change',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon6',
             'content' => 'Management & Change',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=IT',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon7',
             'content' => 'Blockchain Enabled Business',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Digital+Marketing',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon8',
             'content' => 'Digital Film & Video',
         ],
         [
             'link' => '/classes?schoolOptions%5B%5D=Digital+Marketing',
-            'icon' => 'business-foundation',
+            'icon' => 'major-icon9',
             'content' => 'Fashion Enterprise',
         ],
     ];
@@ -63,7 +63,7 @@
     <ul class="flex flex-wrap justify-center gap-4">
         @foreach ($listMajor as $item)
             <li>
-                <x-pages.home.majors.card iconName='business-foundation' :major='$item' />
+                <x-pages.home.majors.card :major='$item' />
             </li>
         @endforeach
     </ul>

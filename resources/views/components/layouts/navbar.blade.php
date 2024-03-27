@@ -2,7 +2,6 @@
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
      x-on:scroll.window="
        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-       isScrolled = currentScroll > lastScrollTop && currentScroll > 80 || currentScroll > 200;
        isScrolled = currentScroll > lastScrollTop && currentScroll > 80;
        lastScrollTop = currentScroll;
      "

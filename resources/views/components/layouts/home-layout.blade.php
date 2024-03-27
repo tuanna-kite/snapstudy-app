@@ -35,6 +35,18 @@
             padding-left: 20px;
         }
 
+        #document-content ul {
+            padding-inline-start: 24px !important;
+            list-style: square !important;
+        }
+
+        #document-content table {
+            display: block;
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+
         .container {
             width: 100%;
             padding-left: 16px;

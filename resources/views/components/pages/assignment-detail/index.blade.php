@@ -92,7 +92,7 @@
                         </p>
                     </div>
                 @else
-                    <div id="document-content" style="overflow: hidden">
+                    <div id="document-content" style="overflow: hidden; max-width: 100vw !important;">
                         {!! $docTrans->content !!}
                     </div>
                 @endif

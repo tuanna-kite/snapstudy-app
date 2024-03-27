@@ -9,6 +9,8 @@
         'Management & Change',
         'People & Organisation',
         'Business-Foundation',
+        'IT',
+        'Global Business'
     ];
     $schoolOptions = ['RMIT', 'VinUniversity', 'MIT', 'Yale', 'Harvard'];
 @endphp

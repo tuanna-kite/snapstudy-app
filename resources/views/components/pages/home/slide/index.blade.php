@@ -6,10 +6,10 @@
                 <img src="img/hero_section.png" alt="slide-img" class="w-full">
             </div>
             <div class="swiper-slide">
-                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+                <img src="img/hero-section-1.jpeg" alt="slide-img" class="w-full">
             </div>
             <div class="swiper-slide">
-                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+                <img src="img/hero-section-2.jpeg" alt="slide-img" class="w-full">
             </div>
         </div>
         {{-- <!-- Add Pagination -->

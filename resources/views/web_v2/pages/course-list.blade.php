@@ -11,13 +11,13 @@
                     <x-search.search-doc />
                 </div>
                 <div class="block md:hidden">
-                    <x-pages.assignment-list.filter.filter-button />
+                    <x-pages.course-list.filter.filter-button />
                 </div>
             </div>
             <div class="flex gap-6">
                 {{-- Filter Sidebar --}}
                 <div class="w-1/4 hidden md:block">
-                    <x-pages.assignment-list.filter.form>
+                    <x-pages.course-list.filter.form>
                         <div class="flex items-center justify-between">
                             <h2 class="font-bold text-2xl text-primary.main">
                                 Filter By
@@ -30,7 +30,7 @@
                                 </button>
                             </div>
                         </div>
-                    </x-pages.assignment-list.filter.form>
+                    </x-pages.course-list.filter.form>
                 </div>
                 {{-- List Courses --}}
                 <div class="w-full md:w-3/4 grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
@@ -42,7 +42,6 @@
                 </div>
             </div>
             <div class="mt-32">
-                {{-- <x-pages.assignment-list.pagination /> --}}
                 {{ $webinars->appends(request()->input())->links('components.pagination.index') }}
             </div>
 

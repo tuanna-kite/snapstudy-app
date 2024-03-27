@@ -13,7 +13,7 @@
         class="fixed inset-0 h-screen">
         <div class="bg-white p-6 h-full">
             <!-- Modal content -->
-            <x-pages.assignment-list.filter.form>
+            <x-pages.course-list.filter.form>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <button class="flex" @click="showModal = false">
@@ -32,7 +32,7 @@
                         </button>
                     </div>
                 </div>
-            </x-pages.assignment-list.filter.form>
+            </x-pages.course-list.filter.form>
         </div>
     </div>
 </div>

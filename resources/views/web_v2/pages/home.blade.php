@@ -1,6 +1,6 @@
 @extends('web_v2.layouts.index')
 
-@section('title','Home Page')
+@section('title', 'Home Page')
 
 @section('content')
     <x-layouts.home-layout>
@@ -41,7 +41,8 @@
                 FOR THE UPCOMING ASSIGNMENT
             </h1>
             <div class="">
-                <x-pages.home.assignments.slide />
+                {{-- TODO: replace to Upcoming data --}}
+                <x-pages.home.assignments.slide :webinarsComing="$upcomingCourses" />
             </div>
         </div>
 
@@ -78,8 +79,7 @@
                 </p>
             </div>
             <div>
-
-                <x-documents.document-grid :webinar="$webinar"/>
+                <x-documents.document-grid :webinar="$webinar" />
             </div>
         </div>
 

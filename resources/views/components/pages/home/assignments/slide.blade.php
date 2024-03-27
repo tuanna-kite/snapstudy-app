@@ -1,3 +1,5 @@
+@props(['webinarsComing'])
+
 <style>
     .swiper-slide {
         display: flex;
@@ -19,19 +21,11 @@
 
 <div class="assignment-container overflow-hidden">
     <div class="swiper-wrapper">
-        <div class="swiper-slide">
-            <x-pages.home.assignments.card title='RMIT' />
-        </div>
-        <div class="swiper-slide">
-            <x-pages.home.assignments.card title="Vin School" />
-        </div>
-        <div class="swiper-slide">
-            <x-pages.home.assignments.card title="Hust" />
-        </div>
-        <div class="swiper-slide">
-            <x-pages.home.assignments.card title="NEU" />
-        </div>
-        <!-- Add more slides as needed -->
+        @foreach ($webinarsComing as $webinarItem)
+            <div class="swiper-slide">
+                <x-pages.home.assignments.card :webinar="$webinarItem" />
+            </div>
+        @endforeach
     </div>
 </div>
 

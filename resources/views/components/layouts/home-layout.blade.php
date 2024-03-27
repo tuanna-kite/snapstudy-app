@@ -39,6 +39,9 @@
             padding-inline-start: 24px !important;
             list-style: square !important;
         }
+        #document-content ul li {
+            margin: 0 !important;
+        }
 
         #document-content table {
             display: block;

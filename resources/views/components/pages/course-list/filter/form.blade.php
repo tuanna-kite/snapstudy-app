@@ -1,3 +1,5 @@
+@props(['formId'])
+
 @php
     $subjectOptions = [
         'Digital Marketing',
@@ -15,7 +17,7 @@
     $schoolOptions = ['RMIT', 'VinUniversity', 'MIT', 'Yale', 'Harvard'];
 @endphp
 
-<form id="filterForm" action="/classes" method="GET">
+<form id={{ $formId }} action="/classes" method="GET">
     {{ $slot }}
     <!-- List of subject checkboxes -->
     <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">Subject</h3>
@@ -45,11 +47,3 @@
 </form>
 
 
-<script>
-    function clearAll() {
-        // Get all checkboxes by name and uncheck them
-        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-            checkbox.checked = false;
-        });
-    }
-</script>

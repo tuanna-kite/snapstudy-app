@@ -17,15 +17,15 @@
             <div class="flex gap-6">
                 {{-- Filter Sidebar --}}
                 <div class="w-1/4 hidden md:block">
-                    <x-pages.course-list.filter.form>
+                    <x-pages.course-list.filter.form formId="filterForm1">
                         <div class="flex items-center justify-between">
                             <h2 class="font-bold text-2xl text-primary.main">
                                 Filter By
                             </h2>
                             <div>
-                                <button id='clearOptionBtn'
+                                <button type="button" id='clearOptionBtn' onclick="clearQueryParams()"
                                     class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
-                                    <span class="font-medium text-xs" onclick="clearAll()">Clear All</span>
+                                    <span class="font-medium text-xs">Clear All</span>
                                     <x-component.material-icon name="close" style="font-size:18px !important" />
                                 </button>
                             </div>

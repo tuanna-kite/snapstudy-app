@@ -16,6 +16,7 @@ use App\Models\RewardAccounting;
 use App\Models\Sale;
 use App\Models\TextLesson;
 use App\Models\CourseLearning;
+use App\Models\Translation\WebinarTranslation;
 use App\Models\WebinarChapter;
 use App\Models\WebinarReport;
 use App\Models\Webinar;
@@ -52,11 +53,15 @@ class WebinarController extends Controller
                 },
                 'tags',
                 'prerequisites' => function ($query) {
-                    $query->with(['prerequisiteWebinar' => function ($query) {
-                        $query->with(['teacher' => function ($qu) {
-                            $qu->select('id', 'full_name', 'avatar');
-                        }]);
-                    }]);
+                    $query->with([
+                        'prerequisiteWebinar' => function ($query) {
+                            $query->with([
+                                'teacher' => function ($qu) {
+                                    $qu->select('id', 'full_name', 'avatar');
+                                }
+                            ]);
+                        }
+                    ]);
                     $query->orderBy('order', 'asc');
                 },
                 'faqs' => function ($query) {
@@ -137,7 +142,8 @@ class WebinarController extends Controller
                             $query->where('status', 'active');
                             $query->with([
                                 'user' => function ($query) {
-                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
+                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar',
+                                        'avatar_settings');
                                 }
                             ]);
                         }
@@ -251,14 +257,18 @@ class WebinarController extends Controller
 
         if ($canSale and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
             $installmentPlans = new InstallmentPlans($user);
-            $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
+            $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id,
+                $course->teacher_id);
         }
 
         /* Cashback Rules */
         if ($canSale and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
             $cashbackRulesMixin = new CashbackRules($user);
-            $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
+            $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id,
+                $course->teacher_id);
         }
+
+        $docTrans = WebinarTranslation::where('webinar_id', '=', $course->id)->first();
 
         $data = [
             'pageTitle' => $course->title,
@@ -266,6 +276,7 @@ class WebinarController extends Controller
             'pageRobot' => $pageRobot,
             'pageMetaImage' => $course->getImage(),
             'course' => $course,
+            'docTrans' => $docTrans,
             'isFavorite' => $isFavorite,
             'hasBought' => $hasBought,
             'user' => $user,
@@ -289,8 +300,10 @@ class WebinarController extends Controller
         if ($justReturnData) {
             return $data;
         }
-
-        return view('web.default.course.index', $data);
+        if (empty($docTrans->content)) {
+            return view('web.default.course.index', $data);
+        }
+        return view('components.pages.assignment-detail.index', $data);
     }
 
     private function checkQuizzesResults($user, $quizzes)
@@ -389,10 +402,10 @@ class WebinarController extends Controller
 
                         $fileName = str_replace(' ', '-', $file->title);
                         $fileName = str_replace('.', '-', $fileName);
-                        $fileName .= '.' . $extension;
+                        $fileName .= '.'.$extension;
 
                         $headers = array(
-                            'Content-Type: application/' . $file->file_type,
+                            'Content-Type: application/'.$file->file_type,
                         );
 
                         return response()->download($filePath, $fileName, $headers);
@@ -538,8 +551,10 @@ class WebinarController extends Controller
                         ];
 
                         return view('web.default.course.learningPage.interactive_file', $data);
-                    } else if ($file->isVideo()) {
-                        return response()->file(public_path($file->file));
+                    } else {
+                        if ($file->isVideo()) {
+                            return response()->file(public_path($file->file));
+                        }
                     }
                 }
             }
@@ -558,9 +573,11 @@ class WebinarController extends Controller
 
         $course = Webinar::where('slug', $slug)
             ->where('status', 'active')
-            ->with(['teacher', 'textLessons' => function ($query) {
-                $query->orderBy('order', 'asc');
-            }])
+            ->with([
+                'teacher', 'textLessons' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                }
+            ])
             ->first();
 
         if (!empty($course) and $this->checkCanAccessToPrivateCourse($course)) {
@@ -595,7 +612,7 @@ class WebinarController extends Controller
                 if (!empty($checkSequenceContent) and $sequenceContentHasError) {
                     $toastData = [
                         'title' => trans('public.request_failed'),
-                        'msg' => ($checkSequenceContent['all_passed_items_error'] ? $checkSequenceContent['all_passed_items_error'] . ' - ' : '') . ($checkSequenceContent['access_after_day_error'] ?? ''),
+                        'msg' => ($checkSequenceContent['all_passed_items_error'] ? $checkSequenceContent['all_passed_items_error'].' - ' : '').($checkSequenceContent['access_after_day_error'] ?? ''),
                         'status' => 'error'
                     ];
                     return back()->with(['toast' => $toastData]);
@@ -621,7 +638,7 @@ class WebinarController extends Controller
                     'previousLesson' => $previousLesson,
                 ];
 
-                return view(getTemplate() . '.course.text_lesson', $data);
+                return view(getTemplate().'.course.text_lesson', $data);
             }
         }
 
@@ -820,7 +837,8 @@ class WebinarController extends Controller
                     'created_at' => time(),
                 ]);
 
-                RewardAccounting::makeRewardAccounting($user->id, $course->points, 'withdraw', null, false, RewardAccounting::DEDUCTION);
+                RewardAccounting::makeRewardAccounting($user->id, $course->points, 'withdraw', null, false,
+                    RewardAccounting::DEDUCTION);
 
                 $toastData = [
                     'title' => '',

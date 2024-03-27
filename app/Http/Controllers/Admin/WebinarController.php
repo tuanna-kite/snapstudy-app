@@ -355,6 +355,8 @@ class WebinarController extends Controller
             'category_id' => 'required',
             'description' => 'required',
             'content' => 'required',
+            'table_contents' => 'required',
+            'preview_content' => 'required',
             // 'duration' => 'required|numeric'
             // 'start_date' => 'required_if:type,webinar',
             // 'capacity' => 'required_if:type,webinar',
@@ -426,12 +428,14 @@ class WebinarController extends Controller
         ]);
 
         if ($webinar) {
-            WebinarTranslation::create([
+            WebinarTranslation::updateOrCreate([
                 'webinar_id' => $webinar->id,
                 'locale' => mb_strtolower($data['locale']),
                 'title' => $data['title'],
                 'description' => $data['description'],
                 'content' => $data['content'],
+                'table_contents' => $data['table_contents'],
+                'preview_content' => $data['preview_content'],
                 'seo_description' => $data['seo_description'],
             ]);
         }
@@ -536,7 +540,9 @@ class WebinarController extends Controller
             'webinarPartnerTeacher' => $webinar->webinarPartnerTeacher,
             'webinarTags' => $tags,
             'defaultLocale' => getDefaultLocale(),
-            'content' => $webinarTrans->content
+            'content' => $webinarTrans->content,
+            'table_contents' => $webinarTrans->table_contents,
+            'preview_content' => $webinarTrans->preview_content,
         ];
 
         return view('admin.webinars.create', $data);
@@ -723,7 +729,9 @@ class WebinarController extends Controller
                 'title' => $data['title'],
                 'description' => $data['description'],
                 'content' => $data['content'],
-                'seo_description' => $data['seo_description']
+                'seo_description' => $data['seo_description'],
+                'table_contents' => $data['table_contents'],
+                'preview_content' => $data['preview_content'],
             ]);
         }
 

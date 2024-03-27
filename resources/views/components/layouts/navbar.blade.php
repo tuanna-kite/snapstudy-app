@@ -1,16 +1,3 @@
-
-<style>
-    .hidden-nav {
-        transform: translateY(-100%);
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .display-nav {
-        transition: transform 0.3s ease-in-out;
-        transform: translateY(0);
-    }
-</style>
-
 {{-- <x-layouts.notice-card /> --}}
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
      x-on:scroll.window="
@@ -18,7 +5,7 @@
        isScrolled = currentScroll > lastScrollTop && currentScroll > 80;
        lastScrollTop = currentScroll;
      "
-     :class="{'hidden-nav': isScrolled, 'display-nav' :!isScrolled }"
+     :class="{'transition-transform duration-300 ease-in-out transform -translate-y-full': isScrolled, 'transition-transform duration-300 ease-in-out transform translate-y-0' :!isScrolled }"
      class="sticky top-0 z-10 bg-white shadow">
     <div class="container mx-auto flex justify-between items-center h-20">
         <a href="{{ route('home') }}">

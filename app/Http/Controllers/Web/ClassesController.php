@@ -108,22 +108,22 @@ class ClassesController extends Controller
                     $query->whereIn('slug', $schoolOptions);
                 });
             }
+            // subject
             if (!empty($subjectOptions) and is_array($subjectOptions)) {
                 $query->whereHas('category', function ($query) use ($subjectOptions) {
                     $query->whereIn('slug', $subjectOptions);
                 });
             }
-
-
-            if (!empty($search) && is_array($search)) {
-                $query->whereHas($this->tableName, function ($query) use ($search) {
-                    foreach ($search as $s) {
-                        $query->orWhere('slug', 'like', '%' . $s . '%');
-                    }
+            // search string
+            if (!empty($search)) {
+                $query->where('private', false)
+                ->where(function ($query) use ($search) {
+                    $query->whereTranslationLike('title', "%$search%")
+                        ->orWhereTranslationLike('description', "%$search%")
+                        ->orWhereTranslationLike('seo_description', "%$search%")
+                        ->orWhereTranslationLike('webinar_id', "%$search%");
                 });
             }
-
-
 
             // if (!empty($upcoming) and $upcoming == 'on') {
             //     $query->whereNotNull('start_date')

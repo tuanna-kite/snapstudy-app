@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#footer-banner span {
+    @apply text-secondary.main font-semibold uppercase
+}
+

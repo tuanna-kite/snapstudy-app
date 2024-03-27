@@ -3,7 +3,7 @@
 <div
     class="sm:p-4 border-b border-grey-300 flex items-start gap-4 @unless ($isRead) bg-primary.lighter @endunless">
     <div class="w-12 h-12">
-        <img src="img/logo/avatar.png" alt="logo" class="w-12 h-12">
+        <img src="{{ asset('img/logo/avatar.png') }}" alt="logo" class="w-12 h-12">
     </div>
     <div class="space-y-1 flex-1">
         <p class="text-base md:text-base text-text.light.primary">

@@ -315,7 +315,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
     });
 
     Route::group(['prefix' => 'notifications'], function () {
-        Route::get('/', 'NotificationsController@index');
+        Route::get('/', 'NotificationsController@index')->name('Notification.index');
         Route::get('/{id}/saveStatus', 'NotificationsController@saveStatus');
         Route::get('/mark-all-as-read', 'NotificationsController@markAllAsRead');
     });

@@ -29,7 +29,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-          
+
             $webinarAll = Webinar::select('webinars.*')
             ->where('webinars.status', 'active')
             ->where('private', false)
@@ -50,7 +50,7 @@ class HomeController extends Controller
             }else{
                 $webinar = $webinarTrending;
             }
-        
+
             $seoSettings = getSeoMetas('classes');
             $pageTitle = $seoSettings['title'] ?? '';
             $pageDescription = $seoSettings['description'] ?? '';
@@ -410,7 +410,7 @@ class HomeController extends Controller
             'forumSection' => $forumSection ?? null,
         ];
 
-        return view(getTemplate() . '.pages.home', $data);
+        return view('web_v2.pages.home', $data);
     }
 
     private function getHomeDefaultStatistics()

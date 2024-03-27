@@ -17,7 +17,7 @@
                     <button class="flex" @click="showModal = false">
                         <x-component.material-icon name='close' />
                     </button>
-                    <img src="img/logo/logo.png" alt="logo-snaps" width="130" height="50">
+                    <img src="{{ asset('img/logo/avatar.png') }}" alt="logo-snaps" width="130" height="50">
                     <div class="">
                     </div>
                 </div>

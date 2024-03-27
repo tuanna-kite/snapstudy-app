@@ -1,3 +1,4 @@
+/resources/views/dev.blade.php
 /.phpunit.cache
 /node_modules
 /public/build
@@ -6,6 +7,7 @@
 /public/store
 /public/assets
 /public/vendor
+/public/css
 /storage/*.key
 /vendor
 /storage/framework/cache/data

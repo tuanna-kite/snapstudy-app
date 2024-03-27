@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+//Route::view('/', 'pages.web.home');
+
 Route::group(['prefix' => 'my_api', 'namespace' => 'Api\Panel', 'middleware' => 'signed', 'as' => 'my_api.web.'], function () {
     Route::get('checkout/{user}', 'CartController@webCheckoutRender')->name('checkout');
     Route::get('/charge/{user}', 'PaymentsController@webChargeRender')->name('charge');
@@ -41,10 +43,10 @@ Route::get('/emergencyDatabaseUpdate', function () {
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['check_mobile_app', 'share', 'check_maintenance']], function () {
-    Route::get('/login', 'LoginController@showLoginForm')->name('login');
-    Route::post('/login', 'LoginController@login');
-    Route::get('/logout', 'LoginController@logout');
-    Route::get('/register', 'RegisterController@showRegistrationForm');
+    Route::get('/login', 'LoginController@showLoginForm');
+    Route::post('/login', 'LoginController@login')->name('login');
+    Route::get('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
     Route::post('/register', 'RegisterController@register');
     Route::post('/register/form-fields', 'RegisterController@getFormFieldsByUserType');
     Route::get('/verification', 'VerificationController@index');
@@ -209,7 +211,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::group(['prefix' => 'search'], function () {
-        Route::get('/', 'SearchController@index');
+        Route::get('/', 'SearchController@index')->name('home.search');
     });
 
     Route::group(['prefix' => 'categories'], function () {

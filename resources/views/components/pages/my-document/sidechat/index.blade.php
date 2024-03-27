@@ -2,7 +2,7 @@
     {{-- avatar --}}
     <div>
         <button class="rounded-full transparent relative" onclick="handleClick()">
-            <img src="img/logo/avatar.png" alt="" width="48" height="48">
+            <img src="{{ asset('img/logo/avatar.png') }}" alt="" width="48" height="48">
             <div class="absolute -right-0.5 -bottom-0.5">
                 <x-component.icon name="online" width="10" height="10" />
             </div>

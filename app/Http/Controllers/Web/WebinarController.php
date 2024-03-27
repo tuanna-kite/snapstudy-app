@@ -303,7 +303,7 @@ class WebinarController extends Controller
         if (empty($docTrans->content)) {
             return view('web.default.course.index', $data);
         }
-        return view('components.pages.assignment-detail.index', $data);
+        return view('web_v2.pages.course-detail', $data);
     }
 
     private function checkQuizzesResults($user, $quizzes)

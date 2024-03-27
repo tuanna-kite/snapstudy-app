@@ -8,16 +8,17 @@
             {{-- title --}}
             <div class="flex justify-between items-center">
                 <h1 class="font-bold text-2xl md:text-3xl text-primary.main">Your Notifications</h1>
-                <button>
+                <a href="{{ route('notification.read') }}">
                     <span class="font-medium text-xs text-primary.main">Mark all as read</span>
-                </button>
+                </a>
             </div>
             {{-- Content --}}
             <div class="rounded-3xl p-6 bg-white">
-                <x-pages.notification.card :isRead=false />
-                <x-pages.notification.card />
-                <x-pages.notification.card :isRead=false />
-                <x-pages.notification.card />
+                @if(!empty($notifications) and !$notifications->isEmpty())
+                    @foreach($notifications as $notification)
+                        <x-pages.notification.card :notification="$notification" />
+                    @endforeach
+                @endif
             </div>
         </div>
     </x-layouts.home-layout>

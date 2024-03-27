@@ -21,11 +21,19 @@
 
 <div class="assignment-container overflow-hidden">
     <div class="swiper-wrapper">
-        @foreach ($webinarsComing as $webinarItem)
-            <div class="swiper-slide">
-                <x-pages.home.assignments.card :webinar="$webinarItem" />
-            </div>
-        @endforeach
+        <div class="swiper-slide">
+            <x-pages.home.assignments.card title='RMIT' />
+        </div>
+        <div class="swiper-slide">
+            <x-pages.home.assignments.card title="Vin School" />
+        </div>
+        <div class="swiper-slide">
+            <x-pages.home.assignments.card title="Hust" />
+        </div>
+        <div class="swiper-slide">
+            <x-pages.home.assignments.card title="NEU" />
+        </div>
+        <!-- Add more slides as needed -->
     </div>
 </div>
 

@@ -395,6 +395,7 @@ class WebinarController extends Controller
 
         $data['organization_price'] = !empty($data['organization_price']) ? convertPriceToDefaultCurrency($data['organization_price']) : null;
         $webinar = Webinar::create([
+
             // 'image_cover' => $data['image_cover'],
             // 'video_demo' => $data['video_demo'],
             // 'video_demo_source' => $data['video_demo'] ? $data['video_demo_source'] : null,
@@ -425,6 +426,7 @@ class WebinarController extends Controller
             'status' => Webinar::$pending,
             'created_at' => time(),
             'updated_at' => time(),
+
         ]);
 
         if ($webinar) {
@@ -440,7 +442,8 @@ class WebinarController extends Controller
             ]);
         }
 
-        return redirect(getAdminPanelUrl().'/webinars/'.$webinar->id.'/edit?locale='.$data['locale']);
+
+        return redirect(getAdminPanelUrl() . '/webinars/' . $webinar->id . '/edit?locale=' . $data['locale']);
     }
 
     public function edit(Request $request, $id)
@@ -561,8 +564,8 @@ class WebinarController extends Controller
         $rules = [
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
-            'slug' => 'max:255|unique:webinars,slug,'.$webinar->id,
-//            'thumbnail' => 'required',
+            'slug' => 'max:255|unique:webinars,slug,' . $webinar->id,
+            'thumbnail' => 'required',
             // 'image_cover' => 'required',
             'description' => 'required',
             'content' => 'required',

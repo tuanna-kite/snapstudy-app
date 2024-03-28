@@ -7,7 +7,7 @@
         </div>
         <div>
             <span class="text-primary.main text-sm font-semibold">
-                {{ $major['content'] }}
+                {{ $major['slug'] }}
             </span>
         </div>
     </div>

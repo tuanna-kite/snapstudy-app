@@ -1,23 +1,11 @@
-@props(['formId'])
+@props(['formId','categories'])
 
 @php
-    $subjectOptions = [
-        'Digital Marketing',
-        'Professional Communication',
-        'Logistics and Supply Chain',
-        'Economics - Finance',
-        'Economics',
-        'Fashion Enterprise',
-        'Management & Change',
-        'People & Organisation',
-        'Business Foundation',
-        'IT',
-        'Global Business',
-    ];
+    $subjectOptions = $categories;
     $schoolOptions = ['RMIT', 'VinUniversity', 'MIT', 'Yale', 'Harvard'];
 @endphp
 
-<form id={{ $formId }} action="/classes" method="GET">
+<form id={{ $formId }} action="{{ route('home.search') }}" method="GET">
     {{ $slot }}
     <!-- List of subject checkboxes -->
     <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">Subject</h3>

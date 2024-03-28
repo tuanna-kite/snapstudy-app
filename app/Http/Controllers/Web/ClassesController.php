@@ -29,10 +29,14 @@ class ClassesController extends Controller
             $this->columnId = 'bundle_id';
         }
 
+
         $slugSchool = 'RMIT';
         $schools = Category::where('parent_id', function ($query) use ($slugSchool) {
             $query->select('id')->from('categories')->where('slug', $slugSchool);
         })->pluck('slug')->toArray();
+
+        $categoriesAll = Category::all()->toArray();
+
         // $slugMajor = 'majors';
         // $majors = Category::where('parent_id', function ($query) use ($slugMajor) {
         //     $query->select('id')->from('categories')->where('slug', $slugMajor);
@@ -64,9 +68,8 @@ class ClassesController extends Controller
             'pageRobot' => $pageRobot,
             'webinars' => $webinars,
             'coursesCount' => $webinars->total(),
-            'schools' => $schools
-            // 'majors' => $majors,
-            // 'subjects' => $subjects
+            'schools' => $schools,
+            'categoriesAll'=> $categoriesAll
 
         ];
         return view('web_v2.pages.course-list', $data);

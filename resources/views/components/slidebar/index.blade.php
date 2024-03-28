@@ -27,7 +27,7 @@
         ],
         [
             'icon' => 'setting-2',
-            'title' => 'Setting Account',
+            'title' => 'Account',
             'href' => '6',
         ],
     ];

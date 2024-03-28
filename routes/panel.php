@@ -231,7 +231,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/payout', 'PayoutController@index');
         Route::post('/request-payout', 'PayoutController@requestPayout');
         Route::get('/account', 'AccountingController@account');
-        Route::post('/account-post', 'AccountingController@charge');
+        Route::post('/account-post', 'AccountingController@charge')->name('charge.pay');
         // Route::get('/account/payout', 'AccountingController@accountPayout');
         Route::post('/account/cancel/{id}', 'AccountingController@cancelRequest');
         Route::get('/momo-request-charge', 'AccountingController@request_charge')->name('momo.request-charge');

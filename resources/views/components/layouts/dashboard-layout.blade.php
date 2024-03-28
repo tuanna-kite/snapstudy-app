@@ -4,7 +4,9 @@
     {{-- sidebar --}}
     <div class="h-screen p-5 hidden lg:block lg:fixed">
         <x-slidebar.index>
-            <img src="{{ asset('img/logo/logo.png') }}" alt="logo-snaps" width="130" height="50">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="logo-snaps" width="130" height="50">
+            </a>
         </x-slidebar.index>
     </div>
     {{-- content --}}

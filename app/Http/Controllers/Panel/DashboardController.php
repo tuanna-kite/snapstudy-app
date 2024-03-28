@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Mixins\RegistrationPackage\UserPackage;
+use App\Http\Controllers\Panel\AccountingController;
 use App\Models\Comment;
 use App\Models\Gift;
 use App\Models\Meeting;
@@ -79,6 +80,7 @@ class DashboardController extends Controller
                 ->where('status', 'active')
                 ->get();
 
+            $data['webinars'] = $webinars;
             $data['webinarsCount'] = count($webinars);
             $data['supportsCount'] = count($supports);
             $data['commentsCount'] = count($comments);
@@ -86,9 +88,11 @@ class DashboardController extends Controller
             $data['monthlyChart'] = $this->getMonthlySalesOrPurchase($user);
         }
 
+        $data['accountCharge'] = $user->getAccountingCharge();
         $data['giftModal'] = $this->showGiftModal($user);
 
-        return view(getTemplate() . '.panel.dashboard.index', $data);
+//        return view(getTemplate() . '.panel.dashboard.index', $data);
+        return view('web_v2.pages.dashboard.my-dashboard', $data);
     }
 
     private function showGiftModal($user)

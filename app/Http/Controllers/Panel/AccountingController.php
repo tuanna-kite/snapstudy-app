@@ -50,7 +50,7 @@ class AccountingController extends Controller
             'commission' => getFinancialSettings('commission') ?? 0,
         ];
 
-        return view(getTemplate() . '.panel.financial.summary', $data);
+        return view('web_v2.pages.dashboard.my-financial', $data);
     }
 
     public function account($id = null)
@@ -131,10 +131,10 @@ class AccountingController extends Controller
         ];
 
         $this->validate($request, $rules);
-        
+
         $amount = $request->input('amount');
         $userId = auth()->user()->id;
-       
+
         // $gateway = $request->input('gateway');
         // $account = $request->input('account');
         // $referenceNumber = $request->input('referral_code');
@@ -158,7 +158,7 @@ class AccountingController extends Controller
         $endpoint = "https://payment.momo.vn/v2/gateway/api/create";
 
         $partnerCode = 'MOMOTCNN20240105';
-        $accessKey = 'QKF9qTEAvC0WWqnh';    
+        $accessKey = 'QKF9qTEAvC0WWqnh';
         $serectkey = 'PMIgjYWsw2Y0xhCjoIgQgKmebvcwU9Ng';
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($amount) < 1000 ? 1000 : intval($amount);
@@ -245,7 +245,7 @@ class AccountingController extends Controller
 
     public function cancelRequest(Request  $request, $id)
     {
-        
+
         $status = $request->status;
         $requestPayment = RequestPayment::find($id);
         $requestPayment->status = $status;

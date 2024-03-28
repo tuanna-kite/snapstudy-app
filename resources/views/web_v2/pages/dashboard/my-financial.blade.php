@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('web_v2.layouts.index')
 @section('title', 'My Financial')
 
 @section('content')
@@ -10,11 +10,13 @@
                     <x-pages.my-financial.financial-head />
                 </thead>
                 <tbody class="bg-white py-4 px-6">
+                    @foreach($accountings as $accounting)
                     <!-- Table rows -->
-                    <x-pages.my-financial.financial-row />
-                    <x-pages.my-financial.financial-row />
-                    <x-pages.my-financial.financial-row />
-                    <x-pages.my-financial.financial-row />
+                        <x-pages.my-financial.financial-row :accounting="$accounting"/>
+                    @endforeach
+{{--                    <x-pages.my-financial.financial-row />--}}
+{{--                    <x-pages.my-financial.financial-row />--}}
+{{--                    <x-pages.my-financial.financial-row />--}}
 
                     <!-- More table rows... -->
                 </tbody>

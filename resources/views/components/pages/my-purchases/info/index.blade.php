@@ -1,8 +1,8 @@
 <div class="rounded-3xl p-6 bg-white flex items-center justify-between">
     <p class="font-bold text-lg">
-        Cart (10 syllabus)
+        Cart ({{ $purchasedCount }} syllabus)
     </p>
-    <a href="" class="flex items-center">
+    <a href="{{ route('classes') }}" class="flex items-center">
         <span class="font-medium text-xs text-text.light.disabled">
             Continue Shopping
         </span>

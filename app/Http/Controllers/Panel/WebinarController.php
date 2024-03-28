@@ -1190,7 +1190,7 @@ class WebinarController extends Controller
             'upComing' => $upComing + $giftUpcoming
         ];
 
-        return view(getTemplate() . '.panel.webinar.purchases', $data);
+        return view('web_v2.pages.dashboard.my-purchases', $data);
     }
 
     public function getJoinInfo(Request $request)

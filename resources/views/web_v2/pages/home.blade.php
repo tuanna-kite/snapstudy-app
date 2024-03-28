@@ -2,6 +2,17 @@
 
 @section('title', 'Home Page')
 
+@push('styles_top')
+    {{-- Swiper css --}}
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+@endpush
+
+@push('scripts_top')
+    {{-- Swiper Script --}}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+@endpush
+
+
 @section('content')
     <x-layouts.home-layout>
         {{-- Slide --}}
@@ -16,7 +27,7 @@
                     class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
                     Search for outlines that fit your major
                 </h1>
-                <x-pages.home.majors />
+                <x-pages.home.majors/>
                 <h1
                     class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
                     We have solutions for all your assessments and test questions
@@ -119,3 +130,4 @@
         </div>
     </x-layouts.home-layout>
 @endsection
+

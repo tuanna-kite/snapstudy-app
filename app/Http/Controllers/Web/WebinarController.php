@@ -300,9 +300,10 @@ class WebinarController extends Controller
         if ($justReturnData) {
             return $data;
         }
-        if (empty($docTrans->content)) {
-            return view('web.default.course.index', $data);
-        }
+        // if (empty($docTrans->content)) {
+        //     return view('web.default.course.index', $data);
+        // }
+        // dd($data['docTrans']);
         return view('web_v2.pages.course-detail', $data);
     }
 

@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('style.css');
+
 #footer-banner span {
     @apply text-secondary.main font-semibold uppercase
 }
-

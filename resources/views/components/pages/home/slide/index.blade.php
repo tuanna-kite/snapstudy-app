@@ -12,32 +12,29 @@
                 <img src="img/hero-section-2.jpeg" alt="slide-img" class="w-full">
             </div>
         </div>
-        {{-- <!-- Add Pagination -->
-        <div class="swiper-pagination"></div> --}}
-        <!-- Add Arrows -->
-        {{-- <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div> --}}
     </div>
 </section>
 
-<script>
-    var swiper = new Swiper('.section-container', {
-        // Optional parameters
-        direction: 'horizontal',
-        loop: true,
-        // Autoplay
-        autoplay: {
-            delay: 2000, // milliseconds
-            disableOnInteraction: false, // enable interaction to stop autoplay
-        },
-        // If we need pagination
-        // pagination: {
-        //     el: '.swiper-pagination',
-        // },
-        // // Navigation arrows
-        // navigation: {
-        //     nextEl: '.swiper-button-next',
-        //     prevEl: '.swiper-button-prev',
-        // },
-    });
-</script>
+@push('scripts_bottom')
+    <script>
+        var swiper = new Swiper('.section-container', {
+            // Optional parameters
+            direction: 'horizontal',
+            loop: true,
+            // Autoplay
+            autoplay: {
+                delay: 2000, // milliseconds
+                disableOnInteraction: false, // enable interaction to stop autoplay
+            },
+            // If we need pagination
+            // pagination: {
+            //     el: '.swiper-pagination',
+            // },
+            // // Navigation arrows
+            // navigation: {
+            //     nextEl: '.swiper-button-next',
+            //     prevEl: '.swiper-button-prev',
+            // },
+        });
+    </script>
+@endpush

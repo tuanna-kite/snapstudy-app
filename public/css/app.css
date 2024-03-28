@@ -962,9 +962,6 @@ video {
 .h-20 {
   height: 5rem;
 }
-.h-32 {
-  height: 8rem;
-}
 .h-40 {
   height: 10rem;
 }
@@ -1121,9 +1118,6 @@ video {
 }
 .flex-col {
   flex-direction: column;
-}
-.flex-col-reverse {
-  flex-direction: column-reverse;
 }
 .flex-wrap {
   flex-wrap: wrap;
@@ -1600,9 +1594,6 @@ video {
 .pt-3 {
   padding-top: 0.75rem;
 }
-.pt-4 {
-  padding-top: 1rem;
-}
 .pt-40 {
   padding-top: 10rem;
 }
@@ -1956,10 +1947,6 @@ video {
     justify-content: flex-end;
   }
 
-  .md\:justify-between {
-    justify-content: space-between;
-  }
-
   .md\:gap-12 {
     gap: 3rem;
   }
@@ -2147,5 +2134,4 @@ video {
     flex-direction: row;
   }
 }
-
 

@@ -48,7 +48,7 @@
 
 
 
-@pushOnce('scripts')
+@pushOnce('scripts_bottom')
     <script>
         // Function to merge and update query parameters
         function updateQueryParams(formId) {

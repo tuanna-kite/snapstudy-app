@@ -2,6 +2,17 @@
 
 @section('title', 'Home Page')
 
+@push('styles_top')
+    {{-- Swiper css --}}
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+@endpush
+
+@push('scripts_top')
+    {{-- Swiper Script --}}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+@endpush
+
+
 @section('content')
     <x-layouts.home-layout>
         {{-- Slide --}}
@@ -119,3 +130,4 @@
         </div>
     </x-layouts.home-layout>
 @endsection
+

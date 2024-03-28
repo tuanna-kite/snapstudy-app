@@ -1,0 +1,47 @@
+@media screen and (max-width:640px) {
+    .container {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+a,
+div {
+    font-family: "Inter Tight", sans-serif !important;
+}
+
+.table_contents h2 {
+    display: none;
+}
+
+.table_contents ul li {
+    color: #032482;
+}
+
+.table_contents ul li ul li {
+    padding-left: 20px;
+}
+
+#document-content ul {
+    padding-inline-start: 24px !important;
+    list-style: square !important;
+}
+
+#document-content ul li {
+    margin: 0 !important;
+}
+
+#document-content table {
+    display: block;
+    overflow: auto;
+    white-space: nowrap;
+}

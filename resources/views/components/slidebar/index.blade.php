@@ -3,13 +3,13 @@
         [
             'icon' => 'menu',
             'title' => 'Dashboard',
-            'href' => '1', // href here
+            'href' => '/panel', // href here
             'tab' => null,
         ],
         [
             'icon' => 'document-text',
             'title' => 'My Syllabus',
-            'href' => '2',
+            'href' => '',
             'tab' => [
                 'Home' => '#home', // href here
                 'My Learning' => '#my-learning', // href here
@@ -18,13 +18,13 @@
         [
             'icon' => 'task',
             'title' => 'My Purchased',
-            'href' => '3',
+            'href' => 'panel/webinars/purchases',
             'tab' => null,
         ],
         [
             'icon' => 'wallet-minus',
             'title' => 'Financial',
-            'href' => '4',
+            'href' => 'panel/financial/summary',
             'tab' => null,
         ],
         [
@@ -38,8 +38,8 @@
         ],
         [
             'icon' => 'setting-2',
-            'title' => 'Account',
-            'href' => '6',
+            'title' => 'Setting',
+            'href' => '/panel/setting',
             'tab' => null,
         ],
     ];

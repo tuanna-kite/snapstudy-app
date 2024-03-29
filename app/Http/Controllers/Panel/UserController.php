@@ -132,7 +132,7 @@ class UserController extends Controller
             'formFieldsHtml' => $formFieldsHtml,
         ];
 
-        return view(getTemplate() . '.panel.setting.index', $data);
+        return view('web_v2.pages.dashboard.my-setting', $data);
     }
 
     public function update(Request $request)

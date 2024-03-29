@@ -6,7 +6,7 @@
         <div class="rounded-3xl bg-white">
             <x-tab>
                 <div x-show="activeTab === 1">
-                    <x-pages.setting.general />
+                    <x-pages.setting.general :user="$user"/>
                 </div>
                 <div x-show="activeTab === 2" class="">
                     <!-- Content for Tab 2 -->

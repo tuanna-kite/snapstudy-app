@@ -3,32 +3,44 @@
         [
             'icon' => 'menu',
             'title' => 'Dashboard',
-            'href' => '1',
+            'href' => '1', // href here
+            'tab' => null,
         ],
         [
             'icon' => 'document-text',
             'title' => 'My Syllabus',
             'href' => '2',
+            'tab' => [
+                'Home' => '#home', // href here
+                'My Learning' => '#my-learning', // href here
+            ],
         ],
         [
             'icon' => 'task',
             'title' => 'My Purchased',
             'href' => '3',
+            'tab' => null,
         ],
         [
             'icon' => 'wallet-minus',
             'title' => 'Financial',
             'href' => '4',
+            'tab' => null,
         ],
         [
             'icon' => 'device-message',
             'title' => 'Support',
             'href' => '5',
+            'tab' => [
+                'New' => '#home', // href here
+                'Document' => '#my-learning', // href here
+            ],
         ],
         [
             'icon' => 'setting-2',
             'title' => 'Account',
             'href' => '6',
+            'tab' => null,
         ],
     ];
 @endphp

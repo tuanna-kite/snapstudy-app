@@ -1,4 +1,6 @@
-<div class="bg-white p-6 rounded-2xl space-y-6">
+<form method="post" action="{{ route('user.update') }}">
+    @csrf
+    <div class="bg-white p-6 rounded-2xl space-y-6">
     <x-input.input-icon />
     <div class="space-y-2">
         <x-input.input-icon />
@@ -12,3 +14,4 @@
         <x-button.button text="Save Changes" />
     </div>
 </div>
+</form>

@@ -5,10 +5,10 @@
         bg-center bg-cover
         bg-no-repeat bg-clip-content p-2
         "
-            style="background-image: url('{{ (!empty($user)) ? $user->getAvatar(150) : '' }}')">
-            <input type="file" name="profile_image" id="profile_image" class="hidden @error('profile_image')  is-invalid @enderror" accept="images/*">
+             style="background-image: url('https://lienquan.garena.vn/files/skin/0935d753a3a06735117b6603d60fc4a95fa8b988c5edb.jpg')">
+            <input type="file" id='file' class="hidden" accept="images/*">
             <label for="file"
-                class="w-full h-full rounded-full
+                   class="w-full h-full rounded-full
                 bg-black opacity-50
                  flex flex-col justify-center items-center
                 gap-2

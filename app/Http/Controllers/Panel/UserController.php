@@ -913,4 +913,101 @@ class UserController extends Controller
 
         return response()->json([], 422);
     }
+
+
+    public function updateInformation(Request $request)
+    {
+        $data = $request->all();
+
+        $organization = null;
+        if (!empty($data['organization_id']) and !empty($data['user_id'])) {
+            $organization = auth()->user();
+            $user = User::where('id', $data['user_id'])
+                ->where('organ_id', $organization->id)
+                ->first();
+        } else {
+            $user = auth()->user();
+        }
+        $registerMethod = getGeneralSettings('register_method') ?? 'mobile';
+        $rules = [
+            'full_name' => 'required|string',
+            'email' => (($registerMethod == 'email') ? 'required' : 'nullable') . '|email|max:255|unique:users,email,' . $user->id,
+            'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable') . '|numeric|unique:users,mobile,' . $user->id,
+        ];
+
+
+        $this->validate($request, $rules);
+
+        $updateData = [
+
+            'email' => $data['email'],
+            'full_name' => $data['full_name'],
+            'mobile' => $data['mobile'],
+
+            'address' => $data['address'] ?? null,
+            'about' => $data['about'] ?? null,
+
+        ];
+
+        if (!empty($data['profile_image'])) {
+            $profileImage = $this->createImage($user, $data['profile_image']);
+            $updateData['avatar'] = $profileImage;
+        }
+
+        if (!empty($updateData)) {
+            $user->update($updateData);
+        }
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('panel.user_setting_success'),
+            'status' => 'success'
+        ];
+        return redirect('/panel/setting')->with(['toast' => $toastData]);
+        abort(404);
+    }
+
+    public function updateNotification(Request $request)
+    {
+        $user = auth()->user();
+        $data = $request->all();
+
+        $updateData = [
+            'enable_email_comment' => $data['enable_email_comment'],
+            'enable_email_answers' => $data['enable_email_answers'],
+            'enable_email_follow' => $data['enable_email_follow'],
+            'enable_email_new' => $data['enable_email_new'],
+            'enable_email_product_update' => $data['enable_email_product_update'],
+            'enable_email_blog_weekly' => $data['enable_email_blog_weekly']
+        ];
+
+        if (!empty($updateData)) {
+            $user->update($updateData);
+        }
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('panel.user_setting_success'),
+            'status' => 'success'
+        ];
+        return redirect('/panel/setting')->with(['toast' => $toastData]);
+        abort(404);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+        if (!empty($data['password'])) {
+            $this->validate($request, [
+                'password' => 'required|confirmed|min:6',
+            ]);
+
+            $user->update([
+                'password' => User::generatePassword($data['password'])
+            ]);
+        }
+
+    }
+
+
 }

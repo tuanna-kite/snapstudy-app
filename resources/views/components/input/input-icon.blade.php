@@ -1,6 +1,6 @@
 <div
     {{ $attributes->merge(['class' => 'rounded-xl p-3 flex items-center bg-white justify-between border border-']) }}>
-    <input class="flex-1" type="text" id="searchInput" placeholder="Old Password">
+    <input class="flex-1" name="password" type="text" id="searchInput" placeholder="Old Password">
     <button id='btnSearch'>
         <x-component.icon name='ic_eye' width='24' height='24' />
     </button>

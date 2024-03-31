@@ -273,6 +273,9 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::post('metas/{meta_id}/update', 'UserController@updateMeta');
         Route::get('metas/{meta_id}/delete', 'UserController@deleteMeta');
         Route::get('/deleteAccount', 'UserController@deleteAccount');
+        Route::post('/update-information', 'UserController@updateInformation')->name('user.update');
+        Route::post('/update-notification', 'UserController@updateNotification')->name('user.update.notification');
+        Route::post('/change-password', 'UserController@changePassword')->name('user.changePass');
     });
 
     Route::group(['prefix' => 'support'], function () {

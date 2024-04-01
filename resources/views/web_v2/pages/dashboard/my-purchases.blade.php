@@ -12,11 +12,7 @@
                 <div>
                     @if(!empty($sales) and !$sales->isEmpty())
                         @foreach($sales as $sale)
-
-                                <x-pages.my-purchases.card :sale="$sale"/>
-            {{--                    <x-pages.my-purchases.card />--}}
-            {{--                    <x-pages.my-purchases.card />--}}
-
+                            <x-pages.my-purchases.card :sale="$sale"/>
                         @endforeach
                     @endif
                 </div>

@@ -1475,4 +1475,48 @@ class WebinarController extends Controller
 
         abort(403);
     }
+
+    public function mySyllabus()
+    {
+        $user = auth()->user();
+
+        $webinarsIds = $user->getPurchasedCoursesIds();
+
+        $learningWebinars = Webinar::whereIn('id', $webinarsIds)
+            ->where('status', 'active')
+            ->orderBy("webinars.created_at", 'desc')
+            ->get();
+
+        $webinarsQuery = Webinar::where('webinars.status', 'active')
+            ->where('private', false);
+        $webinarsQuery = $webinarsQuery->orderBy("webinars.created_at", 'desc');
+        $webinars_new = $webinarsQuery->with([
+            'tickets'
+        ])->limit(4)->get();
+
+        $viewedWebinars = $user->viewedWebinars()
+            ->orderBy('webinar_views.created_at', 'desc')
+            ->limit(4)
+            ->get();
+
+        $data['learningWebinars'] = $learningWebinars;
+        $data['countlearningWebinars'] = count($learningWebinars);
+        $data['viewedWebinars'] = $viewedWebinars;
+        $data['webinars_new'] = $webinars_new;
+        return view('web_v2.pages.dashboard.my-syllabus', $data);
+    }
+
+    public function myLearning()
+    {
+        $user = auth()->user();
+        $webinarsIds = $user->getPurchasedCoursesIds();
+
+        $webinars = Webinar::whereIn('id', $webinarsIds)
+            ->where('status', 'active')
+            ->get();
+
+        $data['webinars'] = $webinars;
+
+        return view('web_v2.pages.dashboard.my-learning', $data);
+    }
 }

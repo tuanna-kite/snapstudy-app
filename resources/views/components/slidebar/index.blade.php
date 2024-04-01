@@ -11,8 +11,8 @@
             'title' => 'My Syllabus',
             'href' => '',
             'tab' => [
-                'Home' => '#home', // href here
-                'My Learning' => '#my-learning', // href here
+                'Home' => '/panel/webinars/my-syllabus', // href here
+                'My Learning' => '/panel/webinars/my-syllabus/my-learning', // href here
             ],
         ],
         [

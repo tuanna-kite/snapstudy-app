@@ -136,3 +136,23 @@
         </div>
     </x-layouts.home-layout>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+            $.ajax({
+                url: '{{ route('webinar.view', ['webinar' => $course->id]) }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    console.log(response.message);
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+    });
+</script>

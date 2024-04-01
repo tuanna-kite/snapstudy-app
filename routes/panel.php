@@ -65,6 +65,11 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
             Route::get('/', 'FavoriteController@index');
             Route::get('/{id}/delete', 'FavoriteController@destroy');
         });
+
+        Route::group(['prefix' => 'my-syllabus'], function () {
+            Route::get('/', 'WebinarController@mySyllabus');
+            Route::get('/my-learning', 'WebinarController@myLearning')->name('mylearning');
+        });
     });
 
     Route::group(['prefix' => 'upcoming_courses'], function () {

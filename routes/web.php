@@ -93,6 +93,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::get('/{slug}/points/apply', 'WebinarController@buyWithPoint');
         Route::post('/{id}/report', 'WebinarController@reportWebinar');
         Route::post('/{id}/learningStatus', 'WebinarController@learningStatus');
+        Route::post('/webinar/{webinar}/view', 'WebinarController@markAsViewed')->name('webinar.view');
 
         Route::group(['middleware' => 'web.auth'], function () {
             Route::get('/{slug}/installments', 'WebinarController@getInstallmentsByCourse');

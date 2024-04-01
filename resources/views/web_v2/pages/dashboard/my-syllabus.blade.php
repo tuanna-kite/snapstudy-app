@@ -10,19 +10,26 @@
                 </h1>
                 <div class="flex flex-col md:flex-row items-start gap-6">
                     <div class="w-full md:flex-1">
-                        <x-documents.document-card />
+                        @foreach($learningWebinars as $key => $trending)
+                            @if($key == 0)
+                                <x-documents.document-card :trending="$trending"/>
+                            @else
+                                @continue
+                            @endif
+                        @endforeach
                     </div>
                     <div class="w-full md:flex-1">
-                        <x-pages.my-syllabus.status-card />
+                        <x-pages.my-syllabus.status-card :countlearningWebinars="$countlearningWebinars"/>
                     </div>
                 </div>
             </div>
             {{-- List my syllabus --}}
             <div>
-                <x-pages.my-syllabus.list />
+                <x-pages.my-syllabus.list :webinars="$viewedWebinars"/>
             </div>
+
             <div>
-                <x-pages.my-syllabus.list />
+                <x-pages.my-syllabus.list :webinars="$webinars_new"/>
             </div>
         </div>
     </x-layouts.dashboard-layout>

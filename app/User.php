@@ -1018,4 +1018,9 @@ class User extends Authenticatable
 
         return $access;
     }
+
+    public function viewedWebinars()
+    {
+        return $this->belongsToMany(Webinar::class, 'webinar_views');
+    }
 }

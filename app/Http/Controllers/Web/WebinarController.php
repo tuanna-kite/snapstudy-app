@@ -20,6 +20,7 @@ use App\Models\Translation\WebinarTranslation;
 use App\Models\WebinarChapter;
 use App\Models\WebinarReport;
 use App\Models\Webinar;
+use App\Models\WebinarView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -900,5 +901,25 @@ class WebinarController extends Controller
         }
 
         abort(404);
+    }
+
+    public function markAsViewed(Request $request, $webinarId)
+    {
+        $user = auth()->user();
+        if ($user){
+            $viewed = WebinarView::where('user_id', $user->id)
+                ->where('webinar_id', $webinarId)
+                ->exists();
+
+            if (!$viewed) {
+                WebinarView::create([
+                    'user_id' => $user->id,
+                    'webinar_id' => $webinarId,
+                    'created_at' => time(),
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'Webinar đã được đánh dấu là đã xem']);
     }
 }

@@ -10,7 +10,8 @@
             </span>
         </button>
     </div>
+
     <div>
-        <x-documents.document-grid/>
+        <x-documents.document-grid :webinar="$webinars"/>
     </div>
 </div>

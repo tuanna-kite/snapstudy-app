@@ -1,3 +1,51 @@
+@media screen and (max-width:640px) {
+    .container {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+a,
+div {
+    font-family: "Inter Tight", sans-serif !important;
+}
+
+.table_contents h2 {
+    display: none;
+}
+
+.table_contents ul li {
+    color: #032482;
+}
+
+.table_contents ul li ul li {
+    padding-left: 20px;
+}
+
+#document-content ul {
+    padding-inline-start: 24px !important;
+    list-style: square !important;
+}
+
+#document-content ul li {
+    margin: 0 !important;
+}
+
+#document-content table {
+    display: block;
+    overflow: auto;
+    white-space: nowrap;
+}
+
 /*
 ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
 *//*
@@ -975,6 +1023,9 @@ video {
 .w-full {
   width: 100%;
 }
+.min-w-24 {
+  min-width: 6rem;
+}
 .min-w-48 {
   min-width: 12rem;
 }
@@ -983,12 +1034,6 @@ video {
 }
 .min-w-full {
   min-width: 100%;
-}
-.min-w-20 {
-  min-width: 5rem;
-}
-.min-w-24 {
-  min-width: 6rem;
 }
 .max-w-48 {
   max-width: 12rem;
@@ -1110,11 +1155,6 @@ video {
 .gap-8 {
   gap: 2rem;
 }
-.-space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(-1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(-1rem * var(--tw-space-y-reverse));
-}
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1169,11 +1209,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-.-space-y-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(-0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(-0.5rem * var(--tw-space-y-reverse));
 }
 .overflow-hidden {
   overflow: hidden;
@@ -1234,14 +1269,6 @@ video {
 .rounded-t-3xl {
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
-}
-.rounded-r-full {
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-}
-.rounded-r-xl {
-  border-top-right-radius: 0.75rem;
-  border-bottom-right-radius: 0.75rem;
 }
 .rounded-tr-3xl {
   border-top-right-radius: 1.5rem;
@@ -1772,16 +1799,6 @@ video {
 .hover\:bg-slate-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-primary\.lighter:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 246 250 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-primary\.main:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(3 36 130 / var(--tw-bg-opacity));
 }
 
 .hover\:opacity-90:hover {

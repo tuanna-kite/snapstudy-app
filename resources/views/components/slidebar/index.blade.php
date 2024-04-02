@@ -9,7 +9,7 @@
         [
             'icon' => 'document-text',
             'title' => 'My Syllabus',
-            'href' => '',
+            'href' => '1',
             'tab' => [
                 'Home' => route('my.syllabus'), // href here
                 'My Learning' => route('my.learning'), // href here
@@ -30,7 +30,7 @@
         [
             'icon' => 'device-message',
             'title' => 'Support',
-            'href' => '5',
+            'href' => '2',
             'tab' => [
                 'New' => route('support.create'), // href here
                 'Document' => route('document'), // href here
@@ -43,14 +43,20 @@
             'tab' => null,
         ],
     ];
+
+    $currentUrl = url()->current();
+    if ($currentUrl === route('mysyllabus') || $currentUrl === route('mylearning')) {
+        $currentUrl = '1';
+    }
+
 @endphp
 
 <nav class="p-2 md:p-8 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
     {{ $slot }}
-    <ul class="flex flex-col gap-3 mt-10 w-full" x-data="{ openTab: null }">
+    <ul class="flex flex-col gap-3 mt-10 w-full" x-data="{ openTab: '{{ $currentUrl }}' }">
         @foreach ($listMenu as $menu)
             <li class="w-full">
-                <x-slidebar.card :menuItem="$menu" />
+                <x-slidebar.card :menuItem="$menu" :currentUrl="$currentUrl" />
             </li>
             @if ($loop->index === 4)
                 <hr class="border-t-1 border-gray-300">

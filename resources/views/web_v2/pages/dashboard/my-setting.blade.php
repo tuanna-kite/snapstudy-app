@@ -1,21 +1,24 @@
 @extends('web_v2.layouts.index')
 @section('title', 'My Setting')
 
+@php
+    $listTab = ['General', 'Notifications', 'Change Password'];
+@endphp
+
 @section('content')
     <x-layouts.dashboard-layout title="Setting">
         <div class="rounded-3xl bg-white">
-            <x-tab>
-                <div x-show="activeTab === 1">
-                    <x-pages.setting.general :user="$user"/>
-                </div>
-                <div x-show="activeTab === 2" class="">
-                    <!-- Content for Tab 2 -->
+            <x-tab :listTab="$listTab">
+                <x-slot name="tab1">
+                    <x-pages.setting.general :user="$user" />
+                </x-slot>
+                {{-- End Content --}}
+                <x-slot name="tab2">
                     <x-pages.setting.notifications />
-                </div>
-                <div x-show="activeTab === 3" class="">
-                    <!-- Content for Tab 3 -->
+                </x-slot>
+                <x-slot name="tab3">
                     <x-pages.setting.update-password />
-                </div>
+                </x-slot>
             </x-tab>
         </div>
     </x-layouts.dashboard-layout>

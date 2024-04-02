@@ -10,9 +10,7 @@
         </label>
     @endif
     <input class="flex-1" type="text" id="searchInput" placeholder="Search...">
-    <button id='btnSearch'>
-        @if ($showIcon)
-            <x-component.material-icon name="search" />
-        @endif
+    <button id='btnSearch' class="" type="submit">
+        <x-component.icon name="ic_search" />
     </button>
 </div>

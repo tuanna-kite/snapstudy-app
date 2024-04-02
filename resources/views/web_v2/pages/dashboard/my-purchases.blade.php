@@ -4,19 +4,20 @@
 @section('content')
     <x-layouts.dashboard-layout title="My Purchases">
         <div class="space-y-3">
-            <x-pages.my-purchases.info :purchasedCount="$purchasedCount"/>
+            <x-pages.my-purchases.info :purchasedCount="$purchasedCount" />
             <div class="bg-white rounded-3xl">
                 <div class="p-6">
-                    <x-input.input-group />
+                    {{-- TODO: Add submitHref here --}}
+                    <x-input.group-filter />
                 </div>
                 <div>
-                    @if(!empty($sales) and !$sales->isEmpty())
-                        @foreach($sales as $sale)
-                            <x-pages.my-purchases.card :sale="$sale"/>
+                    @if (!empty($sales) and !$sales->isEmpty())
+                        @foreach ($sales as $sale)
+                            <x-pages.my-purchases.card :sale="$sale" />
                         @endforeach
                     @endif
                 </div>
-                <x-component.pagination />
+                {{-- {{ $webinars->appends(request()->input())->links('components.pagination.dashboard') }} --}}
             </div>
         </div>
     </x-layouts.dashboard-layout>

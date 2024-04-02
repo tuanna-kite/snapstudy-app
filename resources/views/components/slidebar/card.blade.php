@@ -6,7 +6,7 @@
 
 <div class="rounded-lg mb-2">
     @if (is_array($menuItem['tab']))
-        <button x-effect="console.log(openTab)"
+        <button
             @click="openTab ===  {{ json_encode($menuItem['href']) }}  ? openTab = null : openTab = {{ json_encode($menuItem['href']) }}"
             class="relative z-10 w-full">
             <div :class="{

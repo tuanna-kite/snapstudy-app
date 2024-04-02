@@ -3,7 +3,7 @@
         [
             'icon' => 'menu',
             'title' => 'Dashboard',
-            'href' => route('dashboard'), // href here
+            'href' => route('dashboard'),
             'tab' => null,
         ],
         [

@@ -4,16 +4,16 @@
             @if ($paginator->onFirstPage())
                 <li>
                     <a class="pointer-events-none">
-                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full text-text.light.disabled ">
-                            <x-component.material-icon name="chevron_left" />
+                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full">
+                            <x-component.material-icon name="chevron_left" class="text-text.light.disabled" />
                         </p>
                     </a>
                 </li>
             @else
                 <li>
                     <a href="{{ $paginator->previousPageUrl() }}" class="">
-                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full text-text.light.disabled ">
-                            <x-component.material-icon name="chevron_left" />
+                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full">
+                            <x-component.material-icon name="chevron_left" class="text-text.light.primary" />
                         </p>
                     </a>
                 </li>
@@ -63,16 +63,16 @@
             @if ($paginator->hasMorePages())
                 <li>
                     <a href="{{ $paginator->nextPageUrl() }}">
-                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full text-text.light.disabled ">
-                            <x-component.material-icon name="chevron_right" />
+                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full">
+                            <x-component.material-icon name="chevron_right" class="text-text.light.primary" />
                         </p>
                     </a>
                 </li>
             @else
                 <li>
                     <a class="pointer-events-none">
-                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full text-text.light.disabled ">
-                            <x-component.material-icon name="chevron_right" />
+                        <p class="w-6 h-6 p-1 box-content bg-grey-300 rounded-full">
+                            <x-component.material-icon name="chevron_right" class="text-text.light.disabled" />
                         </p>
                     </a>
                 </li>

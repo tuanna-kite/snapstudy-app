@@ -14,10 +14,6 @@
                     <!-- Table rows -->
                         <x-pages.my-financial.financial-row :accounting="$accounting"/>
                     @endforeach
-{{--                    <x-pages.my-financial.financial-row />--}}
-{{--                    <x-pages.my-financial.financial-row />--}}
-{{--                    <x-pages.my-financial.financial-row />--}}
-
                     <!-- More table rows... -->
                 </tbody>
             </table>

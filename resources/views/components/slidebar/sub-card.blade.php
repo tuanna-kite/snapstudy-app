@@ -10,7 +10,7 @@
             <div :class="{
                 'bg-primary.light': {{ $active }},
             }"
-                class="absolute -left-2 bottom-0 min-w-24 p-2 rounded-xl hover:bg-primary.light"
+                class="absolute -left-2 bottom-0 min-w-24 w-full p-2 rounded-xl hover:bg-primary.light"
                 style="transform:translateY(40%)">
                 <span class="text-sm font-semibold text-text.light.disabled">
                     {{ $title }}

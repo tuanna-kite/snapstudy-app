@@ -16,17 +16,3 @@
         @endif
     </button>
 </div>
-</form>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const myButton = document.getElementById('btnSearch');
-
-        myButton.addEventListener('click', function() {
-            const inputValue = document.getElementById('searchInput').value;
-            console.log('Input value:', inputValue);
-            // Do something with the input value
-        });
-    });
-</script>

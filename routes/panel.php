@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['check_mobile_app', 'impersonate', 'panel', 'share', 'check_maintenance']], function () {
 
-    Route::get('/', 'DashboardController@dashboard');
+    Route::get('/', 'DashboardController@dashboard')->name('dashboard');
 
     Route::group(['prefix' => 'users'], function () {
         Route::post('/search', 'UserController@search');
@@ -44,7 +44,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{id}/getNextSessionInfo', 'WebinarController@getNextSessionInfo');
 
         Route::group(['prefix' => 'purchases'], function () {
-            Route::get('/', 'WebinarController@purchases');
+            Route::get('/', 'WebinarController@purchases')->name('purchases');
             Route::post('/getJoinInfo', 'WebinarController@getJoinInfo');
         });
 
@@ -67,8 +67,8 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         });
 
         Route::group(['prefix' => 'my-syllabus'], function () {
-            Route::get('/', 'WebinarController@mySyllabus');
-            Route::get('/my-learning', 'WebinarController@myLearning')->name('mylearning');
+            Route::get('/', 'WebinarController@mySyllabus')->name('my.syllabus');
+            Route::get('/my-learning', 'WebinarController@myLearning')->name('my.learning');
         });
     });
 
@@ -232,7 +232,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
 
     Route::group(['prefix' => 'financial'], function () {
         Route::get('/sales', 'SaleController@index');
-        Route::get('/summary', 'AccountingController@index');
+        Route::get('/summary', 'AccountingController@index')->name('financial.summary');
         Route::get('/payout', 'PayoutController@index');
         Route::post('/request-payout', 'PayoutController@requestPayout');
         Route::get('/account', 'AccountingController@account');
@@ -272,7 +272,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
 
     Route::group(['prefix' => 'setting'], function () {
         Route::get('/step/{step?}', 'UserController@setting');
-        Route::get('/', 'UserController@setting');
+        Route::get('/', 'UserController@setting')->name('setting');
         Route::post('/', 'UserController@update');
         Route::post('/metas', 'UserController@storeMetas');
         Route::post('metas/{meta_id}/update', 'UserController@updateMeta');
@@ -285,15 +285,18 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
 
     Route::group(['prefix' => 'support'], function () {
         Route::get('/', 'SupportsController@index');
-        Route::get('/new', 'SupportsController@create');
+        Route::get('/new', 'SupportsController@create')->name('support.create');
         Route::post('/store', 'SupportsController@store');
         Route::get('{id}/conversations', 'SupportsController@index');
         Route::post('{id}/conversations', 'SupportsController@storeConversations');
         Route::get('{id}/close', 'SupportsController@close');
 
-        Route::group(['prefix' => 'tickets'], function () {
+            Route::group(['prefix' => 'tickets'], function () {
             Route::get('/', 'SupportsController@tickets');
             Route::get('{id}/conversations', 'SupportsController@tickets');
+        });
+        Route::group(['prefix' => 'document'], function (){
+            Route::get('/', 'SupportsController@document')->name('document');
         });
     });
 

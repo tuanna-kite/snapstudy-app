@@ -1,5 +1,5 @@
 <div class="p-6 rounded-3xl bg-primary.light">
-    <a href="{{ route('mylearning') }}">
+    <a href="{{ route('my.learning') }}">
         <div class="flex items-center justify-between py-3">
             <p class="font-normal text-base text-text.light.primary">
                 My learning ({{ $countlearningWebinars }})

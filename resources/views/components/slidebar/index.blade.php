@@ -3,7 +3,7 @@
         [
             'icon' => 'menu',
             'title' => 'Dashboard',
-            'href' => '/panel', // href here
+            'href' => route('dashboard'), // href here
             'tab' => null,
         ],
         [
@@ -11,20 +11,20 @@
             'title' => 'My Syllabus',
             'href' => '',
             'tab' => [
-                'Home' => '/panel/webinars/my-syllabus', // href here
-                'My Learning' => '/panel/webinars/my-syllabus/my-learning', // href here
+                'Home' => route('my.syllabus'), // href here
+                'My Learning' => route('my.learning'), // href here
             ],
         ],
         [
             'icon' => 'task',
             'title' => 'My Purchased',
-            'href' => 'panel/webinars/purchases',
+            'href' => route('purchases'),
             'tab' => null,
         ],
         [
             'icon' => 'wallet-minus',
             'title' => 'Financial',
-            'href' => 'panel/financial/summary',
+            'href' => route('financial.summary'),
             'tab' => null,
         ],
         [
@@ -32,14 +32,14 @@
             'title' => 'Support',
             'href' => '5',
             'tab' => [
-                'New' => '#home', // href here
-                'Document' => '#my-learning', // href here
+                'New' => route('support.create'), // href here
+                'Document' => route('document'), // href here
             ],
         ],
         [
             'icon' => 'setting-2',
             'title' => 'Setting',
-            'href' => '/panel/setting',
+            'href' => route('setting'),
             'tab' => null,
         ],
     ];

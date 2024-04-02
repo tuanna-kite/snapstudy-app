@@ -1,6 +1,6 @@
 @props(['showIcon' => true])
-
-<div {{ $attributes->merge(['class' => 'rounded-xl p-4 flex items-center bg-white justify-between relative']) }}>
+<form action="{{ route('home.search') }}" method="GET">
+    <div {{ $attributes->merge(['class' => 'rounded-xl p-4 flex items-center bg-white justify-between relative']) }}>
     @if (!$showIcon)
         <label for="">
             <span
@@ -16,6 +16,7 @@
         @endif
     </button>
 </div>
+</form>
 
 
 <script>

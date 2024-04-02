@@ -264,7 +264,7 @@ class SupportsController extends Controller
             'webinars' => $webinars
         ];
 
-        return view(getTemplate() . '.panel.support.new', $data);
+        return view('web_v2.pages.dashboard.my-support', $data);
     }
 
     public function store(Request $request)
@@ -400,5 +400,71 @@ class SupportsController extends Controller
         ]);
 
         return back();
+    }
+
+    public function document(Request $request)
+    {
+        $user = auth()->user();
+
+        $query = Support::whereNotNull('department_id')
+            ->where('user_id', $user->id);
+
+        $supportsCount = deepClone($query)->count();
+        $openSupportsCount = deepClone($query)->where('status', 'open')->count();
+        $closeSupportsCount = deepClone($query)->where('status', 'close')->count();
+
+        $query = $this->filters($query, $request);
+
+        $supports = $query->orderBy('created_at', 'desc')
+            ->orderBy('status', 'asc')
+            ->with([
+                'user' => function ($query) {
+                    $query->select('id', 'full_name', 'avatar', 'avatar_settings', 'role_name');
+                },
+                'department',
+                'conversations' => function ($query) {
+                    $query->orderBy('created_at', 'desc')
+                        ->first();
+                }
+            ])->get();
+
+        $departments = SupportDepartment::all();
+
+        $data = [
+            'pageTitle' => trans('panel.send_new_support'),
+            'departments' => $departments,
+            'supports' => $supports,
+            'supportsCount' => $supportsCount,
+            'openSupportsCount' => $openSupportsCount,
+            'closeSupportsCount' => $closeSupportsCount,
+        ];
+
+        if (!empty($id) and is_numeric($id)) {
+            $selectSupport = Support::where('id', $id)
+                ->whereNotNull('department_id')
+                ->where('user_id', $user->id)
+                ->with([
+                    'department',
+                    'conversations' => function ($query) {
+                        $query->with([
+                            'sender' => function ($qu) {
+                                $qu->select('id', 'full_name', 'avatar', 'role_name');
+                            },
+                            'supporter' => function ($qu) {
+                                $qu->select('id', 'full_name', 'avatar', 'role_name');
+                            }
+                        ]);
+                        $query->orderBy('created_at', 'asc');
+                    }
+                ])->first();
+
+            if (empty($selectSupport)) {
+                return back();
+            }
+
+            $data['selectSupport'] = $selectSupport;
+        }
+
+        return view('web_v2.pages.dashboard.my-document', $data);
     }
 }

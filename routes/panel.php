@@ -284,9 +284,9 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
     });
 
     Route::group(['prefix' => 'support'], function () {
-        Route::get('/', 'SupportsController@index');
+        Route::get('/', 'SupportsController@index')->name('support.home');
         Route::get('/new', 'SupportsController@create')->name('support.create');
-        Route::post('/store', 'SupportsController@store');
+        Route::post('/store', 'SupportsController@store')->name('support.store');
         Route::get('{id}/conversations', 'SupportsController@index');
         Route::post('{id}/conversations', 'SupportsController@storeConversations');
         Route::get('{id}/close', 'SupportsController@close');

@@ -317,13 +317,13 @@ class SupportsController extends Controller
             ];
             sendNotification('support_message_admin', $notifyOptions, 1); // for admin
         }
-
-        $url = '/panel/support';
-
-        if (!empty($data['department_id'])) {
-            $url = '/panel/support/tickets';
-        }
-        return redirect($url);
+//
+//        $url = '/panel/support';
+//
+//        if (!empty($data['department_id'])) {
+//            $url = '/panel/support/tickets';
+//        }
+        return redirect(route('support.home'));
     }
 
     public function storeConversations(Request $request, $id)

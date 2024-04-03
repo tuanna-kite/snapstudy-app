@@ -18,6 +18,6 @@
     @endif
     <div class="">
         <input class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" id={{ $data['name'] }} name={{ $data['name'] }}
-            placeholder="">
+            placeholder="" value="{{ old($data['name']) }}">
     </div>
 </div>

@@ -7,7 +7,7 @@
                     Choose
                 </span>
             </label>
-            <input type="file" id="file" name='file' class="hidden" onchange="handleFileUpload()" />
+            <input type="file" id="file" name='attach' class="hidden" onchange="handleFileUpload()" />
             <span id="file-name" class="font-normal text-base text-text.light.disabled">No file chosen</span>
         </div>
     </div>

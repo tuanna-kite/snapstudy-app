@@ -929,14 +929,14 @@ class UserController extends Controller
             $user = auth()->user();
         }
         $registerMethod = getGeneralSettings('register_method') ?? 'mobile';
-        $rules = [
-            'full_name' => 'required|string',
-            'email' => (($registerMethod == 'email') ? 'required' : 'nullable') . '|email|max:255|unique:users,email,' . $user->id,
-            'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable') . '|numeric|unique:users,mobile,' . $user->id,
-        ];
+//        $rules = [
+//            'full_name' => 'required|string',
+//            'email' => (($registerMethod == 'email') ? 'required' : 'nullable') . '|email|max:255|unique:users,email,' . $user->id,
+//            'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable') . '|numeric|unique:users,mobile,' . $user->id,
+//        ];
 
 
-        $this->validate($request, $rules);
+//        $this->validate($request, $rules);
 
         $updateData = [
 

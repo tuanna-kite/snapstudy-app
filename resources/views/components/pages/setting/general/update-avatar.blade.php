@@ -1,3 +1,6 @@
+@php
+$user = auth()->user();
+@endphp
 <div class="rounded-2xl p-20 bg-white flex items-center justify-center">
     <div class="flex flex-col items-center gap-6">
         <div class="rounded-full
@@ -6,8 +9,8 @@
         bg-no-repeat bg-clip-content p-2
         "
             id="previewImage"
-            style="background-image: url('https://lienquan.garena.vn/files/skin/0935d753a3a06735117b6603d60fc4a95fa8b988c5edb.jpg')">
-            <input type="file" id='file' class="hidden" accept="images/*">
+            style="background-image: url({{ asset((!empty($user)) ? $user->getAvatar(150) : '') }})">
+            <input type="file" name="profile_image" id='file' class="hidden" accept="images/*">
             <label for="file"
                 class="w-full h-full rounded-full
                 bg-black opacity-50

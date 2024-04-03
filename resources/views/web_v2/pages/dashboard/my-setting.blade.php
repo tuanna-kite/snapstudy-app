@@ -12,7 +12,6 @@
                 <x-slot name="tab1">
                     <x-pages.setting.general :user="$user" />
                 </x-slot>
-                {{-- End Content --}}
                 <x-slot name="tab2">
                     <x-pages.setting.notifications />
                 </x-slot>

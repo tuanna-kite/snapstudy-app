@@ -16,7 +16,16 @@
                 <button class="flex border rounded-full border-grey-300 p-3" @click="showModal = false">
                     <x-component.material-icon name='close' />
                 </button>
-                    <input type="text" class="w-full border rounded-lg p-2" placeholder="Search...">
+                {{-- Input Form --}}
+                <form action="{{ route('classes') }}" method="GET" class="w-full">
+                    <div class="rounded-xl border p-4 w-full flex items-center bg-white justify-between">
+                        <input id="searchInput" type="text" class="w-full" name="search"
+                            placeholder="Search...">
+                        <button id='btnSearch' class="" type="submit">
+                            <x-component.icon name="ic_search" />
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

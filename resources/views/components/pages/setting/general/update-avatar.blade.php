@@ -5,13 +5,15 @@
         bg-center bg-cover
         bg-no-repeat bg-clip-content p-2
         "
-             style="background-image: url('https://lienquan.garena.vn/files/skin/0935d753a3a06735117b6603d60fc4a95fa8b988c5edb.jpg')">
+            id="previewImage"
+            style="background-image: url('https://lienquan.garena.vn/files/skin/0935d753a3a06735117b6603d60fc4a95fa8b988c5edb.jpg')">
             <input type="file" id='file' class="hidden" accept="images/*">
             <label for="file"
-                   class="w-full h-full rounded-full
+                class="w-full h-full rounded-full
                 bg-black opacity-50
                  flex flex-col justify-center items-center
                 gap-2
+                cursor-pointer
             ">
                 <x-component.icon name="icon_camera" />
                 <span class="text-white font-normal text-xs">
@@ -28,3 +30,16 @@
 
     </div>
 </div>
+
+@push('scripts_bottom')
+    <script>
+        document.getElementById('file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').style.backgroundImage = `url('${e.target.result}')`;
+            }
+            reader.readAsDataURL(file);
+        });
+    </script>
+@endpush

@@ -7,12 +7,12 @@
     </div>
     <div class="flex-1 h-14 relative z-10">
         <a href={{ $href }}>
-            <div :class="{
-                'bg-primary.light': {{ $active }},
-            }"
-                class="absolute -left-2 bottom-0 min-w-24 w-full p-2 rounded-xl hover:bg-primary.light"
+            <div class="absolute -left-2 bottom-0 min-w-24 w-full p-2 rounded-xl hover:bg-primary.light"
                 style="transform:translateY(40%)">
-                <span class="text-sm font-semibold text-text.light.disabled">
+                <span class="text-sm font-semibold text-text.light.disabled"
+                    :class="{
+                        'text-text.light.primary': {{ $active }},
+                    }">
                     {{ $title }}
                 </span>
             </div>

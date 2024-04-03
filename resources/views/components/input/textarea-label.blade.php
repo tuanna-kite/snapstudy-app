@@ -1,19 +1,22 @@
-@props(['isOverlapping' => false])
-
+@props(['isOverlapping' => false, 'data'])
+{{-- interface data{
+    name:string;
+    label:string;
+} --}}
 <div class="space-y-2 relative">
     @if ($isOverlapping)
-        <label for="">
+        <label for={{ $data['name'] }}>
             <span
                 class="absolute left-4 top-0 transform -translate-y-1/2 p-1 bg-white text-text.light.disabled font-normal text-xs">
-                Type
+                {{ $data['label'] }}
             </span>
         </label>
     @else
-        <label for="price" class="text-sm font-semibold">Type</label>
+        <label for={{ $data['name'] }} class="text-sm font-semibold">{{ $data['label'] }}</label>
     @endif
     <div class="">
         <textarea class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" placeholder=""
-            rows="5" cols="50">
+            id={{ $data['name'] }} name={{ $data['name'] }} rows="5" cols="50">
         </textarea>
     </div>
 </div>

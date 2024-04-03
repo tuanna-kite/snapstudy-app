@@ -1,5 +1,5 @@
 @props(['showIcon' => true])
-<form action="{{ route('home.search') }}" method="GET">
+<form id="searchForm" action="{{ route('home.search') }}" method="GET">
     <div {{ $attributes->merge(['class' => 'rounded-xl p-4 flex items-center bg-white justify-between relative']) }}>
     @if (!$showIcon)
         <label for="">

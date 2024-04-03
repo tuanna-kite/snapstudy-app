@@ -45,15 +45,18 @@
     ];
 
     $currentUrl = url()->current();
-    if ($currentUrl === route('mysyllabus') || $currentUrl === route('mylearning')) {
+    if ($currentUrl === route('my.syllabus') || $currentUrl === route('my.learning')) {
         $currentUrl = '1';
+    }
+    if ($currentUrl === route('support.create') || $currentUrl === route('document')) {
+        $currentUrl = '2';
     }
 
 @endphp
 
 <nav class="p-2 md:p-8 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
     {{ $slot }}
-    <ul class="flex flex-col gap-3 mt-10 w-full" x-data="{ openTab: '{{ $currentUrl }}' }">
+    <ul class="flex flex-col gap-3 mt-10 w-full overflow-y-auto" x-data="{ openTab: '{{ $currentUrl }}' }">
         @foreach ($listMenu as $menu)
             <li class="w-full">
                 <x-slidebar.card :menuItem="$menu" :currentUrl="$currentUrl" />

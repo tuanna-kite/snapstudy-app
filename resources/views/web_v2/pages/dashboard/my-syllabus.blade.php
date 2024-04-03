@@ -12,14 +12,14 @@
                     <div class="w-full md:flex-1">
                         @foreach ($learningWebinars as $key => $trending)
                             @if ($key == 0)
-                                <x-documents.document-card :trending="$trending"/>
+                                <x-documents.document-card :trending="$trending" />
                             @else
                                 @continue
                             @endif
                         @endforeach
                     </div>
                     <div class="w-full md:flex-1">
-                        <x-pages.my-syllabus.status-card :countlearningWebinars="$countlearningWebinars"/>
+                        <x-pages.my-syllabus.status-card :countlearningWebinars="$countlearningWebinars" />
                     </div>
                 </div>
                 {{-- <div class="flex flex-col gap-4 items-center md:flex-row">
@@ -30,12 +30,12 @@
                 </div> --}}
             </div>
             {{-- List my syllabus --}}
+            {{-- TODO: add href and controller for view my-syllabus-all --}}
             <div>
-                <x-pages.my-syllabus.list :webinars="$viewedWebinars" />
+                <x-pages.my-syllabus.list title="Recently Viewed Products" href="/" :webinars="$viewedWebinars" />
             </div>
-
             <div>
-                <x-pages.my-syllabus.list :webinars="$webinars_new" />
+                <x-pages.my-syllabus.list title="News on Snaps" href="/" :webinars="$viewedWebinars" />
             </div>
         </div>
     </x-layouts.dashboard-layout>

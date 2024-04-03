@@ -125,7 +125,7 @@
             <x-pages.home.testimonials />
         </div>
         {{-- Advertisement --}}
-        <div class="my-16 ">
+        <div class="py-16">
             <x-layouts.footer-banner />
         </div>
     </x-layouts.home-layout>

@@ -42,34 +42,31 @@
     @enderror
     <div class="w-[48%]">
         <p>Country</p>
-        <input class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" name="country"
-               placeholder="" value="{{ (!empty($user) and empty($new_user)) ? $user->country : old('country') }}">
-        @error('country')
+        <select id='country_id' name='country_id' class='w-full border border-grey-300 rounded-xl p-[18px]'>
+        @foreach ($countries as $item)
+            <option value={{ $item->id }} {{ (!empty($user) and $user->country_id == $item->id) ? 'selected' : '' }}>{{ $item->value }} </option>
+            @endforeach
+        </select>
         <div class="invalid-feedback">
             {{ $message }}
         </div>
-        @enderror
 
     </div>
     <div class="w-[48%]">
         <p>State/Region</p>
-        <input class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" name="region"
-               placeholder="" value="{{ (!empty($user) and empty($new_user)) ? $user->region : old('region') }}">
-        @error('region')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
+        <select id='province_id' name='province_id' class='w-full border border-grey-300 rounded-xl p-[18px]'>
+            @foreach ($listProvinces as $item)
+                <option value={{ $item->id }} {{ (!empty($user) and $user->province_id == $item->id) ? 'selected' : '' }}>{{ $item->value }}  </option>
+            @endforeach
+        </select>
     </div>
     <div class="w-[48%]">
         <p>City</p>
-        <input class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" name="city"
-               placeholder="" value="{{ (!empty($user) and empty($new_user)) ? $user->city : old('city') }}">
-        @error('city')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
+        <select id='city_id' name='city_id' class='w-full border border-grey-300 rounded-xl p-[18px]'>
+            @foreach ($listCity as $item)
+                <option value={{ $item->id }} {{ (!empty($user) and $user->city_id == $item->id) ? 'selected' : '' }}>{{ $item->value }} </option>
+            @endforeach
+        </select>
     </div>
     <div class="w-[48%]">
         <p>Zip/Code</p>

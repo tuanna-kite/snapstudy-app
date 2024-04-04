@@ -68,32 +68,37 @@ class UserController extends Controller
         $cities = null;
         $districts = null;
 
-        if ($step == 9) {
-            $countries = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
-                ->where('type', Region::$country)
+        $countries = Region::select('id','title as value')
+            ->where('type', Region::$country)
+            ->get();
+        $list_city = Region::select('id','title as value')
+            ->where('type', Region::$city)
+            ->get();
+        $list_provinces = Region::select('id','title as value')
+            ->where('type', Region::$province)
+            ->get();
+
+        if (!empty($user->country_id)) {
+            $provinces = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
+                ->where('type', Region::$province)
+                ->where('country_id', $user->country_id)
                 ->get();
-
-            if (!empty($user->country_id)) {
-                $provinces = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
-                    ->where('type', Region::$province)
-                    ->where('country_id', $user->country_id)
-                    ->get();
-            }
-
-            if (!empty($user->province_id)) {
-                $cities = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
-                    ->where('type', Region::$city)
-                    ->where('province_id', $user->province_id)
-                    ->get();
-            }
-
-            if (!empty($user->city_id)) {
-                $districts = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
-                    ->where('type', Region::$district)
-                    ->where('city_id', $user->city_id)
-                    ->get();
-            }
         }
+
+        if (!empty($user->province_id)) {
+            $cities = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
+                ->where('type', Region::$city)
+                ->where('province_id', $user->province_id)
+                ->get();
+        }
+
+        if (!empty($user->city_id)) {
+            $districts = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
+                ->where('type', Region::$district)
+                ->where('city_id', $user->city_id)
+                ->get();
+        }
+
 
         $formFieldsHtml = null;
         if (($step == 8 and $user->isUser()) or ($step == 9 and !$user->isUser())) {
@@ -130,6 +135,8 @@ class UserController extends Controller
             'districts' => $districts,
             'userBanks' => $userBanks,
             'formFieldsHtml' => $formFieldsHtml,
+            'listCity' => $list_city,
+            'listProvinces' => $list_provinces,
         ];
 
         return view('web_v2.pages.dashboard.my-setting', $data);
@@ -943,7 +950,9 @@ class UserController extends Controller
             'email' => $data['email'],
             'full_name' => $data['full_name'],
             'mobile' => $data['mobile'],
-
+            'country_id' => $data['country_id'],
+            'province_id' => $data['province_id'],
+            'city_id' => $data['city_id'],
             'address' => $data['address'] ?? null,
             'about' => $data['about'] ?? null,
 
@@ -963,7 +972,7 @@ class UserController extends Controller
             'msg' => trans('panel.user_setting_success'),
             'status' => 'success'
         ];
-        return redirect('/panel/setting')->with(['toast' => $toastData]);
+        return redirect(route('setting'))->with(['toast' => $toastData]);
         abort(404);
     }
 

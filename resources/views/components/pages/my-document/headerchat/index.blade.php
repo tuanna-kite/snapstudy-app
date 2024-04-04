@@ -3,7 +3,7 @@
         <div class="p-3 rounded-full bg-primary.lighter w-12 h-12 flex items-center justify-center">
             <x-component.icon name="note-favorite" class="w-12 h-12" />
         </div>
-        <p class="font-semibold text-sm text-text.light.primary">Subject</p>
+        <p class="font-semibold text-sm text-text.light.primary">{{ $selectSupport->title }}</p>
     </div>
     <div class="flex items-center gap-4">
         <x-component.material-icon name='search'/>

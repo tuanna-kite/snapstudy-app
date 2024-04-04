@@ -6,20 +6,22 @@
         <div class="flex flex-1 md:flex-row bg-white rounded-3xl">
             {{-- Sidechat --}}
             <div class="w-full md:max-w-80 md:border-r border-border-disabled">
-                <x-pages.my-document.sidechat />
+                <x-pages.my-document.sidechat :supports="$supports"/>
             </div>
             {{-- Content Chat --}}
-            <div class="flex-1 flex-col hidden md:flex">
-                <div class="border-b border-border-disabled">
-                    <x-pages.my-document.headerchat />
+            @if(!empty($selectSupport))
+                <div class="flex-1 flex-col hidden md:flex">
+                    <div class="border-b border-border-disabled">
+                        <x-pages.my-document.headerchat :selectSupport="$selectSupport" />
+                    </div>
+                    <div class="flex-1">
+                        <x-pages.my-document.bodychat :selectSupport="$selectSupport"/>
+                    </div>
+                    <div class="border-t border-border-disabled">
+                        <x-pages.my-document.bodychat.chat :selectSupport="$selectSupport"/>
+                    </div>
                 </div>
-                <div class="flex-1">
-                    <x-pages.my-document.bodychat />
-                </div>
-                <div class="border-t border-border-disabled">
-                    <x-pages.my-document.bodychat.chat />
-                </div>
-            </div>
+            @endif
         </div>
     </x-layouts.dashboard-layout>
 @endsection

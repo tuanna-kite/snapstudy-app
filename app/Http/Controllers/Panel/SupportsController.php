@@ -188,7 +188,7 @@ class SupportsController extends Controller
             $data['selectSupport'] = $selectSupport;
         }
 
-        return view(getTemplate() . '.panel.support.ticket_conversations', $data);
+        return view('web_v2.pages.dashboard.my-document', $data);
     }
 
     private function filters($query, $request, $userWebinarsIds = [])
@@ -356,7 +356,7 @@ class SupportsController extends Controller
             'support_id' => $support->id,
             'sender_id' => $user->id,
             'message' => $data['message'],
-            'attach' => $data['attach'],
+            'attach' => $data['attach'] ?? null,
             'created_at' => time(),
         ]);
 

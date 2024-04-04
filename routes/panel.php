@@ -288,12 +288,12 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/new', 'SupportsController@create')->name('support.create');
         Route::post('/store', 'SupportsController@store')->name('support.store');
         Route::get('{id}/conversations', 'SupportsController@index');
-        Route::post('{id}/conversations', 'SupportsController@storeConversations');
+        Route::post('{id}/conversations', 'SupportsController@storeConversations')->name('support.reply');
         Route::get('{id}/close', 'SupportsController@close');
 
             Route::group(['prefix' => 'tickets'], function () {
-            Route::get('/', 'SupportsController@tickets');
-            Route::get('{id}/conversations', 'SupportsController@tickets');
+            Route::get('/', 'SupportsController@tickets')->name('support.tickets');
+            Route::get('{id}/conversations', 'SupportsController@tickets')->name('support.conversations');
         });
         Route::group(['prefix' => 'document'], function (){
             Route::get('/', 'SupportsController@document')->name('document');

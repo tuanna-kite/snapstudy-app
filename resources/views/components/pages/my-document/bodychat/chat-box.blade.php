@@ -1,4 +1,4 @@
-@props(['displayChatIcon' => true])
+@props(['displayChatIcon' => true, 'conversation'])
 
 <div {{ $attributes->merge(['class' => 'flex gap-4 items-start bg-white']) }}>
     @if ($displayChatIcon)
@@ -8,10 +8,10 @@
     @endif
     <div class="space-y-2">
         <p class="font-normal text-xs text-text.light.disabled">
-            4:02 PM
+            {{ dateTimeFormatForHumans($conversation->created_at,true,null,1) }}
         </p>
         <p class="rounded-lg p-3 bg-light-neutral">
-            Hey John, I am looking for the best admin template. Could you please help me to find it out? 🤔
+            {{ $conversation->message }}
         </p>
     </div>
 </div>

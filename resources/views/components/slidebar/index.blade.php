@@ -33,7 +33,7 @@
             'href' => '2',
             'tab' => [
                 'New' => route('support.create'), // href here
-                'Document' => route('document'), // href here
+                'Document' => route('support.tickets'), // href here
             ],
         ],
         [

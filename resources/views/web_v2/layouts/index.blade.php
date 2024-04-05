@@ -28,3 +28,14 @@
 </body>
 
 </html>
+
+
+<script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script src="/assets/admin/vendor/poper/popper.min.js"></script>
+<script src="/assets/admin/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="/assets/admin/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script src="/assets/admin/vendor/moment/moment.min.js"></script>
+<script src="/assets/admin/js/stisla.js"></script>
+<script src="/assets/default/vendors/toast/jquery.toast.min.js"></script>
+{{--<script src=" {{ asset('/assets/default/vendors/select2/select2.min.js') }}"></script>--}}
+{{--<script src="{{ asset('/assets/default/js/panel/conversations.min.js')  }}"></script>--}}

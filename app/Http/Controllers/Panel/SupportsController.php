@@ -128,6 +128,7 @@ class SupportsController extends Controller
     public function tickets(Request $request, $id = null)
     {
         $user = auth()->user();
+        $searchTicket = $request->searchTicket;
 
         $query = Support::whereNotNull('department_id')
             ->where('user_id', $user->id);
@@ -139,6 +140,7 @@ class SupportsController extends Controller
         $query = $this->filters($query, $request);
 
         $supports = $query->orderBy('created_at', 'desc')
+            ->where('title', 'like', "%$searchTicket%")
             ->orderBy('status', 'asc')
             ->with([
                 'user' => function ($query) {

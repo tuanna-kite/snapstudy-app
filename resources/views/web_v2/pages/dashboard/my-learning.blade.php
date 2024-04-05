@@ -12,7 +12,7 @@
             <x-input.group-filter />
 
             <x-slot name="tab1">
-                <h1>I'm All</h1>
+                <x-documents.document-grid :webinar="$webinars" />
             </x-slot>
 
             <x-slot name="tab2">

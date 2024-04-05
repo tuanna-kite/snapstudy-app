@@ -85,7 +85,7 @@
     <th class="">
         @switch($accounting->type)
             @case(\App\Models\Accounting::$addiction)
-                <span class="font-semibold text-base text-primary.main">+{{ handlePrice($accounting->amount, false) }}</span>
+                <span class="font-semibold text-base text-green-500">+{{ handlePrice($accounting->amount, false) }}</span>
                 @break;
             @case(\App\Models\Accounting::$deduction)
                 <span class="font-semibold text-base text-secondary.main">-{{ handlePrice($accounting->amount, false) }}</span>

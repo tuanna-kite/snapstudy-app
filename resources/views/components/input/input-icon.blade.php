@@ -1,3 +1,4 @@
+@props(['data'])
 <div
     {{ $attributes->merge(['class' => 'rounded-xl p-3 flex items-center bg-white justify-between border border-']) }}>
     <input class="flex-1" name="password" type="text" id="searchInput" placeholder="Old Password">

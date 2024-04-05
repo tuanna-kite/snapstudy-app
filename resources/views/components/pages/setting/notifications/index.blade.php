@@ -9,7 +9,7 @@
         </h1>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_comment" value="1">
+                <input type="checkbox" name="enable_email_comment" value="1" {{ $user->enable_email_comment ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>
@@ -18,7 +18,7 @@
         </div>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_answers" value="1">
+                <input type="checkbox" name="enable_email_answers" value="1" {{ $user->enable_email_answers ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>
@@ -27,7 +27,7 @@
         </div>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_follow" value="1">
+                <input type="checkbox" name="enable_email_follow" value="1" {{ $user->enable_email_follow ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>
@@ -41,7 +41,7 @@
         </h1>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_new" value="1">
+                <input type="checkbox" name="enable_email_new" value="1" {{ $user->enable_email_new ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>
@@ -49,7 +49,7 @@
         </div>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_product_update" value="1">
+                <input type="checkbox" name="enable_email_product_update" value="1" {{ $user->enable_email_product_update ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>
@@ -57,7 +57,7 @@
         </div>
         <div class="flex items-center gap-2">
             <label class="switch">
-                <input type="checkbox" name="enable_email_blog_weekly" value="1">
+                <input type="checkbox" name="enable_email_blog_weekly" value="1" {{ $user->enable_email_blog_weekly ? 'checked' : '' }}>
                 <span class="slider round"></span>
             </label>
             <p>

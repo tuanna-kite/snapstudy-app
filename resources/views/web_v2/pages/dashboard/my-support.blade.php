@@ -33,9 +33,9 @@
                 <x-input.select-label :data="$typeSelect" />
 
                 <div class="space-y-2 relative" id="departmentInput">
-                    <label for="department" class="text-sm font-semibold">Department</label>
+                    <label for="department_id" class="text-sm font-semibold">Department</label>
                     <div class="">
-                        <select id='department' name='department_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
+                        <select id='department_id' name='department_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
                             @foreach ($departments as $value => $item)
                                 <option value={{ $item->id }}>{{ $item->title }}</option>
                             @endforeach
@@ -46,7 +46,7 @@
                 <div class="space-y-2 relative" id="courseInput">
                     <label for="syllabus" class="text-sm font-semibold">Syllabus</label>
                     <div class="">
-                        <select id='syllabus' name='webinar_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
+                        <select id='webinar_id' name='webinar_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
                             @foreach ($webinars as $value => $webinar)
                                 <option value="{{ $webinar->id }}">{{ $webinar->title }} - {{ $webinar->creator->full_name }}</option>
                             @endforeach
@@ -63,11 +63,9 @@
         </div>
     </x-layouts.dashboard-layout>
 @endsection
-
-<script src="/assets/default/vendors/select2/select2.min.js"></script>
-<script src="/assets/default/js/panel/conversations.min.js"></script>
+<script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script>
-    $('body').on('change', '#supportType', function (e) {
+    $('body').on('change', '#type', function (e) {
         const value = $(this).val();
 
         $('#courseInput,#departmentInput').addClass('d-none');

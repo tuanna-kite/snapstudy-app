@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('user.update') }}">
+<form method="post" action="{{ route('user.changePass') }}">
     @csrf
     <div class="bg-white p-6 rounded-2xl space-y-6">
     <x-input.input-icon />

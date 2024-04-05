@@ -21,7 +21,7 @@
                 {{ handlePrice($item->price, true, true, false, null, true) }}
             </span>
         </div>
-        <x-component.icon name="ic_trash" width="24" height="24" />
+{{--        <x-component.icon name="ic_trash" width="24" height="24" />--}}
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {{-- Can Loop --}}

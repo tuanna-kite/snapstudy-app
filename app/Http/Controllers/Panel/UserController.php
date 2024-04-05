@@ -953,6 +953,7 @@ class UserController extends Controller
             'country_id' => $data['country_id'],
             'province_id' => $data['province_id'],
             'city_id' => $data['city_id'],
+            'code' => $data['code'],
             'address' => $data['address'] ?? null,
             'about' => $data['about'] ?? null,
 
@@ -982,12 +983,12 @@ class UserController extends Controller
         $data = $request->all();
 
         $updateData = [
-            'enable_email_comment' => $data['enable_email_comment'],
-            'enable_email_answers' => $data['enable_email_answers'],
-            'enable_email_follow' => $data['enable_email_follow'],
-            'enable_email_new' => $data['enable_email_new'],
-            'enable_email_product_update' => $data['enable_email_product_update'],
-            'enable_email_blog_weekly' => $data['enable_email_blog_weekly']
+            'enable_email_comment' => $data['enable_email_comment'] ?? 0,
+            'enable_email_answers' => $data['enable_email_answers'] ?? 0,
+            'enable_email_follow' => $data['enable_email_follow'] ?? 0,
+            'enable_email_new' => $data['enable_email_new'] ?? 0,
+            'enable_email_product_update' => $data['enable_email_product_update'] ?? 0,
+            'enable_email_blog_weekly' => $data['enable_email_blog_weekly'] ?? 0,
         ];
 
         if (!empty($updateData)) {
@@ -999,7 +1000,7 @@ class UserController extends Controller
             'msg' => trans('panel.user_setting_success'),
             'status' => 'success'
         ];
-        return redirect('/panel/setting')->with(['toast' => $toastData]);
+        return redirect(route('setting'))->with(['toast' => $toastData]);
         abort(404);
     }
 
@@ -1015,6 +1016,13 @@ class UserController extends Controller
                 'password' => User::generatePassword($data['password'])
             ]);
         }
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('panel.user_setting_success'),
+            'status' => 'success'
+        ];
+        return redirect(route('setting'))->with(['toast' => $toastData]);
+        abort(404);
 
     }
 

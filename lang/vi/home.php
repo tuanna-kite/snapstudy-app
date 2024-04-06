@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Home 
+    | Home
     |--------------------------------------------------------------------------
     */
 
@@ -84,5 +84,10 @@ return [
 
     'platform_address' => 'Địa chỉ',
     'order_summary' => 'Đơn hàng',
-  	'blog_search_placeholder' => 'Tìm kiếm các bài viết trên blog...',
+    'blog_search_placeholder' => 'Tìm kiếm các bài viết trên blog...',
+
+    // New Version
+    'We have solutions' => 'Chúng tôi có giải pháp cho tất cả các bài đánh giá và câu hỏi kiểm tra của bạn',
+    'Assessment & Questions' => 'Đánh giá & Câu hỏi',
+    'We have access to all assessment details and test questions of your chosen courses' => 'Chúng tôi có quyền truy cập vào tất cả các chi tiết đánh giá và câu hỏi kiểm tra của các khóa học bạn đã chọn'
 ];

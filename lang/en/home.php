@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Home 
+    | Home
     |--------------------------------------------------------------------------
     */
 
@@ -84,5 +84,10 @@ return [
 
     'platform_address' => 'Address',
     'order_summary' => 'Order Summary',
-  	'blog_search_placeholder' => 'Search for blog posts...',
+    'blog_search_placeholder' => 'Search for blog posts...',
+
+    // New Version
+    'We have solutions' => 'We have solutions for all your assessments and test questions',
+    'Assessment & Questions' => 'Assessment & Questions',
+    'We have access to all assessment details and test questions of your chosen courses' => 'We have access to all assessment 	details and test questions of your chosen courses'
 ];

@@ -19,22 +19,22 @@
         <x-pages.home.slide />
         {{-- Search Document --}}
         <div class="flex flex-col gap-8 p-4 md:p-12 md:flex-row">
-            <div class="w-full md:w-3/4 flex flex-col">
-                <div class="w-full md:w-3/4 mx-auto">
+            <div class="w-full xl:w-3/4 flex flex-col">
+                <div class="w-full xl:w-3/4 mx-auto">
                     <x-search.search-doc />
                 </div>
                 <h1
-                    class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
+                    class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
                     Search for outlines that fit your major
                 </h1>
-                <x-pages.home.majors/>
+                <x-pages.home.majors />
                 <h1
-                    class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
-                    We have solutions for all your assessments and test questions
+                    class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
+                    {{ trans('home.We have solutions') }}
                 </h1>
                 <x-pages.home.statistics />
             </div>
-            <div class="w-full md:w-1/4 flex flex-col gap-4">
+            <div class="w-full xl:w-1/4  flex-col gap-4 hidden xl:flex">
                 <img src="img/banner1.png" alt="banner1" class="w-full md:max-w-96">
                 <img src="img/banner2.png" alt="banner2" class="w-full md:max-w-96">
             </div>
@@ -130,4 +130,3 @@
         </div>
     </x-layouts.home-layout>
 @endsection
-

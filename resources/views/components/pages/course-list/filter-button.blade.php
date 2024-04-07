@@ -18,7 +18,7 @@
             <x-pages.course-list.form formId="filterForm2" :categories="$categories">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                        <button class="flex" @click="showModal = false">
+                        <button type="button" class="flex" @click="showModal = false">
                             <x-component.material-icon name='close' />
                         </button>
                         <h2 class="font-semibold text-base text-primary.main">

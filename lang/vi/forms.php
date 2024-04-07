@@ -20,5 +20,7 @@ return [
     'subscribe_hint' => 'Học viên sẽ có thể đăng ký theo dõi nội dung của bạn ngoài việc mua trực tiếp..',
     'webinar_description_placeholder' => 'Tối thiểu 300 từ. Hỗ trợ HTML và hình ảnh.',
     'empty_means_unlimited' => 'Để trống cho không giới hạn..',
+    'Search' => "Tìm kiếm",
+    'Search a document' => "Tìm kiếm tài liệu ..."
 
 ];

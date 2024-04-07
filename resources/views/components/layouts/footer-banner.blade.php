@@ -1,18 +1,16 @@
 <section id="footer-banner" class="w-full flex justify-center">
-    <div class="py-8 md:py-0 relative flex-1 flex justify-between flex-col md:flex-row items-center rounded-2xl px-10 bg-primary.light"
+    <div class="py-8 md:py-0 relative flex-1 flex justify-between flex-col md:flex-row items-center lg:rounded-2xl px-10 bg-primary.light"
         style="max-width: 1200px">
         <div class="flex flex-col md:w-3/5 w-full">
             <h3 class="text-primary.main text-2xl font-semibold">
-                Get ahead to achieve your academic goals with SNAPS
+                {{ trans('home.Get ahead to achieve') }}
             </h3>
             <p class="my-6 text-primary.main">
-                Sign up now to receive a <span>free trial</span> and <span>30% discount</span> for the first
-                purchase
+                {!! trans('home.Sign up now to receive a FREE TRIAL') !!}
             </p>
             <a href="{{ route('register') }}">
-                <button class="bg-primary.main text-white rounded-full px-4"
-                    style="text-transform: uppercase; max-width: 240px; height: 54px">
-                    Register for free
+                <button class="bg-primary.main text-white rounded-full px-6 h-12 max-w-60 uppercase">
+                    {{ trans('home.REGISTER FOR FREE') }}
                 </button>
             </a>
         </div>

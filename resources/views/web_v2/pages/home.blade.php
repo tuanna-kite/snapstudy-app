@@ -25,7 +25,7 @@
                 </div>
                 <h1
                     class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
-                    Search for outlines that fit your major
+                    {{ trans('home.Search for outlines') }}
                 </h1>
                 <x-pages.home.majors />
                 <h1
@@ -48,8 +48,7 @@
         {{-- Jump Start --}}
         <div class=" py-16 md:py-32 space-y-12 container mx-auto">
             <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main text-center uppercase">
-                JUMPSTART YOUR SUCCESS <br />
-                FOR THE UPCOMING ASSIGNMENT
+                {!! trans('home.JUMPSTART YOUR SUCCESS') !!}
             </h1>
             <div class="">
                 {{-- TODO: replace to Upcoming data --}}
@@ -61,12 +60,13 @@
         <div class="py-7 bg-primary.main">
             <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
                 <p class="font-bold text-2xl md:text-3xl text-white text-center lg:text-left">
-                    SIGN UP NOW TO PURCHASE THE DETAILED <br />
-                    INSTRUCTION AT 199,000 VND
+                    {!! trans('home.SIGN UP NOW TO PURCHASE') !!}
                 </p>
                 <a href="{{ route('register') }}" class="mt-4 lg:mt-0">
                     <div class="rounded-full px-5 py-2 bg-secondary.main">
-                        <span class="uppercase font-medium text-sm md:text-base text-white">Sign up for free trial</span>
+                        <span class="uppercase font-medium text-sm md:text-base text-white">
+                            {{ trans('home.SIGN UP FOR FREE TRIAL') }}
+                        </span>
                     </div>
                 </a>
             </div>
@@ -76,17 +76,18 @@
         <div class="py-10 md:py-24 space-y-10 container mx-auto ">
             <div class="space-y-2 ">
                 <div class="flex items-center justify-between">
-                    <h1 class="font-bold text-xl md:text-4xl lg:text-5xl text-primary.main">
-                        Start learning with Top Trending Outlines
+                    <h1 class="font-bold text-base sm:text-xl md:text-3xl lg:text-4xl text-primary.main">
+                        {{ trans('home.Start learning with Top Trending Outlines') }}
                     </h1>
                     <a href="{{ route('classes') }}" class="flex items-center">
-                        <span class="font-medium text-xs md:text-base text-text.light.secondary">View all
+                        <span class="font-medium text-xs md:text-base text-text.light.secondary">
+                            {{ trans('home.View all') }}
                         </span>
                         <x-component.icon name="icon-right" />
                     </a>
                 </div>
                 <p class="font-normal text-base md:text-lg text-text.light.primary">
-                    Make a progress towards high scores by starting with the highest-voted outlines
+                    {{ trans('home.Make a progress towards high scores') }}
                 </p>
             </div>
             <div>
@@ -95,16 +96,13 @@
         </div>
 
         {{-- Student Result --}}
-        <div class=" mt-10 md:mt-24 flex flex-col gap-4 md:flex-row items-center justify-between container mx-auto">
+        <div class=" mt-10 md:mt-24 flex flex-col gap-2 md:flex-row items-center justify-between container mx-auto">
             <div class="space-y-6 md:space-y-12 w-full md:w-1/2">
                 <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main">
-                    Students' Results <br /> with SNAPS
+                    {!! trans("home.Student's Results with SNAPS") !!}
                 </h1>
                 <p class="font-normal text-base md:text-lg">
-                    <span class="font-bold text-3xl md:text-4xl lg:text-5xl text-secondary.main">96%</span> of our customers
-                    said that they gained
-                    higher score and saved a lot of time when
-                    they use SNAPS to understand their assessment and come up with ideas
+                    <span class="font-bold text-3xl md:text-4xl lg:text-5xl text-secondary.main">96%</span> {{ trans('home.of our customers')}}
                 </p>
             </div>
             <div class="w-full md:w-1/2 flex justify-center md:justify-end">
@@ -116,10 +114,10 @@
         <div class="container  mx-auto space-y-12 mt-10 md:mt-24">
             <div class="text-center space-y-1">
                 <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main uppercase">
-                    The Community we are in
+                    {{trans('home.THE COMMUNITY WE ARE IN')}}
                 </h1>
                 <p class="font-normal text-base md:text-lg text-text.light.secondary">
-                    Over 3000 students have already joined the SNAPS Community
+                   {{trans('home.Over 3000 students')}}
                 </p>
             </div>
             <x-pages.home.testimonials />

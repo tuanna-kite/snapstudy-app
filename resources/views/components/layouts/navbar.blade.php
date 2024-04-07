@@ -14,12 +14,15 @@
     }
 
     // dd(localeToCountryCode(mb_strtoupper(app()->getLocale())));
+
 @endphp
 
 
 
 {{-- <x-layouts.notice-card /> --}}
-{{-- <div class="container mx-auto">
+
+{{-- Button Locale Language --}}
+<div class="container mx-auto">
     @if (!empty($localLanguage) and count($localLanguage) > 1)
         <form action="{{ route('appLocaleRoute') }}" method="post" class="mr-15 mx-md-20">
             {{ csrf_field() }}
@@ -45,7 +48,7 @@
     @else
         <div class="mr-15 mx-md-20"></div>
     @endif
-</div> --}}
+</div>
 
 
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
@@ -69,12 +72,12 @@
 
         @if (auth()->check())
             <a href="/panel" class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
-                <span class="font-medium text-sm text-white">Dashboard</span>
+                <span class="font-medium text-sm text-white">{{ trans('header.Dashboard') }}</span>
             </a>
         @else
             <a href="{{ route('login') }}"
                 class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
-                <span class="font-medium text-sm text-white">Login</span>
+                <span class="font-medium text-sm text-white">{{ trans('header.Login') }}</span>
             </a>
         @endif
     </div>

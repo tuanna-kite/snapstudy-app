@@ -1,7 +1,7 @@
 @php
     $listMajor = [
         [
-            'link' => '/classes?subjectOptions%5B%5D=Business+Foundation',
+            'link' => '/classes?subjectOptions%5B%5D=Business-Foundation',
             'icon' => 'major-icon0',
             'slug' => 'Business-Foundation',
         ],
@@ -31,7 +31,7 @@
             'slug' => 'People & Organisation',
         ],
         [
-            'link' => '/classes?subjectOptions%5B%5D=Global+Business',
+            'link' => '/classes?subjectOptions%5B%5D=Global-Business',
             'icon' => 'major-icon5',
             'slug' => 'Global-Business',
         ],

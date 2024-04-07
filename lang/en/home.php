@@ -87,7 +87,30 @@ return [
     'blog_search_placeholder' => 'Search for blog posts...',
 
     // New Version
+    'Search for outlines' => 'Search for outlines that fit your major',
     'We have solutions' => 'We have solutions for all your assessments and test questions',
     'Assessment & Questions' => 'Assessment & Questions',
-    'We have access to all assessment details and test questions of your chosen courses' => 'We have access to all assessment 	details and test questions of your chosen courses'
+    'We have access to all assessment' => 'We have access to all assessment details and test questions of your chosen courses',
+    'Outlines' => 'Outlines',
+    'Unlock your assignments' => 'Unlock your assignments with the most detailed and comprehensive instructions',
+    'Experts' => 'Experts',
+    'All the Outlines' => 'All the Outlines are proofreaded by our experts to ensure you a high score',
+    'Time Saved' => 'Time Saved',
+    'Save your time' => 'Save your time to 70% and Boost your Efficiency to 180%',
+    'JUMPSTART YOUR SUCCESS' => 'JUMPSTART YOUR SUCCESS <br/> FOR THE UPCOMING ASSIGNMENT',
+    'SIGN UP NOW TO PURCHASE' => 'SIGN UP NOW TO PURCHASE THE DETAILED <br/> INSTRUCTION AT 199,000 VND',
+    'SIGN UP FOR FREE TRIAL' => 'SIGN UP FOR FREE TRIAL',
+    'Start learning with Top Trending Outlines' => 'Start learning with Top Trending Outlines',
+    'Make a progress towards high scores' => 'Make a progress towards high scores by starting with the highest-voted outlines',
+    'View all' => 'View all',
+    "Student's Results with SNAPS" => "Student's Results <br/> with SNAPS",
+    'of our customers' => 'of our customers said that they gained higher scores and saved a lot of time when they used SNAPS to understand their assessment and come up with ideas',
+    'THE COMMUNITY WE ARE IN' => 'THE COMMUNITY WE ARE IN',
+    'Over 3000 students' => 'Over 3000 students have already joined the SNAPS Community',
+    'Get ahead to achieve' => 'Get ahead to achieve your academic goals with SNAPS',
+    'Sign up now to receive a FREE TRIAL' => 'Sign up now to receive a <span>FREE TRIAL</span> and <span>30% DISCOUNT</span> for the first purchase',
+    'REGISTER FOR FREE' => 'REGISTER FOR FREE',
+    'Economics & Finance at RMIT' => 'Economics & Finance at RMIT',
+    "The most fascinating thing about SNAPS" => "The most fascinating thing about SNAPS, in my opinion, is that I can work and study at the same time without compromising my grades. There are times when multiple deadlines overlap, and the outlines provided by SNAPS are a real lifesaver."
+
 ];

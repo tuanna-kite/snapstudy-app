@@ -87,7 +87,31 @@ return [
     'blog_search_placeholder' => 'Tìm kiếm các bài viết trên blog...',
 
     // New Version
+    'Search for outlines' => 'Tìm kiếm những đề cương phù hợp với ngành học của bạn',
     'We have solutions' => 'Chúng tôi có giải pháp cho tất cả các bài đánh giá và câu hỏi kiểm tra của bạn',
     'Assessment & Questions' => 'Đánh giá & Câu hỏi',
-    'We have access to all assessment details and test questions of your chosen courses' => 'Chúng tôi có quyền truy cập vào tất cả các chi tiết đánh giá và câu hỏi kiểm tra của các khóa học bạn đã chọn'
+    'We have access to all assessment' => 'Chúng tôi có quyền truy cập vào tất cả các chi tiết đánh giá và câu hỏi kiểm tra của các khóa học bạn đã chọn',
+    'Outlines' => 'Đề cương',
+    'Unlock your assignments' => 'Mở khóa bài tập của bạn với hướng dẫn chi tiết và toàn diện nhất',
+    'Experts' => 'Chuyên gia',
+    'All the Outlines' => 'Tất cả các đề cương được chuyên gia của chúng tôi đảm bảo sẽ giúp bạn đạt điểm cao',
+    'Time Saved' => 'Tiết kiệm thời gian',
+    'Save your time' => 'Tiết kiệm thời gian của bạn lên đến 70% và Tăng hiệu suất lên 180%',
+    'JUMPSTART YOUR SUCCESS' => 'BẮT ĐẦU SỰ THÀNH CÔNG CỦA BẠN <br/> CHO BÀI TẬP SẮP TỚI',
+    'SIGN UP NOW TO PURCHASE' => 'ĐĂNG KÝ NGAY ĐỂ MUA HƯỚNG DẪN <br/> CHI TIẾT VỚI GIÁ 199.000 VNĐ',
+    'SIGN UP FOR FREE TRIAL' => 'ĐĂNG KÝ DÙNG THỬ',
+    'Start learning with Top Trending Outlines' => 'Bắt đầu học với Đề cương phổ biến nhất',
+    'Make a progress towards high scores' => 'Đạt điểm cao bằng cách bắt đầu với những đề cương được bình chọn cao nhất',
+    'View all' => 'Xem tất cả',
+    "Student's Results with SNAPS" => 'Kết quả của học viên <br/> với SNAPS',
+    'of our customers' => 'khách hàng của chúng tôi cho biết họ đã đạt điểm cao hơn và tiết kiệm rất nhiều thời gian khi họ sử dụng SNAPS để hiểu đánh giá của mình và đưa ra ý tưởng',
+    'THE COMMUNITY WE ARE IN' => 'CỘNG ĐỒNG CHÚNG TÔI ĐANG Ở',
+    'Over 3000 students' => 'Hơn 3000 sinh viên đã tham gia Cộng đồng SNAPS',
+    'Get ahead to achieve' => 'Vươn lên để đạt được mục tiêu học tập của bạn với SNAPS',
+    'Sign up now to receive a FREE TRIAL' => 'Đăng ký ngay để nhận được <span>DÙNG THỬ MIỄN PHÍ</span> và <span>GIẢM GIÁ 30%</span> cho lần mua đầu tiên',
+    'REGISTER FOR FREE' => 'ĐĂNG KÝ MIỄN PHÍ',
+    'Economics & Finance at RMIT' => 'Kinh tế & Tài chính tại RMIT',
+    'The most fascinating thing about SNAPS' => 'Điều thú vị nhất về SNAPS, theo ý kiến của tôi, là tôi có thể làm việc và học cùng một lúc mà không làm ảnh hưởng đến điểm số của mình. Có những lúc khi có nhiều hạn chót trùng lặp, và các đề cương do SNAPS cung cấp thực sự giúp tôi thoát khỏi tình thế khó khăn.'
+
+
 ];

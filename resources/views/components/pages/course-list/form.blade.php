@@ -1,4 +1,4 @@
-@props(['formId','categories'])
+@props(['formId', 'categories'])
 
 @php
     $subjectOptions = $categories;
@@ -8,7 +8,7 @@
 <form id={{ $formId }} action="{{ route('home.search') }}" method="GET">
     {{ $slot }}
     <!-- List of subject checkboxes -->
-    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">Subject</h3>
+    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">{{ trans('course.Subject') }}</h3>
     @foreach ($subjectOptions as $subject)
         <div class="mb-1">
             <label class="space-x-2">
@@ -30,7 +30,7 @@
         </div>
     @endforeach
     <div class="mt-6">
-        <button type="submit" class="py-1.5 px-10 rounded-xl bg-primary.main text-white">Apply</button>
+        <button type="submit" class="py-1.5 px-10 rounded-xl bg-primary.main text-white">{{ trans('course.Apply')}}</button>
     </div>
 </form>
 
@@ -85,4 +85,3 @@
         }
     </script>
 @endPushOnce
-

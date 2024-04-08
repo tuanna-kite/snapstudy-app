@@ -48,7 +48,7 @@
                 </p>
 
                 <p class="font-normal text-base text-text.light.primary">
-                    <span class="font-semibold">1.332.107 </span> đã đăng ký
+                    <span class="font-semibold">1.332.107 </span> {{ trans('course.Registed') }}
                 </p>
             </div>
         </div>
@@ -61,7 +61,7 @@
                         <div class="px-6 py-3 bg-primary.main rounded-t-2xl flex justify-between items-center text-white"
                             x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
                             <h6 class="font-bold text-xl">
-                                Table of contents
+                                {{ trans('course.Table of Contents') }}
                             </h6>
                             <x-component.material-icon name="expand_more" x-show="openTab === null" />
                             <x-component.material-icon name="expand_less" x-show="openTab === 1" />
@@ -79,7 +79,7 @@
                             <button id="scrollBtn"
                                 class="fixed z-10 bottom-4 right-4 px-4 py-2 rounded bg-gray-800 text-white shadow-md;"
                                 @click="showModal = true; buttonPosition = $event.target.getBoundingClientRect()">
-                                Table of Contents
+                                {{ trans('course.Table of Contents') }}
                             </button>
                             <!-- Modal -->
                             <div x-show="showModal"
@@ -91,7 +91,7 @@
                                 x-transition:leave-start="opacity-100 transform scale-100"
                                 x-transition:leave-end="opacity-0 transform scale-90" @click.away="showModal = false">
                                 <div class="table_contents bg-white p-6">
-                                    <h3 class="text-lg my-4 font-semibold">Table of Contents</h3>
+                                    <h3 class="text-lg my-4 font-semibold">{{ trans('course.Table of Contents') }}</h3>
                                     <!-- Modal content -->
                                     {!! $docTrans->table_contents !!}
                                 </div>
@@ -103,7 +103,7 @@
                 {{--  Content  --}}
                 <div class="space-y-6 max-w-[960px] mx-auto">
                     <h3 class="font-bold text-3xl text-primary.main">
-                        Content
+                        {{ trans('course.Content') }}
                     </h3>
                     @if (!$hasBought)
                         <div id="document-content" class="relative">
@@ -118,12 +118,12 @@
                                 <input class="hidden" type="number" name="item_id" value="{{ $course->id }}">
                                 <input class="hidden" type="text" name="item_name" value="webinar_id">
                                 <button class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                    <span>Read more ({{ handlePrice($course->price) }})</span>
+                                    <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span>
                                     <x-component.material-icon name="arrow_downward" />
                                 </button>
                             </form>
                             <p class="font-normal text-sm text-text.light.secondary">
-                                Documents cannot be previewed. To view them in full, you need to pay a fee
+                                {{ trans('course.Documents cannot be previewed') }}
                             </p>
                         </div>
                     @else
@@ -140,19 +140,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-            $.ajax({
-                url: '{{ route('webinar.view', ['webinar' => $course->id]) }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    console.log(response.message);
+        $.ajax({
+            url: '{{ route('webinar.view', ['webinar' => $course->id]) }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log(response.message);
 
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 </script>

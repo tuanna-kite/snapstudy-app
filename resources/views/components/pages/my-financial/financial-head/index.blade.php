@@ -1,17 +1,17 @@
 <tr class="text-left">
     <th class="pl-6 py-4 font-semibold text-sm text-text.light.secondary">
-        Title
+        {{ trans('dashboard.Title') }}
     </th>
     <th class="font-semibold text-sm text-text.light.secondary">
-        Description
+        {{ trans('dashboard.Description') }}
     </th>
     <th class="font-semibold text-sm text-text.light.secondary">
-        Creator
+        {{ trans('dashboard.Creator') }}
     </th>
     <th class="font-semibold text-sm text-text.light.secondary">
-        Date
+        {{ trans('dashboard.Date') }}
     </th>
     <th class="font-semibold text-sm text-text.light.secondary">
-        Amount
+        {{ trans('dashboard.Amount') }}
     </th>
 </tr>

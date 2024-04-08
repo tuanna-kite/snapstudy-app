@@ -1,5 +1,7 @@
 @props(['title'])
 
+
+<x-layouts.btn-language />
 <div class="bg-primary.lighter min-h-[100vh]">
     {{-- sidebar --}}
     <div class="h-screen p-5 hidden lg:block lg:fixed">

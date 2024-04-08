@@ -5,7 +5,7 @@
     $selectGroup = [
         [
             'name' => 'major',
-            'label' => 'Major',
+            'label' => trans('dashboard.Major'),
             'options' => [
                 'all' => 'All',
                 'math' => 'Math',
@@ -14,7 +14,7 @@
         ],
         [
             'name' => 'school',
-            'label' => 'School',
+            'label' => trans('dashboard.School'),
             'options' => [
                 'all' => 'All',
                 'rmit' => 'RMIT',

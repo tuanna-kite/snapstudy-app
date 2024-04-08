@@ -14,14 +14,12 @@
     <!-- Include Alpine.js via CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-
     @stack('styles_top')
     @stack('scripts_top')
 </head>
 
 <body>
     @yield('content')
-
     {{-- Script Container --}}
     @stack('styles_bottom')
     @stack('scripts_bottom')
@@ -37,5 +35,5 @@
 <script src="/assets/admin/vendor/moment/moment.min.js"></script>
 <script src="/assets/admin/js/stisla.js"></script>
 <script src="/assets/default/vendors/toast/jquery.toast.min.js"></script>
-{{--<script src=" {{ asset('/assets/default/vendors/select2/select2.min.js') }}"></script>--}}
-{{--<script src="{{ asset('/assets/default/js/panel/conversations.min.js')  }}"></script>--}}
+{{-- <script src=" {{ asset('/assets/default/vendors/select2/select2.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('/assets/default/js/panel/conversations.min.js')  }}"></script> --}}

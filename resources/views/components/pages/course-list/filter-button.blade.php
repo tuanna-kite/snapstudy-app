@@ -22,14 +22,14 @@
                             <x-component.material-icon name='close' />
                         </button>
                         <h2 class="font-semibold text-base text-primary.main">
-                            Filter
+                            {{ trans('course.Filter') }}
                         </h2>
                     </div>
                     <div>
                         <button type="button"
                             class="flex items-center gap-1 rounded-full border py-0.5 px-2 border-border-disabled text-text.light.disabled"
                             onclick="clearQueryParams()">
-                            <span class="font-medium text-xs">Clear All</span>
+                            <span class="font-medium text-xs">{{ trans('course.Clear All') }}</span>
                             <x-component.material-icon name="close" style="font-size:18px !important" />
                         </button>
                     </div>
@@ -38,5 +38,3 @@
         </div>
     </div>
 </div>
-
-

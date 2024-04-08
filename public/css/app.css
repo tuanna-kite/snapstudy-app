@@ -1036,26 +1036,21 @@ video {
 .max-w-48 {
   max-width: 12rem;
 }
+.max-w-60 {
+  max-width: 15rem;
+}
 .max-w-\[240px\] {
   max-width: 240px;
 }
 .max-w-\[960px\] {
   max-width: 960px;
 }
-.max-w-screen-sm {
-  max-width: 640px;
-}
-.max-w-screen-xl {
-  max-width: 1280px;
-}
-.max-w-screen-md {
-  max-width: 768px;
-}
 .max-w-screen-lg {
   max-width: 1024px;
 }
-.max-w-60 {
-  max-width: 15rem;
+.max-w-fit {
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -1621,6 +1616,9 @@ video {
 .pt-3 {
   padding-top: 0.75rem;
 }
+.pt-4 {
+  padding-top: 1rem;
+}
 .pt-40 {
   padding-top: 10rem;
 }
@@ -1629,9 +1627,6 @@ video {
 }
 .pt-6 {
   padding-top: 1.5rem;
-}
-.pt-4 {
-  padding-top: 1rem;
 }
 .text-left {
   text-align: left;
@@ -1849,10 +1844,6 @@ video {
     display: flex;
   }
 
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1978,16 +1969,8 @@ video {
     flex: 1 1 0%;
   }
 
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:flex-row {
@@ -2008,10 +1991,6 @@ video {
 
   .md\:gap-12 {
     gap: 3rem;
-  }
-
-  .md\:gap-4 {
-    gap: 1rem;
   }
 
   .md\:space-y-12 > :not([hidden]) ~ :not([hidden]) {
@@ -2136,16 +2115,8 @@ video {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .lg\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .lg\:grid-rows-1 {
@@ -2222,19 +2193,8 @@ video {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 
-  .xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .xl\:flex-row {
     flex-direction: row;
-  }
-}
-
-@media (min-width: 1536px) {
-
-  .\32xl\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

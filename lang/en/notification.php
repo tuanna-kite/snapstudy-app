@@ -18,5 +18,8 @@ return [
     'send_noticeboard' => 'Send a new notice',
     'edit_noticeboard' => 'Edit a notice',
     'post_notice' => 'Send notice',
-	'receiver' => 'Receiver',
+    'receiver' => 'Receiver',
+    // New Version
+    'Your Notifications' => 'Your Notifications',
+    'Mark all as read' => 'Mark all as read'
 ];

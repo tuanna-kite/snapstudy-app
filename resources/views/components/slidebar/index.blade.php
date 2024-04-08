@@ -2,43 +2,43 @@
     $listMenu = [
         [
             'icon' => 'menu',
-            'title' => 'Dashboard',
+            'title' => trans('dashboard.Dashboard'),
             'href' => route('dashboard'),
             'tab' => null,
         ],
         [
             'icon' => 'document-text',
-            'title' => 'My Syllabus',
+            'title' => trans('dashboard.My Syllabus'),
             'href' => '1',
             'tab' => [
-                'Home' => route('my.syllabus'), // href here
-                'My Learning' => route('my.learning'), // href here
+                trans('dashboard.Home') => route('my.syllabus'), // href here
+                trans('dashboard.My Learning') => route('my.learning'), // href here
             ],
         ],
         [
             'icon' => 'task',
-            'title' => 'My Purchased',
+            'title' => trans('dashboard.My Purchased'),
             'href' => route('purchases'),
             'tab' => null,
         ],
         [
             'icon' => 'wallet-minus',
-            'title' => 'Financial',
+            'title' => trans('dashboard.Financial'),
             'href' => route('financial.summary'),
             'tab' => null,
         ],
         [
             'icon' => 'device-message',
-            'title' => 'Support',
+            'title' => trans('dashboard.Support'),
             'href' => '2',
             'tab' => [
-                'New' => route('support.create'), // href here
-                'Document' => route('support.tickets'), // href here
+                trans('dashboard.New') => route('support.create'), // href here
+                trans('dashboard.Document') => route('support.tickets'), // href here
             ],
         ],
         [
             'icon' => 'setting-2',
-            'title' => 'Setting',
+            'title' => trans('dashboard.Setting'),
             'href' => route('setting'),
             'tab' => null,
         ],

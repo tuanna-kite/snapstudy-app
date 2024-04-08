@@ -1,5 +1,5 @@
 @php
-$user = auth()->user();
+    $user = auth()->user();
 @endphp
 <div class="rounded-2xl p-20 bg-white flex items-center justify-center">
     <div class="flex flex-col items-center gap-6">
@@ -8,8 +8,7 @@ $user = auth()->user();
         bg-center bg-cover
         bg-no-repeat bg-clip-content p-2
         "
-            id="previewImage"
-            style="background-image: url({{ asset((!empty($user)) ? $user->getAvatar(150) : '') }})">
+            id="previewImage" style="background-image: url({{ asset(!empty($user) ? $user->getAvatar(150) : '') }})">
             <input type="file" name="profile_image" id='file' class="hidden" accept="images/*">
             <label for="file"
                 class="w-full h-full rounded-full
@@ -20,13 +19,12 @@ $user = auth()->user();
             ">
                 <x-component.icon name="icon_camera" />
                 <span class="text-white font-normal text-xs">
-                    Update Photo
+                    {{ trans('dashboard.Update Photo') }}
                 </span>
             </label>
         </div>
         <p class="text-center font-normal text-xs text-text.light.secondary">
-            Allowed *.jpeg, *.jpg, *.png, *.gif<br />
-            Max size of 3.1 MB
+            {!! trans('dashboard.Allowed') !!}
         </p>
     </div>
     <div class="invalid-feedback">

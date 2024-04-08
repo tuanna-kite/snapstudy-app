@@ -1,5 +1,5 @@
 @php
-$message = $message ?? '';
+    $message = $message ?? '';
 
 @endphp
 
@@ -7,11 +7,11 @@ $message = $message ?? '';
     @csrf
     <div class="flex flex-col md:flex-row items-start">
         <div class="w-full md:w-1/3">
-            <x-pages.setting.general.update-avatar/>
+            <x-pages.setting.general.update-avatar />
         </div>
         <div class="w-full md:w-2/3">
-            <x-pages.setting.general.update-user :user="$user" :message="$message" :listCity="$listCity"
-                                                 :listProvinces="$listProvinces" :countries="$countries"/>
+            <x-pages.setting.general.update-user :user="$user" :message="$message" :listCity="$listCity" :listProvinces="$listProvinces"
+                :countries="$countries" />
         </div>
     </div>
 </form>

@@ -2,7 +2,7 @@
 @section('title', 'My Learning')
 
 @php
-    $listTab = ['All', 'In Progress', 'Completed'];
+    $listTab = [trans('dashboard.All'), trans('dashboard.In Progress'), trans('dashboard.Completed')];
 @endphp
 
 @section('content')

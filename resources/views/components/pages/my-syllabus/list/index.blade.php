@@ -10,7 +10,7 @@
             <a href={{ $href }}
                 class="font-medium text-xs text-text.light.disabled rounded-lg border border-border-disabled py-1 px-4">
                 <span class="flex items-center">
-                    See All <x-component.material-icon name="chevron_right" />
+                    {{ trans('dashboard.See All') }} <x-component.material-icon name="chevron_right" />
                 </span>
             </a>
         @endif

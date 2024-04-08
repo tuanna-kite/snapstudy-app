@@ -9,7 +9,7 @@
                     <x-pages.dashboard.welcome />
                 </div>
                 <div class="w-full xl:w-2/5 flex flex-col justify-between gap-3">
-                    <x-pages.dashboard.pay :accountCharge="$accountCharge"/>
+                    <x-pages.dashboard.pay :accountCharge="$accountCharge" />
                     {{-- Rank --}}
                     <div class="flex justify-center items-center p-24 xl:flex-1 rounded-3xl bg-white">
                         <span class="text-3xl font-bold">
@@ -21,10 +21,10 @@
             {{-- Syllabus --}}
             <div class="rounded-3xl p-6 bg-white">
                 <div class="flex items-center justify-between">
-                    <h1 class="font-bold text-lg">My Syllabus</h1>
+                    <h1 class="font-bold text-lg">{{ trans('dashboard.My Syllabus') }}</h1>
                     <a href="{{ route('classes') }}">
                         <span class="flex items-center">
-                            View all <x-component.material-icon name="chevron_right" />
+                            {{ trans('dashboard.View all') }} <x-component.material-icon name="chevron_right" />
                         </span>
                     </a>
                 </div>

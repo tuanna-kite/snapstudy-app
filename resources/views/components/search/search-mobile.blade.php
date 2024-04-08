@@ -20,7 +20,7 @@
                 <form action="{{ route('classes') }}" method="GET" class="w-full">
                     <div class="rounded-xl border p-4 w-full flex items-center bg-white justify-between">
                         <input id="searchInput" type="text" class="w-full" name="search"
-                            placeholder="Search...">
+                            placeholder="{{ trans('forms.Search') }}">
                         <button id='btnSearch' class="" type="submit">
                             <x-component.icon name="ic_search" />
                         </button>

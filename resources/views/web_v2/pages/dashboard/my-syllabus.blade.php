@@ -6,7 +6,7 @@
         <div class="w-full space-y-12">
             <div class="space-y-4">
                 <h1 class="font-normal text-2xl text-text.light.primary">
-                    Continue Learning
+                    {{ trans('dashboard.Continue Learning') }}
                 </h1>
                 <div class="flex flex-col md:flex-row items-start gap-6">
                     <div class="w-full md:flex-1">
@@ -17,25 +17,26 @@
                                 @continue
                             @endif
                         @endforeach
+                        <div class="flex flex-col gap-4 items-center md:flex-row">
+                            <img src="{{ asset('img/learn.png') }}" alt="character" class="w-full md:max-w-lg">
+                            <p class="font-semibold text-base text-text.light.secondary">
+                                {{ trans('dashboard.You will find your in-progress courses here') }}
+                            </p>
+                        </div>
                     </div>
                     <div class="w-full md:flex-1">
                         <x-pages.my-syllabus.status-card :countlearningWebinars="$countlearningWebinars" />
                     </div>
                 </div>
-                {{-- <div class="flex flex-col gap-4 items-center md:flex-row">
-                    <img src="{{ asset('img/learn.png') }}" alt="character" class="w-full md:max-w-lg">
-                    <p class="font-semibold text-base text-text.light.secondary">
-                        You will find your in-progress courses here
-                    </p>
-                </div> --}}
             </div>
             {{-- List my syllabus --}}
             {{-- TODO: add href and controller for view my-syllabus-all --}}
             <div>
-                <x-pages.my-syllabus.list title="Recently Viewed Products" href="/" :webinars="$viewedWebinars" />
+                <x-pages.my-syllabus.list title="{{ trans('dashboard.Recently Viewed Products') }}" href="/"
+                    :webinars="$viewedWebinars" />
             </div>
             <div>
-                <x-pages.my-syllabus.list title="News on Snaps" href="/" :webinars="$viewedWebinars" />
+                <x-pages.my-syllabus.list title="{{ trans('dashboard.News on Snaps') }}" href="/" :webinars="$viewedWebinars" />
             </div>
         </div>
     </x-layouts.dashboard-layout>

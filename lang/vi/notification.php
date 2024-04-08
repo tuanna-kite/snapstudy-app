@@ -17,5 +17,9 @@ return [
     'send_noticeboard' => 'Gửi một thông báo mới',
     'edit_noticeboard' => 'Chỉnh sửa một thông báo',
     'post_notice' => 'Gửi thông báo',
-	'receiver' => 'Người nhận',
+    'receiver' => 'Người nhận',
+    // New Version
+    'Your Notifications' => 'Thông báo của bạn',
+    'Mark all as read' => 'Đánh dấu tất cả là đã đọc'
+
 ];

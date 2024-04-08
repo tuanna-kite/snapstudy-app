@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Redirect;
+use Illuminate\Support\Facades\Log;
 
 
 class AccountingController extends Controller
@@ -144,7 +145,8 @@ class AccountingController extends Controller
                 'amount' => trans('update.the_amount_must_be_greater_than_0')
             ]);
         }else{
-            $respone = $this->payment_momo($amount);
+//            $respone = $this->payment_momo($amount);
+            $respone = $this->payment_ATM($amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);
             } else {
@@ -155,14 +157,14 @@ class AccountingController extends Controller
 
     public function payment_momo($amount)
     {
-        $endpoint = "https://payment.momo.vn/v2/gateway/api/create";
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
-        $partnerCode = 'MOMOTCNN20240105';
-        $accessKey = 'QKF9qTEAvC0WWqnh';
-        $serectkey = 'PMIgjYWsw2Y0xhCjoIgQgKmebvcwU9Ng';
+        $partnerCode = 'MOMOTCNN20240105_TEST';
+        $accessKey = 'jier6A5LsUGsZXGn';
+        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($amount) < 1000 ? 1000 : intval($amount);
-        // dd($amount);
+
         $orderId = "MOMO" . time();
         $redirectUrl = route('momo.request-charge');
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
@@ -173,7 +175,51 @@ class AccountingController extends Controller
         // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-        $signature = hash_hmac("sha256", $rawHash, $serectkey);
+        Log::info('Signature send: ' . $rawHash);
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+        $data = array(
+            'partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            "storeId" => "MomoTestStore",
+            'requestId' => $requestId,
+            'amount' => $amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            // "responseTime" => $responseTime,
+            'redirectUrl' => $redirectUrl,
+            'ipnUrl' => $ipnUrl,
+            'lang' => 'vi',
+            'extraData' => $extraData,
+            'requestType' => $requestType,
+            'signature' => $signature
+        );
+        $result = execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true);
+        return $jsonResult;
+    }
+
+    public function payment_ATM($amount)
+    {
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+
+        $partnerCode = 'MOMOTCNN20240105_TEST';
+        $accessKey = 'jier6A5LsUGsZXGn';
+        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
+        $orderInfo = "Thanh toán qua MoMo";
+        $amount = intval($amount) < 1000 ? 1000 : intval($amount);
+
+        $orderId = "MOMO" . time();
+        $redirectUrl = route('momo.request-charge');
+        $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+        $extraData = "";
+        $requestId = "MOMO" . time();
+         $requestType = "payWithATM";
+//        $requestType = "captureWallet";
+//         $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
+        //before sign HMAC SHA256 signature
+        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+        Log::info('Signature send: ' . $rawHash);
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
         $data = array(
             'partnerCode' => $partnerCode,
             'partnerName' => "Test",
@@ -196,8 +242,8 @@ class AccountingController extends Controller
     }
     public function request_charge()
     {
-        $secretKey = 'PMIgjYWsw2Y0xhCjoIgQgKmebvcwU9Ng'; //Put your secret key in there
-        $accessKey = 'QKF9qTEAvC0WWqnh'; //Put your access key in there
+        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG'; //Put your secret key in there
+        $accessKey = 'jier6A5LsUGsZXGn'; //Put your access key in there
 
         $partnerCode = $_GET["partnerCode"];
         $requestId = $_GET["requestId"];
@@ -216,7 +262,11 @@ class AccountingController extends Controller
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&message=" . $message . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo .
             "&orderType=" . $orderType . "&partnerCode=" . $partnerCode . "&payType=" . $payType . "&requestId=" . $requestId . "&responseTime=" . $responseTime .
             "&resultCode=" . $resultCode . "&transId=" . $transId;
+        Log::info('Signature receive: ' . $rawHash);
+
+
         $partnerSignature = hash_hmac("sha256", $rawHash, $secretKey);
+        Log::info("partnerSignature:" . $partnerSignature);
         if ($m2signature == $partnerSignature) {
             if ($resultCode == 0) {
                 $userId = auth()->user()->id;
@@ -230,6 +280,7 @@ class AccountingController extends Controller
                 $accounting->type = Accounting::$addiction;
                 $accounting->type_account = Accounting::$asset;
                 $accounting->created_at = time();
+                $accounting->chargeId = $orderId;
                 $accounting->save();
                 if($accounting->save()){
                 return redirect('/panel/financial/account')->with('msg', 'Nạp tiền thành công!');

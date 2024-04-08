@@ -135,14 +135,13 @@ class PaymentController extends Controller
 
     public function payment_momo($orderId, $gateway, $total_amount)
     {
-        $endpoint = "https://payment.momo.vn/v2/gateway/api/create";
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
-        $partnerCode = 'MOMOTCNN20240105';
-        $accessKey = 'QKF9qTEAvC0WWqnh';
-        $serectkey = 'PMIgjYWsw2Y0xhCjoIgQgKmebvcwU9Ng';
+        $partnerCode = 'MOMOTCNN20240105_TEST';
+        $accessKey = 'jier6A5LsUGsZXGn';
+        $serectkey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($total_amount) < 1000 ? 1000 : intval($total_amount);
-        // dd($amount);
         $orderId = $orderId;
         $redirectUrl = route('momo.checkout', ['gateway' => $gateway, 'orderId' => $orderId]);
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
@@ -176,8 +175,8 @@ class PaymentController extends Controller
     }
     public function checkout($gateway, $orderId)
     {
-        $secretKey = 'PMIgjYWsw2Y0xhCjoIgQgKmebvcwU9Ng'; //Put your secret key in there
-        $accessKey = 'QKF9qTEAvC0WWqnh'; //Put your access key in there
+        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG'; //Put your secret key in there
+        $accessKey = 'jier6A5LsUGsZXGn'; //Put your access key in there
 
         $partnerCode = $_GET["partnerCode"];
         $requestId = $_GET["requestId"];
@@ -200,7 +199,7 @@ class PaymentController extends Controller
             if ($resultCode == 0) {
                 $user = auth()->user();
                 $userId = $user->id;
-                $id= explode("-",$orderId)[0];  
+                $id= explode("-",$orderId)[0];
                 $order = Order::where('id', $id)
                     ->where('user_id', $user->id)
                     ->first();
@@ -209,7 +208,7 @@ class PaymentController extends Controller
                     $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
                     $reserveMeeting->update(['locked_at' => time()]);
                 }
-                
+
                 if ($gateway === 'momopay') {
                     // if ($user->getAccountingCharge() < $order->total_amount) {
                     //     $order->update(['status' => Order::$paid]);

@@ -8,7 +8,7 @@
         <div class="flex gap-3 mb-10">
             <div
                 class="flex flex-1 justify-between items-center border border-solid text-text.light.disabled py-1.5 px-3 rounded-xl">
-                <input type="number" placeholder="{{ trans('panel.number_only') }}" name="amount" min="10000" class="flex-1 @error('amount') is-invalid @enderror"
+                <input type="number" placeholder="{{ trans('panel.number_only') }}" name="amount" min="1000" class="flex-1 @error('amount') is-invalid @enderror"
                 value="{{ !empty($editOfflinePayment) ? $editOfflinePayment->amount : old('amount') }}">
                 <div class="px-2 pb-0.5 rounded-full bg-gray-300">
                     <span class="text-xs font-bold text-gray-800">
@@ -27,7 +27,7 @@
                 Account Balance
             </h2>
             <p class="font-bold text-3xl text-secondary.main">
-                {{ $accountCharge ? handlePrice($accountCharge) : 0 }} VNĐ
+                {{ $accountCharge ? handlePrice($accountCharge) : 0 }}
             </p>
         </div>
 

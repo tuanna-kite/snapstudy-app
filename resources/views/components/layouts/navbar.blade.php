@@ -1,8 +1,4 @@
 {{-- <x-layouts.notice-card /> --}}
-
-
-
-
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
     x-on:scroll.window="
        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -22,15 +18,13 @@
 
         <div class="flex items-center gap-2">
             <x-layouts.btn-language />
-            @if (auth()->check())
-                <a href="/panel" class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-3 sm:px-8 bg-primary.main">
+            @if (!auth()->check())
+                <a href="/panel"
+                    class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-3 sm:px-8 bg-primary.main">
                     <span class="font-medium text-sm text-white">{{ trans('header.Dashboard') }}</span>
                 </a>
             @else
-                <a href="{{ route('login') }}"
-                    class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-8 bg-primary.main">
-                    <span class="font-medium text-sm text-white">{{ trans('header.Login') }}</span>
-                </a>
+                <x-auth.btn-login />
             @endif
         </div>
     </div>

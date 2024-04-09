@@ -27,7 +27,7 @@
             <x-component.icon
                 name="{{ localeToCountryCode(mb_strtoupper(app()->getLocale())) == 'VN' ? 'viet-nam' : 'english' }}" />
 
-            <span class="hidden md:block">
+            <span class="hidden sm:block">
                 {{ $localLanguage[localeToCountryCode(mb_strtoupper(app()->getLocale()))] }}
             </span>
         </span>

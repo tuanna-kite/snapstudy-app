@@ -5,6 +5,7 @@
     $input = [
         'name' => 'title',
         'label' => 'Subject',
+        'placeholder' => '',
     ];
 
     $typeSelect = [
@@ -26,16 +27,17 @@
                 @csrf
                 <x-input.input-label :data="$input" />
                 @error('title')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
                 <x-input.select-label :data="$typeSelect" />
 
                 <div class="space-y-2 relative" id="departmentInput">
                     <label for="department_id" class="text-sm font-semibold">Department</label>
                     <div class="">
-                        <select id='department_id' name='department_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
+                        <select id='department_id' name='department_id'
+                            class="w-full border border-grey-300 rounded-xl p-[18px]">
                             @foreach ($departments as $value => $item)
                                 <option value={{ $item->id }}>{{ $item->title }}</option>
                             @endforeach
@@ -48,7 +50,8 @@
                     <div class="">
                         <select id='webinar_id' name='webinar_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
                             @foreach ($webinars as $value => $webinar)
-                                <option value="{{ $webinar->id }}">{{ $webinar->title }} - {{ $webinar->creator->full_name }}</option>
+                                <option value="{{ $webinar->id }}">{{ $webinar->title }} -
+                                    {{ $webinar->creator->full_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -65,7 +68,7 @@
 @endsection
 <script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script>
-    $('body').on('change', '#type', function (e) {
+    $('body').on('change', '#type', function(e) {
         const value = $(this).val();
 
         $('#courseInput,#departmentInput').addClass('d-none');

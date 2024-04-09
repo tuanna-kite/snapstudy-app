@@ -87,8 +87,8 @@ class PaymentController extends Controller
 
             session()->put($this->order_session_key, $order->id);
             return redirect('/payments/status');
-        } elseif ($gateway === 'momopay') {
-            $respone = $this->payment_momo($orderId, $gateway, $order->total_amount);
+        } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
+            $respone = $this->payment($orderId, $gateway, $order->total_amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->to($respone['payUrl']);
             } else {
@@ -133,13 +133,13 @@ class PaymentController extends Controller
         }
     }
 
-    public function payment_momo($orderId, $gateway, $total_amount)
+    public function payment($orderId, $gateway, $total_amount)
     {
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $endpoint = env('MOMO_API_ENDPOINT');
 
-        $partnerCode = 'MOMOTCNN20240105_TEST';
-        $accessKey = 'jier6A5LsUGsZXGn';
-        $serectkey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
+        $partnerCode = env('MOMO_PARTNER_CODE');
+        $accessKey = env('MOMO_ACCESS_KEY');
+        $serectkey = env('MOMO_SECRET_KEY');
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($total_amount) < 1000 ? 1000 : intval($total_amount);
         $orderId = $orderId;
@@ -147,9 +147,8 @@ class PaymentController extends Controller
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
         $extraData = "";
         $requestId = "MOMO" . time();
-        // $requestType = "payWithATM";
-        $requestType = "captureWallet";
-        // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
+        $requestType = $gateway;
+
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $serectkey);
@@ -161,7 +160,6 @@ class PaymentController extends Controller
             'amount' => $amount,
             'orderId' => $orderId,
             'orderInfo' => $orderInfo,
-            // "responseTime" => $responseTime,
             'redirectUrl' => $redirectUrl,
             'ipnUrl' => $ipnUrl,
             'lang' => 'vi',
@@ -175,8 +173,8 @@ class PaymentController extends Controller
     }
     public function checkout($gateway, $orderId)
     {
-        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG'; //Put your secret key in there
-        $accessKey = 'jier6A5LsUGsZXGn'; //Put your access key in there
+        $secretKey = env('MOMO_SECRET_KEY');
+        $accessKey = env('MOMO_ACCESS_KEY');
 
         $partnerCode = $_GET["partnerCode"];
         $requestId = $_GET["requestId"];
@@ -209,7 +207,7 @@ class PaymentController extends Controller
                     $reserveMeeting->update(['locked_at' => time()]);
                 }
 
-                if ($gateway === 'momopay') {
+                if ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
                     // if ($user->getAccountingCharge() < $order->total_amount) {
                     //     $order->update(['status' => Order::$paid]);
                     //     session()->put($this->order_session_key, $order->id);
@@ -218,7 +216,7 @@ class PaymentController extends Controller
                     $order->update([
                         'payment_method' => Order::$credit
                     ]);
-                    $this->setPaymentAccounting($order, 'momopay');
+                    $this->setPaymentAccounting($order, 'momopay', $requestId);
                     $order->update([
                         'status' => Order::$paid
                     ]);
@@ -271,11 +269,9 @@ class PaymentController extends Controller
                 } catch (\Exception $exception) {
                 }
             } else {
-                dd($message,1);
                 return view('web.default.pages.failCheckout');
             }
         }
-        dd($message,2 );
         return view('web.default.pages.failCheckout');
     }
 
@@ -363,12 +359,12 @@ class PaymentController extends Controller
         }
     }
 
-    public function setPaymentAccounting($order, $type = null)
+    public function setPaymentAccounting($order, $type = null, $requestId = null)
     {
         $cashbackAccounting = new CashbackAccounting();
 
         if ($order->is_charge_account) {
-            Accounting::charge($order);
+            Accounting::charge($order, $requestId);
 
             $cashbackAccounting->rechargeWallet($order);
         } else {
@@ -400,11 +396,11 @@ class PaymentController extends Controller
                 }
 
                 if (!empty($orderItem->subscribe_id)) {
-                    Accounting::createAccountingForSubscribe($orderItem, $type);
+                    Accounting::createAccountingForSubscribe($orderItem, $type, $requestId);
                 } elseif (!empty($orderItem->promotion_id)) {
-                    Accounting::createAccountingForPromotion($orderItem, $type);
+                    Accounting::createAccountingForPromotion($orderItem, $type, $requestId);
                 } elseif (!empty($orderItem->registration_package_id)) {
-                    Accounting::createAccountingForRegistrationPackage($orderItem, $type);
+                    Accounting::createAccountingForRegistrationPackage($orderItem, $type, $requestId);
 
                     if (!empty($orderItem->become_instructor_id)) {
                         BecomeInstructor::where('id', $orderItem->become_instructor_id)

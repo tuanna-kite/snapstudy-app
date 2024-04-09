@@ -23,6 +23,7 @@ return [
     'Hello' => 'Hello',
     'Account Balance' => 'Account Balance',
     'View all' => 'View all',
+    'You will find your courses here'=>'You will find your courses here',
     // Syllabus
     'Continue Learning' => 'Continue Learning',
     'Recently Viewed Products' => 'Recently Viewed Products',

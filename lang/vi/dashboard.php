@@ -24,7 +24,7 @@ return [
     'Hello' => 'Xin chào',
     'Account Balance' => 'Số dư tài khoản',
     'View all' => 'Xem tất cả',
-
+    'You will find your courses here' => 'Bạn sẽ tìm thấy các khóa học của bạn ở đây',
     // Syllabus
     'Continue Learning' => 'Tiếp tục Học',
     'Recently Viewed Products' => 'Sản phẩm đã Xem Gần đây',

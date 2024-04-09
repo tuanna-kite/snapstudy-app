@@ -9,20 +9,18 @@
                     {{ trans('dashboard.Continue Learning') }}
                 </h1>
                 <div class="flex flex-col md:flex-row items-start gap-6">
-                    <div class="w-full md:flex-1">
-                        @foreach ($learningWebinars as $key => $trending)
-                            @if ($key == 0)
-                                <x-documents.document-card :trending="$trending" />
-                            @else
-                                @continue
-                            @endif
-                        @endforeach
-                        <div class="flex flex-col gap-4 items-center md:flex-row">
-                            <img src="{{ asset('img/learn.png') }}" alt="character" class="w-full md:max-w-lg">
-                            <p class="font-semibold text-base text-text.light.secondary">
-                                {{ trans('dashboard.You will find your in-progress courses here') }}
-                            </p>
-                        </div>
+                    <div class="w-full md:w-1/2">
+                        @if (count($learningWebinars))
+                            @foreach ($learningWebinars as $key => $trending)
+                                @if ($key == 0)
+                                    <x-documents.document-card :trending="$trending" />
+                                @else
+                                    @continue
+                                @endif
+                            @endforeach
+                        @else
+                            <x-pages.my-syllabus.no-syllabus />
+                        @endif
                     </div>
                     <div class="w-full md:flex-1">
                         <x-pages.my-syllabus.status-card :countlearningWebinars="$countlearningWebinars" />

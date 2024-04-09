@@ -3,25 +3,25 @@
 
 @section('content')
     <x-layouts.dashboard-layout title="Document">
-        <div class="flex flex-1 md:flex-row bg-white rounded-3xl">
+        <div class="flex flex-1 flex-row bg-white rounded-3xl">
             {{-- Sidechat --}}
-            <div class="w-full md:max-w-80 md:border-r border-border-disabled">
-                <x-pages.my-document.sidechat :supports="$supports"/>
+            <div class="sm:max-w-80 border-r flex-shrink-0 border-border-disabled">
+                <x-pages.my-document.sidechat :supports="$supports" />
             </div>
             {{-- Content Chat --}}
-            @if(!empty($selectSupport))
-                <div class="flex-1 flex-col hidden md:flex">
+            <div class="flex-1 flex flex-col min-w-80">
+                @if (!empty($selectSupport))
                     <div class="border-b border-border-disabled">
                         <x-pages.my-document.headerchat :selectSupport="$selectSupport" />
                     </div>
                     <div class="flex-1">
-                        <x-pages.my-document.bodychat :selectSupport="$selectSupport"/>
+                        <x-pages.my-document.bodychat :selectSupport="$selectSupport" />
                     </div>
                     <div class="border-t border-border-disabled">
-                        <x-pages.my-document.bodychat.chat :selectSupport="$selectSupport"/>
+                        <x-pages.my-document.bodychat.chat :selectSupport="$selectSupport" />
                     </div>
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
     </x-layouts.dashboard-layout>
 @endsection

@@ -1,5 +1,5 @@
-<div class="rounded-3xl p-3" style="background: linear-gradient(61.28deg, #B0F6F6 -12.4%, #A1A5FC 99.19%);">
-    <div class="relative">
+<div class="rounded-3xl p-3 h-full" style="background: linear-gradient(61.28deg, #B0F6F6 -12.4%, #A1A5FC 99.19%);">
+    <div class="relative h-full flex flex-col justify-between">
         <div class="w-full md:w-5/12 mb-6 p-4">
             <h1 class="font-extrabold text-5xl text-text.light.primary">
                 {{ trans('dashboard.Hello') }} <br /> {{ $authUser->full_name }},
@@ -8,11 +8,11 @@
                 {{ trans('panel.have_event', ['count' => !empty($unReadNotifications) ? count($unReadNotifications) : 0]) }}
             </p>
             <a href="{{ route('Notification.index') }}"
-                class="mt-12 flex text-xs items-center bg-primary.main py-3 px-5 w-fit rounded-xl font-medium lg:text-base text-white hover:opacity-90">
+                class="mt-12 flex text-xs items-center bg-primary.main py-2 px-4 w-fit rounded-xl font-medium lg:text-base text-white hover:opacity-90">
                 {{ trans('panel.view_all_events') }} <x-component.icon name="end-icon" />
             </a>
+            <img src="img/character_11.png" alt="character" class="md:absolute w-80 md:right-3 md:-top-16">
         </div>
-        <img src="img/character_11.png" alt="character" class="md:absolute w-80 md:right-3 md:-top-16">
         <ul class="py-6 px-8 rounded-3xl bg-primary.lighter flex gap-1 justify-between relative z-10">
             <li class="flex flex-col justify-between">
                 <p class='text-sm md:text-base font-semibold text-text.light.primary'>

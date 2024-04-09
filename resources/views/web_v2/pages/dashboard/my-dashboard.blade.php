@@ -29,7 +29,13 @@
                     </a>
                 </div>
                 <div class="">
-                    <x-documents.document-grid :webinar="$webinars" />
+                    @if (count($webinars))
+                        <x-documents.document-grid :webinar="$webinars" />
+                    @else
+                        <div class="flex justify-center">
+                            <x-pages.dashboard.no-course />
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

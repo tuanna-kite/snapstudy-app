@@ -7,7 +7,7 @@
     <h1 class="font-bold text-3xl hidden lg:block text-text.light.primary">{{ $title }}</h1>
     <div class="flex items-center gap-6">
         <x-layouts.btn-language />
-        <div class="hidden md:block">
+        <div class="hidden md:flex">
             <x-search.search-header />
         </div>
         <div class="block md:hidden">

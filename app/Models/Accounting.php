@@ -489,7 +489,7 @@ class Accounting extends Model
         return true;
     }
 
-    public static function charge($order)
+    public static function charge($order, $requestId = null)
     {
         Accounting::create([
             'user_id' => $order->user_id,
@@ -497,6 +497,7 @@ class Accounting extends Model
             'type_account' => Order::$asset,
             'type' => Order::$addiction,
             'description' => trans('public.charge_account'),
+            'chargeId' => $requestId,
             'created_at' => time()
         ]);
 

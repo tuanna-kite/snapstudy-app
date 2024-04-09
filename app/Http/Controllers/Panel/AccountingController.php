@@ -145,8 +145,7 @@ class AccountingController extends Controller
                 'amount' => trans('update.the_amount_must_be_greater_than_0')
             ]);
         }else{
-//            $respone = $this->payment_momo($amount);
-            $respone = $this->payment_ATM($amount);
+            $respone = $this->payment_momo($amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);
             } else {
@@ -157,11 +156,11 @@ class AccountingController extends Controller
 
     public function payment_momo($amount)
     {
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $endpoint = env('MOMO_API_ENDPOINT');
 
-        $partnerCode = 'MOMOTCNN20240105_TEST';
-        $accessKey = 'jier6A5LsUGsZXGn';
-        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
+        $partnerCode = env('MOMO_PARTNER_CODE');
+        $accessKey = env('MOMO_ACCESS_KEY');
+        $secretKey = env('MOMO_SECRET_KEY');
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($amount) < 1000 ? 1000 : intval($amount);
 
@@ -197,53 +196,10 @@ class AccountingController extends Controller
         $jsonResult = json_decode($result, true);
         return $jsonResult;
     }
-
-    public function payment_ATM($amount)
-    {
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
-        $partnerCode = 'MOMOTCNN20240105_TEST';
-        $accessKey = 'jier6A5LsUGsZXGn';
-        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG';
-        $orderInfo = "Thanh toán qua MoMo";
-        $amount = intval($amount) < 1000 ? 1000 : intval($amount);
-
-        $orderId = "MOMO" . time();
-        $redirectUrl = route('momo.request-charge');
-        $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
-        $extraData = "";
-        $requestId = "MOMO" . time();
-         $requestType = "payWithATM";
-//        $requestType = "captureWallet";
-//         $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
-        //before sign HMAC SHA256 signature
-        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-        Log::info('Signature send: ' . $rawHash);
-        $signature = hash_hmac("sha256", $rawHash, $secretKey);
-        $data = array(
-            'partnerCode' => $partnerCode,
-            'partnerName' => "Test",
-            "storeId" => "MomoTestStore",
-            'requestId' => $requestId,
-            'amount' => $amount,
-            'orderId' => $orderId,
-            'orderInfo' => $orderInfo,
-            // "responseTime" => $responseTime,
-            'redirectUrl' => $redirectUrl,
-            'ipnUrl' => $ipnUrl,
-            'lang' => 'vi',
-            'extraData' => $extraData,
-            'requestType' => $requestType,
-            'signature' => $signature
-        );
-        $result = execPostRequest($endpoint, json_encode($data));
-        $jsonResult = json_decode($result, true);
-        return $jsonResult;
-    }
     public function request_charge()
     {
-        $secretKey = 'GbVJZy9XzirvQ6ENiMCcMKmZpYKj3SzG'; //Put your secret key in there
-        $accessKey = 'jier6A5LsUGsZXGn'; //Put your access key in there
+        $secretKey = env('MOMO_SECRET_KEY');
+        $accessKey = env('MOMO_ACCESS_KEY');
 
         $partnerCode = $_GET["partnerCode"];
         $requestId = $_GET["requestId"];
@@ -283,7 +239,7 @@ class AccountingController extends Controller
                 $accounting->chargeId = $orderId;
                 $accounting->save();
                 if($accounting->save()){
-                return redirect('/panel/financial/account')->with('msg', 'Nạp tiền thành công!');
+                return redirect(route('dashboard'))->with('msg', 'Nạp tiền thành công!');
                 }else{
                     return view('web.default.pages.failCheckout');
                 }

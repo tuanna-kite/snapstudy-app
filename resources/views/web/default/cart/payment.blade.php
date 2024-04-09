@@ -64,9 +64,9 @@
 
                 <div class="col-6 col-lg-4 mb-40 charge-account-radio">
                     <input type="radio" @if (empty($userCharge) or $total > $userCharge) disabled @endif name="gateway" id="offline"
-                        value="credit">
+                           value="credit">
                     <label for="offline"
-                        class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                           class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                         <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
                         <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
@@ -80,14 +80,45 @@
 
                 <div class="col-6 col-lg-4 mb-40 charge-account-radio">
                     <input type="radio" name="gateway" id="momopay"
-                        value="momopay">
+                           value="captureWallet">
+
                     <label for="momopay"
-                        class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                           class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                         <img src="/assets/default/img/activity/MoMo_Logo.png" width="120" height="60" alt="">
 
                         <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                             {{ trans('financial.pay_via') }}
                             <span class="font-weight-bold">Ví MoMo</span>
+                        </p>
+                        <span class="mt-5">{{ handlePrice($total)}}</span>
+                    </label>
+                </div>
+                <div class="col-6 col-lg-4 mb-40 charge-account-radio">
+                    <input type="radio" name="gateway" id="payWithATM"
+                           value="payWithATM">
+
+                    <label for="payWithATM"
+                           class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                        <img src="/assets/default/img/activity/MoMo_Logo.png" width="120" height="60" alt="">
+
+                        <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
+                            {{ trans('financial.pay_via') }}
+                            <span class="font-weight-bold">Thanh toán ATM</span>
+                        </p>
+                        <span class="mt-5">{{ handlePrice($total)}}</span>
+                    </label>
+                </div>
+                <div class="col-6 col-lg-4 mb-40 charge-account-radio">
+                    <input type="radio" name="gateway" id="payWithCC"
+                           value="payWithCC">
+
+                    <label for="payWithCC"
+                           class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                        <img src="/assets/default/img/activity/MoMo_Logo.png" width="120" height="60" alt="">
+
+                        <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
+                            {{ trans('financial.pay_via') }}
+                            <span class="font-weight-bold">Thanh toán Visa</span>
                         </p>
                         <span class="mt-5">{{ handlePrice($total)}}</span>
                     </label>
@@ -126,9 +157,9 @@
                     <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }}
                         {{ handlePrice($total) }}</span>
                     <a href="/panel/financial/account"
-                        class="font-16 btn btn-sm btn-primary">{{ trans('financial.top_up_your_wallet') }}</a>
+                       class="font-16 btn btn-sm btn-primary">{{ trans('financial.top_up_your_wallet') }}</a>
                     <button type="button" id="paymentSubmit" disabled
-                        class="btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
+                            class="btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
                 </div>
             </div>
 
@@ -141,9 +172,9 @@
                 <input type="hidden" name="total_payment" value="{{$total}}" id="">
                 <div class="d-flex align-items-center justify-content-between ">
                     <a href="/panel/financial/account"
-                        class="font-16 btn btn-sm btn-primary">{{ trans('financial.top_up_your_wallet') }}</a>
+                       class="font-16 btn btn-sm btn-primary">{{ trans('financial.top_up_your_wallet') }}</a>
                     <button type="button"name="payUrl" id="paymentSubmit" disabled
-                        class="btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
+                            class="btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
                 </div>
             </div>
         </form>
@@ -153,10 +184,10 @@
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZORPAY_API_KEY') }}"
-                    data-amount="{{ (int) ($order->total_amount * 100) }}" data-buttontext="product_price" data-description="Rozerpay"
-                    data-currency="{{ currency() }}" data-image="{{ $generalSettings['logo'] }}"
-                    data-prefill.name="{{ $order->user->full_name }}" data-prefill.email="{{ $order->user->email }}"
-                    data-theme.color="#43d477"></script>
+                        data-amount="{{ (int) ($order->total_amount * 100) }}" data-buttontext="product_price" data-description="Rozerpay"
+                        data-currency="{{ currency() }}" data-image="{{ $generalSettings['logo'] }}"
+                        data-prefill.name="{{ $order->user->full_name }}" data-prefill.email="{{ $order->user->email }}"
+                        data-theme.color="#43d477"></script>
             </form>
         @endif
     </section>

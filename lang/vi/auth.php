@@ -12,7 +12,7 @@ return [
     'throttle' => 'Quá nhiều lần đăng nhập. Vui lòng thử lại sau :giây.',
     'admin_panel' => 'Bảng điều khiển quản trị',
     'welcome' => 'Chào mừng',
-    'admin_tagline' => 'Vui lòng đăng nhập để kiểm soát và quản lý mọi thứ!',  
+    'admin_tagline' => 'Vui lòng đăng nhập để kiểm soát và quản lý mọi thứ!',
     'email' => 'Email',
     'mobile' => 'Số điện thoại',
     'country' => 'Quê quán',
@@ -30,8 +30,8 @@ return [
     'forget_password' => 'Khôi phục mật khẩu',
     'forget_your_password' => 'Quên mật khẩu?',
     'dont_have_account' => 'Don\'t have an account?',
-    'hint_password'=>'Vui lòng nhập mật khẩu của bạn',
-    'hint_email'=>'Vui lòng nhập địa chỉ email của bạn',
+    'hint_password' => 'Vui lòng nhập mật khẩu của bạn',
+    'hint_email' => 'Vui lòng nhập địa chỉ email của bạn',
     'remember_login' => 'Ghi nhớ đăng nhập',
     'role_admin' => 'Quản trị viên',
     'role_normal' => 'Người dùng',
@@ -74,7 +74,7 @@ return [
 
     'email_confirmation' => 'Email xác thực',
     'email_confirmation_template_body' => 'Để xác minh địa chỉ email của bạn: email., Nhập mã sau trên: Trang web trang web.',
-    'in' =>'Trong',
+    'in' => 'Trong',
 
     'verification' => 'xác minh',
     'account_verification' => 'Xác minh tài khoản',
@@ -88,6 +88,23 @@ return [
 
     'login_failed_your_account_is_not_verified' => 'Đăng nhập thất bại! Email/điện thoại của bạn không được xác minh.',
     'logout' => 'Đăng xuất',
-    'phone' => 'Số điện thoại'
+    'phone' => 'Số điện thoại',
+
+    // New Version
+    'Welcome back!' => 'Chào mừng trở lại!',
+    'Login to your account' => 'Đăng nhập vào tài khoản của bạn',
+    'Forgot password?' => 'Quên mật khẩu?',
+    'Login' => 'Đăng nhập',
+    'Do not have an account?' => 'Bạn chưa có tài khoản?',
+    'Sign up' => 'Đăng ký',
+    'Learn on your own time from top' => 'Học vào thời gian của bạn từ các',
+    'universities and businesses.' => 'trường đại học và doanh nghiệp hàng đầu.',
+    'Do you already have an account?' => 'Bạn đã có tài khoản chưa?',
+    'Email' => 'Email',
+    "Enter your email" => "Nhập email của bạn",
+    'Password' => 'Mật khẩu',
+    'Enter your password' => 'Nhập mật khẩu của bạn',
+    'Full Name' => 'Họ và tên',
+    'Enter your full name' => 'Nhập họ và tên của bạn'
 
 ];

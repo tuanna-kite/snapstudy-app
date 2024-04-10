@@ -1,20 +1,20 @@
 @php
     $fullNameInput = [
         'name' => 'fullName',
-        'label' => 'Full Name',
-        'placeholder' => 'Enter your full name',
+        'label' => trans('auth.Full Name'),
+        'placeholder' => trans('auth.Enter your full name'),
     ];
 
     $emailInput = [
         'name' => 'email',
-        'label' => 'Email',
-        'placeholder' => 'Enter your mail',
+        'label' => trans('auth.Email'),
+        'placeholder' => trans('auth.Enter your email'),
     ];
 
     $passwordInput = [
         'name' => 'password',
-        'label' => 'Password',
-        'placeholder' => 'Enter your password',
+        'label' => trans('auth.Password'),
+        'placeholder' => trans('auth.Enter your password'),
     ];
 
 @endphp
@@ -25,13 +25,14 @@
     </button>
     <div class="pb-12">
         <div class="text-center mb-6 space-y-2 ">
-            <h1 class="text-3xl text-text.light.primary">Sign up</h1>
-            <h3 class="text-sm text-text.light.secondary">Learn on your own time from top <br /> universities and
-                businesses.
+            <h1 class="text-3xl text-text.light.primary">{{ trans('auth.Sign up') }}</h1>
+            <h3 class="text-sm text-text.light.secondary">{{ trans('auth.Learn on your own time from top') }} <br />
+                {{ trans('auth.universities and businesses.') }}
             </h3>
         </div>
         <div>
-            <form method="post" action="/register"  class="px-12 sm:w-96">
+            {{-- TODO: check form field to post --}}
+            <form method="post" action="/register" class="px-12 sm:w-96">
                 {{-- Form input --}}
                 <div class="space-y-4">
                     <x-input.input-label :data="$fullNameInput" />
@@ -41,12 +42,13 @@
                 <div class="space-y-6">
                     <button type="submit" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white">
                         <span class="font-medium text-sm">
-                            Sign up
+                            {{ trans('auth.Sign up') }}
                         </span>
                     </button>
                     <p class="text-center text-sm text-text.light.primary">
-                        Do you already have an account? <button type="button" @click="page = 'login'"
-                            class="text-primary.main hover:underline">Login</button>
+                        {{ trans('auth.Do you already have an account?') }} <button type="button"
+                            @click="page = 'login'"
+                            class="text-primary.main hover:underline">{{ trans('auth.Login') }}</button>
                     </p>
                 </div>
             </form>

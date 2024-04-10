@@ -13,16 +13,18 @@
     class="sticky top-0 z-10 bg-white shadow">
     <div class="container mx-auto flex justify-between items-center h-20">
         <div class="flex items-center gap-2">
-            <div class="block sm:hidden">
-                <x-component.nav-mobile />
-            </div>
+            @if (auth()->check())
+                <div class="block sm:hidden">
+                    <x-component.nav-mobile />
+                </div>
+            @endif
             <a href="{{ route('home') }}">
                 <img src="{{ asset('img/logo/logo.png') }}" class="max-w-32 w-full" alt="Logo">
             </a>
         </div>
 
         <div class="flex items-center gap-6">
-            <x-layouts.btn-language />
+            <x-component.btn-language />
             @if (auth()->check())
                 <div class='flex items-center gap-6'>
                     <a href="{{ route('Notification.index') }}">

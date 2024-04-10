@@ -12,7 +12,7 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'admin_panel' => 'Admin Panel',
     'welcome' => 'Welcome to',
-    'admin_tagline' => 'Please login to control and manage everything!',  
+    'admin_tagline' => 'Please login to control and manage everything!',
     'email' => 'Email',
     'mobile' => 'Phone',
     'country' => 'Country',
@@ -30,8 +30,8 @@ return [
     'forget_password' => 'Password Recovery',
     'forget_your_password' => 'Forgot your password?',
     'dont_have_account' => 'Don\'t have an account?',
-    'hint_password'=>'Please type your password.',
-    'hint_email'=>'Please type your email.',
+    'hint_password' => 'Please type your password.',
+    'hint_email' => 'Please type your email.',
 
     'role_admin' => 'Admin',
     'role_normal' => 'User',
@@ -89,6 +89,22 @@ return [
 
     'login_failed_your_account_is_not_verified' => 'Login failed! Your email/phone not verified.',
     'logout' => 'Logout',
-    'phone' => 'Phone'
+    'phone' => 'Phone',
 
+    // New version
+    'Welcome back!' => 'Welcome back!',
+    'Login to your account' => 'Login to your account',
+    'Forgot password?' => 'Forgot password?',
+    'Login' => 'Login',
+    'Do not have an account?' => 'Do not have an account?',
+    'Sign up' => 'Sign up',
+    'Learn on your own time from top' => 'Learn on your own time from top',
+    'universities and businesses.' => 'universities and businesses.',
+    'Do you already have an account?' => 'Do you already have an account?',
+    'Email' => 'Email',
+    "Enter your email" => "Enter your email",
+    'Password' => 'Password',
+    'Enter your password' => 'Enter your password',
+    'Full Name'=>'Full Name',
+    'Enter your full name'=>'Enter your full name'
 ];

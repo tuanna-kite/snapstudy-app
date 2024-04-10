@@ -4,7 +4,7 @@
     <!-- Button to toggle the modal -->
     <button class="rounded-full px-6 py-1.5 bg-primary.main text-white" @click="showModal = true">
         <span class="font-medium text-sm">
-            Login
+            {{ trans('auth.Login') }}
         </span>
     </button>
 

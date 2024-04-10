@@ -1,33 +1,32 @@
 <div class="relative" style="background: #F02D00" id="card">
-    <div class="container mx-auto py-4 flex flex-col items-start md:flex-row justify-between md:items-center text-white">
-        <p class="font-bold text-2xl ">
+    <div
+        class="container mx-auto py-3.5 flex flex-col-reverse items-start md:flex-row justify-between md:items-center text-white">
+        <p class="text-base font-semibold md:text-2xl md:font-bold">
             All syllabus 144,000đ
         </p>
         <ul class="flex gap-1">
             <li class="text-center">
-                <p class="font-bold text-3xl" id='hours'>00</p>
+                <p class="font-semibold text-sm md:font-bold md:text-3xl" id='hours'>00</p>
                 <p class="font-normal text-xs">hours</p>
             </li>
             <div class="py-1">
                 •
             </div>
             <li class="text-center">
-                <p class="font-bold text-3xl" id='mins'>00</p>
+                <p class="font-semibold text-sm md:font-bold md:text-3xl" id='mins'>00</p>
                 <p class="font-normal text-xs">mins</p>
             </li>
             <div class="py-1">
                 •
             </div>
             <li class="text-center">
-                <p class="font-bold text-3xl" id='secs'>00</p>
+                <p class="font-semibold text-sm md:font-bold md:text-3xl" id='secs'>00</p>
                 <p class="font-normal text-xs">secs</p>
             </li>
         </ul>
     </div>
-    <button class="absolute right-4 top-1/2 transform -translate-y-1/2" id='closeBtn'>
-        <span class="text-white text-2xl">
-            x
-        </span>
+    <button class="flex absolute right-2 top-3 md:top-1/2 md:right-0 transform md:-translate-y-1/2" id='closeBtn'>
+        <x-component.material-icon name="close" class="text-white" />
     </button>
 </div>
 
@@ -39,7 +38,7 @@
         const countdownS = document.getElementById('secs');
 
         const currentDate = new Date();
-            // Set the countdown date to the next occurrence of a specific hour
+        // Set the countdown date to the next occurrence of a specific hour
         const targetHour = 14; // Set the target hour (24-hour format, e.g., 18 for 6 PM)
         let countdownDate = new Date(currentDate); // Clone the current date
         countdownDate.setHours(targetHour, 0, 0, 0);

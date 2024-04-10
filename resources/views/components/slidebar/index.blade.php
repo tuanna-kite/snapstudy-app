@@ -1,3 +1,5 @@
+@props(['padding' => 'p-4'])
+
 @php
     $listMenu = [
         [
@@ -42,6 +44,12 @@
             'href' => route('setting'),
             'tab' => null,
         ],
+        [
+            'icon' => 'logout',
+            'title' => trans('dashboard.Log out'),
+            'href' => route('logout'),
+            'tab' => null,
+        ],
     ];
 
     $currentUrl = url()->current();
@@ -54,12 +62,12 @@
 
 @endphp
 
-<nav class="p-2 md:p-8 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
+<nav class="p-2 md:p-6 space-y-4 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
     {{ $slot }}
-    <ul class="flex flex-col gap-3 mt-10 w-full overflow-y-auto" x-data="{ openTab: '{{ $currentUrl }}' }">
+    <ul class="flex flex-col gap-2 w-full overflow-y-auto" x-data="{ openTab: '{{ $currentUrl }}' }">
         @foreach ($listMenu as $menu)
             <li class="w-full">
-                <x-slidebar.card :menuItem="$menu" :currentUrl="$currentUrl" />
+                <x-slidebar.card :padding="$padding" :menuItem="$menu" :currentUrl="$currentUrl" />
             </li>
             @if ($loop->index === 4)
                 <hr class="border-t-1 border-gray-300">

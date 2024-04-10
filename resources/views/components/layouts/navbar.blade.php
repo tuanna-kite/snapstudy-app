@@ -1,4 +1,4 @@
-{{-- <x-layouts.notice-card /> --}}
+<x-layouts.notice-card />
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
     x-on:scroll.window="
        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -12,17 +12,28 @@
     }"
     class="sticky top-0 z-10 bg-white shadow">
     <div class="container mx-auto flex justify-between items-center h-20">
-        <a href="{{ route('home') }}">
-            <img src="{{ asset('img/logo/logo.png') }}" class="max-w-32 w-full" alt="Logo">
-        </a>
-
         <div class="flex items-center gap-2">
+            <div class="block sm:hidden">
+                <x-component.nav-mobile />
+            </div>
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('img/logo/logo.png') }}" class="max-w-32 w-full" alt="Logo">
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6">
             <x-layouts.btn-language />
-            @if (!auth()->check())
-                <a href="/panel"
-                    class="flex cursor-pointer hover:opacity-90 rounded-full py-1.5 px-3 sm:px-8 bg-primary.main">
-                    <span class="font-medium text-sm text-white">{{ trans('header.Dashboard') }}</span>
-                </a>
+            @if (auth()->check())
+                <div class='flex items-center gap-6'>
+                    <a href="{{ route('Notification.index') }}">
+                        <button class="flex justify-center items-center p-2 rounded-full" onclick="handleClick()">
+                            <x-component.material-icon name="notifications_none" />
+                        </button>
+                    </a>
+                    <div class="hidden sm:block">
+                        <x-component.avatar />
+                    </div>
+                </div>
             @else
                 <x-auth.btn-login />
             @endif

@@ -11,7 +11,7 @@
                 class="mt-12 flex text-xs items-center bg-primary.main py-2 px-4 w-fit rounded-xl font-medium lg:text-base text-white hover:opacity-90">
                 {{ trans('panel.view_all_events') }} <x-component.icon name="end-icon" />
             </a>
-            <img src="img/character_11.png" alt="character" class="md:absolute w-80 md:right-3 md:-top-16">
+            <img src="img/character_11.png" alt="character" class="md:absolute w-72 md:right-3 md:-top-8">
         </div>
         <ul class="py-6 px-8 rounded-3xl bg-primary.lighter flex gap-1 justify-between relative z-10">
             <li class="flex flex-col justify-between">

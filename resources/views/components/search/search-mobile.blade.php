@@ -1,4 +1,6 @@
-<div x-data="{ showModal: false }">
+<div x-data="{ showModal: false }" x-init="$watch('showModal', value => {
+    document.body.style.overflow = value ? 'hidden' : 'auto';
+})">
     <!-- Button to toggle the modal -->
     <button class="flex" @click="showModal = true">
         <x-component.material-icon name='search' />

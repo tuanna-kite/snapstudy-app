@@ -1,4 +1,4 @@
-@props(['menuItem', 'currentUrl'])
+@props(['menuItem', 'currentUrl', 'padding' => 'p-4'])
 
 @php
     $tempCurrentUrl = url()->current();
@@ -13,8 +13,8 @@
                 'bg-primary.light': openTab === {{ json_encode($menuItem['href']) }},
             }"
                 class="min-w-48 flex gap-3 p-0.5 items-center rounded-xl hover:bg-primary.light">
-                <div class="p-4 bg-white rounded-xl">
-                    <x-component.icon name="menu" width="24" height="24" />
+                <div class="{{ $padding }} bg-white rounded-xl">
+                    <x-component.icon name="{{ $menuItem['icon'] }}" width="20" height="20" />
                 </div>
                 <div>
                     <span class="font-semibold text-sm text-text.light.disabled ">
@@ -29,8 +29,8 @@
                 'bg-primary.light': openTab === {{ json_encode($menuItem['href']) }},
             }"
                 class="min-w-48 flex gap-3 p-0.5 items-center rounded-xl hover:bg-primary.light">
-                <div class="p-4 bg-white rounded-xl">
-                    <x-component.icon name="menu" width="24" height="24" />
+                <div class="{{ $padding }} bg-white rounded-xl">
+                    <x-component.icon name="{{ $menuItem['icon'] }}" width="20" height="20" />
                 </div>
                 <div>
                     <span class="font-semibold text-sm text-text.light.disabled ">

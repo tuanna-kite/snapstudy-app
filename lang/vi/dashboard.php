@@ -19,7 +19,7 @@ return [
     'My Learning' => 'Học tập của tôi',
     'New' => 'Mới',
     'Document' => 'Tài liệu',
-
+    'Log out' => 'Đăng xuất',
     // Dashboard
     'Hello' => 'Xin chào',
     'Account Balance' => 'Số dư tài khoản',

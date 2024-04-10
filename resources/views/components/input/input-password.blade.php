@@ -18,7 +18,7 @@
         <label for="{{ $data['name'] }}" class="text-sm text-text.light.primary"> {{ $data['label'] }}</label>
     @endif
     <div class="px-3 py-4 border rounded-lg w-full flex items-center bg-white justify-between">
-        <input x-bind:type="inputType" class="flex-1" name="{{ $data['name'] }}"
+        <input x-bind:type="inputType" class="flex-1" name="{{ $data['name'] }}" id="{{ $data['name'] }}"
             type="{{ $data['type'] ?? 'password' }}" placeholder="{{ $data['placeholder'] }}">
         <button type="button" @click="inputType = (inputType === 'text') ? 'password' : 'text'">
             <x-component.icon name='ic_eye' width='24' height='24' />

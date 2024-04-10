@@ -10,7 +10,7 @@
 
 <label class="card relative bg-white rounded-2xl border-2 p-2 hover:shadow-lg">
     <div class="text-end">
-        <input class="radio checked:accent-secondary.main" name="{{ $data['name'] }}" type="radio">
+        <input class="radio checked:accent-secondary.main" name="{{ $data['name'] }}" value="{{ $data['value'] }}" type="radio">
     </div>
     <div class="flex flex-col items-center gap-3 pb-6">
         <img src="{{ $data['img'] }}" class="w-36 h-12" />

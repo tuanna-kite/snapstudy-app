@@ -106,5 +106,7 @@ return [
     'Password' => 'Password',
     'Enter your password' => 'Enter your password',
     'Full Name'=>'Full Name',
-    'Enter your full name'=>'Enter your full name'
+    'Enter your full name'=>'Enter your full name',
+    'Old password' => 'Old password',
+    'New password' => 'New password',
 ];

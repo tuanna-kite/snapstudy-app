@@ -23,10 +23,11 @@
         </div>
         <div>
             {{-- TODO: check form field to post --}}
-            <form method="post" action="/login" class="px-12 sm:w-96">
+            <div class="px-12 sm:w-96">
                 <div class="space-y-4">
                     <x-input.input-label :data="$emailInput" />
                     <x-input.input-password :data="$passwordInput" />
+                    <div id="errorContainer" style="color: red;"></div>
                     <div>
                         <a href="#">
                             <span class="text-sm text-primary.main">
@@ -36,17 +37,51 @@
                     </div>
                 </div>
                 <div class="space-y-6">
-                    <button type="submit" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white">
+                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white" id="loginBtn">
                         <span class="font-medium text-sm">
                             {{ trans('auth.Login') }}
                         </span>
                     </button>
                     <p class="text-center text-sm text-text.light.primary">
                         {{ trans('auth.Do not have an account?') }} <button type="button" @click="page = 'signup'"
-                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
+                                                                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
                     </p>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+    @push('scripts_bottom')
+        <script>
+            document.getElementById("loginBtn").addEventListener("click", function() {
+                var formData = {
+                    email: document.getElementById("email").value,
+                    password: document.getElementById("password").value,
+                    _token: '{{ csrf_token() }}'
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('popupLogin') }}",
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success) {
+                            window.location.href = '{{ route('home') }}';
+                        } else {
+                            // Display validation errors
+                            var errorContainer = document.getElementById("errorContainer");
+                            errorContainer.innerHTML = ''; // Clear previous errors
+                            for (var error in data.errors) {
+                                console.log(data.errors[error]);
+                                errorContainer.innerHTML += '<p>' + data.errors[error] + '</p>';
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
+            });
+        </script>
+@endpush

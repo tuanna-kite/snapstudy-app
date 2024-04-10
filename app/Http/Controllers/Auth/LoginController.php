@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -101,6 +102,33 @@ class LoginController extends Controller
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    public function popupLogin(Request $request)
+    {
+//        $rules = [
+//            'email' => 'required|email|exists:users,email',
+//            'password' => 'required|min:6',
+//        ];
+//
+//
+//        $this->validate($request, $rules);
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
+        }
+
+        if ($this->attemptLogin($request)) {
+            return $this->afterLogged($request);
+        }
+
+        return response()->json(['success' => false, 'errors' => ['password' => 'Invalid credentials']]);
+//        return $this->sendFailedLoginResponse($request);
     }
 
     public function logout(Request $request)

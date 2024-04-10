@@ -30,11 +30,11 @@
                     <div class="w-full rounded-3xl space-x-8 p-6 bg-white font-bold text-lg">
                         <span class=" text-text.light.primary">Top up:</span>
                         <span class=" text-primary.main">
-                            500,000 VND
+                            {{ handlePrice($total) }}
                         </span>
                     </div>
                     <div class="w-full">
-                        <x-pages.payment.method />
+                        <x-pages.payment.method :order="$order"/>
                     </div>
                 </div>
             @endif

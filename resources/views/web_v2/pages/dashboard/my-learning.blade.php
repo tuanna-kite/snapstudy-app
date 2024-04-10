@@ -15,13 +15,13 @@
                 <x-documents.document-grid :webinar="$webinars" />
             </x-slot>
 
-            <x-slot name="tab2">
-                <h1>i'm Inprogress</h1>
-            </x-slot>
+{{--            <x-slot name="tab2">--}}
+{{--                <h1>i'm Inprogress</h1>--}}
+{{--            </x-slot>--}}
 
-            <x-slot name="tab3">
-                <h1>i'm Completed</h1>
-            </x-slot>
+{{--            <x-slot name="tab3">--}}
+{{--                <h1>i'm Completed</h1>--}}
+{{--            </x-slot>--}}
             {{-- {{ $webinars->appends(request()->input())->links('components.pagination.dashboard') }} --}}
         </x-tab>
     </x-layouts.dashboard-layout>

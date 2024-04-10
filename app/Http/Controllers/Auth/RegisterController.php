@@ -99,10 +99,10 @@ class RegisterController extends Controller
             'country_code' => ($registerMethod == 'mobile') ? 'required' : 'nullable',
             'mobile' => (($registerMethod == 'mobile') ? 'required' : 'nullable').'|numeric|unique:users',
             'email' => (($registerMethod == 'email') ? 'required' : 'nullable').'|email|max:255|unique:users',
-            'term' => 'required',
+//            'term' => 'required',
             'full_name' => 'required|string|min:3',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required|same:password',
+            'password' => 'required|string|min:6',
+//            'password_confirmation' => 'required|same:password',
             'referral_code' => 'nullable|exists:affiliates_codes,code'
         ];
 

@@ -29,7 +29,7 @@
                     {{ trans('dashboard.Account Balance') }}
                 </h2>
                 <p class="font-bold text-3xl text-secondary.main">
-                    {{ $accountCharge ? handlePrice($accountCharge) : 0 }} VNĐ
+                    {{ $accountCharge ? handlePrice($accountCharge) : '0 VND' }}
                 </p>
             </div>
 

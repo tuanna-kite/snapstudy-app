@@ -46,9 +46,10 @@ Route::get('/emergencyDatabaseUpdate', function () {
 Route::group(['namespace' => 'Auth', 'middleware' => ['check_mobile_app', 'share', 'check_maintenance']], function () {
     Route::get('/login', 'LoginController@showLoginForm');
     Route::post('/login', 'LoginController@login')->name('login');
+    Route::post('/popup-login', 'LoginController@popupLogin')->name('popupLogin');
     Route::get('/logout', 'LoginController@logout')->name('logout');
     Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
-    Route::post('/register', 'RegisterController@register');
+    Route::post('/register', 'RegisterController@register')->name('register');
     Route::post('/register/form-fields', 'RegisterController@getFormFieldsByUserType');
     Route::get('/verification', 'VerificationController@index');
     Route::post('/verification', 'VerificationController@confirmCode');
@@ -199,7 +200,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::group(['prefix' => 'payments'], function () {
-        Route::post('/payment-request', 'PaymentController@paymentRequest');
+        Route::post('/payment-request', 'PaymentController@paymentRequest')->name('payment.request');
         Route::get('/momo-checkout/{gateway}/{orderId}', 'PaymentController@checkout')->name('momo.checkout');
         Route::get('/verify/{gateway}', ['as' => 'payment_verify', 'uses' => 'PaymentController@paymentVerify']);
         Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);

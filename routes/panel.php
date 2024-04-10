@@ -235,7 +235,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/summary', 'AccountingController@index')->name('financial.summary');
         Route::get('/payout', 'PayoutController@index');
         Route::post('/request-payout', 'PayoutController@requestPayout');
-        Route::get('/account', 'AccountingController@account');
+        Route::get('/account', 'AccountingController@account')->name('financial.account');
         Route::post('/account-post', 'AccountingController@charge')->name('charge.pay');
         // Route::get('/account/payout', 'AccountingController@accountPayout');
         Route::post('/account/cancel/{id}', 'AccountingController@cancelRequest');

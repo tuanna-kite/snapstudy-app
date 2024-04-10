@@ -325,7 +325,7 @@ class SupportsController extends Controller
 //        if (!empty($data['department_id'])) {
 //            $url = '/panel/support/tickets';
 //        }
-        return redirect(route('support.home'));
+        return redirect(route('support.tickets'));
     }
 
     public function storeConversations(Request $request, $id)

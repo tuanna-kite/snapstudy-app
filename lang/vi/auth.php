@@ -105,6 +105,8 @@ return [
     'Password' => 'Mật khẩu',
     'Enter your password' => 'Nhập mật khẩu của bạn',
     'Full Name' => 'Họ và tên',
-    'Enter your full name' => 'Nhập họ và tên của bạn'
+    'Enter your full name' => 'Nhập họ và tên của bạn',
+    'Old password' => 'Mật khẩu cũ',
+    'New password' => 'Mật khẩu mới',
 
 ];

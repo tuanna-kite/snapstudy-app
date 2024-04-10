@@ -1,18 +1,18 @@
 @php
     $fullNameInput = [
-        'name' => 'fullName',
+        'name' => 'full_name',
         'label' => trans('auth.Full Name'),
         'placeholder' => trans('auth.Enter your full name'),
     ];
 
     $emailInput = [
-        'name' => 'email',
+        'name' => 'email_signup',
         'label' => trans('auth.Email'),
         'placeholder' => trans('auth.Enter your email'),
     ];
 
     $passwordInput = [
-        'name' => 'password',
+        'name' => 'password_signup',
         'label' => trans('auth.Password'),
         'placeholder' => trans('auth.Enter your password'),
     ];
@@ -32,15 +32,16 @@
         </div>
         <div>
             {{-- TODO: check form field to post --}}
-            <form method="post" action="/register" class="px-12 sm:w-96">
+            <form method="post" action="{{ route('register') }}" class="px-12 sm:w-96">
                 {{-- Form input --}}
                 <div class="space-y-4">
                     <x-input.input-label :data="$fullNameInput" />
                     <x-input.input-label :data="$emailInput" />
                     <x-input.input-password :data="$passwordInput" />
                 </div>
+                <div id="errorSignup" style="color: red;"></div>
                 <div class="space-y-6">
-                    <button type="submit" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white">
+                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white" id="signupbtn">
                         <span class="font-medium text-sm">
                             {{ trans('auth.Sign up') }}
                         </span>
@@ -55,3 +56,40 @@
         </div>
     </div>
 </div>
+
+@push('scripts_bottom')
+    <script>
+        document.getElementById("signupbtn").addEventListener("click", function() {
+            var formData = {
+                full_name: document.getElementById("full_name").value,
+                email: document.getElementById("email_signup").value,
+                password: document.getElementById("password_signup").value,
+                _token: '{{ csrf_token() }}'
+            };
+            console.log(formData);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('register') }}",
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success) {
+                        window.location.href = '{{ route('home') }}';
+                    } else {
+                        // Display validation errors
+                        var errorContainer = document.getElementById("errorSignup");
+                        errorContainer.innerHTML = ''; // Clear previous errors
+                        for (var error in data.errors) {
+                            console.log(data.errors[error]);
+                            errorContainer.innerHTML += '<p>' + data.errors[error] + '</p>';
+                        }
+                    }
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    </script>
+@endpush

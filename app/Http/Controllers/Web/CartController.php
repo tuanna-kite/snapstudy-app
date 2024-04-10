@@ -50,7 +50,8 @@ class CartController extends Controller
 
             if (!empty($hasPhysicalProduct) and count($hasPhysicalProduct)) {
                 foreach ($hasPhysicalProduct as $physicalProductCart) {
-                    if (!empty($physicalProductCart->productOrder) and
+                    if (
+                        !empty($physicalProductCart->productOrder) and
                         !empty($physicalProductCart->productOrder->product) and
                         !empty($physicalProductCart->productOrder->product->delivery_estimated_time) and
                         $physicalProductCart->productOrder->product->delivery_estimated_time > $deliveryEstimateTime
@@ -84,6 +85,7 @@ class CartController extends Controller
                 $data = array_merge($data, $this->getLocationsData($user));
 
                 return view('web.default.cart.cart', $data);
+
             }
         }
 
@@ -483,7 +485,8 @@ class CartController extends Controller
                     'previousUrl' => url()->previous(),
                 ];
 
-                return view(getTemplate() . '.cart.payment', $data);
+                // return view(getTemplate() . '.cart.payment', $data);
+                return view('web_v2.pages.payment', $data);
             } else {
                 return $this->handlePaymentOrderWithZeroTotalAmount($order);
             }
@@ -638,7 +641,7 @@ class CartController extends Controller
             $commission = 0;
 
             if (!empty($financialSettings) and !empty($financialSettings['commission'])) {
-                $commission = (int)$financialSettings['commission'];
+                $commission = (int) $financialSettings['commission'];
             }
         }
 

@@ -18,6 +18,7 @@
     @else
         <label for="{{ $data['name'] }}" class="text-sm text-text.light.primary"> {{ $data['label'] }}</label>
     @endif
-    <input class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" id="{{ $data['name'] }}"
-        type="{{ $data['type'] ?? 'text' }}" name="{{ $data['name'] }}" placeholder="{{ $data['placeholder'] }}" {{ old($data['name']) }}>
+    <input class="px-3 py-4 border rounded-lg w-full border-grey-300" id="{{ $data['name'] }}"
+        type="{{ $data['type'] ?? 'text' }}" name="{{ $data['name'] }}" placeholder="{{ $data['placeholder'] }}"
+        {{ old($data['name']) }}>
 </div>

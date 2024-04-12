@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'web.default.pages.home1');
+// Route::view('/', 'web_v2');
 
 
 Route::group(['prefix' => 'my_api', 'namespace' => 'Api\Panel', 'middleware' => 'signed', 'as' => 'my_api.web.'], function () {
@@ -81,6 +81,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::post('/set-currency', 'SetCurrencyController@setCurrency');
 
     Route::get('/', 'HomeController@index')->name('home');
+
+    Route::view('/outline', 'web_v2.pages.outline');
 
     Route::get('/getDefaultAvatar', 'DefaultAvatarController@make');
 

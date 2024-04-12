@@ -106,14 +106,6 @@ class LoginController extends Controller
 
     public function popupLogin(Request $request)
     {
-//        $rules = [
-//            'email' => 'required|email|exists:users,email',
-//            'password' => 'required|min:6',
-//        ];
-//
-//
-//        $this->validate($request, $rules);
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
             'password' => 'required|min:6',
@@ -122,13 +114,11 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
         }
-
         if ($this->attemptLogin($request)) {
             return $this->afterLogged($request);
         }
 
         return response()->json(['success' => false, 'errors' => ['password' => 'Invalid credentials']]);
-//        return $this->sendFailedLoginResponse($request);
     }
 
     public function logout(Request $request)
@@ -300,7 +290,7 @@ class LoginController extends Controller
         }
 
         $user->update([
-            'logged_count' => (int)$user->logged_count + 1
+            'logged_count' => (int) $user->logged_count + 1
         ]);
 
         $cartManagerController = new CartManagerController();
@@ -309,7 +299,7 @@ class LoginController extends Controller
         if ($user->isAdmin()) {
             return redirect(getAdminPanelUrl() . '');
         } else {
-            return redirect('/');
+            return response()->json(['success' => true]);
         }
     }
 

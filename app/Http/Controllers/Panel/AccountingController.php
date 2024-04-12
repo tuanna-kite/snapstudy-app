@@ -34,11 +34,15 @@ class AccountingController extends Controller
                 'promotion',
                 'subscribe',
                 'meetingTime' => function ($query) {
-                    $query->with(['meeting' => function ($query) {
-                        $query->with(['creator' => function ($query) {
-                            $query->select('id', 'full_name');
-                        }]);
-                    }]);
+                    $query->with([
+                        'meeting' => function ($query) {
+                            $query->with([
+                                'creator' => function ($query) {
+                                    $query->select('id', 'full_name');
+                                }
+                            ]);
+                        }
+                    ]);
                 }
             ])
             ->orderBy('created_at', 'desc')
@@ -126,14 +130,14 @@ class AccountingController extends Controller
 
     public function charge(Request $request)
     {
-
-        $rules = [
-            'amount' => 'required|numeric|min:1000'
-        ];
-
-        $this->validate($request, $rules);
-
+        // Remove Commas
         $amount = $request->input('amount');
+        $amount = (str_replace(',', '', $amount));
+        // NOTE: when add validation, it's auto refresh and not pass over validation
+        // $rules = [
+        //     'amount' => 'required|numeric|min:1000'
+        // ];
+        // $this->validate($request, $rules);
         $userId = auth()->user()->id;
 
         // $gateway = $request->input('gateway');
@@ -144,7 +148,7 @@ class AccountingController extends Controller
             return back()->withErrors([
                 'amount' => trans('update.the_amount_must_be_greater_than_0')
             ]);
-        }else{
+        } else {
             $respone = $this->payment_momo($amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);
@@ -238,9 +242,9 @@ class AccountingController extends Controller
                 $accounting->created_at = time();
                 $accounting->chargeId = $orderId;
                 $accounting->save();
-                if($accounting->save()){
-                return redirect(route('dashboard'))->with('msg', 'Nạp tiền thành công!');
-                }else{
+                if ($accounting->save()) {
+                    return redirect(route('dashboard'))->with('msg', 'Nạp tiền thành công!');
+                } else {
                     return view('web.default.pages.failCheckout');
                 }
             } else {
@@ -250,7 +254,7 @@ class AccountingController extends Controller
         return view('web.default.pages.failCheckout');
     }
 
-    public function cancelRequest(Request  $request, $id)
+    public function cancelRequest(Request $request, $id)
     {
 
         $status = $request->status;
@@ -275,7 +279,7 @@ class AccountingController extends Controller
 
         $path = $path . '/' . $name;
 
-        $storage->put($path, (string)$img->encode());
+        $storage->put($path, (string) $img->encode());
 
         return $name;
     }
@@ -290,7 +294,7 @@ class AccountingController extends Controller
             <script src="/assets/default/js/app.js"></script>
             <script src="https://checkout.razorpay.com/v1/checkout.js"
                     data-key="' . env('RAZORPAY_API_KEY') . '"
-                    data-amount="' . (int)($order->total_amount * 100) . '"
+                    data-amount="' . (int) ($order->total_amount * 100) . '"
                     data-buttontext="product_price"
                     data-description="Rozerpay"
                     data-currency="' . currency() . '"

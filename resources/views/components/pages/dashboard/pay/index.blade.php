@@ -8,10 +8,13 @@
             <div class="flex gap-3 mb-10">
                 <div
                     class="flex flex-1 justify-between items-center border border-solid text-text.light.disabled py-1.5 px-3 rounded-xl">
-                    <input type="text" name="currency-field" id="currency-field" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
-                        value="" data-type="currency" placeholder="{{ trans('panel.number_only') }}"
-                        name="amount" min="10000" class="flex-1 @error('amount') is-invalid @enderror"
+                    <input type="text" name="amount" id="amount" value="" data-type="amount"
+                        placeholder="{{ trans('panel.number_only') }}" min="10000"
+                        class="flex-1 @error('amount') is-invalid @enderror"
                         value="{{ !empty($editOfflinePayment) ? $editOfflinePayment->amount : old('amount') }}">
+                    {{-- <input type="number" placeholder="{{ trans('panel.number_only') }}" name="amount" min="10000"
+                        class="flex-1 @error('amount') is-invalid @enderror"
+                        value="{{ !empty($editOfflinePayment) ? $editOfflinePayment->amount : old('amount') }}"> --}}
                     <div class="px-2 pb-0.5 rounded-full bg-gray-300">
                         <span class="text-xs font-bold text-gray-800">
                             VNĐ
@@ -39,7 +42,7 @@
 
 @push('scripts_bottom')
     <script>
-        document.querySelectorAll("input[data-type='currency']").forEach(function(input) {
+        document.querySelectorAll("input[data-type='amount']").forEach(function(input) {
             input.addEventListener('keyup', function() {
                 formatCurrency(this);
             });
@@ -75,6 +78,7 @@
             var updated_len = input_val.length;
             caret_pos = updated_len - original_len + caret_pos;
             input.setSelectionRange(caret_pos, caret_pos);
+            console.log(input.value, "number test", 500)
         }
     </script>
 @endpush

@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Material-UI Icons CSS via CDN -->
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
-
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"> --}}
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- Include Alpine.js via CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 

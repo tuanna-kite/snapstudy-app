@@ -1,6 +1,6 @@
 @props(['name'])
 
 
-<span {{ $attributes->merge(['class' => 'material-icons-round', 'style' => '']) }}>
+<span {{ $attributes->merge(['class' => 'material-symbols-rounded', 'style']) }}>
     {{ $name }}
 </span>

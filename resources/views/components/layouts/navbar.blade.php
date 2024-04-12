@@ -29,7 +29,7 @@
                 <div class='flex items-center gap-6'>
                     <a href="{{ route('Notification.index') }}">
                         <button class="flex justify-center items-center p-2 rounded-full" onclick="handleClick()">
-                            <x-component.material-icon name="notifications_none" />
+                            <x-component.material-icon name="notifications" />
                         </button>
                     </a>
                     <div class="hidden sm:block">

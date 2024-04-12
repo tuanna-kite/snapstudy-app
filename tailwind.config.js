@@ -30,19 +30,23 @@ export default {
 
 
                 // Secondary
-                'secondary.main': '#C92D39',
+                'secondary.main': '#F02D00',
 
                 // Text Color
                 'text.light.primary': '#212B36',
                 'text.light.secondary': '#637381',
                 'text.light.disabled': '#919EAB',
-
+                'action.light.disabled': '#919EABCC',
                 // Grey
                 "light-neutral": "#F4F6F8",
                 "light-gray": "#EBEDF5",
                 "grey-300": "#DFE3E8",
                 "grey-400": "#C4CDD5",
-                "border-disabled":'#919EAB3D'
+                // border
+                'components.input.outlined': '#919EAB52',
+                "border-disabled": '#919EAB3D',
+
+
 
             },
         },

@@ -28,6 +28,8 @@
                     {{ trans('home.Search for outlines') }}
                 </h1>
                 <x-pages.home.majors />
+                {{-- TODO: Change to school view --}}
+                {{-- <x-pages.home.schools /> --}}
                 <h1
                     class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
                     {{ trans('home.We have solutions') }}

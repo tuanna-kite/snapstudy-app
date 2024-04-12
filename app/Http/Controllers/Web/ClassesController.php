@@ -19,6 +19,7 @@ class ClassesController extends Controller
 
     public function index(Request $request)
     {
+        $school_id = $request->school;
         $webinarsQuery = Webinar::where('webinars.status', 'active')
             ->where('private', false);
 
@@ -29,13 +30,12 @@ class ClassesController extends Controller
             $this->columnId = 'bundle_id';
         }
 
-
         $slugSchool = 'RMIT';
         $schools = Category::where('parent_id', function ($query) use ($slugSchool) {
             $query->select('id')->from('categories')->where('slug', $slugSchool);
         })->pluck('slug')->toArray();
 
-        $categoriesAll = Category::all()->toArray();
+        $categoriesAll = Category::where('parent_id', $school_id)->get()->toArray();
 
         // $slugMajor = 'majors';
         // $majors = Category::where('parent_id', function ($query) use ($slugMajor) {

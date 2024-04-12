@@ -376,6 +376,9 @@ class HomeController extends Controller
             }
         }
 
+        $category = Category::whereNull('parent_id')
+            ->get();
+
         $data = [
             'pageTitle' => $pageTitle,
             'pageDescription' => $pageDescription,
@@ -408,6 +411,7 @@ class HomeController extends Controller
             'rewardProgramSection' => $rewardProgramSection ?? null,
             'becomeInstructorSection' => $becomeInstructorSection ?? null,
             'forumSection' => $forumSection ?? null,
+            'category' => $category,
         ];
 
         return view('web_v2.pages.home', $data);

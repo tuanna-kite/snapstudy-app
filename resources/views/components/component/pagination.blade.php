@@ -1,15 +1,28 @@
-<div class="px-2 py-2.5 rounded-b-3xl bg-white flex justify-end border-t" style="border-color: #DFE3E8">
-    <div class="flex items-center gap-6">
-        <p class="font-normal text-sm text-text.light.primary">
-            1 - 8 of 11
-        </p>
-        <div class="flex items-center gap-2">
-            <button class="p-2">
-                <x-component.icon name='icon-left' width="20" height="20" />
-            </button>
-            <button class="p-2">
-                <x-component.icon name='icon-right' width="20" height="20" />
-            </button>
-        </div>
-    </div>
-</div>
+@if ($paginator->hasPages())
+    <nav aria-label="...">
+        <ul class="pagination">
+            {{-- Previous Page Link --}}
+            @if ($paginator->onFirstPage())
+                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                </li>
+            @endif
+
+            {{-- Next Page Link --}}
+            @if ($paginator->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</a>
+                </li>
+            @else
+                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                    <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
+@endif
+

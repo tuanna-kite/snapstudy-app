@@ -1020,9 +1020,6 @@ video {
 .min-h-\[350px\] {
   min-height: 350px;
 }
-.min-h-80 {
-  min-height: 20rem;
-}
 .w-1\/4 {
   width: 25%;
 }
@@ -1075,17 +1072,14 @@ video {
 .w-screen {
   width: 100vw;
 }
-.w-80 {
-  width: 20rem;
-}
-.w-1\/2 {
-  width: 50%;
-}
 .min-w-24 {
   min-width: 6rem;
 }
 .min-w-48 {
   min-width: 12rem;
+}
+.min-w-56 {
+  min-width: 14rem;
 }
 .min-w-64 {
   min-width: 16rem;
@@ -1095,9 +1089,6 @@ video {
 }
 .min-w-full {
   min-width: 100%;
-}
-.min-w-56 {
-  min-width: 14rem;
 }
 .max-w-32 {
   max-width: 8rem;
@@ -1114,14 +1105,11 @@ video {
 .max-w-\[960px\] {
   max-width: 960px;
 }
-.max-w-screen-lg {
-  max-width: 1024px;
-}
-.max-w-xs {
-  max-width: 20rem;
-}
 .max-w-full {
   max-width: 100%;
+}
+.max-w-screen-lg {
+  max-width: 1024px;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -1131,9 +1119,6 @@ video {
 }
 .flex-shrink-0 {
   flex-shrink: 0;
-}
-.flex-shrink {
-  flex-shrink: 1;
 }
 .flex-grow-0 {
   flex-grow: 0;
@@ -1357,6 +1342,10 @@ video {
 .rounded-xl {
   border-radius: 0.75rem;
 }
+.rounded-b-2xl {
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 .rounded-b-3xl {
   border-bottom-right-radius: 1.5rem;
   border-bottom-left-radius: 1.5rem;
@@ -1372,10 +1361,6 @@ video {
 .rounded-t-3xl {
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
-}
-.rounded-b-2xl {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
 }
 .rounded-tr-3xl {
   border-top-right-radius: 1.5rem;
@@ -2041,10 +2026,6 @@ video {
     max-width: 20rem;
   }
 
-  .sm\:max-w-full {
-    max-width: 100%;
-  }
-
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2166,10 +2147,6 @@ video {
     width: 100%;
   }
 
-  .md\:min-w-80 {
-    min-width: 20rem;
-  }
-
   .md\:max-w-80 {
     max-width: 20rem;
   }
@@ -2180,14 +2157,6 @@ video {
 
   .md\:max-w-md {
     max-width: 28rem;
-  }
-
-  .md\:max-w-xs {
-    max-width: 20rem;
-  }
-
-  .md\:max-w-64 {
-    max-width: 16rem;
   }
 
   .md\:flex-1 {
@@ -2366,10 +2335,6 @@ video {
     width: 75%;
   }
 
-  .lg\:max-w-full {
-    max-width: 100%;
-  }
-
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2446,10 +2411,6 @@ video {
 
   .xl\:w-3\/5 {
     width: 60%;
-  }
-
-  .xl\:max-w-xs {
-    max-width: 20rem;
   }
 
   .xl\:flex-1 {

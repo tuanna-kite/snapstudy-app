@@ -1,16 +1,15 @@
 @props(['school'])
-
-<a href="{{ $school['link'] }}">
+<a href="{{ route('classes') . '?school=' .$school->slug }}">
     <div
         class="rounded-3xl shadow-md gap-3 bg-white p-4 flex flex-col justify-between min-h-60 md:min-h-40  hover:-translate-y-3 transition-transform duration-300">
         <div class="flex flex-col items-center md:flex-row md:items-start gap-3">
-            <x-component.icon :name="$school['icon']" width="48" height="48" />
+            <img src="{{ $school->icon }}" alt="cart" width="48" height="48" class="">
             <div class="text-center md:text-start">
                 <p class="font-semibold text-base text-primary.main line-clamp-2">
-                    {{ $school['title'] }}
+                    {{ $school->getDescriptionAttribute('description') }}
                 </p>
                 <p class="text-base text-text.light.secondary">
-                    {{ $school['short'] }}
+                    {{ $school->title }}
                 </p>
             </div>
         </div>

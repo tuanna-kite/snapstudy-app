@@ -20,12 +20,18 @@ class Category extends Model implements TranslatableContract
 
     static $cacheKey = 'categories';
 
-    public $translatedAttributes = ['title'];
+    public $translatedAttributes = ['title', 'description'];
 
     public function getTitleAttribute()
     {
         return getTranslateAttributeValue($this, 'title');
     }
+
+    public function getDescriptionAttribute()
+    {
+        return getTranslateAttributeValue($this, 'description');
+    }
+
 
     /**
      * Return the sluggable configuration array for this model.

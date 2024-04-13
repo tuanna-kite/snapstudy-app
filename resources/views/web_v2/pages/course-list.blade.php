@@ -1,14 +1,7 @@
 @extends('web_v2.layouts.index')
-
-@php
-    // Get Categories
-    $categoriesAll = array_map(fn($category) => $category['slug'], $categoriesAll);
-    $categoriesAll = array_diff($categoriesAll, ['RMIT']);
-@endphp
-
 @section('title', 'Course Page')
-
 @section('content')
+
     <x-layouts.home-layout>
         <div class="container mx-auto py-24">
             {{-- Search Bar --}}
@@ -17,13 +10,12 @@
                     <x-search.search-doc />
                 </div>
                 <div class="block lg:hidden">
-                    <x-pages.course-list.filter-button :categories="$categoriesAll" />
+                    <x-pages.course-list.filter-button :schools="$schools" :slugSchool="$school->slug"/>
                 </div>
             </div>
             <div class="flex gap-6">
-                {{-- Filter Sidebar --}}
                 <div class="w-1/4 hidden lg:block">
-                    <x-pages.course-list.form formId="filterForm1" :categories="$categoriesAll">
+                    <x-pages.course-list.form formId="filterForm1" :schools="$schools" :slugSchool="$school->slug">
                         <div class="flex items-center justify-between">
                             <h2 class="font-bold text-2xl text-primary.main">
                                 {{ trans('course.Filter By') }}
@@ -40,17 +32,16 @@
                         </div>
                     </x-pages.course-list.form>
                 </div>
-                {{-- List Courses --}}
                 <div class="w-full lg:w-3/4 grid-cols-1 grid gap-4 sm:grid-cols-3 xl:grid-cols-4">
-                    @foreach ($webinars as $trending)
-                        <div class="{{ count($webinars) <= 4 ? 'max-h-72 flex' : 'flex' }}">
-                            <x-documents.document-card :trending="$trending" />
+                    @foreach ($subjectAll as $subject)
+                        <div class="{{ count($subjectAll) <= 4 ? 'max-h-72 flex' : 'flex' }}">
+                            <x-documents.document-card :subject="$subject" />
                         </div>
                     @endforeach
                 </div>
             </div>
             <div class="mt-32">
-                {{ $webinars->appends(request()->input())->links('components.pagination.index') }}
+                {{ $subjectAll->appends(['school' => request()->query('school')])->links('components.pagination.index') }}
             </div>
 
         </div>

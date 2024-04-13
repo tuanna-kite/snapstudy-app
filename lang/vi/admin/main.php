@@ -1509,7 +1509,7 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'choose_url' => 'Chọn URL',
 'upcoming_courses' => 'Giáo trình sắp tới',
 'installment_title' => 'Tiêu đề trả góp',
-'installment_payment' => 'Trả góp', 
+'installment_payment' => 'Trả góp',
 "statistics" => "Số liệu thống kê",
 "financial_settings" => "Cài đặt tài chính",
 "upcoming_courses_lists_background" => "Nền danh sách tài liệu sắp diễn ra",
@@ -1527,5 +1527,7 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'notification_submit_form_by_users' => 'Nộp hồ sơ mẫu (của quản trị viên)',
 'form_title' => 'Tiêu đề mẫu',
 
+// scholl
+'school_name' => 'Tên trường đại học',
 ];
 

@@ -1,31 +1,15 @@
-@props(['formId', 'categories'])
-
-@php
-    $subjectOptions = $categories;
-    $schoolOptions = ['RMIT', 'VinUniversity', 'MIT', 'Yale', 'Harvard'];
-@endphp
+@props(['formId', 'categories', 'schools', 'slugSchool'])
 
 <form id={{ $formId }} action="{{ route('home.search') }}" method="GET">
     {{ $slot }}
-    <!-- List of subject checkboxes -->
-    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">{{ trans('course.Subject') }}</h3>
-    @foreach ($subjectOptions as $subject)
-        <div class="mb-1">
-            <label class="space-x-2">
-                <input type="checkbox" name="subjectOptions[]" value="{{ $subject }}"
-                    @if (in_array($subject, request()->get('subjectOptions', []))) checked="checked" @endif>
-                <span>{{ $subject }}</span>
-            </label>
-        </div>
-    @endforeach
     <!-- List of school checkboxes -->
     <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">School</h3>
-    @foreach ($schoolOptions as $school)
+    @foreach ($schools as $school)
         <div class="mb-1">
             <label class="space-x-2">
-                <input type="checkbox" name="schoolOptions[]" value="{{ $school }}"
-                    @if (in_array($school, request()->get('schoolOptions', []))) checked="checked" @endif>
-                <span>{{ $school }}</span>
+                <input type="checkbox" name="schoolOptions[]" value="{{ $school->title }}"
+                    @if (in_array($school->title, request()->get('schoolOptions', [])) || $slugSchool == $school->slug) checked="checked" @endif>
+                <span>{{ $school->title }}</span>
             </label>
         </div>
     @endforeach

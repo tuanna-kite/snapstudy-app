@@ -19,7 +19,8 @@ class ClassesController extends Controller
 
     public function index(Request $request)
     {
-        $school_id = $request->school;
+        $slugSchool = $request->school;
+        $school = Category::where('slug', $slugSchool)->first();
         $webinarsQuery = Webinar::where('webinars.status', 'active')
             ->where('private', false);
 
@@ -30,22 +31,11 @@ class ClassesController extends Controller
             $this->columnId = 'bundle_id';
         }
 
-        $slugSchool = 'RMIT';
-        $schools = Category::where('parent_id', function ($query) use ($slugSchool) {
-            $query->select('id')->from('categories')->where('slug', $slugSchool);
-        })->pluck('slug')->toArray();
+        $schools = Category::whereNull('parent_id')
+            ->orderBy('order', 'asc')
+            ->get();
 
-        $categoriesAll = Category::where('parent_id', $school_id)->get()->toArray();
-
-        // $slugMajor = 'majors';
-        // $majors = Category::where('parent_id', function ($query) use ($slugMajor) {
-        //     $query->select('id')->from('categories')->where('slug', $slugMajor);
-        // })->pluck('slug')->toArray();
-
-        // $slugSubject = 'subject';
-        // $subjects = Category::where('parent_id', function ($query) use ($slugSubject) {
-        //     $query->select('id')->from('categories')->where('slug', $slugSubject);
-        // })->pluck('slug')->toArray();
+        $subjectAll = Category::where('parent_id', $school->id)->paginate(12);
 
         $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
         $sort = $request->get('sort', null);
@@ -69,7 +59,8 @@ class ClassesController extends Controller
             'webinars' => $webinars,
             'coursesCount' => $webinars->total(),
             'schools' => $schools,
-            'categoriesAll'=> $categoriesAll
+            'school' => $school,
+            'subjectAll'=> $subjectAll
 
         ];
         return view('web_v2.pages.course-list', $data);

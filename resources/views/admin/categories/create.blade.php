@@ -60,6 +60,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label>{{ trans('/admin/main.school_name') }}</label>
+                                    <input type="text" name="description"
+                                           class="form-control  @error('description') is-invalid @enderror"
+                                           value="{{ !empty($category) ? $category->description : old('description') }}"
+                                           placeholder="{{ trans('admin/main.school_name') }}"/>
+                                    @error('description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
                                     <label>{{ trans('admin/main.url') }}</label>
                                     <input type="text" name="slug"
                                            class="form-control  @error('slug') is-invalid @enderror"
@@ -148,6 +161,13 @@
                                                                    class="form-control w-auto flex-grow-1"
                                                                    value="{{ $subCategory->slug }}"
                                                                    placeholder="{{ trans('admin/main.choose_url') }}"/>
+                                                        </div>
+
+                                                        <div class="input-group w-100 mt-1">
+                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][description]"
+                                                                   class="form-control w-auto flex-grow-1"
+                                                                   value="{{ $subCategory->description }}"
+                                                                   placeholder="{{ trans('admin/main.description') }}"/>
                                                         </div>
 
                                                         <div class="input-group mt-1">

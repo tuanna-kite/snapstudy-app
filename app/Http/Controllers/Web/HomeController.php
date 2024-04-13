@@ -377,6 +377,7 @@ class HomeController extends Controller
         }
 
         $category = Category::whereNull('parent_id')
+            ->orderBy('order', 'asc')
             ->get();
 
         $data = [

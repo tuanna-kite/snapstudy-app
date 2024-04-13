@@ -1509,7 +1509,7 @@ By enabling this feature, newly registered users will require approval using thi
 'choose_url' => 'Choose URL',
 'upcoming_courses' => 'Upcoming Document',
 'installment_title' => 'Installment Title',
-'installment_payment' => 'Installment', 
+'installment_payment' => 'Installment',
 "statistics" => "Statistics",
 "financial_settings" => "Financial Settings",
 "upcoming_courses_lists_background" => "Upcoming Document List Background",
@@ -1527,4 +1527,5 @@ By enabling this feature, newly registered users will require approval using thi
 'notification_submit_form_by_users' => 'Form Submission (for Admin)',
 'form_title' => 'Form Title',
 
+'school_name' => 'University name'
 ];

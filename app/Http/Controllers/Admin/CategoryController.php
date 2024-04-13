@@ -48,6 +48,7 @@ class CategoryController extends Controller
 
         $this->validate($request, [
             'title' => 'required|min:3|max:128',
+            'description' => 'required|min:3|max:255',
             'slug' => 'nullable|max:255|unique:categories,slug',
             'icon' => 'required'
         ]);
@@ -71,6 +72,7 @@ class CategoryController extends Controller
             'locale' => mb_strtolower($data['locale']),
         ], [
             'title' => $data['title'],
+            'description' => $data['description']
         ]);
 
         $hasSubCategories = (!empty($request->get('has_sub')) and $request->get('has_sub') == 'on');
@@ -112,6 +114,7 @@ class CategoryController extends Controller
 
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
             'slug' => 'nullable|max:255|unique:categories,slug,' . $category->id,
             'icon' => 'required',
         ]);
@@ -129,6 +132,7 @@ class CategoryController extends Controller
             'locale' => mb_strtolower($data['locale']),
         ], [
             'title' => $data['title'],
+            'description' => $data['description']
         ]);
 
         $hasSubCategories = (!empty($request->get('has_sub')) and $request->get('has_sub') == 'on');
@@ -218,6 +222,7 @@ class CategoryController extends Controller
                             'locale' => mb_strtolower($locale),
                         ], [
                             'title' => $subCategory['title'],
+                            'description' => $subCategory['description']
                         ]);
                     } else {
 
@@ -233,6 +238,7 @@ class CategoryController extends Controller
                             'locale' => mb_strtolower($locale),
                         ], [
                             'title' => $subCategory['title'],
+                            'description' => $subCategory['description']
                         ]);
 
                         $oldIds[] = $new->id;

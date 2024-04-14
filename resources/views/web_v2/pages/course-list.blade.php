@@ -10,12 +10,12 @@
                     <x-search.search-doc />
                 </div>
                 <div class="block lg:hidden">
-                    <x-pages.course-list.filter-button :schools="$schools" :slugSchool="$school->slug"/>
+                    <x-pages.course-list.filter-button :schools="$schools"/>
                 </div>
             </div>
             <div class="flex gap-6">
                 <div class="w-1/4 hidden lg:block">
-                    <x-pages.course-list.form formId="filterForm1" :schools="$schools" :slugSchool="$school->slug">
+                    <x-pages.course-list.form formId="filterForm1" :schools="$schools">
                         <div class="flex items-center justify-between">
                             <h2 class="font-bold text-2xl text-primary.main">
                                 {{ trans('course.Filter By') }}

@@ -224,6 +224,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::get('/subjects', 'ClassesController@index')->name('classes');
+    Route::get('/outline', 'ClassesController@outline')->name('outline');
 
     Route::get('/reward-courses', 'RewardCoursesController@index');
 

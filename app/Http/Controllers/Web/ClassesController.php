@@ -19,35 +19,27 @@ class ClassesController extends Controller
 
     public function index(Request $request)
     {
-        $slugSchool = $request->school;
-        $school = Category::where('slug', $slugSchool)->first();
+        $slugSchool = $request->get('school', []);
+        $search = $request->get('search', '');
+        $school = Category::whereIN('slug', $slugSchool)->pluck('id')->toArray();
         $webinarsQuery = Webinar::where('webinars.status', 'active')
             ->where('private', false);
-
-        $type = $request->get('type');
-        if (!empty($type) and is_array($type) and in_array('bundle', $type)) {
-            $webinarsQuery = Bundle::where('bundles.status', 'active');
-            $this->tableName = 'bundles';
-            $this->columnId = 'bundle_id';
-        }
 
         $schools = Category::whereNull('parent_id')
             ->orderBy('order', 'asc')
             ->get();
 
-        $subjectAll = Category::where('parent_id', $school->id)->paginate(12);
-
-        $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
-        $sort = $request->get('sort', null);
-
-
-        if (empty($sort) or $sort == 'newest') {
-            $webinarsQuery = $webinarsQuery->orderBy("{$this->tableName}.created_at", 'desc');
+        if($slugSchool){
+            $subjectQuery = Category::whereIn('parent_id', $school);
         }
+        else{
+            $subjectQuery = Category::whereNotNull('parent_id');
+        }
+        if($search) {
+            $subjectQuery = $subjectQuery->whereTranslationLike('title', "%$search%");
+        }
+        $subjectAll = $subjectQuery->paginate(12);
 
-        $webinars = $webinarsQuery->with([
-            'tickets'
-        ])->paginate(12);
         $seoSettings = getSeoMetas('classes');
         $pageTitle = $seoSettings['title'] ?? '';
         $pageDescription = $seoSettings['description'] ?? '';
@@ -56,8 +48,6 @@ class ClassesController extends Controller
             'pageTitle' => $pageTitle,
             'pageDescription' => $pageDescription,
             'pageRobot' => $pageRobot,
-            'webinars' => $webinars,
-            'coursesCount' => $webinars->total(),
             'schools' => $schools,
             'school' => $school,
             'subjectAll'=> $subjectAll
@@ -239,6 +229,34 @@ class ClassesController extends Controller
         }
 
         return $query;
+    }
+
+    public function outline(Request $request)
+    {
+        $subject = $request->get('subject');
+        $search = $request->get('search');
+        $subject_id = Category::where('slug', $subject)->pluck('id')->toArray();
+
+        $webinarsQuery = Webinar::where('webinars.status', 'active')
+            ->where('private', false);
+        if (!empty($subject)) {
+            $webinarsQuery->whereIn('webinars.category_id', $subject_id);
+        }
+        if (!empty($search)) {
+            $webinarsQuery->where(function ($query) use ($search) {
+                    $query->whereTranslationLike('title', "%$search%")
+                        ->orWhereTranslationLike('description', "%$search%")
+                        ->orWhereTranslationLike('seo_description', "%$search%")
+                        ->orWhereTranslationLike('webinar_id', "%$search%");
+            });
+        }
+        $outlines = $webinarsQuery->paginate(12);
+
+        $data = [
+            'outlines' => $outlines,
+            'subject' => $subject
+        ];
+        return view('web_v2.pages.outline', $data);
     }
 }
 

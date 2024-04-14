@@ -6,7 +6,7 @@
         <img src="{{ !empty($subject) ? $subject->category->icon : asset('img/logo/rmit-logo.png') }}" alt="rmit-logo" width="40px" height="40px">
         <span class="font-semibold text-sm text-text.light.primary">{{ !empty($subject) ? $subject->category->title : '' }}</span>
     </p>
-    <a href="{{ !empty($subject) ? $subject->slug : $trending->getUrl() }}"
+    <a href="{{ !empty($subject) ? route('outline'). '?subject=' . $subject->slug : $trending->getUrl() }}"
         class="text-primary.main font-semibold text-lg uppercase line-clamp-3">{{ !empty($subject) ? $subject->title : clean($trending->title, 'title') }}</a>
     <p class="text-text.light.primary text-sm line-clamp-3">
         {{ !empty($subject) ? $subject->getDescriptionAttribute('description') :$trending->seo_description }}

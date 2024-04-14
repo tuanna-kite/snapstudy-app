@@ -17,11 +17,11 @@
 
     <div class="" x-show="openTab === 1">
         {{-- Content Expand --}}
-        <x-pages.outline.sub-card />
-        <x-pages.outline.sub-card />
-        <x-pages.outline.sub-card />
-        <div class="rounded-b-2xl overflow-hidden">
-            <x-pages.outline.sub-card />
-        </div>
+        @foreach($outlines as $outline)
+            <x-pages.outline.sub-card :outline="$outline"/>
+        @endforeach
+{{--        <div class="rounded-b-2xl overflow-hidden">--}}
+{{--            <x-pages.outline.sub-card />--}}
+{{--        </div>--}}
     </div>
 </div>

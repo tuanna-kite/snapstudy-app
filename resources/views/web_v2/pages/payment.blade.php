@@ -3,8 +3,10 @@
 @section('title', 'Payment Page')
 
 @php
-    // checkout || charge
-    $payment_type = 'charge';
+if(empty($payment_type)){
+    $payment_type = 'checkout';
+}
+
 @endphp
 
 @section('content')
@@ -16,13 +18,13 @@
                     {{ trans('payment.A checkout is a counter where you pay for things you are buying') }}
                 </p>
             </div>
-            @if ($payment_type === 'checkout')
+            @if ($payment_type == 'checkout')
                 <div class="flex flex-col-reverse items-start md:flex-row gap-6">
                     <div class="w-full md:w-2/3 min-h-[350px]">
-                        <x-pages.payment.method />
+                        <x-pages.payment.method :order="$order" :payment_type="$payment_type"/>
                     </div>
                     <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
-                        <x-pages.payment.card-course />
+                        <x-pages.payment.card-course :webinar="$webinar" />
                     </div>
                 </div>
             @else
@@ -30,11 +32,11 @@
                     <div class="w-full rounded-3xl space-x-8 p-6 bg-white font-bold text-lg">
                         <span class=" text-text.light.primary">{{ trans('payment.Top up:') }}</span>
                         <span class=" text-primary.main">
-                            {{ handlePrice($total) }}
+                            {{ $amount }}
                         </span>
                     </div>
                     <div class="w-full">
-                        <x-pages.payment.method :order="$order" />
+                        <x-pages.payment.method :amount="$amount" :payment_type="$payment_type"/>
                     </div>
                 </div>
             @endif

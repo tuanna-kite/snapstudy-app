@@ -21,6 +21,7 @@ use App\Models\Sale;
 use App\Models\TicketUser;
 use App\PaymentChannels\ChannelManager;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -146,8 +147,9 @@ class PaymentController extends Controller
         $redirectUrl = route('momo.checkout', ['gateway' => $gateway, 'orderId' => $orderId]);
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
         $extraData = "";
-        $requestId = "MOMO" . time();
+        $requestId = "HL_" . time();
         $requestType = $gateway;
+
 
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
@@ -188,6 +190,7 @@ class PaymentController extends Controller
         $responseTime = $_GET["responseTime"];
         $extraData = $_GET["extraData"];
         $m2signature = $_GET["signature"]; //MoMo signature
+        Log::info('Thanh toan khoa hoc: ' . $requestId);
         //Checksum
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&message=" . $message . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo .
             "&orderType=" . $orderType . "&partnerCode=" . $partnerCode . "&payType=" . $payType . "&requestId=" . $requestId . "&responseTime=" . $responseTime .
@@ -208,11 +211,6 @@ class PaymentController extends Controller
                 }
 
                 if ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
-                    // if ($user->getAccountingCharge() < $order->total_amount) {
-                    //     $order->update(['status' => Order::$paid]);
-                    //     session()->put($this->order_session_key, $order->id);
-                    //     return redirect('/payments/status');
-                    // }
                     $order->update([
                         'payment_method' => Order::$credit
                     ]);

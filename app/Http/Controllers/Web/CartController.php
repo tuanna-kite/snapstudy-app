@@ -406,7 +406,7 @@ class CartController extends Controller
         ];
     }
 
-    public function checkout(Request $request, $carts = null)
+    public function checkout(Request $request, $carts = null, $webinar = null)
     {
         $user = auth()->user();
 
@@ -483,6 +483,7 @@ class CartController extends Controller
                     'razorpay' => $razorpay,
                     'totalCashbackAmount' => $totalCashbackAmount,
                     'previousUrl' => url()->previous(),
+                    'webinar' => $webinar
                 ];
 
                 // return view(getTemplate() . '.cart.payment', $data);

@@ -1,4 +1,4 @@
-<form action="{{ route('charge.pay') }}" method="post" enctype="multipart/form-data" class="mt-25">
+<form action="{{ route('course.directPayment') }}" method="post" class="mt-25">
     @csrf
     <div class="p-4 md:p-6 rounded-3xl bg-white">
         <div>
@@ -12,16 +12,14 @@
                         placeholder="{{ trans('panel.number_only') }}" min="10000"
                         class="flex-1 @error('amount') is-invalid @enderror"
                         value="{{ !empty($editOfflinePayment) ? $editOfflinePayment->amount : old('amount') }}">
-                    {{-- <input type="number" placeholder="{{ trans('panel.number_only') }}" name="amount" min="10000"
-                        class="flex-1 @error('amount') is-invalid @enderror"
-                        value="{{ !empty($editOfflinePayment) ? $editOfflinePayment->amount : old('amount') }}"> --}}
+
                     <div class="px-2 pb-0.5 rounded-full bg-gray-300">
                         <span class="text-xs font-bold text-gray-800">
                             VNĐ
                         </span>
                     </div>
                 </div>
-                <button class="px-4 py-1.5 bg-primary.main rounded-xl">
+                <button type="submit" class="px-4 py-1.5 bg-primary.main rounded-xl">
                     <span class="text-white text-sm font-medium">
                         {{ trans('public.send_require') }}
                     </span>

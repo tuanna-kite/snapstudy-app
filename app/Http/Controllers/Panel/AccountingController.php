@@ -132,6 +132,7 @@ class AccountingController extends Controller
     {
         // Remove Commas
         $amount = $request->input('amount');
+        $gateway = $request->input('gateway');
         $amount = (str_replace(',', '', $amount));
         // NOTE: when add validation, it's auto refresh and not pass over validation
         // $rules = [
@@ -149,7 +150,7 @@ class AccountingController extends Controller
                 'amount' => trans('update.the_amount_must_be_greater_than_0')
             ]);
         } else {
-            $respone = $this->payment_momo($amount);
+            $respone = $this->payment_momo($amount, $gateway);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);
             } else {
@@ -158,25 +159,22 @@ class AccountingController extends Controller
         }
     }
 
-    public function payment_momo($amount)
+    public function payment_momo($amount, $gateway)
     {
         $endpoint = env('MOMO_API_ENDPOINT');
-
         $partnerCode = env('MOMO_PARTNER_CODE');
         $accessKey = env('MOMO_ACCESS_KEY');
         $secretKey = env('MOMO_SECRET_KEY');
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($amount) < 1000 ? 1000 : intval($amount);
 
-        $orderId = "MOMO" . time();
+        $orderId = "HL_" . time();
         $redirectUrl = route('momo.request-charge');
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
         $extraData = "";
-        $requestId = "MOMO" . time();
-        // $requestType = "payWithATM";
-        $requestType = "captureWallet";
-        // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
-        //before sign HMAC SHA256 signature
+        $requestId = "HL_" . time();
+        Log::info('Nap tien:' . $requestId);
+        $requestType = $gateway;
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         Log::info('Signature send: ' . $rawHash);
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
@@ -188,7 +186,6 @@ class AccountingController extends Controller
             'amount' => $amount,
             'orderId' => $orderId,
             'orderInfo' => $orderInfo,
-            // "responseTime" => $responseTime,
             'redirectUrl' => $redirectUrl,
             'ipnUrl' => $ipnUrl,
             'lang' => 'vi',

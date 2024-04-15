@@ -127,7 +127,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
                 });
             });
 
-            Route::post('/direct-payment', 'WebinarController@directPayment');
+            Route::post('/direct-payment', 'WebinarController@directPayment')->name('course.directPayment');
         });
     });
 

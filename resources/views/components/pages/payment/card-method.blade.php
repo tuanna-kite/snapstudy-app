@@ -1,12 +1,4 @@
 @props(['data'])
-{{--
-    interface    {
-        name:string
-        img:string
-        title:string;
-        subtitle:string;
-    }
---}}
 
 <label class="card relative bg-white rounded-2xl border-2 p-2 hover:shadow-lg">
     <div class="text-end">

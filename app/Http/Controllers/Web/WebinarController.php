@@ -861,20 +861,22 @@ class WebinarController extends Controller
         $user = auth()->user();
 
         if (!empty($user) and !empty(getFeaturesSettings('direct_classes_payment_button_status'))) {
-            $this->validate($request, [
-                'item_id' => 'required',
-                'item_name' => 'nullable',
-            ]);
+            $amount = $request->amount;
+            if (empty($amount)){
+                $this->validate($request, [
+                    'item_id' => 'required',
+                    'item_name' => 'nullable',
+                ]);
+                $data = $request->except('_token');
 
-            $data = $request->except('_token');
+                $webinarId = $data['item_id'];
+                $ticketId = $data['ticket_id'] ?? null;
 
-            $webinarId = $data['item_id'];
-            $ticketId = $data['ticket_id'] ?? null;
-
-            $webinar = Webinar::where('id', $webinarId)
-                ->where('private', false)
-                ->where('status', 'active')
-                ->first();
+                $webinar = Webinar::where('id', $webinarId)
+                    ->where('private', false)
+                    ->where('status', 'active')
+                    ->first();
+            }
 
             if (!empty($webinar)) {
                 $checkCourseForSale = checkCourseForSale($webinar, $user);
@@ -896,7 +898,14 @@ class WebinarController extends Controller
 
                 $cartController = new CartController();
 
-                return $cartController->checkout(new Request(), $fakeCarts);
+                return $cartController->checkout(new Request(), $fakeCarts, $webinar);
+            }
+            if ($amount){
+                $data = [
+                    'amount' => $amount,
+                    'payment_type' => 'charge'
+                    ];
+                return view('web_v2.pages.payment', $data);
             }
         }
 

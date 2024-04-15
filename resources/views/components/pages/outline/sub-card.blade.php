@@ -1,5 +1,5 @@
 <div
-    class="py-4 px-6 bg-white flex flex-col md:flex-row gap-4 items-end md:items-center justify-between border-t border-grey-300 ">
+    class="py-4 px-6 bg-white flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between border-t border-grey-300 ">
     <div class="flex items-center gap-2 max-w-full overflow-hidden">
         <x-component.material-icon name="menu_book" />
         <div class="flex flex-col max-w-full overflow-hidden">
@@ -11,7 +11,7 @@
             </p>
         </div>
     </div>
-    <div class="flex items-center justify-between gap-4 min-w-56">
+    <div class="flex items-center justify-between gap-4 min-w-56 self-end">
         <p class="font-bold text-lg text-primary.main">{{ handlePrice($outline->price) }}</p>
         <form method="post" action="/course/direct-payment">
             @csrf

@@ -279,7 +279,7 @@ class ForumController extends Controller
         $user = auth()->user();
 
         if (empty($user)) {
-            return redirect('/login');
+            return redirect('/');
         }
 
         $forums = Forum::orderBy('order', 'asc')

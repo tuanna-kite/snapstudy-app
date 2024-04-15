@@ -1,6 +1,5 @@
-<div x-data="{ openTab: 1 }" x-on:click="openTab !== 1 ? openTab = 1 : openTab = null"
-    class="rounded-2xl shadow-md  bg-white">
-    <div class="flex items-center justify-between px-6 py-4">
+<div x-data="{ openTab: 1 }" class="rounded-2xl shadow-md  bg-white">
+    <div class="flex items-center justify-between px-6 py-4" x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
         <div>
             <p class="font-semibold text-base text-primary.main">
                 OUTLINE
@@ -15,13 +14,17 @@
         </div>
     </div>
 
-    <div class="" x-show="openTab === 1">
+    <div x-show="openTab === 1" x-transition:enter="transition ease-out duration-500 transform"
+        x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
         {{-- Content Expand --}}
-        @foreach($outlines as $outline)
-            <x-pages.outline.sub-card :outline="$outline"/>
+        @foreach ($outlines as $outline)
+            @if ($loop->last)
+                <div class="rounded-b-2xl overflow-hidden">
+                    <x-pages.outline.sub-card :outline="$outline" />
+                </div>
+            @else
+                <x-pages.outline.sub-card :outline="$outline" />
+            @endif
         @endforeach
-{{--        <div class="rounded-b-2xl overflow-hidden">--}}
-{{--            <x-pages.outline.sub-card />--}}
-{{--        </div>--}}
     </div>
 </div>

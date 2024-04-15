@@ -16,10 +16,6 @@
             </div>
             {{-- Content --}}
             <x-pages.outline.card :outlines="$outlines"/>
-
-            <x-pages.outline.card :outlines="$outlines"/>
-
-
         </div>
     </x-layouts.home-layout>
 @endsection

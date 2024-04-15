@@ -17,7 +17,7 @@
                         @endforeach
                     @endif
                 </div>
-                {{-- {{ $webinars->appends(request()->input())->links('components.pagination.dashboard') }} --}}
+                {{ $sales->appends(request()->input())->links('components.pagination.dashboard') }}
             </div>
         </div>
     </x-layouts.dashboard-layout>

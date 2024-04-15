@@ -10,17 +10,17 @@
                     <x-pages.my-financial.financial-head />
                 </thead>
                 <tbody class="bg-white py-4 px-6">
-                    @foreach($accountings as $accounting)
-                    <!-- Table rows -->
-                        <x-pages.my-financial.financial-row :accounting="$accounting"/>
+                    @foreach ($accountings as $accounting)
+                        <!-- Table rows -->
+                        <x-pages.my-financial.financial-row :accounting="$accounting" />
                     @endforeach
                     <!-- More table rows... -->
                 </tbody>
             </table>
-            <x-component.pagination />
         </div>
 
         <!-- Pagination -->
+        {{ $accountings->appends(request()->input())->links('components.pagination.dashboard') }}
 
     </x-layouts.dashboard-layout>
 

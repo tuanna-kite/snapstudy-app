@@ -3,27 +3,59 @@
 
 @php
     $input = [
-        'name' => 'title',
         'label' => 'Subject',
+        'name' => 'title',
         'placeholder' => '',
     ];
 
-    $typeSelect = [
-        'name' => 'type',
-        'label' => 'Type',
-        'options' => [
-            'course_support' => 'Course support',
-            'platform_support' => 'Platform support',
+    $fmDepartments = [];
+    // Format Departments
+    foreach ($departments as $department) {
+        $fmDepartments[$department->id] = $department->title;
+    }
+
+    $fmWebinars = [];
+    // Format Departments
+    foreach ($webinars as $webinar) {
+        $fmWebinars[$webinar->id] = $webinar->title . ' - ' . $webinar->creator->full_name;
+    }
+
+    $selects = [
+        [
+            'label' => 'Type',
+            'id' => 'typeInput',
+            'name' => 'type',
+            'options' => [
+                '' => 'Choose',
+                'course_support' => 'Course support',
+                'platform_support' => 'Platform support',
+            ],
+        ],
+        [
+            'label' => 'Department',
+            'id' => 'departmentInput',
+            'name' => 'department_id',
+            'options' => $fmDepartments,
+        ],
+        [
+            'label' => 'Syllabus',
+            'id' => 'syllabusInput',
+            'name' => 'webinar_id',
+            'options' => $fmWebinars,
         ],
     ];
 
-    $textarea = ['name' => 'message', 'label' => 'Message'];
+    $textarea = [
+        'name' => 'message',
+        'label' => 'Message',
+    ];
+
 @endphp
 
 @section('content')
     <x-layouts.dashboard-layout title="New Support">
-        <div class="px-6 py-8 bg-white rounded-2xl space-y-4">
-            <form action="{{ route('support.store') }}" method="POST">
+        <div class="p-6 bg-white rounded-2xl">
+            <form class="space-y-4" action="{{ route('support.store') }}" method="POST">
                 @csrf
                 <x-input.input-label :data="$input" />
                 @error('title')
@@ -31,31 +63,10 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <x-input.select-label :data="$typeSelect" />
 
-                <div class="space-y-2 relative" id="departmentInput">
-                    <label for="department_id" class="text-sm font-semibold">Department</label>
-                    <div class="">
-                        <select id='department_id' name='department_id'
-                            class="w-full border border-grey-300 rounded-xl p-[18px]">
-                            @foreach ($departments as $value => $item)
-                                <option value={{ $item->id }}>{{ $item->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="space-y-2 relative" id="courseInput">
-                    <label for="syllabus" class="text-sm font-semibold">Syllabus</label>
-                    <div class="">
-                        <select id='webinar_id' name='webinar_id' class="w-full border border-grey-300 rounded-xl p-[18px]">
-                            @foreach ($webinars as $value => $webinar)
-                                <option value="{{ $webinar->id }}">{{ $webinar->title }} -
-                                    {{ $webinar->creator->full_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                @foreach ($selects as $select)
+                    <x-input.select-label :data="$select" />
+                @endforeach
 
                 <x-input.textarea-label :data="$textarea" />
                 <div class="flex flex-col md:flex-row justify-between items-end">
@@ -66,18 +77,26 @@
         </div>
     </x-layouts.dashboard-layout>
 @endsection
-<script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
-<script>
-    $('body').on('change', '#type', function(e) {
-        const value = $(this).val();
+@push('scripts_bottom')
+    <script>
+        const syllabusInput = document.getElementById('syllabusInput')
+        const departmentInput = document.getElementById('departmentInput')
 
-        $('#courseInput,#departmentInput').addClass('d-none');
+        syllabusInput.style.display = 'none'
+        departmentInput.style.display = 'none'
+        document.getElementById('type').addEventListener('change', function() {
+            const typeValue = this.value; // Get the selected value
 
-        if (value === 'course_support') {
-            $('#courseInput').removeClass('d-none');
-            panelSearchWebinarSelect2();
-        } else if (value === 'platform_support') {
-            $('#departmentInput').removeClass('d-none');
-        }
-    })
-</script>
+            if (typeValue === 'course_support') {
+                syllabusInput.style.display = 'block';
+                departmentInput.style.display = 'none';
+            } else if (typeValue === 'platform_support') {
+                syllabusInput.style.display = 'none'
+                departmentInput.style.display = 'block'
+            } else {
+                syllabusInput.style.display = 'none'
+                departmentInput.style.display = 'none'
+            }
+        });
+    </script>
+@endpush

@@ -111,7 +111,10 @@ return [
     'Sign up now to receive a FREE TRIAL' => 'Đăng ký ngay để nhận được <span>DÙNG THỬ MIỄN PHÍ</span> và <span>GIẢM GIÁ 30%</span> cho lần mua đầu tiên',
     'REGISTER FOR FREE' => 'ĐĂNG KÝ MIỄN PHÍ',
     'Economics & Finance at RMIT' => 'Kinh tế & Tài chính tại RMIT',
-    'The most fascinating thing about SNAPS' => 'Điều thú vị nhất về SNAPS, theo ý kiến của tôi, là tôi có thể làm việc và học cùng một lúc mà không làm ảnh hưởng đến điểm số của mình. Có những lúc khi có nhiều hạn chót trùng lặp, và các đề cương do SNAPS cung cấp thực sự giúp tôi thoát khỏi tình thế khó khăn.'
+    'The most fascinating thing about SNAPS' => 'Điều thú vị nhất về SNAPS, theo ý kiến của tôi, là tôi có thể làm việc và học cùng một lúc mà không làm ảnh hưởng đến điểm số của mình. Có những lúc khi có nhiều hạn chót trùng lặp, và các đề cương do SNAPS cung cấp thực sự giúp tôi thoát khỏi tình thế khó khăn.',
+    'Outline' => 'Tóm tắt',
+    "See more" => "Xem thêm",
+
 
 
 ];

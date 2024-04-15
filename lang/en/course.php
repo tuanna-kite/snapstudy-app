@@ -19,5 +19,9 @@ return [
     'Registed' => 'Registed',
     'Content' => 'Content',
     'Read more' => 'Read more',
-    'Documents cannot be previewed' => 'Documents cannot be previewed. To view them in full, you need to pay a fee'
+    'Documents cannot be previewed' => 'Documents cannot be previewed. To view them in full, you need to pay a fee',
+    'School' => 'School',
+    'Search outline' => 'Search outline',
+    'Buy now' => 'Buy now',
+
 ];

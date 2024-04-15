@@ -3,31 +3,31 @@
         [
             'name' => 'gateway',
             'img' => asset('img/visa.png'),
-            'title' => 'Pay with card',
+            'title' => trans('payment.Pay with card'),
             'sub' => 'Visa, Master, JCB...',
             'value' => 'payWithCC',
         ],
         [
             'name' => 'gateway',
             'img' => asset('img/atm.png'),
-            'title' => 'Pay with ATM',
-            'sub' => 'by VNPay',
+            'title' => trans('payment.Pay with ATM'),
+            'sub' => trans('payment.by VNPay'),
             'value' => 'payWithATM',
         ],
         [
             'name' => 'gateway',
             'img' => asset('img/momo.png'),
-            'title' => 'Pay with MoMo',
-            'sub' => 'MoMo Wallet',
+            'title' => trans('payment.Pay with MoMo'),
+            'sub' => trans('payment.MoMo Wallet'),
             'value' => 'captureWallet',
         ],
     ];
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">
-    <h2 class="font-semibold text-base text-text.light.primary mb-6 ">Payment method</h2>
+    <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
     <div>
-        <form class="space-y-10"  action='{{ route('payment.request') }}' method="post">
+        <form class="space-y-10" action='{{ route('payment.request') }}' method="post">
             @csrf
             <input type="hidden" name="order_id" value="{{ $order->id }}">
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
@@ -37,7 +37,7 @@
             </div>
             <button type="submit" class="rounded-lg px-6 py-1.5 bg-primary.main">
                 <span class="font-medium text-sm text-white">
-                    Start Payment
+                    {{ trans('payment.Start Payment') }}
                 </span>
             </button>
         </form>

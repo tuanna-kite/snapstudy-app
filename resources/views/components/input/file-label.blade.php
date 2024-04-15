@@ -1,14 +1,15 @@
 <div class="space-y-2">
-    <label for="file-name" class="text-sm font-semibold">Attach a file</label>
+    <label for="file-name" class="text-sm font-semibold">{{ trans('dashboard.Attach a file') }}</label>
     <div class="flex justify-between items-center">
         <div class="file-upload flex items-center gap-2 px-3 py-4 border rounded-lg border-grey-300">
             <label for="file" class="rounded-md px-2 py-0.5 bg-grey-300 cursor-pointer">
                 <span class="font-bold text-xs text-gray-800 ">
-                    Choose
+                    {{ trans('dashboard.Choose') }}
                 </span>
             </label>
             <input type="file" id="file" name='attach' class="hidden" onchange="handleFileUpload()" />
-            <span id="file-name" class="font-normal text-base text-text.light.disabled">No file chosen</span>
+            <span id="file-name"
+                class="font-normal text-base text-text.light.disabled">{{ trans('dashboard.No file chosen') }}</span>
         </div>
     </div>
 </div>

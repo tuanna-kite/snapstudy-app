@@ -11,9 +11,9 @@
     <x-layouts.home-layout>
         <div class="container mx-auto py-16 space-y-8">
             <div class="space-y-1">
-                <h1 class="font-bold text-3xl text-primary.main">Check out</h1>
+                <h1 class="font-bold text-3xl text-primary.main">{{ trans('payment.Check out') }}</h1>
                 <p class="text-base text-text.light.secondary">
-                    a checkout is a counter where you pay for things you are buying
+                    {{ trans('payment.A checkout is a counter where you pay for things you are buying') }}
                 </p>
             </div>
             @if ($payment_type === 'checkout')
@@ -28,13 +28,13 @@
             @else
                 <div class="flex flex-col items-start gap-6">
                     <div class="w-full rounded-3xl space-x-8 p-6 bg-white font-bold text-lg">
-                        <span class=" text-text.light.primary">Top up:</span>
+                        <span class=" text-text.light.primary">{{ trans('payment.Top up:') }}</span>
                         <span class=" text-primary.main">
                             {{ handlePrice($total) }}
                         </span>
                     </div>
                     <div class="w-full">
-                        <x-pages.payment.method :order="$order"/>
+                        <x-pages.payment.method :order="$order" />
                     </div>
                 </div>
             @endif

@@ -18,6 +18,9 @@ return [
     'Registed' => 'Đã đăng ký',
     'Content' => 'Nội dung',
     'Read more' => 'Đọc thêm',
-    'Documents cannot be previewed' => 'Tài liệu không thể xem trước. Để xem đầy đủ, bạn cần phải thanh toán phí'
+    'Documents cannot be previewed' => 'Tài liệu không thể xem trước. Để xem đầy đủ, bạn cần phải thanh toán phí',
+    'School' => 'Trường học',
+    'Search outline' => 'Tìm kiếm tóm tắt',
+    'Buy now' => 'Mua ngay',
 
 ];

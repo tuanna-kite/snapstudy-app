@@ -11,12 +11,12 @@
     {{-- Search --}}
     <form action="{{ route('support.tickets') }}" method="GET">
         <div
-            class='rounded-xl p-3 flex items-center bg-white justify-between relative border border-grey-300 flex-row-reverse'>
+            class='rounded-xl p-3 flex items-center bg-white justify-between relative border border-grey-300 flex-row-reverse gap-2'>
             <span
                 class="absolute left-4 top-0 transform -translate-y-1/2 p-1 bg-white text-text.light.disabled font-normal text-xs">
-                Search
+                {{ trans('dashboard.Search') }}
             </span>
-            <input class="flex-1" type="text" name="searchTicket" placeholder="Search...">
+            <input class="flex-1" type="text" name="searchTicket" placeholder="{{ trans('dashboard.Search...') }}">
             <button id='btnSearch' class="" type="submit">
                 <x-component.icon name="ic_search" />
             </button>

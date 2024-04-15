@@ -74,7 +74,19 @@ return [
     'Old Password' => 'Old Password',
     'New Password' => 'New Password',
     'Confirm New Password' => 'Confirm New Password',
-
-
+    // Support
+    'Subject' => 'Subject',
+    'Type' => 'Type',
+    'Choose' => 'Choose',
+    'Course support' => 'Course support',
+    'Platform support' => 'Platform support',
+    'Department' => 'Department',
+    'Syllabus' => 'Syllabus',
+    'Message' => 'Message',
+    'Attach a file' => 'Attach a file',
+    'No file chosen' => 'No file chosen',
+    'Send Message' => 'Send Message',
+    'Search' => 'Search',
+    'Search...' => 'Search...'
 
 ];

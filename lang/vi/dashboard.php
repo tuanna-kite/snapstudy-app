@@ -74,9 +74,20 @@ return [
     'Password must be minimum 6+' => 'Mật khẩu phải có ít nhất 6 ký tự',
     'Old Password' => 'Mật khẩu cũ',
     'New Password' => 'Mật khẩu mới',
-    'Confirm New Password' => 'Xác nhận mật khẩu mới'
-
-
-
+    'Confirm New Password' => 'Xác nhận mật khẩu mới',
+    // Support
+    'Subject' => 'Chủ đề',
+    'Type' => 'Loại',
+    'Choose' => 'Chọn',
+    'Course support' => 'Hỗ trợ khóa học',
+    'Platform support' => 'Hỗ trợ nền tảng',
+    'Department' => 'Bộ phận',
+    'Syllabus' => 'Chương trình học',
+    'Message' => 'Tin nhắn',
+    'Attach a file' => 'Đính kèm tệp',
+    'No file chosen' => 'Không có tệp nào được chọn',
+    'Send Message' => 'Gửi Tin Nhắn',
+    'Search' => 'Tìm kiếm',
+    'Search...' => 'Tìm kiếm...'
 
 ];

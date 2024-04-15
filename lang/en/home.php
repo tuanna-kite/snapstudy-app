@@ -111,6 +111,9 @@ return [
     'Sign up now to receive a FREE TRIAL' => 'Sign up now to receive a <span>FREE TRIAL</span> and <span>30% DISCOUNT</span> for the first purchase',
     'REGISTER FOR FREE' => 'REGISTER FOR FREE',
     'Economics & Finance at RMIT' => 'Economics & Finance at RMIT',
-    "The most fascinating thing about SNAPS" => "The most fascinating thing about SNAPS, in my opinion, is that I can work and study at the same time without compromising my grades. There are times when multiple deadlines overlap, and the outlines provided by SNAPS are a real lifesaver."
+    "The most fascinating thing about SNAPS" => "The most fascinating thing about SNAPS, in my opinion, is that I can work and study at the same time without compromising my grades. There are times when multiple deadlines overlap, and the outlines provided by SNAPS are a real lifesaver.",
+
+    'Outline' => 'Outline',
+    "See more" => "See more",
 
 ];

@@ -64,7 +64,7 @@
 
 <nav class="p-2 md:p-6 space-y-4 w-full h-full rounded-2xl flex flex-col items-center sm:items-start bg-white">
     {{ $slot }}
-    <ul class="flex flex-col gap-2 w-full overflow-y-auto" x-data="{ openTab: '{{ $currentUrl }}' }">
+    <ul class="flex flex-col gap-4 w-full overflow-y-auto" x-data="{ openTab: '{{ $currentUrl }}' }">
         @foreach ($listMenu as $menu)
             <li class="w-full">
                 <x-slidebar.card :padding="$padding" :menuItem="$menu" :currentUrl="$currentUrl" />

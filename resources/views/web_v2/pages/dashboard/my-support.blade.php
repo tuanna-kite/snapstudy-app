@@ -3,7 +3,7 @@
 
 @php
     $input = [
-        'label' => 'Subject',
+        'label' => trans('dashboard.Subject'),
         'name' => 'title',
         'placeholder' => '',
     ];
@@ -22,23 +22,23 @@
 
     $selects = [
         [
-            'label' => 'Type',
+            'label' => trans('dashboard.Type'),
             'id' => 'typeInput',
             'name' => 'type',
             'options' => [
-                '' => 'Choose',
-                'course_support' => 'Course support',
-                'platform_support' => 'Platform support',
+                '' => trans('dashboard.Choose'),
+                'course_support' => trans('dashboard.Course support'),
+                'platform_support' => trans('dashboard.Platform support'),
             ],
         ],
         [
-            'label' => 'Department',
+            'label' => trans('dashboard.Department'),
             'id' => 'departmentInput',
             'name' => 'department_id',
             'options' => $fmDepartments,
         ],
         [
-            'label' => 'Syllabus',
+            'label' => trans('dashboard.Syllabus'),
             'id' => 'syllabusInput',
             'name' => 'webinar_id',
             'options' => $fmWebinars,
@@ -47,7 +47,7 @@
 
     $textarea = [
         'name' => 'message',
-        'label' => 'Message',
+        'label' => trans('dashboard.Message'),
     ];
 
 @endphp
@@ -71,7 +71,7 @@
                 <x-input.textarea-label :data="$textarea" />
                 <div class="flex flex-col md:flex-row justify-between items-end">
                     <x-input.file-label />
-                    <x-button.button text="Send Message" type='submit' class="mb-2" />
+                    <x-button.button text="{{ trans('dashboard.Send Message') }}" type='submit' class="mb-2" />
                 </div>
             </form>
         </div>

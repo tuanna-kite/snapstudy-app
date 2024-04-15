@@ -3,7 +3,7 @@
 <form id={{ $formId }} action="{{ route('classes') }}" method="GET">
     {{ $slot }}
     <!-- List of school checkboxes -->
-    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">School</h3>
+    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">{{ trans('course.School') }}</h3>
     @foreach ($schools as $school)
         <div class="mb-1">
             <label class="space-x-2">
@@ -14,7 +14,8 @@
         </div>
     @endforeach
     <div class="mt-6">
-        <button type="submit" class="py-1.5 px-10 rounded-xl bg-primary.main text-white">{{ trans('course.Apply')}}</button>
+        <button type="submit"
+            class="py-1.5 px-10 rounded-xl bg-primary.main text-white">{{ trans('course.Apply') }}</button>
     </div>
 </form>
 

@@ -18,7 +18,7 @@ return [
     'Pay with card' => 'Thanh toán bằng thẻ',
     'Pay with ATM' => 'Thanh toán bằng thẻ ATM',
     'Pay with MoMo' => 'Thanh toán bằng MoMo',
-    'by VNPay' => 'bằng VNPay',
+    'by Momo' => 'bằng Momo',
     'MoMo Wallet' => 'Ví MoMo'
 
 

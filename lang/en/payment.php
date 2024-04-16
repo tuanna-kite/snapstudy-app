@@ -18,7 +18,7 @@ return [
     'Pay with card' => 'Pay with card',
     'Pay with ATM' => 'Pay with ATM',
     'Pay with MoMo' => 'Pay with MoMo',
-    'by VNPay'=>'by VNPay',
+    'by Momo'=>'by Momo',
     'MoMo Wallet'=>'MoMo Wallet'
 
 ];

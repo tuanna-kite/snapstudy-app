@@ -12,7 +12,7 @@
             'name' => 'gateway',
             'img' => asset('img/atm.png'),
             'title' => trans('payment.Pay with ATM'),
-            'sub' => trans('payment.by VNPay'),
+            'sub' => trans('payment.by Momo'),
             'value' => 'payWithATM',
         ],
         [
@@ -29,7 +29,8 @@
 <div class="p-6 rounded-3xl bg-white shadow-lg">
     <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
     <div>
-        <form class="space-y-10" action='{{ ($payment_type == 'checkout') ? route('payment.request') : route('charge.pay') }}' method="post">
+        <form class="space-y-10"
+            action='{{ $payment_type == 'checkout' ? route('payment.request') : route('charge.pay') }}' method="post">
             @csrf
             @if ($payment_type == 'checkout')
                 <input type="hidden" name="order_id" value="{{ $order->id }}">

@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('category_translations', function (Blueprint $table) {
-            $table->string('description')->nullable()->after('title');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('prefix')->nullable();
+            $table->integer('level')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('category_translations', function (Blueprint $table) {
-            $table->dropColumn('description');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('prefix');
+            $table->dropColumn('level');
         });
     }
 };

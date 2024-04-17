@@ -1527,5 +1527,13 @@ By enabling this feature, newly registered users will require approval using thi
 'notification_submit_form_by_users' => 'Form Submission (for Admin)',
 'form_title' => 'Form Title',
 
-'school_name' => 'University name'
+'school_name' => 'University name',
+'add_majors' => 'Add Majors',
+'add_subject' => 'Add Subject',
+'title_majors' => 'Title Major',
+'description_majors' => 'Subject Major',
+'title_subject' => 'Title Subject',
+'description_subject' => 'Outline Subject',
+'prefix' => 'Prefix',
+
 ];

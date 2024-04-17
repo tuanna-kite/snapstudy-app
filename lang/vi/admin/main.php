@@ -1529,5 +1529,12 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 
 // scholl
 'school_name' => 'Tên trường đại học',
+'add_majors' => 'Thêm ngành học',
+'add_subject' => 'Thêm môn học',
+'title_majors' => 'Tiêu đề ngành học',
+'description_majors' => 'Mô tả ngành học',
+'title_subject' => 'Tiêu đề môn học',
+'description_subject' => 'Mô tả môn học',
+'prefix' => 'Prefix',
 ];
 

@@ -50,6 +50,7 @@ class CategoryController extends Controller
             'title' => 'required|min:3|max:128',
             'description' => 'required|min:3|max:255',
             'slug' => 'nullable|max:255|unique:categories,slug',
+            'prefix' => 'required|min:2|max:255',
             'icon' => 'required'
         ]);
 
@@ -62,9 +63,11 @@ class CategoryController extends Controller
         }
 
         $category = Category::create([
-            'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
+            'slug' => $data['prefix'] . '_' . Category::makeSlug($data['title']),
             'icon' => $data['icon'],
             'order' => $order,
+            'prefix' => $data['prefix'],
+            'level' => 1,
         ]);
 
         CategoryTranslation::updateOrCreate([
@@ -116,6 +119,7 @@ class CategoryController extends Controller
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
             'slug' => 'nullable|max:255|unique:categories,slug,' . $category->id,
+            'prefix' => 'required|min:2|max:255',
             'icon' => 'required',
         ]);
 
@@ -123,8 +127,10 @@ class CategoryController extends Controller
 
         $category->update([
             'icon' => $data['icon'],
-            'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
+            'slug' => $data['prefix'] . '_' . Category::makeSlug($data['title']),
             'order' => $data['order'] ?? $category->order,
+            'prefix' => $data['prefix'],
+            'level' => 1,
         ]);
 
         CategoryTranslation::updateOrCreate([
@@ -136,7 +142,7 @@ class CategoryController extends Controller
         ]);
 
         $hasSubCategories = (!empty($request->get('has_sub')) and $request->get('has_sub') == 'on');
-        $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
+        $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale'], $request);
 
 
         cache()->forget(Category::$cacheKey);
@@ -189,7 +195,7 @@ class CategoryController extends Controller
         return response()->json($categories, 200);
     }
 
-    public function setSubCategory(Category $category, $subCategories, $hasSubCategories, $locale)
+    public function setSubCategory(Category $category, $subCategories, $hasSubCategories, $locale, $request = null)
     {
         $order = 1;
         $oldIds = [];
@@ -215,6 +221,7 @@ class CategoryController extends Controller
                             'order' => $order,
                             'icon' => $subCategory['icon'] ?? null,
                             'slug' => $slug,
+                            'level' => 2,
                         ]);
 
                         CategoryTranslation::updateOrCreate([
@@ -231,6 +238,7 @@ class CategoryController extends Controller
                             'slug' => $slug,
                             'icon' => $subCategory['icon'] ?? null,
                             'order' => $order,
+                            'level' => 2,
                         ]);
 
                         CategoryTranslation::updateOrCreate([

@@ -73,12 +73,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ trans('admin/main.url') }}</label>
-                                    <input type="text" name="slug"
-                                           class="form-control  @error('slug') is-invalid @enderror"
-                                           value="{{ !empty($category) ? $category->slug : old('slug') }}"/>
-                                    <div class="text-muted text-small mt-1">{{ trans('update.category_url_hint') }}</div>
-                                    @error('slug')
+                                    <label>{{ trans('admin/main.prefix') }}</label>
+                                    <input type="text" name="prefix"
+                                           class="form-control  @error('prefix') is-invalid @enderror"
+                                           value="{{ !empty($category) ? $category->prefix : old('prefix') }}"/>
+                                    @error('prefix')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -122,7 +121,7 @@
 
                                 <div id="subCategories" class="ml-0 {{ (!empty($subCategories) and !$subCategories->isEmpty()) ? '' : ' d-none' }}">
                                     <div class="d-flex align-items-center justify-content-between mb-4">
-                                        <strong class="d-block">{{ trans('admin/main.add_sub_categories') }}</strong>
+                                        <strong class="d-block">{{ trans('admin/main.add_majors') }}</strong>
 
                                         <button type="button" class="btn btn-success add-btn"><i class="fa fa-plus"></i> Add</button>
                                     </div>
@@ -131,7 +130,8 @@
 
                                         @if((!empty($subCategories) and !$subCategories->isEmpty()))
                                             @foreach($subCategories as $key => $subCategory)
-                                                <li class="form-group list-group">
+                                                <input type="hidden" name="subCategory_id" value="{{ $subCategory->id }}">
+                                                <li class="form-group list-group draggable-lists-outline">
 
                                                     <div class="p-2 border rounded-sm">
                                                         <div class="input-group">
@@ -156,12 +156,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="input-group w-100 mt-1">
-                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][slug]"
-                                                                   class="form-control w-auto flex-grow-1"
-                                                                   value="{{ $subCategory->slug }}"
-                                                                   placeholder="{{ trans('admin/main.choose_url') }}"/>
-                                                        </div>
+{{--                                                        <div class="input-group w-100 mt-1">--}}
+{{--                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][slug]"--}}
+{{--                                                                   class="form-control w-auto flex-grow-1"--}}
+{{--                                                                   value="{{ $subCategory->slug }}"--}}
+{{--                                                                   placeholder="{{ trans('admin/main.choose_url') }}"/>--}}
+{{--                                                        </div>--}}
 
                                                         <div class="input-group w-100 mt-1">
                                                             <input type="text" name="sub_categories[{{ $subCategory->id }}][description]"
@@ -170,15 +170,39 @@
                                                                    placeholder="{{ trans('admin/main.description') }}"/>
                                                         </div>
 
-                                                        <div class="input-group mt-1">
+                                                    </div>
+                                                    @if($subCategory)
+                                                        <div class="d-flex align-items-center justify-content-between mb-2 mt-2 ml-4">
+                                                            <strong class="d-block">{{ trans('admin/main.add_subject') }}</strong>
+                                                            <button type="button" class="btn btn-success outline-add-btn"><i class="fa fa-plus"></i> Add</button>
+                                                        </div>
+                                                    @endif
+
+                                                <li class="form-group outline-list list-group ml-4 d-none">
+                                                    <div class="p-2 border rounded-sm">
+                                                        <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" class="input-group-text admin-file-manager " data-input="icon_{{ $subCategory->id }}" data-preview="holder">
-                                                                    <i class="fa fa-upload"></i>
-                                                                </button>
+                                                                <div class="input-group-text cursor-pointer move-icon">
+                                                                    <i class="fa fa-arrows-alt"></i>
+                                                                </div>
                                                             </div>
-                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][icon]" id="icon_{{ $subCategory->id }}" class="form-control" value="{{ $subCategory->icon }}" placeholder="{{ trans('admin/main.icon') }}"/>
+
+                                                            <input type="text" name="outline_{{ $subCategory->id }}[record][title]"
+                                                                   class="form-control w-auto flex-grow-1"
+                                                                   placeholder="{{ trans('admin/main.title_subject') }}"/>
+
+                                                            <div class="input-group-append">
+                                                                <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="input-group mt-1">
+                                                            <input type="text" name="outline_{{ $subCategory->id }}[record][description]"
+                                                                   class="form-control w-auto flex-grow-1"
+                                                                   placeholder="{{ trans('admin/main.description_subject') }}"/>
                                                         </div>
                                                     </div>
+                                                </li>
                                                 </li>
                                             @endforeach
                                         @endif
@@ -201,7 +225,7 @@
 
                                         <input type="text" name="sub_categories[record][title]"
                                                class="form-control w-auto flex-grow-1"
-                                               placeholder="{{ trans('admin/main.choose_title') }}"/>
+                                               placeholder="{{ trans('admin/main.title_majors') }}"/>
 
                                         <div class="input-group-append">
                                             <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
@@ -209,18 +233,9 @@
                                     </div>
 
                                     <div class="input-group mt-1">
-                                        <input type="text" name="sub_categories[record][slug]"
+                                        <input type="text" name="sub_categories[record][description]"
                                                class="form-control w-auto flex-grow-1"
-                                               placeholder="{{ trans('admin/main.choose_url') }}"/>
-                                    </div>
-
-                                    <div class="input-group mt-1">
-                                        <div class="input-group-prepend">
-                                            <button type="button" class="input-group-text admin-file-manager " data-input="icon_record" data-preview="holder">
-                                                <i class="fa fa-upload"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" name="sub_categories[record][icon]" id="icon_record" class="form-control" placeholder="{{ trans('admin/main.icon') }}"/>
+                                               placeholder="{{ trans('admin/main.title_majors') }}"/>
                                     </div>
                                 </div>
                             </li>

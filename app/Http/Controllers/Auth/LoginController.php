@@ -297,7 +297,8 @@ class LoginController extends Controller
         $cartManagerController->storeCookieCartsToDB();
 
         if ($user->isAdmin()) {
-            return redirect(getAdminPanelUrl() . '');
+//            return redirect(getAdminPanelUrl() . '');
+            return response()->json(['success' => true]);
         } else {
             return response()->json(['success' => true]);
         }

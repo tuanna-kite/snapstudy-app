@@ -32,7 +32,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
 
     Route::group(['middleware' => 'admin'], function () {
 
-        Route::get('/', 'DashboardController@index');
+        Route::get('/', 'DashboardController@index')->name('admin.dashboard');
         Route::get('/clear-cache', 'DashboardController@cacheClear');
 
         Route::group(['prefix' => 'dashboard'], function () {

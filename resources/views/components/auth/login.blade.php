@@ -67,7 +67,7 @@
                     dataType: 'json',
                     success: function(data) {
                         if(data.success) {
-                            window.location.href = '{{ route('home') }}';
+                            window.location.href = '{{ route('admin.dashboard') }}';
                         } else {
                             // Display validation errors
                             var errorContainer = document.getElementById("errorContainer");

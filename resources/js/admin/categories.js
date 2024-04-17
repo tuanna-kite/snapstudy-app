@@ -23,6 +23,19 @@
         $('.draggable-lists').append(copy);
     });
 
+    $('body').on('click', '.outline-add-btn', function (e) {
+        e.preventDefault();
+        var mainRow = $('.outline-list');
+
+        var copy = mainRow.clone();
+        copy.removeClass('outline-list');
+        copy.removeClass('d-none');
+        var copyHtml = copy.prop('innerHTML');
+        copyHtml = copyHtml.replaceAll('record', randomString());
+        copy.html(copyHtml);
+        $('.draggable-lists-outline').append(copy);
+    });
+
     $('body').on('click', '.remove-btn', function (e) {
         e.preventDefault();
         $(this).closest('.form-group').remove();

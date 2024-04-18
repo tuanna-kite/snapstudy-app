@@ -69,13 +69,13 @@
                                                     class="custom-select @error('type')  is-invalid @enderror">
                                                 <option value="webinar"
                                                         @if (!empty($webinar) and $webinar->isWebinar() or old('type') == \App\Models\Webinar::$webinar) selected @endif>
-                                                    {{ trans('webinars.webinar') }}</option>
+                                                    {{ trans('admin/main.outline') }}</option>
                                                 <option value="course"
                                                         @if (!empty($webinar) and $webinar->isCourse() or old('type') == \App\Models\Webinar::$course) selected @endif>
-                                                    {{ trans('product.video_course') }}</option>
+                                                    {{ trans('admin/main.exam') }}</option>
                                                 <option value="text_lesson"
                                                         @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>
-                                                    {{ trans('product.text_course') }}</option>
+                                                    {{ trans('admin/main.question') }}</option>
                                             </select>
 
                                             @error('type')

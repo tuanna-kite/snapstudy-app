@@ -131,7 +131,7 @@
                                         @if((!empty($subCategories) and !$subCategories->isEmpty()))
                                             @foreach($subCategories as $key => $subCategory)
                                                 <input type="hidden" name="subCategory_id" value="{{ $subCategory->id }}">
-                                                <li class="form-group list-group draggable-lists-outline">
+                                                <li class="form-group list-group draggable-lists-outline_{{ $subCategory->id }}">
 
                                                     <div class="p-2 border rounded-sm">
                                                         <div class="input-group">
@@ -174,7 +174,7 @@
                                                     @if($subCategory)
                                                         <div class="d-flex align-items-center justify-content-between mb-2 mt-2 ml-4">
                                                             <strong class="d-block">{{ trans('admin/main.add_subject') }}</strong>
-                                                            <button type="button" class="btn btn-success outline-add-btn"><i class="fa fa-plus"></i> Add</button>
+                                                            <button type="button" onclick="handleOutlineAddBtnClick(event, {{ $subCategory->id }})" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
                                                         </div>
                                                     @endif
 
@@ -252,4 +252,20 @@
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
 
     <script src="/assets/default/js/admin/categories.min.js"></script>
+    <script>
+
+        function handleOutlineAddBtnClick(e, id) {
+            e.preventDefault();
+            var mainRow = document.querySelector('.outline-list');
+
+            var copy = mainRow.cloneNode(true);
+            copy.classList.remove('outline-list');
+            copy.classList.remove('d-none');
+            var copyHtml = copy.innerHTML;
+            copyHtml = copyHtml.replaceAll('record', randomString());
+            copy.innerHTML = copyHtml;
+            var subID = 'draggable-lists-outline' + '_' + id;
+            document.querySelector(('.' + subID)).appendChild(copy);
+        }
+    </script>
 @endpush

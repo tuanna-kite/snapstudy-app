@@ -1536,5 +1536,9 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'title_subject' => 'Tiêu đề môn học',
 'description_subject' => 'Mô tả môn học',
 'prefix' => 'Prefix',
+'outline' => 'Outline',
+'exam' => 'Exam',
+'question' => 'Question',
+
 ];
 

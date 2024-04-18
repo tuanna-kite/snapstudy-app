@@ -82,8 +82,6 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
 
     Route::get('/', 'HomeController@index')->name('home');
 
-    Route::view('/outline', 'web_v2.pages.outline');
-
     Route::get('/getDefaultAvatar', 'DefaultAvatarController@make');
 
     Route::group(['prefix' => 'course'], function () {
@@ -224,6 +222,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::get('/subjects', 'ClassesController@index')->name('classes');
+    Route::get('/school/{slug}', 'ClassesController@school')->name('school');
     Route::get('/outline', 'ClassesController@outline')->name('outline');
 
     Route::get('/reward-courses', 'RewardCoursesController@index');

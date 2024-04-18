@@ -2,11 +2,11 @@
     <div class="flex items-center justify-between px-6 py-4" x-on:click="openTab !== 1 ? openTab = 1 : openTab = null">
         <div>
             <p class="font-semibold text-base text-primary.main">
-                OUTLINE
+                {{ $type['name'] }}
             </p>
-            <p class="text-xs text-text.light.secondary">
-                Lorem ipsum dolor sit amet consectetur.
-            </p>
+{{--            <p class="text-xs text-text.light.secondary">--}}
+{{--                Lorem ipsum dolor sit amet consectetur.--}}
+{{--            </p>--}}
         </div>
         <div class="flex">
             <x-component.material-icon name="expand_more" x-show="openTab === null" />

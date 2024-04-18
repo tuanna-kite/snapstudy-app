@@ -2,6 +2,18 @@
 
 @section('title', 'Outline Page')
 
+@php
+$outline_type = [
+        'name' => 'Outline',
+        ];
+$exam_type = [
+        'name' => 'Exam',
+        ];
+$question_type = [
+        'name' => 'Question',
+        ];
+@endphp
+
 @section('content')
     <x-layouts.home-layout>
         <div class="container mx-auto py-24 space-y-8">
@@ -15,7 +27,9 @@
                 </div>
             </div>
             {{-- Content --}}
-            <x-pages.outline.card :outlines="$outlines"/>
+            <x-pages.outline.card :type="$outline_type" :outlines="$outlines"/>
+            <x-pages.outline.card :type="$exam_type" :outlines="$exams"/>
+            <x-pages.outline.card :type="$question_type" :outlines="$questions"/>
         </div>
     </x-layouts.home-layout>
 @endsection

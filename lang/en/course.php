@@ -10,6 +10,7 @@ return [
 
     'Filter By' => 'Filter By',
     'Subject' => 'Subject',
+    'Majors' => 'Major',
     'Clear All' => 'Clear All',
     'Filter' => 'Filter',
     'Apply' => 'Apply',

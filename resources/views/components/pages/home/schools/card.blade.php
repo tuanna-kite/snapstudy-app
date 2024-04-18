@@ -5,7 +5,7 @@
         ->toArray();
     $countWebinar = \App\Models\Webinar::whereIn('category_id', $categoryIds)->count();
 @endphp
-<a href="{{ route('classes') . '?school[]=' . $school->slug }}">
+<a href="{{ route('school', ['slug' => $school->slug]) }}">
     <div
         class="rounded-3xl shadow-md gap-3 bg-white p-4 flex flex-col justify-between min-h-60 md:min-h-40  hover:-translate-y-3 transition-transform duration-300">
         <div class="flex flex-col items-center md:flex-row md:items-start gap-3">

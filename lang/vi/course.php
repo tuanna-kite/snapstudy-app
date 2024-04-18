@@ -10,6 +10,7 @@ return [
 
     'Filter By' => 'Lọc theo',
     'Subject' => 'Chủ đề',
+    'Majors' => 'Ngành học',
     'Clear All' => 'Xóa tất cả',
     'Filter' => 'Lọc',
     'Apply' => 'Áp dụng',

@@ -1,15 +1,15 @@
-@props(['formId', 'categories', 'schools'])
+@props(['formId', 'categories', 'school', 'majors'])
 
-<form id={{ $formId }} action="{{ route('classes') }}" method="GET">
+<form id={{ $formId }} action="{{ route('school', ['slug' => $school->slug]) }}" method="GET">
     {{ $slot }}
     <!-- List of school checkboxes -->
-    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">{{ trans('course.School') }}</h3>
-    @foreach ($schools as $school)
+    <h3 class="font-semibold text-base text-primary.main mt-6 mb-2">{{ trans('course.Majors') }}</h3>
+    @foreach ($majors as $major)
         <div class="mb-1">
             <label class="space-x-2">
-                <input type="checkbox" name="school[]" value="{{ $school->slug }}"
-                    @if (in_array($school->slug, request()->get('school', []))) checked="checked" @endif>
-                <span>{{ $school->title }}</span>
+                <input type="checkbox" name="marjors[]" value="{{ $major->slug }}"
+                    @if (in_array($major->slug, request()->get('marjors', []))) checked="checked" @endif>
+                <span>{{ $major->title }}</span>
             </label>
         </div>
     @endforeach
@@ -44,7 +44,7 @@
                 }
             }
             // Redirect to the updated URL with merged query parameters
-            window.location.href = '/subjects?' + existingParams.toString();
+            window.location.href = '{{ route('school', ['slug' => $school->slug]) }}?' + existingParams.toString();
         }
 
         // Event listener for filter form submission
@@ -65,7 +65,7 @@
             // Get all checkboxes by name and uncheck them
             document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
                 checkbox.checked = false;
-                window.location.href = '{{ route('classes') }}'
+                window.location.href = '{{ route('school', ['slug' => $school->slug]) }}'
             });
         }
     </script>

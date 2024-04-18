@@ -1535,5 +1535,8 @@ By enabling this feature, newly registered users will require approval using thi
 'title_subject' => 'Title Subject',
 'description_subject' => 'Outline Subject',
 'prefix' => 'Prefix',
+'outline' => 'Outline',
+'exam' => 'Exam',
+'question' => 'Question',
 
 ];

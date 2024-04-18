@@ -1,4 +1,4 @@
-@props(['categories', 'schools'])
+@props(['categories', 'majors', 'school'])
 
 <div x-data="{ showModal: false }">
     <!-- Button to toggle the modal -->
@@ -15,7 +15,7 @@
         class="fixed inset-0 h-screen">
         <div class="bg-white p-6 h-full">
             <!-- Modal content -->
-            <x-pages.course-list.form :schools="$schools" formId="filterForm2">
+            <x-pages.course-list.form :school="$school" :majors="$majors" formId="filterForm2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <button type="button" class="flex" @click="showModal = false">

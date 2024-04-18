@@ -143,6 +143,7 @@ class CategoryController extends Controller
 
         $hasSubCategories = (!empty($request->get('has_sub')) and $request->get('has_sub') == 'on');
         $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale'], $request);
+        $this->setSubject($request->get('subCategory_id'), $request->get('sub_categories'), $data['locale']);
 
 
         cache()->forget(Category::$cacheKey);
@@ -260,6 +261,66 @@ class CategoryController extends Controller
         Category::where('parent_id', $category->id)
             ->whereNotIn('id', $oldIds)
             ->delete();
+
+        return true;
+    }
+
+    public function setSubject($subCategory, $subjects, $locale, $request = null)
+    {
+        $order = 1;
+        $oldIds = [];
+
+        if (!empty($subjects) and count($subjects)) {
+            foreach ($subjects as $key => $subject) {
+                $check = Category::where('id', $key)
+                    ->where('level', 3)
+                    ->first();
+
+                if (is_numeric($key)) {
+                    $oldIds[] = $key;
+                }
+
+                if (!empty($subject['title'])) {
+                    $checkSlug = 0;
+                    if (!empty($subject['slug'])) {
+                        $checkSlug = Category::query()->where('slug', $subject['slug'])->count();
+                    }
+                    if (!empty($check)) {
+                        CategoryTranslation::updateOrCreate([
+                            'category_id' => $check->id,
+                            'locale' => mb_strtolower($locale),
+                        ], [
+                            'title' => $subject['title'],
+                            'description' => $subject['description']
+                        ]);
+                    } else {
+                        $new = Category::create([
+                            'parent_id' => $subCategory,
+                            'icon' => $subject['icon'] ?? null,
+                            'slug' => '',
+                            'order' => $order,
+                            'level' => 2,
+                        ]);
+
+                        CategoryTranslation::updateOrCreate([
+                            'category_id' => $new->id,
+                            'locale' => mb_strtolower($locale),
+                        ], [
+                            'title' => $subject['title'],
+                            'description' => $subject['description']
+                        ]);
+
+                        $oldIds[] = $new->id;
+                    }
+
+                    $order += 1;
+                }
+            }
+        }
+//
+//        Category::where('parent_id', $subCategory)
+//            ->whereNotIn('id', $oldIds)
+//            ->delete();
 
         return true;
     }

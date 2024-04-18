@@ -10,12 +10,12 @@
                     <x-search.search-doc />
                 </div>
                 <div class="block lg:hidden">
-                    <x-pages.course-list.filter-button :schools="$schools"/>
+                    <x-pages.course-list.filter-button :majors="$majors" :school="$school"/>
                 </div>
             </div>
             <div class="flex gap-6">
                 <div class="w-1/4 hidden lg:block">
-                    <x-pages.course-list.form formId="filterForm1" :schools="$schools">
+                    <x-pages.course-list.form formId="filterForm1" :majors="$majors" :school="$school">
                         <div class="flex items-center justify-between">
                             <h2 class="font-bold text-2xl text-primary.main">
                                 {{ trans('course.Filter By') }}
@@ -33,6 +33,7 @@
                     </x-pages.course-list.form>
                 </div>
                 <div class="w-full lg:w-3/4 grid-cols-1 grid gap-4 sm:grid-cols-3 xl:grid-cols-4">
+
                     @foreach ($subjectAll as $subject)
                         <div class="{{ count($subjectAll) <= 4 ? 'max-h-72 flex' : 'flex' }}">
                             <x-documents.document-card :subject="$subject" />

@@ -250,13 +250,60 @@ class ClassesController extends Controller
                         ->orWhereTranslationLike('webinar_id', "%$search%");
             });
         }
-        $outlines = $webinarsQuery->paginate(12);
+        $outlines = $webinarsQuery->where('webinars.type', Webinar::$webinar)->paginate(12);
+        $exams = $webinarsQuery->where('webinars.type', Webinar::$course)->paginate(12);
+        $questions = $webinarsQuery->where('webinars.type', Webinar::$textLesson)->paginate(12);
 
         $data = [
             'outlines' => $outlines,
+            'exams' => $exams,
+            'questions' => $questions,
             'subject' => $subject
         ];
         return view('web_v2.pages.outline', $data);
+    }
+
+    public function school(Request $request, $slug)
+    {
+        $search = $request->get('search', '');
+        $majors_search = $request->get('majors', []);
+        $school = Category::where('slug', $slug)->first();
+
+        $majors = Category::where('parent_id', $school->id)
+            ->where('level', 2)
+            ->orderBy('order', 'asc')
+            ->get();
+
+        $majors_list = Category::where('parent_id', $school->id)
+            ->where('level', 2)
+            ->pluck('id')->toArray();
+
+
+        $subjectQuery = Category::where('parent_id', 660)
+            ->where('level', 3);
+
+        if($search) {
+            $subjectQuery = $subjectQuery->whereTranslationLike('title', "%$search%");
+        }
+        if($majors_search) {
+            $subjectQuery = $subjectQuery->whereIn('slug', $majors_search);
+        }
+        $subjectAll = $subjectQuery->paginate(12);
+
+        $seoSettings = getSeoMetas('classes');
+        $pageTitle = $seoSettings['title'] ?? '';
+        $pageDescription = $seoSettings['description'] ?? '';
+        $pageRobot = getPageRobot('classes');
+        $data = [
+            'pageTitle' => $pageTitle,
+            'pageDescription' => $pageDescription,
+            'pageRobot' => $pageRobot,
+            'majors' => $majors,
+            'school' => $school,
+            'subjectAll'=> $subjectAll
+
+        ];
+        return view('web_v2.pages.course-list', $data);
     }
 }
 

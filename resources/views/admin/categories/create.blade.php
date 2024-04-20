@@ -156,13 +156,6 @@
                                                             </div>
                                                         </div>
 
-{{--                                                        <div class="input-group w-100 mt-1">--}}
-{{--                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][slug]"--}}
-{{--                                                                   class="form-control w-auto flex-grow-1"--}}
-{{--                                                                   value="{{ $subCategory->slug }}"--}}
-{{--                                                                   placeholder="{{ trans('admin/main.choose_url') }}"/>--}}
-{{--                                                        </div>--}}
-
                                                         <div class="input-group w-100 mt-1">
                                                             <input type="text" name="sub_categories[{{ $subCategory->id }}][description]"
                                                                    class="form-control w-auto flex-grow-1"
@@ -177,32 +170,69 @@
                                                             <button type="button" onclick="handleOutlineAddBtnClick(event, {{ $subCategory->id }})" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
                                                         </div>
                                                     @endif
+                                            @php
+                                                $outlines = \App\Models\Category::where('parent_id', $subCategory->id)
+                                                ->where('level', 3)
+                                                ->orderBy('order', 'asc')
+                                                ->get();
+                                            @endphp
+                                                @if((!empty($outlines)))
+                                                    @foreach($outlines as $key => $outline)
+                                                        <li class="form-group list-group ml-4">
+                                                            <div class="p-2 border rounded-sm">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="input-group-text cursor-pointer move-icon">
+                                                                            <i class="fa fa-arrows-alt"></i>
+                                                                        </div>
+                                                                    </div>
 
-                                                <li class="form-group outline-list list-group ml-4 d-none">
-                                                    <div class="p-2 border rounded-sm">
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text cursor-pointer move-icon">
-                                                                    <i class="fa fa-arrows-alt"></i>
+                                                                    <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][title]"
+                                                                           class="form-control w-auto flex-grow-1"
+                                                                           value="{{ $outline->title }}"
+                                                                           placeholder="{{ trans('admin/main.title_subject') }}"/>
+
+                                                                    <div class="input-group-append">
+                                                                        <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="input-group mt-1">
+                                                                    <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][description]"
+                                                                           class="form-control w-auto flex-grow-1"
+                                                                           value="{{ $outline->description }}"
+                                                                           placeholder="{{ trans('admin/main.description_subject') }}"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+
+                                                    <li class="form-group outline-list list-group ml-4 d-none">
+                                                        <div class="p-2 border rounded-sm">
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text cursor-pointer move-icon">
+                                                                        <i class="fa fa-arrows-alt"></i>
+                                                                    </div>
+                                                                </div>
+
+                                                                <input type="text" name="outline_majorID[record][title]"
+                                                                       class="form-control w-auto flex-grow-1"
+                                                                       placeholder="{{ trans('admin/main.title_subject') }}"/>
+
+                                                                <div class="input-group-append">
+                                                                    <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
                                                                 </div>
                                                             </div>
 
-                                                            <input type="text" name="outline_{{ $subCategory->id }}[record][title]"
-                                                                   class="form-control w-auto flex-grow-1"
-                                                                   placeholder="{{ trans('admin/main.title_subject') }}"/>
-
-                                                            <div class="input-group-append">
-                                                                <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
+                                                            <div class="input-group mt-1">
+                                                                <input type="text" name="outline_majorID[record][description]"
+                                                                       class="form-control w-auto flex-grow-1"
+                                                                       placeholder="{{ trans('admin/main.description_subject') }}"/>
                                                             </div>
                                                         </div>
-
-                                                        <div class="input-group mt-1">
-                                                            <input type="text" name="outline_{{ $subCategory->id }}[record][description]"
-                                                                   class="form-control w-auto flex-grow-1"
-                                                                   placeholder="{{ trans('admin/main.description_subject') }}"/>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
                                                 </li>
                                             @endforeach
                                         @endif
@@ -263,6 +293,7 @@
             copy.classList.remove('d-none');
             var copyHtml = copy.innerHTML;
             copyHtml = copyHtml.replaceAll('record', randomString());
+            copyHtml = copyHtml.replaceAll('majorID', id);
             copy.innerHTML = copyHtml;
             var subID = 'draggable-lists-outline' + '_' + id;
             document.querySelector(('.' + subID)).appendChild(copy);

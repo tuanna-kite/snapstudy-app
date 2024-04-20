@@ -1839,6 +1839,50 @@
 
     });
 
+    $('#school').change(function() {
+        var schoolId = $(this).val();
+        if (schoolId) {
+            let html = '';
+            $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
+                if (result && result.code === 200) {
+                    const selectBox = $('#major');
+                    // let html = '<option value="">' + selectCityLang + '</option>';
+                    console.log(result)
+
+                    if (result.majors && result.majors.length) {
+                        for (let major of result.majors) {
+                            html += '<option value="' + major.id + '">' + major.title + '</option>';
+                        }
+                    }
+                    selectBox.append(html);
+                }
+            })
+        } else {
+            $('#major').empty();
+        }
+    });
+
+    $('#major').change(function() {
+        var majorID = $(this).val();
+        if (majorID) {
+            let html_major = '';
+            $.get(adminPanelPrefix + '/categories/get-subject/' + majorID, function (result) {
+                if (result && result.code === 200) {
+                    const subject = $('#subject');
+
+                    if (result.subjects && result.subjects.length) {
+                        for (let subject of result.subjects) {
+                            html_major += '<option value="' + subject.id + '">' + subject.title + '</option>';
+                        }
+                    }
+                    subject.append(html_major);
+                }
+            })
+        } else {
+            $('#subject').empty();
+        }
+    });
+
 
     /* feather icons */
     // **

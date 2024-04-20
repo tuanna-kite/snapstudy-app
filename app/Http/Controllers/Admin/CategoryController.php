@@ -94,6 +94,7 @@ class CategoryController extends Controller
 
         $category = Category::findOrFail($id);
         $subCategories = Category::where('parent_id', $category->id)
+            ->where('level', 2)
             ->orderBy('order', 'asc')
             ->get();
 
@@ -143,7 +144,6 @@ class CategoryController extends Controller
 
         $hasSubCategories = (!empty($request->get('has_sub')) and $request->get('has_sub') == 'on');
         $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale'], $request);
-        $this->setSubject($request->get('subCategory_id'), $request->get('sub_categories'), $data['locale']);
 
 
         cache()->forget(Category::$cacheKey);
@@ -232,6 +232,8 @@ class CategoryController extends Controller
                             'title' => $subCategory['title'],
                             'description' => $subCategory['description']
                         ]);
+                        $this->setSubject($category, $check->id, $request->get('outline_' . $check->id), $locale);
+
                     } else {
 
                         $new = Category::create([
@@ -249,7 +251,7 @@ class CategoryController extends Controller
                             'title' => $subCategory['title'],
                             'description' => $subCategory['description']
                         ]);
-
+                        $this->setSubject($category, $new->id, $request->get('sub_categories_' . $new->id), $locale);
                         $oldIds[] = $new->id;
                     }
 
@@ -265,12 +267,12 @@ class CategoryController extends Controller
         return true;
     }
 
-    public function setSubject($subCategory, $subjects, $locale, $request = null)
+    public function setSubject(Category $category, $subCategoryID, $subjects, $locale, $request = null)
     {
         $order = 1;
         $oldIds = [];
 
-        if (!empty($subjects) and count($subjects)) {
+        if (!empty($subjects)) {
             foreach ($subjects as $key => $subject) {
                 $check = Category::where('id', $key)
                     ->where('level', 3)
@@ -281,10 +283,6 @@ class CategoryController extends Controller
                 }
 
                 if (!empty($subject['title'])) {
-                    $checkSlug = 0;
-                    if (!empty($subject['slug'])) {
-                        $checkSlug = Category::query()->where('slug', $subject['slug'])->count();
-                    }
                     if (!empty($check)) {
                         CategoryTranslation::updateOrCreate([
                             'category_id' => $check->id,
@@ -294,13 +292,14 @@ class CategoryController extends Controller
                             'description' => $subject['description']
                         ]);
                     } else {
-                        $new = Category::create([
-                            'parent_id' => $subCategory,
+                        $data = [
+                            'parent_id' => $subCategoryID,
                             'icon' => $subject['icon'] ?? null,
-                            'slug' => '',
+                            'slug' => Category::makeSlug($subject['title']),
                             'order' => $order,
-                            'level' => 2,
-                        ]);
+                            'level' => 3,
+                        ];
+                        $new = Category::create($data);
 
                         CategoryTranslation::updateOrCreate([
                             'category_id' => $new->id,
@@ -317,11 +316,37 @@ class CategoryController extends Controller
                 }
             }
         }
-//
-//        Category::where('parent_id', $subCategory)
-//            ->whereNotIn('id', $oldIds)
-//            ->delete();
+
+        Category::where('parent_id', $subCategoryID)
+            ->whereNotIn('id', $oldIds)
+            ->delete();
 
         return true;
+    }
+
+    public function getMajorBySchool($school_id)
+    {
+        $majors = Category::where('parent_id', $school_id)
+            ->where('level', 2)
+            ->orderBy('order', 'asc')
+            ->get();
+
+        return response()->json([
+            'code' => 200,
+            'majors' => $majors
+        ]);
+    }
+
+    public function getSubjectByMajor($major_id)
+    {
+        $subjects = Category::where('parent_id', $major_id)
+            ->where('level', 3)
+            ->orderBy('order', 'asc')
+            ->get();
+
+        return response()->json([
+            'code' => 200,
+            'subjects' => $subjects
+        ]);
     }
 }

@@ -368,7 +368,7 @@ return [
     'zoom_jwt_token' => 'Zoom JWT Token',
  	  'how_zoom_jwt_token' => 'How to create Zoom JWT token',
     'instructor_is_not_available' => 'Instructor is temporarily unavailable.',
-  
+
     'chapter' => 'Section',
     'chapters' => 'Sections',
     'add_new_chapter' => 'Add New Section',
@@ -385,5 +385,9 @@ return [
 'my_purchases' => 'My Purchases',
     'forbidden_request_toast_lang' => '"FORBIDDEN" Request',
     'forbidden_request_toast_msg_lang' => 'You not access to this content.',
+
+    'choose_school' => 'Choose School',
+    'choose_major' => 'Choose Major',
+    'choose_subject' => 'Choose Subject',
 
 ];

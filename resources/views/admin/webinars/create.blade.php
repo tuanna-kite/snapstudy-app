@@ -185,27 +185,48 @@
                                                        placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)"/>
                                             </div>
                                             <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('public.category') }}</label>
-                                                <select id="categories"
-                                                        class="custom-select @error('category_id')  is-invalid @enderror"
-                                                        name="category_id" required>
+                                                <label class="input-label">{{ trans('public.choose_school') }}</label>
+                                                <select id="school"
+                                                        class="custom-select @error('school_id')  is-invalid @enderror"
+                                                        name="school_id" required>
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
-                                                        {{ trans('public.choose_category') }}</option>
+                                                        {{ trans('public.choose_school') }}</option>
                                                     @foreach ($categories as $category)
-                                                        @if (!empty($category->subCategories) and count($category->subCategories))
-                                                            <optgroup label="{{ $category->title }}">
-                                                                @foreach ($category->subCategories as $subCategory)
-                                                                    <option value="{{ $subCategory->id }}"
-                                                                            {{ (!empty($webinar) and $webinar->category_id == $subCategory->id) ? 'selected' : '' }}>
-                                                                        {{ $subCategory->title }}</option>
-                                                                @endforeach
-                                                            </optgroup>
-                                                        @else
                                                             <option value="{{ $category->id }}"
                                                                     {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
                                                                 {{ $category->title }}</option>
-                                                        @endif
                                                     @endforeach
+                                                </select>
+
+                                                @error('school_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group mt-15">
+                                                <label class="input-label">{{ trans('public.choose_major') }}</label>
+                                                <select id="major"
+                                                        class="custom-select @error('major_id')  is-invalid @enderror"
+                                                        name="major_id" required>
+                                                    <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
+                                                        {{ trans('public.choose_major') }}</option>
+                                                </select>
+
+                                                @error('major_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group mt-15">
+                                                <label class="input-label">{{ trans('public.choose_subject') }}</label>
+                                                <select id="subject"
+                                                        class="custom-select @error('category_id')  is-invalid @enderror"
+                                                        name="category_id" required>
+                                                    <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
+                                                        {{ trans('public.choose_subject') }}</option>
+
                                                 </select>
 
                                                 @error('category_id')

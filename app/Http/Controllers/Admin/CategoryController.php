@@ -251,7 +251,6 @@ class CategoryController extends Controller
                             'title' => $subCategory['title'],
                             'description' => $subCategory['description']
                         ]);
-                        $this->setSubject($category, $new->id, $request->get('sub_categories_' . $new->id), $locale);
                         $oldIds[] = $new->id;
                     }
 

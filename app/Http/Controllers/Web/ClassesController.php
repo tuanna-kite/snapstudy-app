@@ -279,7 +279,7 @@ class ClassesController extends Controller
             ->pluck('id')->toArray();
 
 
-        $subjectQuery = Category::where('parent_id', 660)
+        $subjectQuery = Category::where('parent_id', $majors_list)
             ->where('level', 3);
 
         if($search) {

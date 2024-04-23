@@ -36,13 +36,13 @@
         {!! getThemeColorsSettings(true) !!}
     </style>
 
-    {{--  TinyMCE Editor  --}}
-    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/wliji6ewtvzu9zn08ui3ac9gy1iu2oia3894vltejkc9tznl/tinymce/7/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
-            plugins: 'code table lists image fullscreen',
-            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | image | fullscreen',
+            selector: 'textarea', // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker permanentpen advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags inlinecss markdown',
+            toolbar: 'fullscreen tableofcontents blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             images_file_types: 'jpg,svg,webp,png',
             height: 600
         });
@@ -162,18 +162,6 @@
     {!! !empty(getCustomCssAndJs('js')) ? getCustomCssAndJs('js') : '' !!}
 </script>
 
-<!-- Place the first <script> tag in your HTML's <head> -->
-<script src="https://cdn.tiny.cloud/1/s1zy2pbcws8mg66ii9iy9m626jk2i9goxtv4xaxsedb1g7ba/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-
-<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
-<script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags typography inlinecss markdown',
-        toolbar: 'fullscreen tableofcontents blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    });
-</script>
 
 </body>
 </html>

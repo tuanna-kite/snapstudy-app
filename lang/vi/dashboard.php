@@ -85,6 +85,7 @@ return [
     'Syllabus' => 'Chương trình học',
     'Message' => 'Tin nhắn',
     'Attach a file' => 'Đính kèm tệp',
+    'Attach a file (Your current assignment and assignment)' => 'Đính kèm một tệp (Đề bài và bài làm hiện tại của bạn)',
     'No file chosen' => 'Không có tệp nào được chọn',
     'Send Message' => 'Gửi Tin Nhắn',
     'Search' => 'Tìm kiếm',

@@ -84,6 +84,7 @@ return [
     'Syllabus' => 'Syllabus',
     'Message' => 'Message',
     'Attach a file' => 'Attach a file',
+    'Attach a file (Your current assignment and assignment)'=>'Attach a file (Your current assignment and assignment)',
     'No file chosen' => 'No file chosen',
     'Send Message' => 'Send Message',
     'Search' => 'Search',

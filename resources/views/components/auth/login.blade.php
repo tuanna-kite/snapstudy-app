@@ -37,51 +37,74 @@
                     </div>
                 </div>
                 <div class="space-y-6">
-                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white" id="loginBtn">
+                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white"
+                        id="loginBtn">
                         <span class="font-medium text-sm">
                             {{ trans('auth.Login') }}
                         </span>
                     </button>
                     <p class="text-center text-sm text-text.light.primary">
                         {{ trans('auth.Do not have an account?') }} <button type="button" @click="page = 'signup'"
-                                                                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
+                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    @push('scripts_bottom')
-        <script>
-            document.getElementById("loginBtn").addEventListener("click", function() {
-                var formData = {
-                    email: document.getElementById("email").value,
-                    password: document.getElementById("password").value,
-                    _token: '{{ csrf_token() }}'
-                };
+@push('scripts_bottom')
+    <script>
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('popupLogin') }}",
-                    data: formData,
-                    dataType: 'json',
-                    success: function(data) {
-                        if(data.success) {
-                            window.location.href = '{{ route('admin.dashboard') }}';
-                        } else {
-                            // Display validation errors
-                            var errorContainer = document.getElementById("errorContainer");
-                            errorContainer.innerHTML = ''; // Clear previous errors
-                            for (var error in data.errors) {
-                                console.log(data.errors[error]);
-                                errorContainer.innerHTML += '<p>' + data.errors[error] + '</p>';
-                            }
+        function submitForm() {
+            var formData = {
+                email: emailInput.value,
+                password: passwordInput.value,
+                _token: '{{ csrf_token() }}'
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('popupLogin') }}",
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success) {
+                        window.location.href = '{{ route('home') }}';
+                    } else {
+                        // Display validation errors
+                        var errorContainer = document.getElementById("errorContainer");
+                        errorContainer.innerHTML = ''; // Clear previous errors
+                        for (var error in data.errors) {
+                            console.log(data.errors[error]);
+                            errorContainer.innerHTML += '<p>' + data.errors[error] + '</p>';
                         }
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
                     }
-                });
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
             });
-        </script>
+        }
+
+        // Add event listener to the email input field
+        emailInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                submitForm();
+            }
+        });
+
+        // Add event listener to the password input field
+        passwordInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                submitForm();
+            }
+        });
+
+        loginBtn.addEventListener("click", function() {
+            submitForm();
+        });
+    </script>
 @endpush

@@ -46,10 +46,12 @@
                 <p class="font-normal text-base text-text.light.primary">
                     {{ $course->seo_description }}
                 </p>
-
-                <p class="font-normal text-base text-text.light.primary">
+                <div>
+                    <x-pages.course-detail.button-support/>
+                </div>
+                {{-- <p class="font-normal text-base text-text.light.primary">
                     <span class="font-semibold">1.332.107 </span> {{ trans('course.Registed') }}
-                </p>
+                </p> --}}
             </div>
         </div>
         <div class="bg-white">

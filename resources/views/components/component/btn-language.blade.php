@@ -35,14 +35,13 @@
         <x-component.material-icon name="expand_less" x-show="open === true" />
     </button>
     <ul x-show.transition="open" @click.away="open = false"
-        class="absolute z-10 bg-white mt-6 rounded-xl overflow-hidden shadow-lg w-40">
+        class="absolute z-10 bg-white mt-6 rounded-xl overflow-hidden shadow-lg w-40 flex flex-col">
         @foreach ($localLanguage as $language => $languageName)
-            <li>
-                <form action="{{ route('appLocaleRoute') }}" method="POST">
+            <li class="flex-1 hover:bg-gray-400">
+                <form action="{{ route('appLocaleRoute') }}" method="POST" class="mb-0">
                     @csrf
                     <input type="hidden" name="locale" value="{{ $language }}">
-                    <button type="submit"
-                        class="block px-4 py-2 w-full text-sm leading-5 text-gray-700 hover:bg-primary.light hover:text-white focus:outline-none">
+                    <button type="submit" class="px-4 py-4 text-sm leading-5 text-gray-500 focus:outline-none">
                         <span class="flex gap-2 items-center">
                             <x-component.icon name="{{ $language == 'VN' ? 'viet-nam' : 'english' }}" />
                             {{ $languageName }}

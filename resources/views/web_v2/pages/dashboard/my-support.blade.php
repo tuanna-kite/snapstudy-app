@@ -69,9 +69,11 @@
                 @endforeach
 
                 <x-input.textarea-label :data="$textarea" />
-                <div class="flex flex-col md:flex-row justify-between items-end">
-                    <x-input.file-label />
-                    <x-button.button text="{{ trans('dashboard.Send Message') }}" type='submit' class="mb-2" />
+                <div class="flex flex-col md:flex-row justify-between items-end  gap-4">
+                    <div class="w-full md:max-w-64">
+                        <x-input.file-label />
+                    </div>
+                    <x-button.button text="{{ trans('dashboard.Send Message') }}" type='submit' />
                 </div>
             </form>
         </div>

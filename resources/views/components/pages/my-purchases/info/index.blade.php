@@ -2,7 +2,7 @@
     <p class="font-bold text-lg">
         {{ trans('dashboard.Cart') }} ({{ $purchasedCount }} {{ trans('dashboard.syllabus') }})
     </p>
-    <a href="{{ route('classes') }}" class="flex items-center">
+    <a href="{{ route('outline') }}" class="flex items-center">
         <span class="font-medium text-xs text-text.light.disabled">
             {{ trans('dashboard.Continue Shopping') }}
         </span>

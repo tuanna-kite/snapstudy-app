@@ -81,7 +81,7 @@
                     <h1 class="font-bold text-base sm:text-xl md:text-3xl lg:text-4xl text-primary.main">
                         {{ trans('home.Start learning with Top Trending Outlines') }}
                     </h1>
-                    <a href="{{ route('classes') }}" class="flex items-center">
+                    <a href="{{ route('outline') }}" class="flex items-center">
                         <span class="font-medium text-xs md:text-base text-text.light.secondary">
                             {{ trans('home.View all') }}
                         </span>

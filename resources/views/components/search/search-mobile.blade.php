@@ -19,7 +19,7 @@
                     <x-component.material-icon name='close' />
                 </button>
                 {{-- Input Form --}}
-                <form action="{{ route('classes') }}" method="GET" class="w-full">
+                <form action="{{ route('outline') }}" method="GET" class="w-full">
                     <div class="rounded-xl border p-4 w-full flex items-center bg-white justify-between">
                         <input id="searchInput" type="text" class="w-full" name="search"
                             placeholder="{{ trans('forms.Search') }}">

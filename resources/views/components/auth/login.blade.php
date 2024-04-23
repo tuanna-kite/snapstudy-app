@@ -43,9 +43,13 @@
                             {{ trans('auth.Login') }}
                         </span>
                     </button>
+{{--                    <p class="text-center text-sm text-text.light.primary">--}}
+{{--                        {{ trans('auth.Do not have an account?') }} <button type="button" @click="page = 'signup'"--}}
+{{--                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>--}}
+{{--                    </p>--}}
                     <p class="text-center text-sm text-text.light.primary">
-                        {{ trans('auth.Do not have an account?') }} <button type="button" @click="page = 'signup'"
-                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
+                        {{ trans('auth.Do not have an account?') }} <a type="button"  href="{{ route('register') }}"
+                        class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</a>
                     </p>
                 </div>
             </div>

@@ -22,7 +22,7 @@
             <div class="rounded-3xl p-6 bg-white">
                 <div class="flex items-center justify-between">
                     <h1 class="font-bold text-lg">{{ trans('dashboard.My Syllabus') }}</h1>
-                    <a href="{{ route('classes') }}">
+                    <a href="{{ route('outline') }}">
                         <span class="flex items-center">
                             {{ trans('dashboard.View all') }} <x-component.material-icon name="chevron_right" />
                         </span>

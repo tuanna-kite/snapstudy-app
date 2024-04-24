@@ -486,7 +486,7 @@ class CartController extends Controller
                     'webinar' => $webinar
                 ];
 
-                // return view(getTemplate() . '.cart.payment', $data);
+//                 return view(getTemplate() . '.cart.payment', $data);
                 return view('web_v2.pages.payment', $data);
             } else {
                 return $this->handlePaymentOrderWithZeroTotalAmount($order);

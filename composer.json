@@ -57,6 +57,7 @@
         "shetabit/payment": "^5.4",
         "spatie/calendar-links": "^1.8",
         "spatie/laravel-google-calendar": "^3.6",
+        "srmklive/paypal": "~3.0",
         "ssheduardo/redsys-laravel": "^1.4",
         "stripe/stripe-php": "^10.17",
         "tinymce/tinymce": "^6.8",

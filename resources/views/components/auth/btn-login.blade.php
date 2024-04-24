@@ -24,6 +24,9 @@
             <div x-show="page =='signup'">
                 <x-auth.signup />
             </div>
+            <div x-show="page =='verify'">
+                <x-auth.verify />
+            </div>
         </div>
     </div>
 </div>

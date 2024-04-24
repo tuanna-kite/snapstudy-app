@@ -109,4 +109,12 @@ return [
     'Old password' => 'Mật khẩu cũ',
     'New password' => 'Mật khẩu mới',
 
+    'Account verification' => 'Xác minh tài khoản',
+    'We have to sent the code verification to your mail' => 'Chúng tôi đã gửi mã xác minh đến email của bạn',
+    'Verify' => 'Xác minh',
+    'Resend code' => 'Gửi lại mã',
+    'Verification code' => 'Mã xác minh',
+    'Enter your code' => 'Nhập mã của bạn'
+
+
 ];

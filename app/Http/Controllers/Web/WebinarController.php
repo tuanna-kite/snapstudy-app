@@ -701,7 +701,7 @@ class WebinarController extends Controller
 
             abort(404);
         } else {
-         return redirect('/');
+            return redirect('/');
         }
     }
 
@@ -856,13 +856,16 @@ class WebinarController extends Controller
         }
     }
 
+/*   TODO: Check in directPayment and change to Paypal.
+            View: course-detail
+*/
     public function directPayment(Request $request)
     {
         $user = auth()->user();
 
         if (!empty($user) and !empty(getFeaturesSettings('direct_classes_payment_button_status'))) {
             $amount = $request->amount;
-            if (empty($amount)){
+            if (empty($amount)) {
                 $this->validate($request, [
                     'item_id' => 'required',
                     'item_name' => 'nullable',
@@ -900,11 +903,11 @@ class WebinarController extends Controller
 
                 return $cartController->checkout(new Request(), $fakeCarts, $webinar);
             }
-            if ($amount){
+            if ($amount) {
                 $data = [
                     'amount' => $amount,
                     'payment_type' => 'charge'
-                    ];
+                ];
                 return view('web_v2.pages.payment', $data);
             }
         }
@@ -915,7 +918,7 @@ class WebinarController extends Controller
     public function markAsViewed(Request $request, $webinarId)
     {
         $user = auth()->user();
-        if ($user){
+        if ($user) {
             $viewed = WebinarView::where('user_id', $user->id)
                 ->where('webinar_id', $webinarId)
                 ->exists();

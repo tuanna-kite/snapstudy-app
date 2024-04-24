@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\Gateways\PaypalController;
 use Illuminate\Support\Facades\Route;
 
-// Route::view('/', 'web_v2');
+Route::view('/paypal', 'dev');
+// Paypal Handler
+Route::post('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+Route::get('/paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('/paypal/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 
 
 Route::group(['prefix' => 'my_api', 'namespace' => 'Api\Panel', 'middleware' => 'signed', 'as' => 'my_api.web.'], function () {

@@ -1,18 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Video Thumbnail</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
-<body class="flex flex-col items-center bg-primary.lighter px-6">
+<body>
 
-{{--<x-video-tutorial/>--}}
-{{--    <x-documents.document-grid/>--}}
-<x-documents.special-document-section/>
-
-<x-layouts.footer/>
-
+<input type="number" value="1">
+<form action="{{route('paypal.payment')}}" method="post">
+    @csrf
+    <input type="hidden" value="10" name="price">
+    <button>
+        Buy now
+    </button>
+</form>
 </body>
 </html>

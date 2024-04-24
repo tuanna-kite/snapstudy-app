@@ -1,27 +1,36 @@
 @props(['payment_type', 'order', 'amount'])
 @php
-    $methods = [
+//    $methods = [
+//        [
+//            'name' => 'gateway',
+//            'img' => asset('img/visa.png'),
+//            'title' => trans('payment.Pay with card'),
+//            'sub' => 'Visa, Master, JCB...',
+//            'value' => 'payWithCC',
+//        ],
+//        [
+//            'name' => 'gateway',
+//            'img' => asset('img/atm.png'),
+//            'title' => trans('payment.Pay with ATM'),
+//            'sub' => trans('payment.by Momo'),
+//            'value' => 'payWithATM',
+//        ],
+//        [
+//            'name' => 'gateway',
+//            'img' => asset('img/momo.png'),
+//            'title' => trans('payment.Pay with MoMo'),
+//            'sub' => trans('payment.MoMo Wallet'),
+//            'value' => 'captureWallet',
+//        ],
+//    ];
+$methods = [
         [
             'name' => 'gateway',
             'img' => asset('img/visa.png'),
             'title' => trans('payment.Pay with card'),
             'sub' => 'Visa, Master, JCB...',
-            'value' => 'payWithCC',
-        ],
-        [
-            'name' => 'gateway',
-            'img' => asset('img/atm.png'),
-            'title' => trans('payment.Pay with ATM'),
-            'sub' => trans('payment.by Momo'),
-            'value' => 'payWithATM',
-        ],
-        [
-            'name' => 'gateway',
-            'img' => asset('img/momo.png'),
-            'title' => trans('payment.Pay with MoMo'),
-            'sub' => trans('payment.MoMo Wallet'),
-            'value' => 'captureWallet',
-        ],
+            'value' => 'paypal',
+        ]
     ];
 
 @endphp

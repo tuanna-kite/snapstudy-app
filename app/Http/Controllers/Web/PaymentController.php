@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\FuncCall;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentController extends Controller
 {
@@ -95,6 +96,8 @@ class PaymentController extends Controller
             } else {
                 return view('web.default.pages.failCheckout');
             }
+        } elseif ($gateway == 'paypal') {
+            return $this->paypalPayment($order);
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)
@@ -134,6 +137,40 @@ class PaymentController extends Controller
         }
     }
 
+    public function paypalPayment($order)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "application_context" => [
+                "return_url" => route('paypal.success'),
+                "cancel_url" => route('paypal.cancel'),
+            ],
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "AUD",
+                        "value" => $order->total_amount,
+                    ]
+                ]
+            ]
+        ]);
+
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $link) {
+                if ($link['rel'] == 'approve') {
+                    $order->payment_data = $response['id'];
+                    $order->save();
+                    return redirect()->away($link['href']);
+                }
+            }
+        } else {
+            return redirect()->route('paypal.cancel');
+        }
+    }
+
     public function payment($orderId, $gateway, $total_amount)
     {
         $endpoint = env('MOMO_API_ENDPOINT');
@@ -147,12 +184,12 @@ class PaymentController extends Controller
         $redirectUrl = route('momo.checkout', ['gateway' => $gateway, 'orderId' => $orderId]);
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
         $extraData = "";
-        $requestId = "HL_" . time();
+        $requestId = "HL_".time();
         $requestType = $gateway;
 
 
         //before sign HMAC SHA256 signature
-        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+        $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&ipnUrl=".$ipnUrl."&orderId=".$orderId."&orderInfo=".$orderInfo."&partnerCode=".$partnerCode."&redirectUrl=".$redirectUrl."&requestId=".$requestId."&requestType=".$requestType;
         $signature = hash_hmac("sha256", $rawHash, $serectkey);
         $data = array(
             'partnerCode' => $partnerCode,
@@ -173,6 +210,7 @@ class PaymentController extends Controller
         $jsonResult = json_decode($result, true);
         return $jsonResult;
     }
+
     public function checkout($gateway, $orderId)
     {
         $secretKey = env('MOMO_SECRET_KEY');
@@ -190,17 +228,17 @@ class PaymentController extends Controller
         $responseTime = $_GET["responseTime"];
         $extraData = $_GET["extraData"];
         $m2signature = $_GET["signature"]; //MoMo signature
-        Log::info('Thanh toan khoa hoc: ' . $requestId);
+        Log::info('Thanh toan khoa hoc: '.$requestId);
         //Checksum
-        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&message=" . $message . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo .
-            "&orderType=" . $orderType . "&partnerCode=" . $partnerCode . "&payType=" . $payType . "&requestId=" . $requestId . "&responseTime=" . $responseTime .
-            "&resultCode=" . $resultCode . "&transId=" . $transId;
+        $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&message=".$message."&orderId=".$orderId."&orderInfo=".$orderInfo.
+            "&orderType=".$orderType."&partnerCode=".$partnerCode."&payType=".$payType."&requestId=".$requestId."&responseTime=".$responseTime.
+            "&resultCode=".$resultCode."&transId=".$transId;
         $partnerSignature = hash_hmac("sha256", $rawHash, $secretKey);
         if ($m2signature == $partnerSignature) {
             if ($resultCode == 0) {
                 $user = auth()->user();
                 $userId = $user->id;
-                $id= explode("-",$orderId)[0];
+                $id = explode("-", $orderId)[0];
                 $order = Order::where('id', $id)
                     ->where('user_id', $user->id)
                     ->first();
@@ -528,7 +566,8 @@ class PaymentController extends Controller
                     if ($installment->needToVerify()) {
                         $status = 'pending_verification';
 
-                        sendNotification("installment_verification_request_sent", $notifyOptions, $installmentOrder->user_id);
+                        sendNotification("installment_verification_request_sent", $notifyOptions,
+                            $installmentOrder->user_id);
                         sendNotification("admin_installment_verification_request_sent", $notifyOptions, 1); // Admin
                     } else {
                         $status = 'open';

@@ -115,7 +115,7 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
         }
         if ($this->attemptLogin($request)) {
-            return $this->afterLogged($request);
+            return response()->json(['success' => true]);
         }
 
         return response()->json(['success' => false, 'errors' => ['password' => 'Invalid credentials']]);

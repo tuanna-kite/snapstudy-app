@@ -38,13 +38,12 @@ class WebinarController extends Controller
             $user = auth()->user();
         }
 
-
-        if (!$justReturnData) {
-            $contentLimitation = $this->checkContentLimitation($user, true);
-            if ($contentLimitation != "ok") {
-                return $contentLimitation;
-            }
-        }
+        // if (!$justReturnData) {
+        //     $contentLimitation = $this->checkContentLimitation($user, true);
+        //     if ($contentLimitation != "ok") {
+        //         return $contentLimitation;
+        //     }
+        // }
 
         $course = Webinar::where('slug', $slug)
             ->with([

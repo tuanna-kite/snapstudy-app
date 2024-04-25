@@ -121,10 +121,20 @@
                                     @csrf
                                     <input class="hidden" type="number" name="item_id" value="{{ $course->id }}">
                                     <input class="hidden" type="text" name="item_name" value="webinar_id">
-                                    <button class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                        <span>{{ trans('course.Read more') }} ({{ $course->price }} AUD)</span>
-                                        <x-component.material-icon name="arrow_downward" />
-                                    </button>
+                                    @if (auth()->user())
+                                        <button type="submit"
+                                            class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
+                                            <span>{{ trans('course.Read more') }} ({{ $course->price }} AUD)</span>
+                                            <x-component.material-icon name="arrow_downward" />
+                                        </button>
+                                    @else
+                                        <button type="button" onclick="showModalAuth()"
+                                            class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
+                                            <span>{{ trans('course.Read more') }} ({{ $course->price }} AUD)</span>
+                                            <x-component.material-icon name="arrow_downward" />
+                                        </button>
+                                    @endif
+
                                 </form>
                                 <p class="font-normal text-sm text-text.light.secondary">
                                     {{ trans('course.Documents cannot be previewed') }}

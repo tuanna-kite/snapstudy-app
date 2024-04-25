@@ -19,10 +19,15 @@
                 @csrf
                 <input class="hidden" type="number" name="item_id" value="{{ $outline->id }}">
                 <input class="hidden" type="text" name="item_name" value="webinar_id">
-
-                <button type="submit" class="rounded-lg py-1.5 px-4 bg-secondary.main">
-                    <span class="font-medium text-sm text-white">{{ trans('course.Buy now') }}</span>
-                </button>
+                @if (auth()->user())
+                    <button type="submit" class="rounded-lg py-1.5 px-4 bg-secondary.main">
+                        <span class="font-medium text-sm text-white">{{ trans('course.Buy now') }}</span>
+                    </button>
+                @else
+                    <button type="button" onclick="showModalAuth()" class="rounded-lg py-1.5 px-4 bg-secondary.main">
+                        <span class="font-medium text-sm text-white">{{ trans('course.Buy now') }}</span>
+                    </button>
+                @endif
             </form>
         </div>
     @endif

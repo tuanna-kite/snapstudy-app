@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="flex items-center justify-between gap-4 min-w-56 self-end">
-        <p class="font-bold text-lg text-primary.main">{{ handlePrice($outline->price) }}</p>
+        <p class="font-bold text-lg text-primary.main">{{ $outline->price }} AUD</p>
         <form method="post" action="/course/direct-payment">
             @csrf
             <input class="hidden" type="number" name="item_id" value="{{ $outline->id }}">

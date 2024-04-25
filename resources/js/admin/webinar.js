@@ -1840,6 +1840,7 @@
     });
 
     $('#school').change(function() {
+        $('.major-option').addClass('d-none');
         var schoolId = $(this).val();
         if (schoolId) {
             let html = '';

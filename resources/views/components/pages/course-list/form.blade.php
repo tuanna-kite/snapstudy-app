@@ -7,8 +7,8 @@
     @foreach ($majors as $major)
         <div class="mb-1">
             <label class="space-x-2">
-                <input type="checkbox" name="marjors[]" value="{{ $major->slug }}"
-                    @if (in_array($major->slug, request()->get('marjors', []))) checked="checked" @endif>
+                <input type="checkbox" name="majors[]" value="{{ $major->slug }}"
+                    @if (in_array($major->slug, request()->get('majors', []))) checked="checked" @endif>
                 <span>{{ $major->title }}</span>
             </label>
         </div>
@@ -31,6 +31,7 @@
 
             // Get the existing query parameters
             const existingParams = new URLSearchParams(window.location.search);
+            existingParams.delete('majors[]');
             // Merge the existing query parameters with the new form data
             for (const [key, value] of formParams.entries()) {
                 // Check for Filter Form
@@ -39,7 +40,7 @@
                     existingParams.append(key, value);
                 }
                 // Check for Search Form
-                if (key == 'search') {
+                if (key === 'search') {
                     existingParams.set(key, value);
                 }
             }

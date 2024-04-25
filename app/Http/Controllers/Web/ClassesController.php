@@ -268,11 +268,19 @@ class ClassesController extends Controller
         return view('web_v2.pages.outline', $data);
     }
 
+    /*
+     * Neu khong co Major thi hien tat ca.
+     * Khi co major thi se loc theo major
+     */
     public function school(Request $request, $slug)
     {
         $search = $request->get('search', '');
-        $majors_search = $request->get('majors', []);
+        $majors_search = $request->query('majors', []);
+
         $school = Category::where('slug', $slug)->first();
+        if (is_null($school)) {
+            abort(404);
+        }
 
         $majors = Category::where('parent_id', $school->id)
             ->where('level', 2)
@@ -284,15 +292,25 @@ class ClassesController extends Controller
             ->pluck('id')->toArray();
 
 
-        $subjectQuery = Category::where('parent_id', $majors_list)
+        $subjectQuery = Category::whereIn('parent_id', $majors_list)
             ->where('level', 3);
+
+//        $subjectQuery = Category::whereIn('parent_id', $majors_list)
+//            ->where('level', 3)->pluck('slug')->toArray();
+//
+//        dd($subjectQuery);
+        if ($majors_search) {
+//            $subjectQuery = $subjectQuery->whereIn('slug', $majors_search);
+            $majors_filtered= Category::whereIn('slug', $majors_search)
+                ->where('level', 2)
+                ->pluck('id')->toArray();
+            $subjectQuery = $subjectQuery->whereIn('parent_id', $majors_filtered);
+        }
 
         if ($search) {
             $subjectQuery = $subjectQuery->whereTranslationLike('title', "%$search%");
         }
-        if ($majors_search) {
-            $subjectQuery = $subjectQuery->whereIn('slug', $majors_search);
-        }
+
         $subjectAll = $subjectQuery->paginate(12);
 
         $seoSettings = getSeoMetas('classes');

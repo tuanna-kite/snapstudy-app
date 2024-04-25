@@ -37,7 +37,7 @@
 <div id="button_login">
     <!-- Button to toggle the modal -->
     <button id="login_button" class="rounded-full px-6 py-1.5 bg-primary.main text-white">
-        <span class="font-medium text-sm">Login</span>
+        <span class="font-medium text-sm">{{trans("auth.Login")}}</span>
     </button>
 
     <!-- Modal -->
@@ -76,10 +76,14 @@
         // Event listener for button click
         buttonLogin.addEventListener('click', function() {
             showModalAuth()
+            showPage('login')
         });
 
         // Event listener to close modal when overlay is clicked
         overlay.addEventListener('click', function() {
+            if (!verifyPage.classList.contains('hidden')) {
+                return; // Prevent closing modal if verify page is shown
+            }
             closeModalAuth();
         });
 

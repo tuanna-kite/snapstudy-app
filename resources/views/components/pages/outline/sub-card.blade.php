@@ -1,10 +1,10 @@
 <div
-        class="py-4 px-6 bg-white flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between border-t border-grey-300 ">
+    class="py-4 px-6 bg-white flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between border-t border-grey-300 ">
     <div class="flex items-center gap-2 max-w-full overflow-hidden">
-        <x-component.material-icon name="menu_book"/>
+        <x-component.material-icon name="menu_book" />
         <div class="flex flex-col max-w-full overflow-hidden">
             <a href="{{ $outline->getUrl() }}" id="title"
-               class="truncate font-semibold text-base text-text.light.primary">
+                class="truncate font-semibold text-base text-text.light.primary">
                 {{ clean($outline->title, 'title') }}
             </a>
             <p class="truncate text-xs text-text.light.secondary">

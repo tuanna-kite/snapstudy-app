@@ -296,12 +296,14 @@ class LoginController extends Controller
         $cartManagerController = new CartManagerController();
         $cartManagerController->storeCookieCartsToDB();
 
-        if ($user->isAdmin()) {
-//            return redirect(getAdminPanelUrl() . '');
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => true]);
-        }
+        return redirect(route('admin.dashboard'));
+
+//        if ($user->isAdmin()) {
+////            return redirect(getAdminPanelUrl() . '');
+//            return response()->json(['success' => true]);
+//        } else {
+//            return response()->json(['success' => true]);
+//        }
     }
 
     private function checkLoginDeviceLimit($user)

@@ -166,7 +166,7 @@
                                             </div>
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.price') }}
-                                                    ({{ $currency }})</label>
+                                                    ( AUD )</label>
                                                 <input type="text" name="price"
                                                        value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
                                                        class="form-control @error('price')  is-invalid @enderror"
@@ -192,8 +192,8 @@
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_school') }}</option>
                                                     @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}"
-                                                                    {{ (!empty($webinar) and $webinar->category_id == $category->id) ? 'selected' : '' }}>
+                                                            <option  value="{{ $category->id }}"
+                                                                    {{ (!empty($webinar) and $school->id == $category->id) ? 'selected' : '' }}>
                                                                 {{ $category->title }}</option>
                                                     @endforeach
                                                 </select>
@@ -209,8 +209,19 @@
                                                 <select id="major"
                                                         class="custom-select @error('major_id')  is-invalid @enderror"
                                                         name="major_id" required>
+                                                    @if(!empty($webinar) && $webinar->category_id)
+                                                        <option value="{{ $major->id }}">
+                                                            {{ $major->title }}</option>
+{{--                                                        @foreach ($major_list as $major_item)--}}
+{{--                                                            <option class="major-option" value="{{ $major_item->id }}"--}}
+{{--                                                                {{ (!empty($webinar) and $major->id == $major_item->id) ? 'selected' : '' }}>--}}
+{{--                                                                {{ $major_item->title }}</option>--}}
+{{--                                                        @endforeach--}}
+                                                    @else
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_major') }}</option>
+                                                    @endif
+
                                                 </select>
 
                                                 @error('major_id')
@@ -224,8 +235,13 @@
                                                 <select id="subject"
                                                         class="custom-select @error('category_id')  is-invalid @enderror"
                                                         name="category_id" required>
+                                                    @if(!empty($webinar) && $webinar->category_id)
+                                                        <option value="{{ $subject->id }}">
+                                                            {{ $subject->title }}</option>
+                                                    @else
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_subject') }}</option>
+                                                    @endif
 
                                                 </select>
 

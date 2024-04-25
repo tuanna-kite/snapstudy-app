@@ -511,6 +511,24 @@ class WebinarController extends Controller
             'webinar_id' => $id
         ])->first();
 
+        $subject = Category::find($webinar->category_id);
+
+        $major = Category::where('id', $subject->parent_id)
+            ->with('subCategories')
+            ->first();
+
+        $school = Category::where('id', $major->parent_id)
+            ->with('subCategories')
+            ->first();
+
+        $major_list = Category::where('parent_id', $school->id)
+            ->with('subCategories')
+            ->get();
+
+        $subject_list = Category::where('parent_id', $major->id)
+            ->with('subCategories')
+            ->get();
+
         $categories = Category::where('parent_id', null)
             ->with('subCategories')
             ->get();
@@ -543,6 +561,11 @@ class WebinarController extends Controller
             'content' => $webinarTrans->content,
             'table_contents' => $webinarTrans->table_contents,
             'preview_content' => $webinarTrans->preview_content,
+            'major' => $major,
+            'school' => $school,
+            'subject_list' => $subject_list,
+            'major_list' => $major_list,
+            'subject' => $subject
         ];
 
         return view('admin.webinars.create', $data);

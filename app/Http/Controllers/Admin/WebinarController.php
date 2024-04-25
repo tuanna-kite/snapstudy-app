@@ -499,7 +499,6 @@ class WebinarController extends Controller
                 },
             ])
             ->first();
-
         if (empty($webinar)) {
             abort(404);
         }

@@ -15,8 +15,6 @@
 
 @section('content')
     <x-layouts.home-layout>
-        <x-pages.payment.modal-payment />
-
         {{-- Slide --}}
         <x-pages.home.slide />
         {{-- Search Document --}}

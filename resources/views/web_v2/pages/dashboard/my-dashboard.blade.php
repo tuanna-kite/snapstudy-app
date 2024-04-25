@@ -6,7 +6,7 @@
         <div class="space-y-3">
             <div class="flex flex-col gap-3 xl:flex-row">
                 <div class="w-full">
-                    <x-pages.dashboard.welcome />
+                    <x-pages.dashboard.welcome :webinarsCount="$webinarsCount" :supportsCount="$supportsCount" :commentsCount="$commentsCount"/>
                 </div>
 {{--                <div class="w-full xl:w-2/5 flex flex-col justify-between gap-3">--}}
 {{--                    <x-pages.dashboard.pay :accountCharge="$accountCharge" />--}}

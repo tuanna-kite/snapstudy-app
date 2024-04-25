@@ -10,12 +10,15 @@ use App\Models\Cart;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\ReserveMeeting;
 use App\Models\RewardAccounting;
 use App\Models\Sale;
 use App\Models\TicketUser;
+use App\Models\Webinar;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaypalController extends Controller
@@ -31,7 +34,7 @@ class PaypalController extends Controller
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             $order = Order::where('payment_data', $request->token)->first();
-            $user = auth()->user();
+;            $user = auth()->user();
             $userId = $user->id;
             $order->update([
                 'payment_method' => Order::$credit
@@ -56,8 +59,12 @@ class PaypalController extends Controller
                     'user_id' => $getUser->id,
                 ]);
             }
-
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
             session()->put($this->order_session_key, $order->id);
+            if($orderItem){
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect(route('course', ['slug' => $webinar->slug]));
+            }
             return redirect('/payments/status');
         }
         return redirect()->route('paypal.cancel');

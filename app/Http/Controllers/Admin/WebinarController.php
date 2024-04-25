@@ -520,9 +520,11 @@ class WebinarController extends Controller
             ->with('subCategories')
             ->first();
 
-        $major_list = Category::where('parent_id', $school->id)
-            ->with('subCategories')
-            ->get();
+        if($school){
+            $major_list = Category::where('parent_id', $school->id)
+                ->with('subCategories')
+                ->get();
+        }
 
         $subject_list = Category::where('parent_id', $major->id)
             ->with('subCategories')
@@ -563,7 +565,7 @@ class WebinarController extends Controller
             'major' => $major,
             'school' => $school,
             'subject_list' => $subject_list,
-            'major_list' => $major_list,
+            'major_list' => $major_list ?? null,
             'subject' => $subject
         ];
 

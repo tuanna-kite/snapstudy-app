@@ -189,11 +189,11 @@
                                                 <select id="school"
                                                         class="custom-select @error('school_id')  is-invalid @enderror"
                                                         name="school_id" required>
-                                                    <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
+                                                    <option {{ !empty($school) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_school') }}</option>
                                                     @foreach ($categories as $category)
                                                             <option  value="{{ $category->id }}"
-                                                                    {{ (!empty($webinar) and $school->id == $category->id) ? 'selected' : '' }}>
+                                                                    {{ (!empty($school) and $school->id == $category->id) ? 'selected' : '' }}>
                                                                 {{ $category->title }}</option>
                                                     @endforeach
                                                 </select>

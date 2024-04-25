@@ -15,6 +15,8 @@
 
 @section('content')
     <x-layouts.home-layout>
+        <x-pages.payment.modal-payment />
+
         {{-- Slide --}}
         <x-pages.home.slide />
         {{-- Search Document --}}
@@ -27,9 +29,9 @@
                     class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-10 md:mt-20 lg:mt-24 mb-8 md:mb-12">
                     {{ trans('home.Search for outlines') }}
                 </h1>
-{{--                <x-pages.home.majors />--}}
+                {{--                <x-pages.home.majors /> --}}
                 {{-- TODO: Change to school view --}}
-                 <x-pages.home.schools :listSchools="$category"/>
+                <x-pages.home.schools :listSchools="$category" />
                 <h1
                     class="font-bold text-2xl md:text-3xl lg:text-4xl text-primary.main text-center mt-20 md:mt-24 lg:mt-32 mb-8 md:mb-12">
                     {{ trans('home.We have solutions') }}
@@ -37,8 +39,8 @@
                 <x-pages.home.statistics />
             </div>
             <div class="w-full xl:w-1/4  flex-col gap-4 hidden xl:flex">
-                <img src="img/banner1.png" alt="banner1" class="w-full md:max-w-96">
-                <img src="img/banner2.png" alt="banner2" class="w-full md:max-w-96">
+                <img src="img/banner1(en).jpg" alt="banner1" class="w-full md:max-w-96 rounded-2xl">
+                <img src="img/banner2(en).jpg" alt="banner2" class="w-full md:max-w-96 rounded-2xl">
             </div>
         </div>
 
@@ -104,7 +106,8 @@
                     {!! trans("home.Student's Results with SNAPS") !!}
                 </h1>
                 <p class="font-normal text-base md:text-lg">
-                    <span class="font-bold text-3xl md:text-4xl lg:text-5xl text-secondary.main">96%</span> {{ trans('home.of our customers')}}
+                    <span class="font-bold text-3xl md:text-4xl lg:text-5xl text-secondary.main">96%</span>
+                    {{ trans('home.of our customers') }}
                 </p>
             </div>
             <div class="w-full md:w-1/2 flex justify-center md:justify-end">
@@ -116,10 +119,10 @@
         <div class="container  mx-auto space-y-12 mt-10 md:mt-24">
             <div class="text-center space-y-1">
                 <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl text-primary.main uppercase">
-                    {{trans('home.THE COMMUNITY WE ARE IN')}}
+                    {{ trans('home.THE COMMUNITY WE ARE IN') }}
                 </h1>
                 <p class="font-normal text-base md:text-lg text-text.light.secondary">
-                   {{trans('home.Over 3000 students')}}
+                    {{ trans('home.Over 3000 students') }}
                 </p>
             </div>
             <x-pages.home.testimonials />

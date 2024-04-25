@@ -17,10 +17,25 @@ return [
     'Company number: 024682213' => 'Company number: 024682213',
     'About' => "About",
     'What We Offer' => 'What We Offer',
-    'Frequently asked questions' => 'Frequently asked questions',
     'Terms of use' => 'Terms of use',
     'Regulations on document sales policy' => 'Regulations on document sales policy',
-    'Payment Guide' => 'Payment Guide',
     'MORE' => "MORE",
     "HELP" => "HELP",
+
+    'The service provides detailed outlines for all student assignments' => 'The service provides detailed outlines for all student assignments',
+    'Hong Linh Education Investment and Development Joint Stock Company' => 'Hong Linh Education Investment and Development Joint Stock Company',
+    'Address: 37 Xa Dan, Hanoi, Vietnam' => 'Address: 37 Xa Dan, Hanoi, Vietnam',
+    'Information' => 'Information',
+    'Support' => 'Support',
+    'Introduction' => 'Introduction',
+    'Outline' => 'Outline',
+    'Contact' => 'Contact',
+    'Promotion' => 'Promotion',
+    'Notification' => 'Notification',
+    'Frequently asked questions' => 'Frequently asked questions',
+    'Outline user manual' => 'Outline user manual',
+    'Payment Guide' => 'Payment Guide',
+    'Payment support' => 'Payment support',
+    'connect with us' => 'connect with us'
+
 ];

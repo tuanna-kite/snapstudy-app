@@ -7,7 +7,7 @@
             {{-- Search Bar --}}
             <div class="flex items-center gap-2 mb-12 md:mb-24">
                 <div class="flex-1">
-                    <x-search.search-doc />
+                    <x-search.search-doc/>
                 </div>
                 <div class="block lg:hidden">
                     <x-pages.course-list.filter-button :majors="$majors" :school="$school"/>
@@ -22,11 +22,11 @@
                             </h2>
                             <div>
                                 <button type="button" id='clearOptionBtn' onclick="clearQueryParams()"
-                                    class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
+                                        class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
                                     <span class="font-medium text-xs">
                                         {{ trans('course.Clear All') }}
                                     </span>
-                                    <x-component.material-icon name="close" style="font-size:18px !important" />
+                                    <x-component.material-icon name="close" style="font-size:18px !important"/>
                                 </button>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
 
                     @foreach ($subjectAll as $subject)
                         <div class="{{ count($subjectAll) <= 4 ? 'max-h-72 flex' : 'flex' }}">
-                            <x-documents.document-card :subject="$subject" />
+                            <x-documents.document-card :subject="$subject" :icon="$school->icon" />
                         </div>
                     @endforeach
                 </div>

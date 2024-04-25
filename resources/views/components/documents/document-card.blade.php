@@ -1,9 +1,20 @@
 @props(['trending', 'subject'])
+@php
+    $logo = '';
 
+    if (isset($subject)) {
+        $logo = $subject->category->category->icon;
+    } else {
+        $logo = $trending->category->icon;
+        if (isset( $trending->category->category)) {
+            $logo = $trending->category->category->icon;
+        }
+    }
+@endphp
 <article class="flex flex-col flex-1 shadow-lg px-5 py-6 rounded-2xl bg-white space-y-4">
 {{--    <a class="text-primary.main p-2 bg-primary.lighter w-fit rounded-md">{{ !empty($subject) ? $subject->title :$trending->category->title }}</a>--}}
     <p class="flex items-center space-x-2">
-        <img src="{{ asset('img/logo/rmit-logo.png') }}" alt="rmit-logo" width="40px" height="40px">
+        <img src="{{ $logo }}" alt="logo" width="40px" height="40px">
         <span class="font-semibold text-sm text-text.light.primary">{{ !empty($subject) ? $subject->category->title : $trending->category->title }}</span>
     </p>
     <a href="{{ !empty($subject) ? route('outline'). '?subject=' . $subject->slug : $trending->getUrl() }}"

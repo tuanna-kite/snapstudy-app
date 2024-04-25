@@ -6,10 +6,10 @@
         <div class="rounded-full
         border border-dashed size-32
         bg-center bg-cover
-        bg-no-repeat bg-clip-content p-2
-        "
-            id="previewImage" style="background-image: url({{ asset(!empty($user) ? $user->getAvatar(150) : '') }})">
-            <input type="file" name="profile_image" id='file' class="hidden" accept="images/*">
+        bg-no-repeat bg-clip-content p-2"
+            id="previewImage" style="background-image: url('{{ asset(!empty($user) ? $user->getAvatar(150) : '') }}')">
+            <input type="file" name="file" id='file' class="hidden" accept="images/*">
+            <input type="hidden" name="profile_image" id='base64file' class="hidden">
             <label for="file"
                 class="w-full h-full rounded-full
                 bg-black opacity-50
@@ -43,4 +43,19 @@
             reader.readAsDataURL(file);
         });
     </script>
+    <script>
+        document.getElementById('file').addEventListener('change', function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                var imageData = event.target.result;
+                document.getElementById('previewImage').src = imageData; // Hiển thị trước hình ảnh cho người dùng (tùy chọn)
+                document.getElementById('base64file').value = imageData; // Đặt giá trị của trường ẩn thành dữ liệu base64
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+
 @endpush

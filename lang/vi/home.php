@@ -98,7 +98,7 @@ return [
     'Time Saved' => 'Tiết kiệm thời gian',
     'Save your time' => 'Tiết kiệm thời gian của bạn lên đến 70% và Tăng hiệu suất lên 180%',
     'JUMPSTART YOUR SUCCESS' => 'BẮT ĐẦU SỰ THÀNH CÔNG CỦA BẠN <br/> CHO BÀI TẬP SẮP TỚI',
-    'SIGN UP NOW TO PURCHASE' => 'ĐĂNG KÝ NGAY ĐỂ MUA HƯỚNG DẪN <br/> CHI TIẾT VỚI GIÁ 199.000 VNĐ',
+    'SIGN UP NOW TO PURCHASE' => 'ĐĂNG KÝ NGAY ĐỂ MUA HƯỚNG DẪN <br/> CHI TIẾT VỚI GIÁ 10.99 AUD',
     'SIGN UP FOR FREE TRIAL' => 'ĐĂNG KÝ DÙNG THỬ',
     'Start learning with Top Trending Outlines' => 'Bắt đầu học với Đề cương phổ biến nhất',
     'Make a progress towards high scores' => 'Đạt điểm cao bằng cách bắt đầu với những đề cương được bình chọn cao nhất',

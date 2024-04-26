@@ -16,11 +16,10 @@
     //     // Return the masked email address
     //     return $maskedLocalPart . '*****@' . $domainPart;
     // }
-
 @endphp
 
 <div class="">
-    <button type="button" class="w-full text-end" @click="showModal = false">
+    <button type="button" class="w-full text-end" onclick="closeModalAuth()">
         <x-component.material-icon name='close' />
     </button>
     <div class="pb-12">

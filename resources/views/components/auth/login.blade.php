@@ -13,7 +13,9 @@
 @endphp
 
 <div class="">
-    <button type="button" class="w-full text-end" @click="showModal = false">
+    <button type="button" class="w-full text-end"
+    onclick="closeModalAuth()"
+    >
         <x-component.material-icon name='close' />
     </button>
     <div class="pb-12">
@@ -43,10 +45,11 @@
                             {{ trans('auth.Login') }}
                         </span>
                     </button>
-{{--                    <p class="text-center text-sm text-text.light.primary">--}}
-{{--                        {{ trans('auth.Do not have an account?') }} <button type="button" @click="page = 'signup'"--}}
-{{--                            class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>--}}
-{{--                    </p>--}}
+                   {{-- <p class="text-center text-sm text-text.light.primary">
+                       {{ trans('auth.Do not have an account?') }} <button type="button"
+                       onclick="showPage('signup')"
+                           class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</button>
+                   </p> --}}
                     <p class="text-center text-sm text-text.light.primary">
                         {{ trans('auth.Do not have an account?') }} <a type="button"  href="{{ route('register') }}"
                         class="text-primary.main hover:underline">{{ trans('auth.Sign up') }}</a>
@@ -76,7 +79,7 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success) {
-                        window.location.href = '{{ route('home') }}';
+                        window.location.href = window.location.href;
                     } else {
                         // Display validation errors
                         var errorContainer = document.getElementById("errorContainer");

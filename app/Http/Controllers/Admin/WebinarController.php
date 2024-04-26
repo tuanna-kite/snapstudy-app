@@ -54,7 +54,7 @@ class WebinarController extends Controller
         removeContentLocale();
 
         $type = $request->get('type', 'webinar');
-        $query = Webinar::where('webinars.type', $type);
+        $query = Webinar::where('webinars.status', 'active');
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
@@ -69,10 +69,7 @@ class WebinarController extends Controller
             ->with('subCategories')
             ->get();
 
-        $inProgressWebinars = 0;
-        if ($type == 'webinar') {
-            $inProgressWebinars = $this->getInProgressWebinarsCount();
-        }
+        $inProgressWebinars = $this->getInProgressWebinarsCount();
 
         $query = $this->filterWebinar($query, $request)
             ->with([
@@ -126,7 +123,7 @@ class WebinarController extends Controller
             'totalDurations' => $totalDurations,
             'totalSales' => !empty($totalSales) ? $totalSales->sales_count : 0,
             'categories' => $categories,
-            'inProgressWebinars' => $inProgressWebinars,
+            'inProgressWebinars' => $inProgressWebinars ?? 0,
             'classesType' => $type,
         ];
 
@@ -308,8 +305,8 @@ class WebinarController extends Controller
     private function getInProgressWebinarsCount()
     {
         $count = 0;
-        $webinars = Webinar::where('type', 'webinar')
-            ->where('status', 'active')
+        $webinars = Webinar::
+            where('status', 'active')
             ->where('start_date', '<=', time())
             ->whereHas('sessions')
             ->get();

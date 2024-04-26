@@ -240,7 +240,7 @@
                                 @php
                                     $countWebinar = $webinars->total();
                                 @endphp
-                              <strong> {{__('home.Total results') }} : {{$countWebinar}}</strong>   
+                              <strong> {{__('home.Total results') }} : {{$countWebinar}}</strong>
                             </div>
                         </div>
 

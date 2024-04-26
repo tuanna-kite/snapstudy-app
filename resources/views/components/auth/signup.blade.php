@@ -67,11 +67,10 @@
                 password: document.getElementById("password_signup").value,
                 _token: '{{ csrf_token() }}'
             };
-            console.log(formData);
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('register') }}",
+                url: "{{ route('store_register') }}",
                 data: formData,
                 dataType: 'json',
                 success: function(data) {

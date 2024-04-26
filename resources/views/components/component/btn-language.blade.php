@@ -24,8 +24,8 @@
         class="inline-flex items-center justify-between px-2 py-2 text-sm
          text-gray-700 bg-white md:border border-gray-300 rounded-lg hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150">
         <span class="flex gap-2 items-center">
-            <x-component.icon
-                name="{{ localeToCountryCode(mb_strtoupper(app()->getLocale())) == 'VN' ? 'viet-nam' : 'english' }}" />
+            {{-- <x-component.icon
+                name="{{ localeToCountryCode(mb_strtoupper(app()->getLocale())) == 'VN' ? 'viet-nam' : 'english' }}" /> --}}
 
             <span class="hidden sm:block">
                 {{ $localLanguage[localeToCountryCode(mb_strtoupper(app()->getLocale()))] }}
@@ -43,7 +43,7 @@
                     <input type="hidden" name="locale" value="{{ $language }}">
                     <button type="submit" class="px-4 py-4 text-sm leading-5 text-gray-500 focus:outline-none">
                         <span class="flex gap-2 items-center">
-                            <x-component.icon name="{{ $language == 'VN' ? 'viet-nam' : 'english' }}" />
+                            {{-- <x-component.icon name="{{ $language == 'VN' ? 'viet-nam' : 'english' }}" /> --}}
                             {{ $languageName }}
                         </span>
                     </button>

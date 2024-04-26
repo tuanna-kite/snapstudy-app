@@ -15,6 +15,11 @@
                         <x-pages.my-financial.financial-row :accounting="$accounting" />
                     @endforeach
                     <!-- More table rows... -->
+                    {{-- <tr class="text-left h-24">
+                        <th class="pl-6 py-4">
+                            Hiện tại chưa có giao dịch nào
+                        </th>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>

@@ -24,7 +24,7 @@
     </nav>
 
     <!-- Tab Content -->
-    <div class="bg-white p-6">
+    <div class="bg-white p-6" style="min-height: 400px">
         {{ $slot }}
         <div x-show="activeTab === 1" class="">
             <!-- Content for Tab 1 -->

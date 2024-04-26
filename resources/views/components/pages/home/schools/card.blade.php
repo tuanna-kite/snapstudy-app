@@ -1,9 +1,12 @@
 @props(['school'])
 @php
-    $categoryIds = \App\Models\Category::where('parent_id', $school->id)
+    $majorList = \App\Models\Category::where('parent_id', $school->id)
         ->pluck('id')
         ->toArray();
-    $countWebinar = \App\Models\Webinar::whereIn('category_id', $categoryIds)->count();
+    $subjectList = \App\Models\Category::whereIn('parent_id', $majorList)
+        ->pluck('id')
+        ->toArray();
+    $countWebinar = \App\Models\Webinar::whereIn('category_id', $subjectList)->count();
 @endphp
 <a href="{{ route('school', ['slug' => $school->slug]) }}">
     <div

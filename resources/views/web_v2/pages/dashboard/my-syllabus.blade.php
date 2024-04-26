@@ -34,7 +34,7 @@
                     :webinars="$viewedWebinars" />
             </div>
             <div>
-                <x-pages.my-syllabus.list title="{{ trans('dashboard.News on Snaps') }}" href="/" :webinars="$viewedWebinars" />
+                <x-pages.my-syllabus.list title="{{ trans('dashboard.News on Snaps') }}" href="/" :webinars="$webinars_new" />
             </div>
         </div>
     </x-layouts.dashboard-layout>

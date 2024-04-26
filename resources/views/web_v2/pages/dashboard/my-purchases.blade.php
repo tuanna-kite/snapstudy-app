@@ -8,7 +8,7 @@
             <div class="bg-white rounded-3xl">
                 <div class="p-6">
                     {{-- TODO: Add submitHref here --}}
-                    <x-input.group-filter />
+{{--                    <x-input.group-filter />--}}
                 </div>
                 <div>
                     @if (!empty($sales) and !$sales->isEmpty())

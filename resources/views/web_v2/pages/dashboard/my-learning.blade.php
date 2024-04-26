@@ -9,7 +9,7 @@
     <x-layouts.dashboard-layout title="My Learning">
         <x-tab :listTab="$listTab">
             {{-- TODO: Add submitHref here --}}
-            <x-input.group-filter />
+{{--            <x-input.group-filter />--}}
 
             <x-slot name="tab1">
                 <x-documents.document-grid :webinar="$webinars" />

@@ -22,8 +22,7 @@
                     <img src="{{ $authUser->getAvatar() ? $authUser->getAvatar() : '' }}"
                         class="w-10 aspect-square rounded-full" alt="avt">
                     <span class="text-base font-medium">
-                        {{-- TODO: change to name --}}
-                        Quang Anh
+                        {{ $authUser->full_name }}
                     </span>
                 </div>
                 <hr class="border-t-1 border-gray-300 w-full">

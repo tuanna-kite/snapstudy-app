@@ -107,16 +107,24 @@
                         {{ trans('footer.Payment support') }}
                     </p>
                     <ul class="flex gap-3">
-                        <li>
+                        {{-- <li>
                             <img src="{{ asset('img/logo/momo-footer.png') }}" alt=""
                                 class="w-10 h-10 aspect-square">
                         </li>
                         <li>
                             <img src="{{ asset('img/logo/vnpay-footer.png') }}" alt=""
                                 class="w-10 h-10 aspect-square">
+                        </li> --}}
+                        <li>
+                            <img src="{{ asset('img/logo/paypal.png') }}" alt=""
+                                class="w-10 h-10 aspect-square rounded-md">
                         </li>
                         <li>
                             <img src="{{ asset('img/logo/visa-footer.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li>
+                        <li>
+                            <img src="{{ asset('img/logo/mastercard.png') }}" alt=""
                                 class="w-10 h-10 aspect-square">
                         </li>
                     </ul>
@@ -127,13 +135,15 @@
                     </p>
                     <ul class="flex gap-3">
                         <li>
-                            <img src="{{ asset('img/logo/facebook-footer.png') }}" alt=""
-                                class="w-10 h-10 aspect-square">
+                            <a href="https://www.facebook.com/Snapszone">
+                                <img src="{{ asset('img/logo/facebook-footer.png') }}" alt=""
+                                    class="w-10 h-10 aspect-square">
+                            </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <img src="{{ asset('img/logo/insta-footer.png') }}" alt=""
                                 class="w-10 h-10 aspect-square">
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>

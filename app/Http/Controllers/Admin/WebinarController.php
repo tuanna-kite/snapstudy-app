@@ -54,7 +54,7 @@ class WebinarController extends Controller
         removeContentLocale();
 
         $type = $request->get('type', 'webinar');
-        $query = Webinar::where('webinars.status', 'active');
+        $query = Webinar::whereNotNull('webinars.status');
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();

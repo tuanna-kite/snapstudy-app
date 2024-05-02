@@ -79,7 +79,7 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success) {
-                        window.location.href = window.location.href;
+                        window.location.href = window.location.href = '{{ route('admin.dashboard') }}';
                     } else {
                         // Display validation errors
                         var errorContainer = document.getElementById("errorContainer");

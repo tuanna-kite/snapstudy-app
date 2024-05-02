@@ -234,7 +234,7 @@ class ClassesController extends Controller
     {
         $outlineQuery = Webinar::where('webinars.status', 'active')
             ->where('private', false);
-        if (!empty($subject)) {
+        if (!empty($subject_id)) {
             $outlineQuery->whereIn('webinars.category_id', $subject_id);
         }
 

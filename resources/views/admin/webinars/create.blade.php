@@ -22,9 +22,6 @@
 
 
 @section('content')
-    @php
-
-            @endphp
     <section class="section">
         <div class="section-header">
             <h1>{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }} {{ trans('admin/main.class') }}
@@ -136,8 +133,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group mt-15">
-                                            <label class="input-label">{{ trans('public.description') }}</label>
-                                            <textarea name="description" id="description"
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <label class="input-label">{{ trans('public.description') }}</label>
+                                                <button type="button" class="btn btn-primary" id="edit_description">Edit</button>
+
+                                            </div>
+
+                                            <textarea name="description" id="description_mce"
                                                       class="form-control @error('description')  is-invalid @enderror"
                                                       placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
                                             @error('description')
@@ -263,11 +265,14 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group mt-15">
-                                            <label class="input-label">Mục lục</label>
-                                            <textarea name="table_contents"
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <label class="input-label">Mục lục</label>
+                                                <button type="button" class="btn btn-primary" id="edit_table_contents">Edit</button>
+                                            </div>
+                                            <textarea name="table_contents" id="table_contents_mce"
                                                       class="form-control @error('table_contents')  is-invalid @enderror" rows="5"
                                                       placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($table_contents)) ? $table_contents : old('table_contents') !!}</textarea>
-                                            @error('content')
+                                            @error('table_contents')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -281,7 +286,10 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group mt-15">
-                                            <label class="input-label">Preview</label>
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <label class="input-label">Preview</label>
+                                                <button type="button" class="btn btn-primary" id="edit_preview">Edit</button>
+                                            </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <button type="button" class="input-group-text admin-file-manager"
@@ -304,10 +312,10 @@
                                                 </div>
                                                 @enderror
                                             </div>
-                                            <textarea name="preview_content"
+                                            <textarea name="preview_content" id="preview_content_mce"
                                                       class="form-control @error('preview_content')  is-invalid @enderror" rows="5"
                                                       placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($preview_content)) ? $preview_content : old('preview_content') !!}</textarea>
-                                            @error('content')
+                                            @error('preview_content')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -320,7 +328,10 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group mt-15">
-                                            <label class="input-label">Nội dung tài liệu</label>
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <label class="input-label">Nội dung tài liệu</label>
+                                                <button type="button" class="btn btn-primary" id="edit_content">Edit</button>
+                                            </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <button type="button" class="input-group-text admin-file-manager"
@@ -343,8 +354,8 @@
                                                 </div>
                                                 @enderror
                                             </div>
-                                            <textarea name="content"
-                                                      class="form-control tinymce @error('content')  is-invalid @enderror"
+                                            <textarea name="content" id="content_mce"
+                                                      class="form-control @error('content')  is-invalid @enderror"
                                                       placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($content)) ? $content : old('content') !!}</textarea>
                                             @error('content')
                                             <div class="invalid-feedback">
@@ -359,12 +370,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button type="submit" id="saveAndPublish"
-                                                class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
+                                                class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
-                                            <button type="button" id="saveReject"
-                                                    class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
-
+                                            @can('admin_webinars_publish')
+                                                <button type="button" id="saveReject"
+                                                        class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
+                                            @endcan
                                             @include('admin.includes.delete_button', [
                                                 'url' =>
                                                     getAdminPanelUrl() . '/webinars/' . $webinar->id . '/delete',
@@ -415,6 +427,40 @@
             iframe: '{{ trans('update.file_source_iframe_placeholder') }}',
             s3: '{{ trans('update.file_source_s3_placeholder') }}',
         }
+    </script>
+
+    <script src="https://cdn.tiny.cloud/1/wliji6ewtvzu9zn08ui3ac9gy1iu2oia3894vltejkc9tznl/tinymce/7/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
+    <script>
+        function initTinymce(){
+            tinymce.init({
+                selector: 'textarea.tinymce',
+                plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker permanentpen advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags inlinecss markdown',
+                toolbar: 'fullscreen tableofcontents blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                images_file_types: 'jpg,svg,webp,png',
+                height: 600,
+            });
+        }
+        $('#edit_content').on('click', function() {
+            $('#content_mce').addClass('tinymce');
+            initTinymce();
+        });
+
+        $('#edit_description').on('click', function() {
+            $('#description_mce').addClass('tinymce');
+            initTinymce();
+        });
+
+        $('#edit_table_contents').on('click', function() {
+            $('#table_contents_mce').addClass('tinymce');
+            initTinymce();
+        });
+
+        $('#edit_preview').on('click', function() {
+            $('#preview_content_mce').addClass('tinymce');
+            initTinymce();
+        });
     </script>
 
     <script src="/assets/default/vendors/sweetalert2/dist/sweetalert2.min.js"></script>

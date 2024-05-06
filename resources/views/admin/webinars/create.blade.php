@@ -166,6 +166,32 @@
                                                            for="enable_waitlistSwitch"></label>
                                                 </div>
                                             </div>
+                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=""
+                                                       for="private">{{ trans('Private') }}</label>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" name="private"
+                                                           class="custom-control-input" id="private"
+                                                        {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }}>
+                                                    <label class="custom-control-label"
+                                                           for="private"></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-15">
+                                                <label class="input-label">{{ trans('User') }}</label>
+                                                <select id="personalization_user"
+                                                        class="custom-select"
+                                                        name="personalization_user" required>
+                                                    <option {{ !empty($school) ? '' : 'selected' }} disabled>
+                                                        {{ trans('Choose User') }}</option>
+                                                    @foreach ($users as $user)
+                                                        <option  value="{{ $user->id }}"
+                                                            {{ (!empty($personalization_user) and $personalization_user == $user->id) ? 'selected' : '' }}>
+                                                            {{ $user->full_name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.price') }}
                                                     ( AUD )</label>

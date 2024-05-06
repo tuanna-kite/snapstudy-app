@@ -20,12 +20,14 @@
             'name' => 'phone',
             'placeholder' => trans('course.Enter your phone number'),
             'type' => 'number',
+            'required' => true,
         ],
     ];
 
     $textarea = [
         'name' => 'message',
         'label' => trans('dashboard.Message'),
+        'required' => true,
     ];
 @endphp
 
@@ -59,7 +61,7 @@
                 </button>
             </div>
             <div class="bg-white rounded-2xl">
-                <form class="space-y-4" action="{{ route('support.store') }}" method="POST">
+                <form class="space-y-4" action="{{ route('course.personalization') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @foreach ($inputs as $input)
                         <x-input.input-label :data="$input" />
@@ -69,14 +71,18 @@
                             </div>
                         @enderror
                     @endforeach
+                    <input class="hidden" type="number" name="course_id" value="{{ $course->id }}">
+                    <input type="hidden" name="order_type" value="personalization">
                     <x-input.textarea-label :data="$textarea" />
                     <div class="flex flex-col sm:flex-row justify-between items-end gap-4">
                         <x-input.file-label :extends_title="true" />
+{{--                        <input type="file" id="file" name='attach' class=""  />--}}
                         <div class="flex sm:flex-col flex-row justify-between items-center w-full sm:w-fit">
                             <p class="font-semibold text-base text-secondary.main">
-                                999.000 VNĐ
+                                60 AUD
                             </p>
-                            <button class="py-2 px-8 rounded-xl bg-secondary.main min-w-28">
+                            <input type="hidden" name="amount" value="60">
+                            <button type="submit" class="py-2 px-8 rounded-xl bg-secondary.main min-w-28">
                                 <span class="font-medium text-sm text-white">
                                     {{trans('course.Send')}}
                                 </span>

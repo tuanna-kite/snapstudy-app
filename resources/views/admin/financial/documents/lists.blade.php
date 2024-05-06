@@ -213,7 +213,7 @@
                                                 </td> --}}
 
                                                 <td>
-                                                    <span class="text-success">{{ handlePrice($document->amount) }}</span>
+                                                    <span class="text-success">{{ $document->amount }} AUD</span>
                                                 </td>
 
                                                 <td>

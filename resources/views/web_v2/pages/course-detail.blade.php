@@ -48,9 +48,9 @@
                         {{ $course->seo_description }}
                     </p>
                     {{-- TODO: open view after handle logic --}}
-                    {{-- <div>
-                        <x-pages.course-detail.button-support />
-                    </div> --}}
+                    <div>
+                        <x-pages.course-detail.button-support :course="$course"/>
+                    </div>
                 </div>
             </div>
         </div>

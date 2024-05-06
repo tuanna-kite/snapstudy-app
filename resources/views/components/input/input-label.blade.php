@@ -24,5 +24,5 @@
     <input {{ isset($data['disabled']) && $data['disabled'] ? 'disabled' : '' }} value="{{ $data['value'] ?? '' }}"
         class="px-3 py-4 border rounded-lg w-full border-grey-300" id="{{ $data['name'] }}"
         type="{{ $data['type'] ?? 'text' }}" name="{{ $data['name'] }}" placeholder="{{ $data['placeholder'] }}"
-        {{ old($data['name']) }}>
+        {{ old($data['name']) }} {{ isset($data['required']) && $data['required'] ? 'required' : '' }}>
 </div>

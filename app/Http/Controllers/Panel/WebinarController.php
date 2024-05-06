@@ -1514,8 +1514,13 @@ class WebinarController extends Controller
         $webinars = Webinar::whereIn('id', $webinarsIds)
             ->where('status', 'active')
             ->get();
+        $webinar_privates = Webinar::where('private', true)
+            ->where('personalization_user', $user->id)
+            ->get();
 
         $data['webinars'] = $webinars;
+        $data['webinar_privates'] = $webinar_privates;
+
 
         return view('web_v2.pages.dashboard.my-learning', $data);
     }

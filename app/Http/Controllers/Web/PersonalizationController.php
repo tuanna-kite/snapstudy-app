@@ -48,7 +48,6 @@ class PersonalizationController extends Controller
             'user_id' => $user->id,
             'title' => 'Set up personalized editing support',
             'webinar_id' => $request->input('course_id'),
-            'department_id' => '4',
             'status' => 'open',
             'created_at' => time(),
             'updated_at' => time(),

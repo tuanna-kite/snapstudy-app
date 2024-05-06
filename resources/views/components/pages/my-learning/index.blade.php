@@ -1,9 +1,9 @@
 <x-layouts.dashboard-layout title="My Learning">
     <x-tab>
         <div class="bg-white p-6">
-            <div class="p-6">
-                <x-input.group-filter />
-            </div>
+{{--            <div class="p-6">--}}
+{{--                <x-input.group-filter />--}}
+{{--            </div>--}}
             <div x-show="activeTab === 1" class="">
                 <!-- Content for Tab 1 -->
                 <x-documents.document-grid />

@@ -3,13 +3,13 @@
     <div class="section-container w-full overflow-hidden">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="img/hero_section.png" alt="slide-img" class="w-full">
+                <img src="{{ asset('img/hero-section(en)1.jpg') }}" alt="slide-img" class="w-full">
             </div>
             <div class="swiper-slide">
-                <img src="img/hero-section-1.jpeg" alt="slide-img" class="w-full">
+                <img src="{{ asset('img/hero-section(en)2.jpg') }}" alt="slide-img" class="w-full">
             </div>
             <div class="swiper-slide">
-                <img src="img/hero-section-2.jpeg" alt="slide-img" class="w-full">
+                <img src="{{ asset('img/hero-section(en)3.jpg') }}"alt="slide-img" class="w-full">
             </div>
         </div>
     </div>

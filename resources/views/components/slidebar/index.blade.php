@@ -29,15 +29,15 @@
             'href' => route('financial.summary'),
             'tab' => null,
         ],
-        [
-            'icon' => 'device-message',
-            'title' => trans('dashboard.Support'),
-            'href' => '2',
-            'tab' => [
-                trans('dashboard.New') => route('support.create'), // href here
-                trans('dashboard.Document') => route('support.tickets'), // href here
-            ],
-        ],
+//        [
+//            'icon' => 'device-message',
+//            'title' => trans('dashboard.Support'),
+//            'href' => '2',
+//            'tab' => [
+//                trans('dashboard.New') => route('support.create'), // href here
+//                trans('dashboard.Document') => route('support.tickets'), // href here
+//            ],
+//        ],
         [
             'icon' => 'setting-2',
             'title' => trans('dashboard.Setting'),

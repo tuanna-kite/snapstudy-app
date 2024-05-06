@@ -5,18 +5,18 @@
     <x-layouts.dashboard-layout title="{{ trans('panel.dashboard') }}">
         <div class="space-y-3">
             <div class="flex flex-col gap-3 xl:flex-row">
-                <div class="w-full xl:w-3/5">
-                    <x-pages.dashboard.welcome />
+                <div class="w-full">
+                    <x-pages.dashboard.welcome :webinarsCount="$webinarsCount" :supportsCount="$supportsCount" :commentsCount="$commentsCount"/>
                 </div>
-                <div class="w-full xl:w-2/5 flex flex-col justify-between gap-3">
-                    <x-pages.dashboard.pay :accountCharge="$accountCharge" />
-                    {{-- Rank --}}
-                    <div class="flex justify-center items-center p-24 xl:flex-1 rounded-3xl bg-white">
-                        <span class="text-3xl font-bold">
-                            Diamond
-                        </span>
-                    </div>
-                </div>
+{{--                <div class="w-full xl:w-2/5 flex flex-col justify-between gap-3">--}}
+{{--                    <x-pages.dashboard.pay :accountCharge="$accountCharge" />--}}
+{{--                    --}}{{-- Rank --}}
+{{--                    <div class="flex justify-center items-center p-24 xl:flex-1 rounded-3xl bg-white">--}}
+{{--                        <span class="text-3xl font-bold">--}}
+{{--                            Diamond--}}
+{{--                        </span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
             {{-- Syllabus --}}
             <div class="rounded-3xl p-6 bg-white">

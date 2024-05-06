@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logo/favicon.jpg') }}">
     <!-- Material-UI Icons CSS via CDN -->
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> --}}
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"> --}}

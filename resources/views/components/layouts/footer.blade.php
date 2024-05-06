@@ -1,102 +1,165 @@
 <footer class="bg-primary.light">
-    <div class='flex flex-col gap-4 py-16 md:flex-row container mx-auto'>
-        <div class="flex-1">
-            <a href="#">
-                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo">
-            </a>
-            <ul class="mt-4">
-                <li class="text-sm font-medium text-text.light.primary">
-                    <a href="#">
-                        {{ trans('footer.Company name') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.primary">
-                    <a href="#">
-                        {{ trans('footer.Company number: 024682213') }}
-                    </a>
-                </li>
-            </ul>
+    <div>
+        {{--  --}}
+        <div class='flex flex-col gap-12 pt-12 md:flex-row container mx-auto'>
+            <div class="flex-1">
+                <a href="#">
+                    <img src="{{ asset('img/logo/logo.png') }}" alt="Logo">
+                </a>
+                <ul class="mt-4 space-y-2">
+                    <li class="text-sm font-semibold text-text.light.primary">
+                        <a href="#">
+                            {{ trans('footer.The service provides detailed outlines for all student assignments') }}
+                        </a>
+                    </li>
+                    <li class="text-sm text-text.light.secondary">
+                        <a href="#">
+                            {{ trans('footer.Hong Linh Education Investment and Development Joint Stock Company') }}
+                        </a>
+                    </li>
+                    <li class="text-sm text-text.light.secondary">
+                        <a href="#">
+                            {{ trans('footer.Address: 37 Xa Dan, Hanoi, Vietnam') }}
+                        </a>
+                    </li>
+                    <li class="text-sm text-text.light.secondary">
+                        <a href="#">
+                            Hotline: (024) 682213
+                        </a>
+                    </li>
+                    <li class="text-sm text-text.light.secondary">
+                        <a href="#">
+                            Email: honglinh.education@gmail.com
+                        </a>
+                    </li>
+                    <li class="text-sm text-text.light.secondary">
+                        <a target="_blank" href="https://snapstudy.co/">
+                            Web: https://snapstudy.co/
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex flex-1">
+                <div class="flex-1 pt-4">
+                    <span class="text-base font-semibold text-text.light.primary uppercase">
+                        {{ trans('footer.Information') }}
+                    </span>
+                    <ul class="space-y-2 mt-3">
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.About') }}
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Outline') }}
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Contact') }}
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Promotion') }}
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Notification') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-1 pt-4">
+                    <span class="text-base font-semibold text-text.light.primary uppercase">
+                        {{ trans('footer.Support') }}
+                    </span>
+                    <ul class="space-y-2 mt-3">
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Frequently asked questions') }}
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Outline user manual') }}
+
+                            </a>
+                        </li>
+                        <li class="text-sm font-medium text-text.light.secondary">
+                            <a href="#">
+                                {{ trans('footer.Payment Guide') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="flex-1 pt-4">
-            <span class="text-base font-semibold text-text.light.primary">
-                SNAPS
-            </span>
-            <ul class="flex flex-col gap-2 mt-3">
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.About') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.What We Offer') }}
-                    </a>
-                </li>
-            </ul>
+        <div class='flex flex-col pt-4 pb-8 gap-12 md:flex-row container mx-auto'>
+            <div class="flex-1">
+                <img src="{{ asset('img/image-footer.png') }}" />
+            </div>
+            <div class="flex flex-1 items-start">
+                <div class="flex-1 space-y-2">
+                    <p class="uppercase text-sm text-text.light.secondary">
+                        {{ trans('footer.Payment support') }}
+                    </p>
+                    <ul class="flex gap-3">
+                        {{-- <li>
+                            <img src="{{ asset('img/logo/momo-footer.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li>
+                        <li>
+                            <img src="{{ asset('img/logo/vnpay-footer.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li> --}}
+                        <li>
+                            <img src="{{ asset('img/logo/paypal.png') }}" alt=""
+                                class="w-10 h-10 aspect-square rounded-md">
+                        </li>
+                        <li>
+                            <img src="{{ asset('img/logo/visa-footer.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li>
+                        <li>
+                            <img src="{{ asset('img/logo/mastercard.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-1 space-y-2">
+                    <p class="uppercase text-sm text-text.light.secondary">
+                        {{ trans('footer.connect with us') }}
+                    </p>
+                    <ul class="flex gap-3">
+                        <li>
+                            <a href="https://www.facebook.com/Snapszone">
+                                <img src="{{ asset('img/logo/facebook-footer.png') }}" alt=""
+                                    class="w-10 h-10 aspect-square">
+                            </a>
+                        </li>
+                        {{-- <li>
+                            <img src="{{ asset('img/logo/insta-footer.png') }}" alt=""
+                                class="w-10 h-10 aspect-square">
+                        </li> --}}
+                    </ul>
+                </div>
+            </div>
+
         </div>
-        <div class="flex-1 pt-4">
-            <span class="text-base font-semibold text-text.light.primary">
-                {{ trans('footer.MORE') }}
-            </span>
-            <ul class="flex flex-col gap-2 mt-3">
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.About') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.What We Offer') }}
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="flex-1 pt-4">
-            <span class="text-base font-semibold text-text.light.primary">
-                {{ trans('footer.HELP') }}
-            </span>
-            <ul class="flex flex-col gap-2 mt-3">
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.Frequently asked questions') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.Terms of use') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.Regulations on document sales policy') }}
-                    </a>
-                </li>
-                <li class="text-sm font-medium text-text.light.secondary">
-                    <a href="#">
-                        {{ trans('footer.Payment Guide') }}
-                    </a>
-                </li>
-            </ul>
-        </div>
+
     </div>
+
+
     <div style="border-top:1px solid #637381">
-        <div class="container mx-auto py-6 flex flex-col-reverse items-center gap-4 md:justify-between md:flex-row">
+        <div class="container mx-auto py-6">
             <div>
                 <span class="text-sm font-medium text-text.light.secondary">
                     © 2024 Snaps. All rights reserved.
                 </span>
             </div>
-            <ul class="flex gap-4">
-                <li>
-                    <img src="{{ asset('img/logo/facebook.png') }}" alt="fb" width="32" height="32">
-                </li>
-                <li>
-                    <img src="{{ asset('img/logo/youtube.png') }}" alt="fb" width="32" height="32">
-                </li>
-                <li>
-                    <img src="{{ asset('img/logo/instagram.png') }}" alt="fb" width="32" height="32">
-                </li>
-            </ul>
         </div>
     </div>
 </footer>

@@ -64,7 +64,7 @@
                             </li> -->
 
                             <li class="{{ (request()->is(getAdminPanelUrl('/webinars', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars?type=webinar">{{ trans('admin/main.live_classes') }}</a>
+                                <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars">{{ trans('admin/main.live_classes') }}</a>
                             </li>
 
                           <!--   <li class="{{ (request()->is(getAdminPanelUrl('/webinars', false)) and request()->get('type') == 'text_lesson') ? 'active' : '' }}">
@@ -889,7 +889,7 @@
                         @endcan()
                     </ul>
                 </li>
-            @endcan 
+            @endcan
             -->
 
             @can('admin_additional_pages')
@@ -918,7 +918,7 @@
                         @can('admin_additional_pages_navbar_links')
                             <li class="{{ (request()->is(getAdminPanelUrl('/additional_page/navbar_links', false))) ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ getAdminPanelUrl() }}/additional_page/navbar_links">{{ trans('admin/main.top_navbar') }}</a>
-                            </li> 
+                            </li>
                         @endcan()-->
                     </ul>
                 </li>

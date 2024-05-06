@@ -109,4 +109,11 @@ return [
     'Enter your full name'=>'Enter your full name',
     'Old password' => 'Old password',
     'New password' => 'New password',
+
+    'Account verification'=>'Account verification',
+    'We have to sent the code verification to your mail'=>'We have to sent the code verification to your mail',
+    'Verify'=>'Verify',
+    'Resend code'=>'Resend code',
+    'Verification code'=>'Verification code',
+    'Enter your code'=>'Enter your code'
 ];

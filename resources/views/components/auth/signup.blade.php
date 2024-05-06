@@ -20,7 +20,7 @@
 @endphp
 
 <div class="">
-    <button type="button" class="w-full text-end" @click="showModal = false">
+    <button type="button" class="w-full text-end" onclick="closeModalAuth()">
         <x-component.material-icon name='close' />
     </button>
     <div class="pb-12">
@@ -41,14 +41,15 @@
                 </div>
                 <div id="errorSignup" style="color: red;"></div>
                 <div class="space-y-6">
-                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white" id="signupbtn">
+                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white"
+                        id="signupbtn">
                         <span class="font-medium text-sm">
                             {{ trans('auth.Sign up') }}
                         </span>
                     </button>
                     <p class="text-center text-sm text-text.light.primary">
                         {{ trans('auth.Do you already have an account?') }} <button type="button"
-                            @click="page = 'login'"
+                            onclick="showPage('login')"
                             class="text-primary.main hover:underline">{{ trans('auth.Login') }}</button>
                     </p>
                 </div>
@@ -66,15 +67,14 @@
                 password: document.getElementById("password_signup").value,
                 _token: '{{ csrf_token() }}'
             };
-            console.log(formData);
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('register') }}",
+                url: "{{ route('store_register') }}",
                 data: formData,
                 dataType: 'json',
                 success: function(data) {
-                    if(data.success) {
+                    if (data.success) {
                         window.location.href = '{{ route('home') }}';
                     } else {
                         // Display validation errors

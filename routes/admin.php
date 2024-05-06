@@ -262,7 +262,8 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/', 'WebinarController@index');
             Route::get('/create', 'WebinarController@create');
             Route::post('/store', 'WebinarController@store');
-            Route::get('/{id}/edit', 'WebinarController@edit');
+            Route::get('/{id}/edit', 'WebinarController@edit')->name('webinar.edit');
+            Route::get('/{id}/preview', 'WebinarController@preview')->name('webinar.preview');
             Route::post('/{id}/update', 'WebinarController@update');
             Route::get('/{id}/delete', 'WebinarController@destroy');
             Route::get('/{id}/approve', 'WebinarController@approve');

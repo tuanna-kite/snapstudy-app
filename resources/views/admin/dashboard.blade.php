@@ -127,7 +127,7 @@
                                     <h4>{{trans('admin/main.total_incomes')}}</h4>
                                 </div>
                                 <div class="card-body">
-                                  {{ handlePrice($totalSales['amount']) }}
+                                  {{ $totalSales['amount'] }} AUD
 
                                 </div>
                             </div>
@@ -468,7 +468,7 @@
                                         </a>
                                     @endforeach
 
-                                    <a href="{{ getAdminPanelUrl() }}/webinars?type=webinar" class="ticket-item ticket-more">
+                                    <a href="{{ getAdminPanelUrl() }}" class="ticket-item ticket-more">
                                         {{trans('admin/main.view_all')}} <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>

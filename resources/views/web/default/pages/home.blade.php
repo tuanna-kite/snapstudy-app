@@ -927,7 +927,7 @@
     <div class="container d-flex justify-content-center align-items-center">
         <div class="w-100 row justify-content-center align-items-center">
             <h3 class="col-sm-12 col-md-8 mb-3 mb-md-0" style="text-transform: uppercase">
-                Sign up now to purchase the detailed instruction at 199,000 VND
+                Sign up now to purchase the detailed instruction at 15.99 AUD
             </h3>
             <button class="btn btn-danger rounded-btn px-3 col-9 col-md-4"
                     style="text-transform: uppercase; display: inline-block">

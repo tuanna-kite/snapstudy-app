@@ -230,28 +230,36 @@ class ClassesController extends Controller
         return $query;
     }
 
-    public function outline(Request $request)
+    public function outlineQuery($type, $subject_id, $search = null)
     {
-        $subject = $request->get('subject');
-        $search = $request->get('search');
-        $subject_id = Category::where('slug', $subject)->pluck('id')->toArray();
-        $webinarsQuery = Webinar::where('webinars.status', 'active')
+        $outlineQuery = Webinar::where('webinars.status', 'active')
             ->where('private', false);
-
-        if (!empty($subject)) {
-            $webinarsQuery->whereIn('webinars.category_id', $subject_id);
+        if (!empty($subject_id)) {
+            $outlineQuery->whereIn('webinars.category_id', $subject_id);
         }
+
         if (!empty($search)) {
-            $webinarsQuery->where(function ($query) use ($search) {
+            $outlineQuery->where(function ($query) use ($search) {
                 $query->whereTranslationLike('title', "%$search%")
                     ->orWhereTranslationLike('description', "%$search%")
                     ->orWhereTranslationLike('seo_description', "%$search%")
                     ->orWhereTranslationLike('webinar_id', "%$search%");
             });
         }
-        $outlines = $webinarsQuery->where('webinars.type', Webinar::$webinar)->paginate(12);
-        $exams = $webinarsQuery->where('webinars.type', Webinar::$course)->paginate(12);
-        $questions = $webinarsQuery->where('webinars.type', Webinar::$textLesson)->paginate(12);
+        $data = $outlineQuery->where('webinars.type', $type)->paginate(12);
+        return $data;
+    }
+
+    public function outline(Request $request)
+    {
+        $subject = $request->get('subject');
+        $search = $request->get('search');
+        $subject_id = Category::where('slug', $subject)->pluck('id')->toArray();
+
+        $outlines = $this->outlineQuery(Webinar::$webinar, $subject_id, $search);
+        $exams = $this->outlineQuery(Webinar::$course, $subject_id, $search);
+        $questions = $this->outlineQuery(Webinar::$textLesson, $subject_id, $search);
+
 
         $subjectItem = Category::where('slug', $subject)->first();
         if ($subjectItem != null) {
@@ -268,11 +276,19 @@ class ClassesController extends Controller
         return view('web_v2.pages.outline', $data);
     }
 
+    /*
+     * Neu khong co Major thi hien tat ca.
+     * Khi co major thi se loc theo major
+     */
     public function school(Request $request, $slug)
     {
         $search = $request->get('search', '');
-        $majors_search = $request->get('majors', []);
+        $majors_search = $request->query('majors', []);
+
         $school = Category::where('slug', $slug)->first();
+        if (is_null($school)) {
+            abort(404);
+        }
 
         $majors = Category::where('parent_id', $school->id)
             ->where('level', 2)
@@ -284,15 +300,25 @@ class ClassesController extends Controller
             ->pluck('id')->toArray();
 
 
-        $subjectQuery = Category::where('parent_id', $majors_list)
+        $subjectQuery = Category::whereIn('parent_id', $majors_list)
             ->where('level', 3);
+
+//        $subjectQuery = Category::whereIn('parent_id', $majors_list)
+//            ->where('level', 3)->pluck('slug')->toArray();
+//
+//        dd($subjectQuery);
+        if ($majors_search) {
+//            $subjectQuery = $subjectQuery->whereIn('slug', $majors_search);
+            $majors_filtered= Category::whereIn('slug', $majors_search)
+                ->where('level', 2)
+                ->pluck('id')->toArray();
+            $subjectQuery = $subjectQuery->whereIn('parent_id', $majors_filtered);
+        }
 
         if ($search) {
             $subjectQuery = $subjectQuery->whereTranslationLike('title', "%$search%");
         }
-        if ($majors_search) {
-            $subjectQuery = $subjectQuery->whereIn('slug', $majors_search);
-        }
+
         $subjectAll = $subjectQuery->paginate(12);
 
         $seoSettings = getSeoMetas('classes');

@@ -98,7 +98,7 @@ return [
     'Time Saved' => 'Time Saved',
     'Save your time' => 'Save your time to 70% and Boost your Efficiency to 180%',
     'JUMPSTART YOUR SUCCESS' => 'JUMPSTART YOUR SUCCESS <br/> FOR THE UPCOMING ASSIGNMENT',
-    'SIGN UP NOW TO PURCHASE' => 'SIGN UP NOW TO PURCHASE THE DETAILED <br/> INSTRUCTION AT 199,000 VND',
+    'SIGN UP NOW TO PURCHASE' => 'SIGN UP NOW TO PURCHASE THE DETAILED <br/> INSTRUCTION AT 15.99 AUD',
     'SIGN UP FOR FREE TRIAL' => 'SIGN UP FOR FREE TRIAL',
     'Start learning with Top Trending Outlines' => 'Start learning with Top Trending Outlines',
     'Make a progress towards high scores' => 'Make a progress towards high scores by starting with the highest-voted outlines',
@@ -115,5 +115,7 @@ return [
 
     'Outline' => 'Outline',
     "See more" => "See more",
+
+
 
 ];

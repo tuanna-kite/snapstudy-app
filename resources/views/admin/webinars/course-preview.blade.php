@@ -1,8 +1,16 @@
-@extends('web_v2.layouts.index')
+@extends('admin.layouts.app')
 
-@section('title', 'Course Detail')
+@section('title', 'Course Preview')
 
 @push('styles_top')
+    <script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/assets/admin/vendor/poper/popper.min.js"></script>
+    <script src="/assets/admin/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/assets/admin/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="/assets/admin/vendor/moment/moment.min.js"></script>
+    <script src="/assets/admin/js/stisla.js"></script>
+    <script src="/assets/default/vendors/toast/jquery.toast.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         .table_contents h2 {
             display: none;
@@ -34,7 +42,6 @@
 @endpush
 
 @section('content')
-    <x-layouts.home-layout>
         <div class="py-20 bg-primary.light">
             <div class="container mx-auto">
                 <div class="max-w-[960px] mx-auto space-y-6">
@@ -67,42 +74,12 @@
                                 <h6 class="font-bold text-xl">
                                     {{ trans('course.Table of Contents') }}
                                 </h6>
-                                <x-component.material-icon name="expand_more" x-show="openTab === null" />
-                                <x-component.material-icon name="expand_less" x-show="openTab === 1" />
                             </div>
                             <div class="table_contents px-6 py-4" x-show="openTab === 1">
                                 {!! $docTrans->table_contents !!}
                             </div>
                         </div>
                     </div>
-                    {{-- Scrolled Table of Contents  --}}
-                    @if ($hasBought)
-                        <div x-show='scrolled'>
-                            <div x-data="{ showModal: false, buttonPosition: { top: 0, right: 0 } }">
-                                <!-- Button to toggle the modal -->
-                                <button id="scrollBtn"
-                                    class="fixed z-10 bottom-4 right-4 px-4 py-2 rounded bg-gray-800 text-white shadow-md;"
-                                    @click="showModal = true; buttonPosition = $event.target.getBoundingClientRect()">
-                                    {{ trans('course.Table of Contents') }}
-                                </button>
-                                <!-- Modal -->
-                                <div x-show="showModal"
-                                    class="fixed z-10 bottom-16 right-0 w-3/5 bg-white h-1/2 overflow-y-auto shadow-xl rounded-l-xl max-w-[240px]"
-                                    x-transition:enter="transition ease-out duration-300"
-                                    x-transition:enter-start="opacity-0 transform scale-90"
-                                    x-transition:enter-end="opacity-100 transform scale-100"
-                                    x-transition:leave="transition ease-in duration-300"
-                                    x-transition:leave-start="opacity-100 transform scale-100"
-                                    x-transition:leave-end="opacity-0 transform scale-90" @click.away="showModal = false">
-                                    <div class="table_contents bg-white p-6">
-                                        <h3 class="text-lg my-4 font-semibold">{{ trans('course.Table of Contents') }}</h3>
-                                        <!-- Modal content -->
-                                        {!! $docTrans->table_contents !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
 
                     {{--  Content  --}}
                     <div class="space-y-6  mx-auto">
@@ -146,29 +123,15 @@
                             </div>
                         @endif
                     </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            @can('admin_webinars_edit')
+                                <a class="btn btn-primary" href="{{ route('webinar.edit', ['id' => $course->id]) }}">Edit</a>
+                            @endcan
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
-    </x-layouts.home-layout>
 @endsection
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '{{ route('webinar.view', ['webinar' => $course->id]) }}',
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                console.log(response.message);
-
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-</script>

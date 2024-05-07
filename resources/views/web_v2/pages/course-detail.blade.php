@@ -48,9 +48,11 @@
                         {{ $course->seo_description }}
                     </p>
                     {{-- TODO: open view after handle logic --}}
-                    <div>
-                        <x-pages.course-detail.button-support :course="$course"/>
-                    </div>
+                    @if ($hasBought)
+                        <div>
+                            <x-pages.course-detail.button-support :course="$course"/>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

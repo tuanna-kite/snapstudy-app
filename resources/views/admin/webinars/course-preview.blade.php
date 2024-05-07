@@ -101,13 +101,13 @@
                                     @if (auth()->user())
                                         <button type="submit"
                                             class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                            <span>{{ trans('course.Read more') }} ({{ $course->price }} AUD)</span>
+                                            <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span>
                                             <x-component.material-icon name="arrow_downward" />
                                         </button>
                                     @else
                                         <button type="button" onclick="showModalAuth()"
                                             class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                            <span>{{ trans('course.Read more') }} ({{ $course->price }} AUD)</span>
+                                            <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span>
                                             <x-component.material-icon name="arrow_downward" />
                                         </button>
                                     @endif

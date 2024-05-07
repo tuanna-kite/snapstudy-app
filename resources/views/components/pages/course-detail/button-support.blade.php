@@ -79,9 +79,9 @@
 {{--                        <input type="file" id="file" name='attach' class=""  />--}}
                         <div class="flex sm:flex-col flex-row justify-between items-center w-full sm:w-fit">
                             <p class="font-semibold text-base text-secondary.main">
-                                60 AUD
+                                ({{ handlePrice(999000) }})
                             </p>
-                            <input type="hidden" name="amount" value="60">
+                            <input type="hidden" name="amount" value="999000">
                             <button type="submit" class="py-2 px-8 rounded-xl bg-secondary.main min-w-28">
                                 <span class="font-medium text-sm text-white">
                                     {{trans('course.Send')}}

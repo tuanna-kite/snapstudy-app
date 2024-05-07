@@ -18,7 +18,7 @@
                 {{ $item->title }}
             </a>
             <span class="font-semibold text-base text-secondary.main">
-                {{ $item->price }} AUD
+                {{ handlePrice($item->price) }}
             </span>
         </div>
 {{--        <x-component.icon name="ic_trash" width="24" height="24" />--}}

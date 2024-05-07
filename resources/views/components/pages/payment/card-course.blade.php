@@ -20,7 +20,7 @@
     <div class="flex justify-between items-center p-6">
         <p class="font-bold text-lg text-text.light.primary">Total:</p>
         <p class="font-bold text-lg text-primary.main">
-            {{ $webinar->price }} AUD
+            {{ handlePrice($webinar->price) }}
         </p>
     </div>
 </div>

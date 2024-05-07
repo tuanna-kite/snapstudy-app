@@ -852,7 +852,7 @@ class CartController extends Controller
                 ];
 
 
-                return view('web_v2.pages.payment1', $data);
+                return view('web_v2.pages.payment', $data);
             } else {
                 return $this->handlePaymentOrderWithZeroTotalAmount($order);
             }

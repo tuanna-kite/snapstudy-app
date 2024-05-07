@@ -24,6 +24,7 @@ use App\PaymentChannels\ChannelManager;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UploadFileManager ;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -169,84 +170,144 @@ class PersonalizationController extends Controller
         }
     }
 
-    public function paypalPayment($order, $amount)
+    public function payment($orderId, $gateway, $total_amount)
     {
+        $endpoint = env('MOMO_API_ENDPOINT');
 
-        $provider = new PayPalClient;
-        $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken();
-        $response = $provider->createOrder([
-            "intent" => "CAPTURE",
-            "application_context" => [
-                "return_url" => route('personalization.success'),
-                "cancel_url" => route('paypal.cancel'),
-            ],
-            "purchase_units" => [
-                [
-                    "amount" => [
-                        "currency_code" => "AUD",
-                        "value" => $amount ?? 60,
-                    ]
-                ]
-            ]
-        ]);
+        $partnerCode = env('MOMO_PARTNER_CODE');
+        $accessKey = env('MOMO_ACCESS_KEY');
+        $serectkey = env('MOMO_SECRET_KEY');
+        $orderInfo = "Thanh toán qua MoMo";
+        $amount = intval($total_amount) < 1000 ? 1000 : intval($total_amount);
+        $orderId = $orderId;
+        $redirectUrl = route('personalization.checkout', ['gateway' => $gateway, 'orderId' => $orderId]);
+        $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+        $extraData = "";
+        $requestId = "HL_".time();
+        $requestType = $gateway;
 
-        if (isset($response['id']) && $response['id'] != null) {
-            foreach ($response['links'] as $link) {
-                if ($link['rel'] == 'approve') {
-                    $order->payment_data = $response['id'];
-                    $order->save();
-                    return redirect()->away($link['href']);
-                }
-            }
-        } else {
-            return redirect()->route('paypal.cancel');
-        }
+
+        //before sign HMAC SHA256 signature
+        $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&ipnUrl=".$ipnUrl."&orderId=".$orderId."&orderInfo=".$orderInfo."&partnerCode=".$partnerCode."&redirectUrl=".$redirectUrl."&requestId=".$requestId."&requestType=".$requestType;
+        $signature = hash_hmac("sha256", $rawHash, $serectkey);
+        $data = array(
+            'partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            "storeId" => "MomoTestStore",
+            'requestId' => $requestId,
+            'amount' => $amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'redirectUrl' => $redirectUrl,
+            'ipnUrl' => $ipnUrl,
+            'lang' => 'vi',
+            'extraData' => $extraData,
+            'requestType' => $requestType,
+            'signature' => $signature
+        );
+        $result = execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true);
+        return $jsonResult;
     }
 
-    public function success(Request $request)
+    public function checkout($gateway, $orderId)
     {
-        $provider = new PayPalClient;
-        $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken();
+        $secretKey = env('MOMO_SECRET_KEY');
+        $accessKey = env('MOMO_ACCESS_KEY');
 
-        $response = $provider->capturePaymentOrder($request->token);
+        $partnerCode = $_GET["partnerCode"];
+        $requestId = $_GET["requestId"];
+        $amount = $_GET["amount"];
+        $orderInfo = $_GET["orderInfo"];
+        $orderType = $_GET["orderType"];
+        $transId = $_GET["transId"];
+        $resultCode = $_GET["resultCode"];
+        $message = $_GET["message"];
+        $payType = $_GET["payType"];
+        $responseTime = $_GET["responseTime"];
+        $extraData = $_GET["extraData"];
+        $m2signature = $_GET["signature"]; //MoMo signature
+        Log::info('Thanh toan khoa hoc: '.$requestId);
+        //Checksum
+        $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&message=".$message."&orderId=".$orderId."&orderInfo=".$orderInfo.
+            "&orderType=".$orderType."&partnerCode=".$partnerCode."&payType=".$payType."&requestId=".$requestId."&responseTime=".$responseTime.
+            "&resultCode=".$resultCode."&transId=".$transId;
+        $partnerSignature = hash_hmac("sha256", $rawHash, $secretKey);
+        if ($m2signature == $partnerSignature) {
+            if ($resultCode == 0) {
+                $user = auth()->user();
+                $userId = $user->id;
+                $id = explode("-", $orderId)[0];
+                $order = Order::where('id', $id)
+                    ->where('user_id', $user->id)
+                    ->first();
+                if ($order->type === Order::$meeting) {
+                    $orderItem = OrderItem::where('order_id', $order->id)->first();
+                    $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
+                    $reserveMeeting->update(['locked_at' => time()]);
+                }
 
-        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            $order = Order::where('payment_data', $request->token)->first();
-            ;            $user = auth()->user();
-            $userId = $user->id;
-            $order->update([
-                'payment_method' => Order::$credit
-            ]);
-            $this->setPaymentAccounting($order, 'paypalpay', $order->payment_data);
-            $order->update([
-                'status' => Order::$paid
-            ]);
-            $getUser = User::find($userId);
-            $score = RewardAccounting::where('user_id', $userId)->sum('score');
-            $groups = Group::where('min_score', '<=', $score)
-                ->where('max_score', '>=', $score)
-                ->get();
-            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+                if ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
+                    $order->update([
+                        'payment_method' => Order::$credit
+                    ]);
+                    $this->setPaymentAccounting($order, 'momopay', $requestId);
+                    $order->update([
+                        'status' => Order::$paid
+                    ]);
+                    $getUser = User::find($userId);
+                    $score = RewardAccounting::where('user_id', $userId)->sum('score');
+                    $groups = Group::where('min_score', '<=', $score)
+                        ->where('max_score', '>=', $score)
+                        ->get();
+                    $groupUser = GroupUser::where('user_id', $getUser->id)->first();
 
-            if ($groupUser != null) {
-                $groupUser->group_id = $groups->first()->id;
-                $groupUser->save();
+                    if ($groupUser != null) {
+                        $groupUser->group_id = $groups->first()->id;
+                        $groupUser->save();
+                    } else {
+                        GroupUser::create([
+                            'group_id' => $groups->first()->id,
+                            'user_id' => $getUser->id,
+                        ]);
+                    }
+
+                    session()->put($this->order_session_key, $order->id);
+                    return redirect('/payments/status');
+                }
+
+                $paymentChannel = PaymentChannel::where('id', $gateway)
+                    ->where('status', 'active')
+                    ->first();
+
+                if (!$paymentChannel) {
+                    $toastData = [
+                        'title' => trans('cart.fail_purchase'),
+                        'msg' => trans('public.channel_payment_disabled'),
+                        'status' => 'error'
+                    ];
+                    return back()->with(['toast' => $toastData]);
+                }
+
+                $order->payment_method = Order::$paymentChannel;
+                $order->save();
+
+                try {
+                    $channelManager = ChannelManager::makeChannel($paymentChannel);
+                    $redirect_url = $channelManager->paymentRequest($order);
+
+                    if (in_array($paymentChannel->class_name, PaymentChannel::$gatewayIgnoreRedirect)) {
+                        return $redirect_url;
+                    }
+
+                    return Redirect::away($redirect_url);
+                } catch (\Exception $exception) {
+                }
             } else {
-                GroupUser::create([
-                    'group_id' => $groups->first()->id,
-                    'user_id' => $getUser->id,
-                ]);
+                return view('web.default.pages.failCheckout');
             }
-            $orderItem = OrderItem::where('order_id', $order->id)->first();
-            if($orderItem){
-                $webinar = Webinar::find($orderItem->webinar_id);
-                return redirect(route('course', ['slug' => $webinar->slug]));
-            }
-            return redirect('/payments/status');
         }
-        return redirect()->route('paypal.cancel');
+        return view('web.default.pages.failCheckout');
     }
 
     public function setPaymentAccounting($order, $type = null, $requestId = null)

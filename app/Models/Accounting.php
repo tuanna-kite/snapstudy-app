@@ -86,9 +86,10 @@ class Accounting extends Model
         return $this->belongsTo(Gift::class, 'gift_id', 'id');
     }
 
-    public static function createAccounting($orderItem, $type = null)
+    public static function createAccounting($orderItem, $type = null, $amount = null)
     {
-        self::createAccountingBuyer($orderItem, $type);
+        self::createAccountingBuyer($orderItem, $type, $amount);
+
 
         if ($orderItem->tax_price and $orderItem->tax_price > 0) {
             self::createAccountingTax($orderItem);
@@ -101,13 +102,14 @@ class Accounting extends Model
         }
     }
 
-    public static function createAccountingBuyer($orderItem, $type = null)
+    public static function createAccountingBuyer($orderItem, $type = null, $amount = null)
     {
+        $amount_new = !empty($amount) ? $amount : $orderItem->total_amount;
         if ($type !== 'credit') {
             Accounting::create([
                 'user_id' => $orderItem->user_id,
                 'order_item_id' => $orderItem->id,
-                'amount' => $orderItem->total_amount,
+                'amount' => $amount_new,
                 'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
                 'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
                 'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
@@ -138,7 +140,7 @@ class Accounting extends Model
         Accounting::create([
             'user_id' => $orderItem->user_id,
             'order_item_id' => $orderItem->id,
-            'amount' => $orderItem->total_amount,
+            'amount' => $amount_new,
             'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
             'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
             'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
@@ -154,9 +156,10 @@ class Accounting extends Model
             'created_at' => time()
         ]);
 
+
         $notifyOptions = [
             '[f.d.type]' => Accounting::$deduction,
-            '[amount]' => handlePrice($orderItem->total_amount, true, true, false, $orderItem->user),
+            '[amount]' => handlePrice($amount_new, true, true, false, $orderItem->user),
         ];
 
         if (!empty($orderItem->webinar_id)) {
@@ -497,7 +500,6 @@ class Accounting extends Model
             'type_account' => Order::$asset,
             'type' => Order::$addiction,
             'description' => trans('public.charge_account'),
-            'chargeId' => $requestId,
             'created_at' => time()
         ]);
 

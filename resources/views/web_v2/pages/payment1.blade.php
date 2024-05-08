@@ -3,6 +3,7 @@
 @section('title', 'Payment Page')
 
 @php
+    $user = auth()->user();
     if(empty($payment_type)){
         $payment_type = 'checkout';
     }
@@ -48,12 +49,12 @@
                                         <label class="card relative bg-white rounded-2xl border-2 p-2 hover:shadow-lg">
                                             <div class="text-end">
                                                 <input class="radio checked:accent-secondary.main" name="gateway"
-                                                       value="credit" type="radio" checked>
+                                                       value="credit" type="radio">
                                             </div>
                                             <div class="flex flex-col items-center gap-3 pb-6">
                                                 <div class="text-center">
                                                     <p class="font-semibold text-base">
-                                                        Pay with your wallet
+                                                        Pay with your wallet ({{ $user->getAccountingCharge() }} SPoint)
                                                     </p>
                                                 </div>
                                             </div>

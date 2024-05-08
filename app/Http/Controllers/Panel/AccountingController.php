@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Redirect;
 use Illuminate\Support\Facades\Log;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 
 class AccountingController extends Controller
@@ -134,29 +135,18 @@ class AccountingController extends Controller
         $amount = $request->input('amount');
         $gateway = $request->input('gateway');
         $amount = (str_replace(',', '', $amount));
-        // NOTE: when add validation, it's auto refresh and not pass over validation
-        // $rules = [
-        //     'amount' => 'required|numeric|min:1000'
-        // ];
-        // $this->validate($request, $rules);
-        $userId = auth()->user()->id;
 
-        // $gateway = $request->input('gateway');
-        // $account = $request->input('account');
-        // $referenceNumber = $request->input('referral_code');
-        // $date = $request->input('date');
-        if ($amount < 1000) {
-            return back()->withErrors([
-                'amount' => trans('update.the_amount_must_be_greater_than_0')
-            ]);
-        } else {
+        if ($gateway == 'momopay'){
             $respone = $this->payment_momo($amount, $gateway);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);
             } else {
                 return view('web.default.pages.failCheckout');
             }
+        } else if ($gateway == 'paypal') {
+            return $this->paypalPayment($amount);
         }
+
     }
 
     public function payment_momo($amount, $gateway)
@@ -197,6 +187,39 @@ class AccountingController extends Controller
         $jsonResult = json_decode($result, true);
         return $jsonResult;
     }
+
+    public function paypalPayment($amount)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "application_context" => [
+                "return_url" => route('account.paypal.success'),
+                "cancel_url" => route('paypal.cancel'),
+            ],
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "AUD",
+                        "value" => $amount,
+                    ]
+                ]
+            ]
+        ]);
+
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $link) {
+                if ($link['rel'] == 'approve') {
+                    return redirect()->away($link['href']);
+                }
+            }
+        } else {
+            return redirect()->route('paypal.cancel');
+        }
+    }
+
     public function request_charge()
     {
         $secretKey = env('MOMO_SECRET_KEY');
@@ -380,6 +403,36 @@ class AccountingController extends Controller
         }
 
         return response()->json([], 422);
+    }
+
+    public function paypalSuccess(Request $request)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+
+        $response = $provider->capturePaymentOrder($request->token);
+
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            $userId = auth()->user()->id;
+            $accounting = new Accounting();
+            $accounting->user_id = $userId;
+            $accounting->amount = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
+            $accounting->system = 0;
+            $accounting->tax = 0;
+            $accounting->is_registration_bonus = 0;
+            $accounting->is_cashback = 0;
+            $accounting->type = Accounting::$addiction;
+            $accounting->type_account = Accounting::$asset;
+            $accounting->created_at = time();
+            $accounting->save();
+            if ($accounting->save()) {
+                return redirect(route('dashboard'))->with('msg', 'Nạp tiền thành công!');
+            } else {
+                return view('paypal.cancel');
+            }
+        }
+        return redirect()->route('paypal.cancel');
     }
 
 }

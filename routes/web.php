@@ -131,6 +131,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
             });
 
             Route::post('/direct-payment', 'WebinarController@directPayment')->name('course.directPayment');
+            Route::post('/direct-personalization', 'PersonalizationController@directPersonalization')->name('course.personalization');
         });
     });
 
@@ -211,6 +212,11 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);
         Route::get('/status', 'PaymentController@payStatus');
         Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
+    });
+
+    Route::group(['prefix' => 'personalization'], function () {
+        Route::post('/payment-request', 'PersonalizationController@paymentRequest')->name('personalization.request');
+        Route::get('/paypal/success', 'PersonalizationController@success')->name('personalization.success');
     });
 
     Route::group(['prefix' => 'subscribes'], function () {
@@ -391,6 +397,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     /* Forms */
     Route::get('/forms/{url}', 'FormsController@index');
     Route::post('/forms/{url}/store', 'FormsController@store');
+    Route::post('/personalization/store', 'PersonalizationController@store')->name('personalization.store');
 
 });
 

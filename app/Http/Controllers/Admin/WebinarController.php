@@ -9,6 +9,7 @@ use App\Http\Controllers\Panel\WebinarStatisticController;
 use App\Mail\SendNotifications;
 use App\Mixins\Cashback\CashbackRules;
 use App\Mixins\Installment\InstallmentPlans;
+use App\Models\Accounting;
 use App\Models\AdvertisingBanner;
 use App\Models\BundleWebinar;
 use App\Models\Category;
@@ -331,11 +332,16 @@ class WebinarController extends Controller
 
         $teachers = User::where('role_name', Role::$teacher)->get();
         $categories = Category::where('parent_id', null)->get();
+        $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->where('is_personalization', 1)
+            ->groupBy('user_id')
+            ->get();
 
         $data = [
             'pageTitle' => trans('admin/main.webinar_new_page_title'),
             'teachers' => $teachers,
-            'categories' => $categories
+            'categories' => $categories,
+            'users' => $users
         ];
 
         return view('admin.webinars.create', $data);
@@ -421,10 +427,12 @@ class WebinarController extends Controller
             'forum' => !empty($data['forum']),
             'enable_waitlist' => (!empty($data['enable_waitlist'])),
             'organization_price' => $data['organization_price'] ?? null,
+            'personalization_user' => $data['personalization_user'] ?? null,
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
             'status' => Webinar::$pending,
             'created_at' => time(),
             'updated_at' => time(),
+
         ]);
 
         if ($webinar) {
@@ -538,6 +546,11 @@ class WebinarController extends Controller
             ->where('creator_id', $webinar->teacher_id)
             ->get();
 
+        $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->where('is_personalization', 1)
+            ->groupBy('user_id')
+            ->get();
+
         $tags = $webinar->tags->pluck('title')->toArray();
 
         $data = [
@@ -566,7 +579,8 @@ class WebinarController extends Controller
             'school' => $school,
             'subject_list' => $subject_list,
             'major_list' => $major_list ?? null,
-            'subject' => $subject
+            'subject' => $subject,
+            'users' => $users
         ];
 
         return view('admin.webinars.create', $data);
@@ -743,6 +757,7 @@ class WebinarController extends Controller
             'category_id' => $data['category_id'],
             'points' => $data['points'] ?? null,
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
+            'personalization_user' => $data['personalization_user'] ?? null,
             'status' => $data['status'],
             'updated_at' => time(),
         ]);

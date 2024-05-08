@@ -16,7 +16,7 @@
     @endif
     <div class="">
         <textarea class="px-3 py-4 border rounded-lg w-full" style="border-color: #DFE3E8" type="text" placeholder=""
-            id={{ $data['name'] }} name={{ $data['name'] }} rows="5" cols="50">
+            id={{ $data['name'] }} name={{ $data['name'] }} rows="5" cols="50" {{ isset($data['required']) && $data['required'] ? 'required' : '' }}>
         </textarea>
     </div>
 </div>

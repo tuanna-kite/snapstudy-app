@@ -2,13 +2,6 @@
 
 @section('title', 'Payment Page')
 
-@php
-    if(empty($payment_type)){
-        $payment_type = 'checkout';
-    }
-
-@endphp
-
 @section('content')
     <x-layouts.home-layout>
         <div class="container mx-auto py-16 space-y-8">
@@ -18,15 +11,15 @@
                     {{ trans('payment.A checkout is a counter where you pay for things you are buying') }}
                 </p>
             </div>
-            @if ($payment_type == 'checkout')
                 <div class="flex flex-col-reverse items-start md:flex-row gap-6">
                     <div class="w-full md:w-2/3 min-h-[350px]">
                         <div class="p-6 rounded-3xl bg-white shadow-lg">
                             <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
                             <div>
-                                <form class="space-y-10" action='{{ route('payment.request') }}' method="post">
+                                <form class="space-y-10" action='{{ !empty($order_type) ? route('personalization.request') : route('payment.request') }}' method="post">
                                     @csrf
                                     <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                    <input type="hidden" name="amount" value="{{ !empty($amount) ? $amount : 0 }}">
                                     <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
                                         <label class="card relative bg-white rounded-2xl border-2 p-2 hover:shadow-lg">
                                             <div class="text-end">
@@ -53,23 +46,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
-                        <x-pages.payment.card-course :webinar="$webinar"/>
-                    </div>
+                    @if(empty($amount))
+                        <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
+                            <x-pages.payment.card-course :webinar="$webinar"/>
+                        </div>
+                    @endif
                 </div>
-            @else
-                <div class="flex flex-col items-start gap-6">
-                    <div class="w-full rounded-3xl space-x-8 p-6 bg-white font-bold text-lg">
-                        <span class=" text-text.light.primary">{{ trans('payment.Top up:') }}</span>
-                        <span class=" text-primary.main">
-                            {{ $amount }}
-                        </span>
-                    </div>
-                    <div class="w-full">
-                        <x-pages.payment.method :amount="$amount" :payment_type="$payment_type"/>
-                    </div>
-                </div>
-            @endif
         </div>
     </x-layouts.home-layout>
 @endsection

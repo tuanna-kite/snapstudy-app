@@ -415,26 +415,8 @@ class CartController extends Controller
                 ->get();
         }
 
-        $hasPhysicalProduct = $carts->where('productOrder.product.type', Product::$physical);
-        $checkAddressValidation = (count($hasPhysicalProduct) > 0);
-
-        if (empty(getStoreSettings('show_address_selection_in_cart')) or !empty(getStoreSettings('take_address_selection_optional'))) {
-            $checkAddressValidation = false;
-        }
-
-        $this->validate($request, [
-            'country_id' => Rule::requiredIf($checkAddressValidation),
-            'province_id' => Rule::requiredIf($checkAddressValidation),
-            'city_id' => Rule::requiredIf($checkAddressValidation),
-            'district_id' => Rule::requiredIf($checkAddressValidation),
-            'address' => Rule::requiredIf($checkAddressValidation),
-        ]);
-
-        $discountId = $request->input('discount_id');
-
         $paymentChannels = PaymentChannel::where('status', 'active')->get();
 
-        $discountCoupon = Discount::where('id', $discountId)->first();
 
         if (empty($discountCoupon) or $discountCoupon->checkValidDiscount() != 'ok') {
             $discountCoupon = null;
@@ -451,9 +433,6 @@ class CartController extends Controller
                 $calculate["total"] = $calculate["total"] - $totalCouponDiscount;
             }
 
-            if (count($hasPhysicalProduct) > 0) {
-                $this->updateProductOrders($request, $carts, $user);
-            }
 
             if (!empty($order) and $order->total_amount > 0) {
                 $razorpay = false;
@@ -810,5 +789,76 @@ class CartController extends Controller
         }
 
         return $amount;
+    }
+
+    public function checkout_v2($data, $carts = null, $webinar = null)
+    {
+        $user = auth()->user();
+
+        if (empty($carts)) {
+            $carts = Cart::where('creator_id', $user->id)
+                ->get();
+        }
+
+        $paymentChannels = PaymentChannel::where('status', 'active')->get();
+
+
+        if (empty($discountCoupon) or $discountCoupon->checkValidDiscount() != 'ok') {
+            $discountCoupon = null;
+        }
+
+        if (!empty($carts) and !$carts->isEmpty()) {
+            $calculate = $this->calculatePrice($carts, $user);
+
+            $order = $this->createOrderAndOrderItems($carts, $calculate, $user, $discountCoupon);
+
+            if (!empty($discountCoupon)) {
+                $totalCouponDiscount = $this->handleDiscountPrice($discountCoupon, $carts, $calculate['sub_total']);
+                $calculate['total_discount'] += $totalCouponDiscount;
+                $calculate["total"] = $calculate["total"] - $totalCouponDiscount;
+            }
+
+
+            if (!empty($order) and $order->total_amount > 0) {
+                $razorpay = false;
+                $isMultiCurrency = !empty(getFinancialCurrencySettings('multi_currency'));
+
+                foreach ($paymentChannels as $paymentChannel) {
+                    if ($paymentChannel->class_name == 'Razorpay' and (!$isMultiCurrency or in_array(currency(), $paymentChannel->currencies))) {
+                        $razorpay = true;
+                    }
+                }
+
+                $totalCashbackAmount = $this->getTotalCashbackAmount($carts, $user, $calculate["sub_total"]);
+
+                $data = [
+                    'pageTitle' => trans('public.checkout_page_title'),
+                    'paymentChannels' => $paymentChannels,
+                    'carts' => $carts,
+                    'subTotal' => $calculate["sub_total"],
+                    'totalDiscount' => $calculate["total_discount"],
+                    'tax' => $calculate["tax"],
+                    'taxPrice' => $calculate["tax_price"],
+                    'total' => $calculate["total"],
+                    'userGroup' => $user->userGroup ? $user->userGroup->group : null,
+                    'order' => $order,
+                    'count' => $carts->count(),
+                    'userCharge' => $user->getAccountingCharge(),
+                    'razorpay' => $razorpay,
+                    'totalCashbackAmount' => $totalCashbackAmount,
+                    'previousUrl' => url()->previous(),
+                    'webinar' => $webinar,
+                    'amount' => $data['amount'] ?? null,
+                    'order_type' => $data['order_type'] ?? null,
+                ];
+
+
+                return view('web_v2.pages.payment1', $data);
+            } else {
+                return $this->handlePaymentOrderWithZeroTotalAmount($order);
+            }
+        }
+
+        return redirect('/cart');
     }
 }

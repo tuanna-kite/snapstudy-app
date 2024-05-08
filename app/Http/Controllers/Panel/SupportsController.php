@@ -129,9 +129,12 @@ class SupportsController extends Controller
     {
         $user = auth()->user();
         $searchTicket = $request->searchTicket;
+        $userWebinarsIds = $user->webinars->pluck('id')->toArray();
 
-        $query = Support::whereNotNull('department_id')
-            ->where('user_id', $user->id);
+        $query = Support::where(function ($query) use ($user, $userWebinarsIds) {
+                $query->where('user_id', $user->id)
+                    ->orWhereIn('webinar_id', $userWebinarsIds);
+            });;
 
         $supportsCount = deepClone($query)->count();
         $openSupportsCount = deepClone($query)->where('status', 'open')->count();
@@ -145,6 +148,11 @@ class SupportsController extends Controller
             ->with([
                 'user' => function ($query) {
                     $query->select('id', 'full_name', 'avatar', 'avatar_settings', 'role_name');
+                },
+                'webinar' => function ($query) {
+                    $query->with(['teacher' => function ($query) {
+                        $query->select('id', 'full_name', 'avatar');
+                    }]);
                 },
                 'department',
                 'conversations' => function ($query) {

@@ -207,7 +207,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="input-label">{{trans('admin/main.campus')}}</label>
-                                    <select name="campus_id" data-plugin-selectTwo class="form-control populate" id="major">
+                                    <select name="campus_id" data-plugin-selectTwo class="form-control populate" id="major" disabled>
                                     </select>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="input-label">{{trans('admin/main.subject2')}}</label>
-                                    <select name="subject_id" data-plugin-selectTwo class="form-control populate" id="subject">
+                                    <select name="subject_id" data-plugin-selectTwo class="form-control populate" id="subject" disabled>
                                         <option value="">{{trans('admin/main.subject2')}}</option>
                                     </select>
                                 </div>
@@ -460,6 +460,8 @@
     <script>
         $('#school').change(function() {
             var schoolId = $(this).val();
+            $('#major').removeAttr('disabled');
+            $('#major').empty();
             if (schoolId) {
                 let html = '<option value="" id="campus_option">{{trans('admin/main.campus')}}</option>';
                 $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
@@ -481,6 +483,8 @@
 
         $('#major').change(function() {
             var majorID = $(this).val();
+            $('#subject').removeAttr('disabled');
+            $('#subject').empty();
             if (majorID) {
                 let html_major = '<option value="">{{trans('admin/main.subject2')}}</option>';
                 $.get(adminPanelPrefix + '/categories/get-subject/' + majorID, function (result) {

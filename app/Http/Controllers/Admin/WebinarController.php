@@ -128,7 +128,7 @@ class WebinarController extends Controller
             'totalSales' => !empty($totalSales) ? $totalSales->sales_count : 0,
             'categories' => $categories,
             'inProgressWebinars' => $inProgressWebinars ?? 0,
-            'classesType' => $type,
+            'classesType' => 'webinar',
         ];
 
         $teacher_ids = $request->get('teacher_ids', null);
@@ -148,7 +148,7 @@ class WebinarController extends Controller
         $teacher_ids = $request->get('teacher_ids', null);
         $school_id = $request->get('school_id', null);
         $campus_id = $request->get('campus_id', null);
-        $subject_id = $request->get('subject', null);
+        $subject_id = $request->get('subject_id', null);
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
 

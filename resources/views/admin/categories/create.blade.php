@@ -160,7 +160,14 @@
                                                             <input type="text" name="sub_categories[{{ $subCategory->id }}][description]"
                                                                    class="form-control w-auto flex-grow-1"
                                                                    value="{{ $subCategory->description }}"
-                                                                   placeholder="{{ trans('admin/main.description') }}"/>
+                                                                   placeholder="{{ trans('admin/main.title_majors') }}"/>
+                                                        </div>
+
+                                                        <div class="input-group w-100 mt-1">
+                                                            <input type="text" name="sub_categories[{{ $subCategory->id }}][campus_code]"
+                                                                   class="form-control w-auto flex-grow-1"
+                                                                   value="{{ $subCategory->campus_code }}"
+                                                                   placeholder="{{ trans('admin/main.code') }}"/>
                                                         </div>
 
                                                     </div>
@@ -203,6 +210,13 @@
                                                                            value="{{ $outline->description }}"
                                                                            placeholder="{{ trans('admin/main.description_subject') }}"/>
                                                                 </div>
+
+                                                                <div class="input-group mt-1">
+                                                                    <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][subject_code]"
+                                                                           class="form-control w-auto flex-grow-1"
+                                                                           value="{{ $outline->subject_code }}"
+                                                                           placeholder="{{ trans('admin/main.code') }}"/>
+                                                                </div>
                                                             </div>
                                                         </li>
                                                     @endforeach
@@ -230,6 +244,12 @@
                                                                 <input type="text" name="outline_majorID[record][description]"
                                                                        class="form-control w-auto flex-grow-1"
                                                                        placeholder="{{ trans('admin/main.description_subject') }}"/>
+                                                            </div>
+
+                                                            <div class="input-group mt-1">
+                                                                <input type="text" name="outline_majorID[record][subject_code]"
+                                                                       class="form-control w-auto flex-grow-1"
+                                                                       placeholder="{{ trans('admin/main.code') }}"/>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -266,6 +286,12 @@
                                         <input type="text" name="sub_categories[record][description]"
                                                class="form-control w-auto flex-grow-1"
                                                placeholder="{{ trans('admin/main.title_majors') }}"/>
+                                    </div>
+
+                                    <div class="input-group mt-1">
+                                        <input type="text" name="sub_categories[record][campus_code]"
+                                               class="form-control w-auto flex-grow-1"
+                                               placeholder="{{ trans('admin/main.code') }}"/>
                                     </div>
                                 </div>
                             </li>

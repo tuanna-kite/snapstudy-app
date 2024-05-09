@@ -172,29 +172,6 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.category')}}</label>
-                                    <select name="category_id" data-plugin-selectTwo class="form-control populate">
-                                        <option value="">{{trans('admin/main.all_categories')}}</option>
-
-                                        @foreach($categories as $category)
-                                            @if(!empty($category->subCategories) and count($category->subCategories))
-                                                <optgroup label="{{  $category->title }}">
-                                                    @foreach($category->subCategories as $subCategory)
-                                                        <option value="{{ $subCategory->id }}" @if(request()->get('category_id') == $subCategory->id) selected="selected" @endif>{{ $subCategory->title }}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            @else
-                                                <option value="{{ $category->id }}" @if(request()->get('category_id') == $category->id) selected="selected" @endif>{{ $category->title }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="input-label">{{trans('admin/main.status')}}</label>
@@ -214,6 +191,41 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="input-label">{{trans('admin/main.school')}}</label>
+                                    <select name="school_id" data-plugin-selectTwo class="form-control populate" id="school">
+                                        <option value="" id="school_option">{{trans('admin/main.school')}}</option>
+
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" @if(request()->get('school_id') == $category->id) selected="selected" @endif>{{ $category->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="input-label">{{trans('admin/main.campus')}}</label>
+                                    <select name="campus_id" data-plugin-selectTwo class="form-control populate" id="major">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="input-label">{{trans('admin/main.subject2')}}</label>
+                                    <select name="subject_id" data-plugin-selectTwo class="form-control populate" id="subject">
+                                        <option value="">{{trans('admin/main.subject2')}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group mt-1">
@@ -445,5 +457,48 @@
 @endsection
 
 @push('scripts_bottom')
+    <script>
+        $('#school').change(function() {
+            var schoolId = $(this).val();
+            if (schoolId) {
+                let html = '<option value="" id="campus_option">{{trans('admin/main.campus')}}</option>';
+                $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
+                    if (result && result.code === 200) {
+                        console.log(result)
+
+                        if (result.majors && result.majors.length) {
+                            for (let major of result.majors) {
+                                html += '<option value="' + major.id + '">' + major.title + '</option>';
+                            }
+                        }
+                        $('#major').append(html);
+                    }
+                })
+            } else {
+                $('#major').empty();
+            }
+        });
+
+        $('#major').change(function() {
+            var majorID = $(this).val();
+            if (majorID) {
+                let html_major = '<option value="">{{trans('admin/main.subject2')}}</option>';
+                $.get(adminPanelPrefix + '/categories/get-subject/' + majorID, function (result) {
+                    if (result && result.code === 200) {
+                        const subject = $('#subject');
+
+                        if (result.subjects && result.subjects.length) {
+                            for (let subject of result.subjects) {
+                                html_major += '<option value="' + subject.id + '">' + subject.title + '</option>';
+                            }
+                        }
+                        $('#subject').append(html_major);
+                    }
+                })
+            } else {
+                $('#subject').empty();
+            }
+        });
+    </script>
 
 @endpush

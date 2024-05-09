@@ -1817,6 +1817,8 @@ $months = [
 
 function fromAndToDateFilter($from, $to, $query, $column = 'created_at', $strToTime = true)
 {
+    $to = !empty($to) ? date("Y-m-d", strtotime($to . " +1 day")) : '';
+
     if (!empty($from) and !empty($to)) {
         $from = $strToTime ? strtotime($from) : $from;
         $to = $strToTime ? strtotime($to) : $to;

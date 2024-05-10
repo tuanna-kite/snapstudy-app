@@ -198,7 +198,7 @@
                                 @php
                                     $countSales = $sales->total();
                                 @endphp
-                                <strong> {{__('home.Total results') }} : {{$countSales}}</strong>   
+                                <strong> {{__('home.Total results') }} : {{$countSales}}</strong>
                              </div>
                         </div>
 
@@ -208,6 +208,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th class="text-left">{{ trans('admin/main.student') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.email') }}</th>
                                         <th class="text-left">{{ trans('admin/main.instructor') }}</th>
                                         <th>{{ trans('admin/main.paid_amount') }}</th>
                                         <th>{{ trans('admin/main.discount') }}</th>
@@ -228,7 +229,10 @@
                                             <td class="text-left">
                                                 {{ !empty($sale->buyer) ? $sale->buyer->full_name : '' }}
                                                 <div class="text-primary text-small font-600-bold">ID : {{  !empty($sale->buyer) ? $sale->buyer->id : '' }}</div>
-                                                <p style="font-size: small">{{$sale->buyer->email}}</p>
+                                            </td>
+
+                                            <td class="text-left">
+                                                {{$sale->buyer->email}}
                                             </td>
 
                                             <td class="text-left">

@@ -348,7 +348,7 @@ class PersonalizationController extends Controller
                 return view('web.default.pages.failCheckout');
             }
         }
-        return view('web.default.pages.failCheckout');
+        return redirect()->route('support.tickets');
     }
 
     public function setPaymentAccounting($order, $type = null, $requestId = null)

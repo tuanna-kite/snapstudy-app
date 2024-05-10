@@ -44,14 +44,14 @@
                                                 </div>
                                             </div>
                                         </label>
-                                    </div>
-                                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
                                         <label class="card relative bg-white rounded-2xl border-2 p-2 hover:shadow-lg">
                                             <div class="text-end">
                                                 <input class="radio checked:accent-secondary.main" name="gateway"
                                                        value="credit" type="radio">
                                             </div>
                                             <div class="flex flex-col items-center gap-3 pb-6">
+                                                <img src="{{ asset('img/wallet.jpg') }}"
+                                                     class="" style="width: 30%"/>
                                                 <div class="text-center">
                                                     <p class="font-semibold text-base">
                                                         Pay with your wallet ({{ $user->getAccountingCharge() }} SPoint)
@@ -60,6 +60,7 @@
                                             </div>
                                         </label>
                                     </div>
+
                                     <button type="submit" class="rounded-lg px-6 py-1.5 bg-primary.main">
                                         <span class="font-medium text-sm text-white">
                                             {{ trans('payment.Start Payment') }}

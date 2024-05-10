@@ -281,7 +281,7 @@ class PersonalizationController extends Controller
             }
             return redirect('/payments/status');
         }
-        return redirect()->route('paypal.cancel');
+        return redirect()->route('support.tickets');
     }
 
     public function setPaymentAccounting($order, $type = null, $requestId = null)

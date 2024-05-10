@@ -12,7 +12,7 @@
             'name' => 'syllabus-support',
             'placeholder' => '',
             // TODO: Pass assignment name to key below
-            'value' => 'Assignment Name',
+            'value' => $course->title,
             'disabled' => true,
         ],
         [

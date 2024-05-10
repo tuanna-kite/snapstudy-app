@@ -6,7 +6,6 @@
 if(empty($payment_type)){
     $payment_type = 'checkout';
 }
-
 @endphp
 
 @section('content')

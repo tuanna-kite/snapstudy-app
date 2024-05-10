@@ -1846,8 +1846,6 @@
             let html = '';
             $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
                 if (result && result.code === 200) {
-                    const selectBox = $('#major');
-                    // let html = '<option value="">' + selectCityLang + '</option>';
                     console.log(result)
 
                     if (result.majors && result.majors.length) {
@@ -1855,7 +1853,7 @@
                             html += '<option value="' + major.id + '">' + major.title + '</option>';
                         }
                     }
-                    selectBox.append(html);
+                    $('#major').append(html);
                 }
             })
         } else {

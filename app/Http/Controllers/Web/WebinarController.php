@@ -903,7 +903,7 @@ class WebinarController extends Controller
                     'amount' => $amount,
                     'payment_type' => 'charge'
                 ];
-                return view('web_v2.pages.payment', $data);
+                return view('web_v2.pages.payment1', $data);
             }
         }
 

@@ -223,6 +223,7 @@ class CategoryController extends Controller
                             'icon' => $subCategory['icon'] ?? null,
                             'slug' => $slug,
                             'level' => 2,
+                            'campus_code' => $subCategory['campus_code'] ?? null,
                         ]);
 
                         CategoryTranslation::updateOrCreate([
@@ -297,6 +298,7 @@ class CategoryController extends Controller
                             'slug' => Category::makeSlug($subject['title']),
                             'order' => $order,
                             'level' => 3,
+                            'subject_code' => $subject['subject_code'] ?? null,
                         ];
                         $new = Category::create($data);
 

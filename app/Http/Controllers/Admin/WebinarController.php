@@ -71,7 +71,6 @@ class WebinarController extends Controller
             ->first();
 
         $categories = Category::where('parent_id', null)
-            ->with('subCategories')
             ->get();
 
         $inProgressWebinars = $this->getInProgressWebinarsCount();
@@ -129,7 +128,7 @@ class WebinarController extends Controller
             'totalSales' => !empty($totalSales) ? $totalSales->sales_count : 0,
             'categories' => $categories,
             'inProgressWebinars' => $inProgressWebinars ?? 0,
-            'classesType' => $type,
+            'classesType' => 'webinar',
         ];
 
         $teacher_ids = $request->get('teacher_ids', null);
@@ -147,7 +146,9 @@ class WebinarController extends Controller
         $to = $request->get('to', null);
         $title = $request->get('title', null);
         $teacher_ids = $request->get('teacher_ids', null);
-        $category_id = $request->get('category_id', null);
+        $school_id = $request->get('school_id', null);
+        $campus_id = $request->get('campus_id', null);
+        $subject_id = $request->get('subject_id', null);
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
 
@@ -166,8 +167,22 @@ class WebinarController extends Controller
             $query->whereIn('teacher_id', $teacher_ids);
         }
 
-        if (!empty($category_id)) {
-            $query->where('category_id', $category_id);
+        if (!empty($school_id) && empty($campus_id) && empty($subject_id)) {
+            $campus_list = Category::where('parent_id', $school_id)
+                ->pluck('id');
+            $subject_list = Category::whereIn('parent_id', $campus_list)
+                ->pluck('id');
+            $query->whereIn('category_id', $subject_list);
+        }
+
+        if (!empty($campus_id) && empty($subject_id)) {
+            $subject_list = Category::where('parent_id', $campus_id)
+                ->pluck('id');
+            $query->whereIn('category_id', $subject_list);
+        }
+
+        if (!empty($subject_id)) {
+            $query->where('category_id', $subject_id);
         }
 
         if (!empty($status)) {

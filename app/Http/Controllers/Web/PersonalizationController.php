@@ -122,7 +122,42 @@ class PersonalizationController extends Controller
             ->where('user_id', $user->id)
             ->first();
 
-        if ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
+        if ($gateway === 'credit') {
+            if ($user->getAccountingCharge() < $order->total_amount) {
+                $order->update(['status' => Order::$fail]);
+                session()->put($this->order_session_key, $order->id);
+                return redirect('/payments/status');
+            }
+
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+
+            $this->setPaymentAccounting_v2($order, 'credit', $amount);
+
+            $order->update([
+                'status' => Order::$paid
+            ]);
+
+            $getUser = User::find($userId);
+            $score = RewardAccounting::where('user_id', $userId)->sum('score');
+            $groups = Group::where('min_score', '<=', $score)
+                ->where('max_score', '>=', $score)
+                ->get();
+            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+
+            if ($groupUser != null) {
+                $groupUser->group_id = $groups->first()->id;
+                $groupUser->save();
+            } else {
+                GroupUser::create([
+                    'group_id' => $groups->first()->id,
+                    'user_id' => $getUser->id,
+                ]);
+            }
+
+            return redirect('/payments/status');
+        } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
             $respone = $this->payment($orderId, $gateway, $order->total_amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->to($respone['payUrl']);
@@ -345,6 +380,77 @@ class PersonalizationController extends Controller
                     $this->updateProductOrder($sale, $orderItem);
                 }
             }
+        }
+
+        Cart::emptyCart($order->user_id);
+    }
+
+
+    public function setPaymentAccounting_v2($order, $type = null, $amount = null)
+    {
+        $cashbackAccounting = new CashbackAccounting();
+
+        if ($order->is_charge_account) {
+            Accounting::charge($order);
+
+        } else {
+            foreach ($order->orderItems as $orderItem) {
+                $sale = Sale::createSales($orderItem, $order->payment_method);
+
+                if (!empty($orderItem->reserve_meeting_id)) {
+                    $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
+                    $reserveMeeting->update([
+                        'sale_id' => $sale->id,
+                        'reserved_at' => time()
+                    ]);
+
+                    $reserver = $reserveMeeting->user;
+
+                    if ($reserver) {
+                        $this->handleMeetingReserveReward($reserver);
+                    }
+                }
+
+                if (!empty($orderItem->gift_id)) {
+                    $gift = $orderItem->gift;
+
+                    $gift->update([
+                        'status' => 'active'
+                    ]);
+
+                    $gift->sendNotificationsWhenActivated($orderItem->total_amount);
+                }
+
+                if (!empty($orderItem->subscribe_id)) {
+                    Accounting::createAccountingForSubscribe($orderItem, $type);
+                } elseif (!empty($orderItem->promotion_id)) {
+                    Accounting::createAccountingForPromotion($orderItem, $type);
+                } elseif (!empty($orderItem->registration_package_id)) {
+                    Accounting::createAccountingForRegistrationPackage($orderItem, $type);
+
+                    if (!empty($orderItem->become_instructor_id)) {
+                        BecomeInstructor::where('id', $orderItem->become_instructor_id)
+                            ->update([
+                                'package_id' => $orderItem->registration_package_id
+                            ]);
+                    }
+                } elseif (!empty($orderItem->installment_payment_id)) {
+                    Accounting::createAccountingForInstallmentPayment($orderItem, $type);
+
+                    $this->updateInstallmentOrder($orderItem, $sale);
+                } else {
+                    // webinar and meeting and product and bundle
+
+                    Accounting::createAccounting($orderItem, $type, $amount);
+                    TicketUser::useTicket($orderItem);
+
+                    if (!empty($orderItem->product_id)) {
+                        $this->updateProductOrder($sale, $orderItem);
+                    }
+                }
+            }
+            // Set Cashback Accounting For All Order Items
+            $cashbackAccounting->setAccountingForOrderItems($order->orderItems);
         }
 
         Cart::emptyCart($order->user_id);

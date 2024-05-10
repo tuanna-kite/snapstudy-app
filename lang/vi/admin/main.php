@@ -1539,6 +1539,9 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'outline' => 'Outline',
 'exam' => 'Exam',
 'question' => 'Question',
+'school' => 'School',
+'campus' => 'Campus',
+'subject' => 'Subject',
 
 ];
 

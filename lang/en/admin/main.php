@@ -1538,5 +1538,7 @@ By enabling this feature, newly registered users will require approval using thi
 'outline' => 'Outline',
 'exam' => 'Exam',
 'question' => 'Question',
-
+'school' => 'School',
+'campus' => 'Campus',
+'subject2' => 'Subject',
 ];

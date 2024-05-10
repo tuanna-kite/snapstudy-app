@@ -30,7 +30,7 @@
                     {{ trans('dashboard.Account Balance') }}
                 </h2>
                 <p class="font-bold text-3xl text-secondary.main">
-                    {{ $accountCharge ?? 0 }} AUD
+                    {{ handlePrice($accountCharge) }}
                 </p>
             </div>
 

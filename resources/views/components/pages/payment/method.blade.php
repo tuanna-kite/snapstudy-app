@@ -1,5 +1,6 @@
 @props(['payment_type', 'order', 'amount'])
 @php
+$user = auth()->user();
     $methods = [
         [
             'name' => 'gateway',
@@ -23,16 +24,17 @@
             'value' => 'captureWallet',
         ],
     ];
-//$methods = [
-//        [
-//            'name' => 'gateway',
-//            'img' => asset('img/visa.png'),
-//            'title' => trans('payment.Pay with card'),
-//            'sub' => 'Visa, Master, JCB...',
-//            'value' => 'paypal',
-//        ]
-//    ];
 
+    $spoint = [
+            'name' => 'gateway',
+            'img' => asset('img/wallet.jpg'),
+            'title' => 'Pay with your wallet',
+            'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
+            'value' => 'credit',
+        ];
+    if ($payment_type == 'checkout'){
+        array_push($methods, $spoint);
+    }
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">

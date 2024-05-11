@@ -246,7 +246,9 @@ class ClassesController extends Controller
                     ->orWhereTranslationLike('webinar_id', "%$search%");
             });
         }
-        $data = $outlineQuery->where('webinars.type', $type)->paginate(12);
+        $data = $outlineQuery->where('webinars.type', $type)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
         return $data;
     }
 
@@ -259,14 +261,6 @@ class ClassesController extends Controller
         $outlines = $this->outlineQuery(Webinar::$webinar, $subject_id, $search);
         $exams = $this->outlineQuery(Webinar::$course, $subject_id, $search);
         $questions = $this->outlineQuery(Webinar::$textLesson, $subject_id, $search);
-
-
-        $subjectItem = Category::where('slug', $subject)->first();
-        if ($subjectItem != null) {
-            $subject = $subjectItem->title;
-        } else {
-            $subject = null;
-        }
         $data = [
             'outlines' => $outlines,
             'exams' => $exams,

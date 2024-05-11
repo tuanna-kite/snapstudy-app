@@ -127,8 +127,7 @@
                                     <h4>{{trans('admin/main.total_incomes')}}</h4>
                                 </div>
                                 <div class="card-body">
-                                  {{ $totalSales['amount'] }} VND
-
+                                    {{ handlePrice($totalSales['amount']) }}
                                 </div>
                             </div>
                         </div>

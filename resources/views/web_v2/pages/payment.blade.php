@@ -26,12 +26,6 @@ if(empty($payment_type)){
                         <x-pages.payment.card-course :webinar="$webinar" />
                     </div>
                 </div>
-            @elseif ($payment_type == 'personalization')
-                <div class="flex flex-col-reverse items-start md:flex-row gap-6">
-                    <div class="w-full md:w-2/3 min-h-[350px]">
-                        <x-pages.payment.method :order="$order" :payment_type="$payment_type" :amount="$amount"/>
-                    </div>
-                </div>
             @else
                 <div class="flex flex-col items-start gap-6">
                     <div class="w-full rounded-3xl space-x-8 p-6 bg-white font-bold text-lg">

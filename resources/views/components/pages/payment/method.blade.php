@@ -32,7 +32,7 @@ $user = auth()->user();
             'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
             'value' => 'credit',
         ];
-    if ($payment_type == 'checkout' || $payment_type == 'personalization'){
+    if ($payment_type == 'checkout'){
         array_push($methods, $spoint);
     }
 @endphp
@@ -41,12 +41,9 @@ $user = auth()->user();
     <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
     <div>
         <form class="space-y-10"
-            action='{{ $payment_type == 'checkout' ? route('payment.request') : ($payment_type == 'personalization' ? route('personalization.request') : route('charge.pay')) }}' method="post">
+            action='{{ $payment_type == 'checkout' ? route('payment.request') : route('charge.pay') }}' method="post">
             @csrf
             @if ($payment_type == 'checkout')
-                <input type="hidden" name="order_id" value="{{ $order->id }}">
-            @elseif($payment_type == 'personalization')
-                <input type="hidden" name="amount" value="{{ $amount }}">
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
             @else
                 <input type="hidden" name="amount" value="{{ $amount }}">

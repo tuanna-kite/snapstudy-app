@@ -1118,7 +1118,6 @@ class WebinarController extends Controller
                     ]);
                 }
             ])
-            ->groupBy('webinar_id')
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 

@@ -115,7 +115,7 @@ class PersonalizationController extends Controller
         $user = auth()->user();
         $userId = $user->id;
         $gateway = $request->input('gateway');
-        $amount = $request->input('amount', 999000);
+        $amount = $request->input('amount', 10);
         $orderId = $request->input('order_id')."-".time();
 
         $order = Order::where('id', $orderId)
@@ -123,9 +123,10 @@ class PersonalizationController extends Controller
             ->first();
 
         if ($gateway === 'credit') {
-            if ($user->getAccountingCharge() < $amount) {
+            if ($user->getAccountingCharge() < $order->total_amount) {
                 $order->update(['status' => Order::$fail]);
-                return view('web.default.pages.failCheckout');
+                session()->put($this->order_session_key, $order->id);
+                return redirect('/payments/status');
             }
 
             $order->update([
@@ -154,14 +155,10 @@ class PersonalizationController extends Controller
                     'user_id' => $getUser->id,
                 ]);
             }
-            $orderItem = OrderItem::where('order_id', $order->id)->first();
-            if($orderItem){
-                $webinar = Webinar::find($orderItem->webinar_id);
-                return redirect(route('course', ['slug' => $webinar->slug]));
-            }
+
             return redirect('/payments/status');
         } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
-            $respone = $this->payment($orderId, $gateway, $amount);
+            $respone = $this->payment($orderId, $gateway, $order->total_amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->to($respone['payUrl']);
             } else {
@@ -218,7 +215,7 @@ class PersonalizationController extends Controller
         $orderInfo = "Thanh toán qua MoMo";
         $amount = intval($total_amount) < 1000 ? 1000 : intval($total_amount);
         $orderId = $orderId;
-        $redirectUrl = route('personalization.success', ['gateway' => $gateway, 'orderId' => $orderId]);
+        $redirectUrl = route('personalization.checkout', ['gateway' => $gateway, 'orderId' => $orderId]);
         $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
         $extraData = "";
         $requestId = "HL_".time();
@@ -309,11 +306,8 @@ class PersonalizationController extends Controller
                             'user_id' => $getUser->id,
                         ]);
                     }
-                    $orderItem = OrderItem::where('order_id', $order->id)->first();
-                    if($orderItem){
-                        $webinar = Webinar::find($orderItem->webinar_id);
-                        return redirect(route('course', ['slug' => $webinar->slug]));
-                    }
+
+                    session()->put($this->order_session_key, $order->id);
                     return redirect('/payments/status');
                 }
 
@@ -362,7 +356,7 @@ class PersonalizationController extends Controller
         } else {
             foreach ($order->orderItems as $orderItem) {
                 $sale = Sale::createSales($orderItem, $order->payment_method);
-                Accounting::create([
+                $acc = Accounting::create([
                     'user_id' => $orderItem->user_id,
                     'order_item_id' => $orderItem->id,
                     'amount' => 60,

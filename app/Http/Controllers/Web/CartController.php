@@ -849,6 +849,7 @@ class CartController extends Controller
                     'webinar' => $webinar,
                     'amount' => $data['amount'] ?? null,
                     'order_type' => $data['order_type'] ?? null,
+                    'payment_type' => 'personalization'
                 ];
 
 

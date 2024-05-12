@@ -19,6 +19,7 @@ use App\Models\Reward;
 use App\Models\RewardAccounting;
 use App\Models\Sale;
 use App\Models\TicketUser;
+use App\Models\Webinar;
 use App\PaymentChannels\ChannelManager;
 use App\User;
 use Illuminate\Support\Facades\Log;
@@ -57,7 +58,7 @@ class PaymentController extends Controller
             if ($user->getAccountingCharge() < $order->total_amount) {
                 $order->update(['status' => Order::$fail]);
                 session()->put($this->order_session_key, $order->id);
-                return redirect('/payments/status');
+                return view('web.default.pages.failCheckout');
             }
 
             $order->update([
@@ -88,6 +89,11 @@ class PaymentController extends Controller
             }
 
             session()->put($this->order_session_key, $order->id);
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if($orderItem){
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect(route('course', ['slug' => $webinar->slug]));
+            }
             return redirect('/payments/status');
         } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
             $respone = $this->payment($orderId, $gateway, $order->total_amount);
@@ -274,6 +280,11 @@ class PaymentController extends Controller
                     }
 
                     session()->put($this->order_session_key, $order->id);
+                    $orderItem = OrderItem::where('order_id', $order->id)->first();
+                    if($orderItem){
+                        $webinar = Webinar::find($orderItem->webinar_id);
+                        return redirect(route('course', ['slug' => $webinar->slug]));
+                    }
                     return redirect('/payments/status');
                 }
 

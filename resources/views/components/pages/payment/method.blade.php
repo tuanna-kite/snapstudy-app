@@ -1,49 +1,52 @@
 @props(['payment_type', 'order', 'amount'])
 @php
-$user = auth()->user();
-    $methods = [
-        [
-            'name' => 'gateway',
-            'img' => asset('img/visa.png'),
-            'title' => trans('payment.Pay with card'),
-            'sub' => 'Visa, Master, JCB...',
-            'value' => 'payWithCC',
-        ],
-        [
-            'name' => 'gateway',
-            'img' => asset('img/atm.png'),
-            'title' => trans('payment.Pay with ATM'),
-            'sub' => trans('payment.by Momo'),
-            'value' => 'payWithATM',
-        ],
-        [
-            'name' => 'gateway',
-            'img' => asset('img/momo.png'),
-            'title' => trans('payment.Pay with MoMo'),
-            'sub' => trans('payment.MoMo Wallet'),
-            'value' => 'captureWallet',
-        ],
-    ];
-
-    $spoint = [
-            'name' => 'gateway',
-            'img' => asset('img/wallet.jpg'),
-            'title' => 'Pay with your wallet',
-            'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
-            'value' => 'credit',
+    $user = auth()->user();
+        $methods = [
+            [
+                'name' => 'gateway',
+                'img' => asset('img/visa.png'),
+                'title' => trans('payment.Pay with card'),
+                'sub' => 'Visa, Master, JCB...',
+                'value' => 'payWithCC',
+            ],
+            [
+                'name' => 'gateway',
+                'img' => asset('img/atm.png'),
+                'title' => trans('payment.Pay with ATM'),
+                'sub' => trans('payment.by Momo'),
+                'value' => 'payWithATM',
+            ],
+            [
+                'name' => 'gateway',
+                'img' => asset('img/momo.png'),
+                'title' => trans('payment.Pay with MoMo'),
+                'sub' => trans('payment.MoMo Wallet'),
+                'value' => 'captureWallet',
+            ],
         ];
-    if ($payment_type == 'checkout'){
-        array_push($methods, $spoint);
-    }
+
+        $spoint = [
+                'name' => 'gateway',
+                'img' => asset('img/wallet.jpg'),
+                'title' => 'Pay with your wallet',
+                'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
+                'value' => 'credit',
+            ];
+        if ($payment_type == 'checkout' || $payment_type == 'personalization'){
+            array_push($methods, $spoint);
+        }
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">
     <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
     <div>
         <form class="space-y-10"
-            action='{{ $payment_type == 'checkout' ? route('payment.request') : route('charge.pay') }}' method="post">
+              action='{{ $payment_type == 'checkout' ? route('payment.request') : ($payment_type == 'personalization' ? route('personalization.request') : route('charge.pay')) }}' method="post">
             @csrf
             @if ($payment_type == 'checkout')
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
+            @elseif($payment_type == 'personalization')
+                <input type="hidden" name="amount" value="{{ $amount }}">
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
             @else
                 <input type="hidden" name="amount" value="{{ $amount }}">

@@ -58,7 +58,7 @@ class PaymentController extends Controller
             if ($user->getAccountingCharge() < $order->total_amount) {
                 $order->update(['status' => Order::$fail]);
                 session()->put($this->order_session_key, $order->id);
-                return view('web.default.pages.failCheckout');
+                return redirect('/payments/status');
             }
 
             $order->update([

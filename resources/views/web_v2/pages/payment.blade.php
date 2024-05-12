@@ -3,9 +3,9 @@
 @section('title', 'Payment Page')
 
 @php
-if(empty($payment_type)){
-    $payment_type = 'checkout';
-}
+    if(empty($payment_type)){
+        $payment_type = 'checkout';
+    }
 @endphp
 
 @section('content')
@@ -24,6 +24,12 @@ if(empty($payment_type)){
                     </div>
                     <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
                         <x-pages.payment.card-course :webinar="$webinar" />
+                    </div>
+                </div>
+            @elseif ($payment_type == 'personalization')
+                <div class="flex flex-col-reverse items-start md:flex-row gap-6">
+                    <div class="w-full md:w-2/3 min-h-[350px]">
+                        <x-pages.payment.method :order="$order" :payment_type="$payment_type" :amount="$amount"/>
                     </div>
                 </div>
             @else

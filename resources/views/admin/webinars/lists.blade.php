@@ -310,9 +310,9 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <span class="text-primary mt-0 mb-1 font-weight-bold">
+                                                <a href="{{ route('webinar.monitoring', ['id' => $webinar->id]) }}" class="text-primary mt-0 mb-1 font-weight-bold">
                                                     {{ $webinar->sales->count() }}
-                                                </span>
+                                                </a>
 
                                                 @if(!empty($webinar->capacity))
                                                     <div class="text-small font-600-bold">{{trans('admin/main.capacity')}} : {{ $webinar->getWebinarCapacity() }}</div>
@@ -351,7 +351,7 @@
                                                         <span class="text-dark">{{ trans('admin/main.is_draft') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$pending)
-                                                    <span class="text-danger">{{ trans('admin/main.stop') }}</span>
+                                                        <span class="text-danger">{{ trans('admin/main.stop') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$inactive)
                                                         <span class="text-danger">{{ trans('public.rejected') }}</span>

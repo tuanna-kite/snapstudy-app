@@ -278,7 +278,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/order-items', 'WebinarController@orderItems');
             Route::post('/{id}/getContentItemByLocale', 'WebinarController@getContentItemByLocale');
 
-            Route::get('/{id}/statistics', 'WebinarStatisticController@index');
+            Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');
 
             Route::group(['prefix' => 'features'], function () {
                 Route::get('/', 'FeatureWebinarsControllers@index');
@@ -740,8 +740,8 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
         });
 
         // Route::group(['prefix' => 'agora_history'], function () {
-            // Route::get('/', 'AgoraHistoryController@index');
-            // Route::get('/excel', 'AgoraHistoryController@exportExcel');
+        // Route::get('/', 'AgoraHistoryController@index');
+        // Route::get('/excel', 'AgoraHistoryController@exportExcel');
         // });
 
         Route::group(['prefix' => 'regions'], function () {

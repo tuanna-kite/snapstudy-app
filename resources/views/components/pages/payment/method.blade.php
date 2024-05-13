@@ -2,20 +2,20 @@
 @php
     $user = auth()->user();
         $methods = [
-            [
-                'name' => 'gateway',
-                'img' => asset('img/visa.png'),
-                'title' => trans('payment.Pay with card'),
-                'sub' => 'Visa, Master, JCB...',
-                'value' => 'payWithCC',
-            ],
-            [
-                'name' => 'gateway',
-                'img' => asset('img/atm.png'),
-                'title' => trans('payment.Pay with ATM'),
-                'sub' => trans('payment.by Momo'),
-                'value' => 'payWithATM',
-            ],
+//            [
+//                'name' => 'gateway',
+//                'img' => asset('img/visa.png'),
+//                'title' => trans('payment.Pay with card'),
+//                'sub' => 'Visa, Master, JCB...',
+//                'value' => 'payWithCC',
+//            ],
+//            [
+//                'name' => 'gateway',
+//                'img' => asset('img/atm.png'),
+//                'title' => trans('payment.Pay with ATM'),
+//                'sub' => trans('payment.by Momo'),
+//                'value' => 'payWithATM',
+//            ],
             [
                 'name' => 'gateway',
                 'img' => asset('img/momo.png'),

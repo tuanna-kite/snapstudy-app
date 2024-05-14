@@ -24,7 +24,7 @@
         </div>
 
         <div class="flex items-center gap-6">
-            {{-- <x-component.btn-language /> --}}
+             <x-component.btn-language />
             @if (auth()->check())
                 <div class='flex items-center gap-6'>
                     <a href="{{ route('Notification.index') }}">

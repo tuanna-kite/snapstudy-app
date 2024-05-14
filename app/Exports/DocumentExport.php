@@ -48,7 +48,7 @@ class DocumentExport implements FromCollection, WithHeadings, WithMapping
     public function map($documents): array
     {
         if (!empty($documents->webinar_id)) {
-            $title = trans('update.product_purchased') . '-' . $documents->webinar_id . (!empty($documents->webinar) ? $documents->webinar->title : '');
+            $title = ($documents->is_personalization  ? trans('course.Syllabus support') : trans('update.product_purchased')) . '-' . $documents->webinar_id . '-' . (!empty($documents->webinar) ? $documents->webinar->title : '');
         } elseif (!empty($documents->bundle_id)) {
             $title = trans('update.product_purchased') . '-' . $documents->product_id . (!empty($documents->bundle) ? $documents->bundle->title : '');
         } elseif (!empty($documents->product_id)) {

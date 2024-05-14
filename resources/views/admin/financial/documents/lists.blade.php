@@ -143,8 +143,12 @@
                                                         @endif
 
                                                         @if(!empty($document->webinar_id))
-                                                            @if(!$document->is_cashback)
+                                                            @if(!$document->is_cashback && !$document->is_personalization)
                                                                 <span class="d-block font-weight-bold">{{ trans('admin/main.item_purchased') }}</span>
+                                                            @endif
+
+                                                            @if($document->is_personalization)
+                                                                <span class="d-block font-weight-bold">{{ trans('course.Syllabus support') }}</span>
                                                             @endif
 
                                                             <a href="{{ !empty($document->webinar) ? $document->webinar->getUrl() : '' }}"

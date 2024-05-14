@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::fallback(function () {
-        return view("errors.404", ['pageTitle' => trans('public.error_404_page_title')]);
+        return view("web_v2.pages.not-found");
     });
 
     // set Locale

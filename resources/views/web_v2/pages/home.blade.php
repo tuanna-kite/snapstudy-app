@@ -35,8 +35,8 @@
                 <x-pages.home.statistics />
             </div>
             <div class="w-full xl:w-1/4  flex-col gap-4 hidden xl:flex">
-                <img src="img/banner1(en).jpg" alt="banner1" class="w-full md:max-w-96 rounded-2xl">
-                <img src="img/banner2(en).jpg" alt="banner2" class="w-full md:max-w-96 rounded-2xl">
+                <img src="img/banner(en)1.jpg" alt="banner1" class="w-full md:max-w-96 rounded-2xl">
+                <img src="img/banner(en)2.jpg" alt="banner2" class="w-full md:max-w-96 rounded-2xl">
             </div>
         </div>
 

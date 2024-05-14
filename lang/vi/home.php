@@ -114,7 +114,10 @@ return [
     'The most fascinating thing about SNAPS' => 'Điều thú vị nhất về SNAPS, theo ý kiến của tôi, là tôi có thể làm việc và học cùng một lúc mà không làm ảnh hưởng đến điểm số của mình. Có những lúc khi có nhiều hạn chót trùng lặp, và các đề cương do SNAPS cung cấp thực sự giúp tôi thoát khỏi tình thế khó khăn.',
     'Outline' => 'Tóm tắt',
     "See more" => "Xem thêm",
-
-
+    "Exam" => "Đề thi",
+    'Question' => 'Câu hỏi',
+    'Back to home' => 'Quay lại trang chủ',
+    'Oops! Page Not Found' => 'Rất tiếc! Trang không được tìm thấy',
+    'Sorry, this site doesn’t exist or is being upgraded' => 'Xin lỗi, trang web này không tồn tại hoặc đang được nâng cấp,<br/> vui lòng thử lại sau, cảm ơn bạn!'
 
 ];

@@ -7,7 +7,8 @@
         <div class="container mx-auto py-24 space-y-8">
             {{-- title --}}
             <div class="flex justify-between items-center">
-                <h1 class="font-bold text-2xl md:text-3xl text-primary.main">{{ trans('notification.Your Notifications') }}</h1>
+                <h1 class="font-bold text-2xl md:text-3xl text-primary.main">{{ trans('notification.Your Notifications') }}
+                </h1>
                 <a href="{{ route('notification.read') }}">
                     <span class="font-medium text-xs text-primary.main">{{ trans('notification.Mark all as read') }}</span>
                 </a>
@@ -22,4 +23,5 @@
             </div>
         </div>
     </x-layouts.home-layout>
+
 @endsection

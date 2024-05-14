@@ -135,7 +135,7 @@
                     </p>
                     <ul class="flex gap-3">
                         <li>
-                            <a href="https://www.facebook.com/Snapszone">
+                            <a href="https://www.facebook.com/Snapszone" target="_blank">
                                 <img src="{{ asset('img/logo/facebook-footer.png') }}" alt=""
                                     class="w-10 h-10 aspect-square">
                             </a>

@@ -9,6 +9,7 @@ use App\Exports\StudentsExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\traits\UserFormFieldsTrait;
+use App\Models\Accounting;
 use App\Models\Badge;
 use App\Models\BecomeInstructor;
 use App\Models\Category;
@@ -112,6 +113,46 @@ class UserController extends Controller
         return view('admin.users.organizations', $data);
     }
 
+    public function purchasedsSum()
+    {
+        $data = Sale::whereNull('refund_at')
+            ->whereNotNull('webinar_id')
+            ->whereNull('meeting_id')
+            ->whereNull('promotion_id')
+            ->whereNull('subscribe_id')
+            ->sum('total_amount');
+
+       return $data;
+    }
+
+    public function purchasedsCount()
+    {
+        $data = Sale::whereNull('refund_at')
+            ->whereNotNull('webinar_id')
+            ->whereNull('meeting_id')
+            ->whereNull('promotion_id')
+            ->whereNull('subscribe_id')
+            ->count();
+
+        return $data;
+    }
+
+    public function getTotalAccountingBalance()
+    {
+        $additions = Accounting::where('type', Accounting::$addiction)
+            ->where('system', false)
+            ->where('tax', false)
+            ->sum('amount');
+
+        $deductions = Accounting::where('type', Accounting::$deduction)
+            ->where('system', false)
+            ->where('tax', false)
+            ->sum('amount');
+
+        $balance = $additions - $deductions;
+        return $balance > 0 ? $balance : 0;
+    }
+
     public function students(Request $request, $is_export_excel = false)
     {
         $this->authorize('admin_users_list');
@@ -163,6 +204,9 @@ class UserController extends Controller
             'totalOrganizationsStudents' => $totalOrganizationsStudents,
             'userGroups' => $userGroups,
             'organizations' => $organizations,
+            'totalPurchasedsSum' => $this->purchasedsSum(),
+            'totalPurchasedsCnt' => $this->purchasedsCount(),
+            'totalAccountingBalance' => $this->getTotalAccountingBalance(),
         ];
 
         return view('admin.users.students', $data);

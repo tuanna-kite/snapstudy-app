@@ -20,7 +20,8 @@ class SaleController extends Controller
     {
         $this->authorize('admin_sales_list');
 
-        $query = Sale::whereNull('product_order_id');
+        $query = Sale::whereNull('product_order_id')
+            ->where('type', '<>' ,'personalization');
 
         $totalSales = [
             'count' => deepClone($query)->count(),

@@ -354,13 +354,7 @@ class PersonalizationController extends Controller
     public function setPaymentAccounting($order, $type = null, $requestId = null)
     {
         $cashbackAccounting = new CashbackAccounting();
-
-        if ($order->is_charge_account) {
-            Accounting::charge($order, $requestId);
-
-            $cashbackAccounting->rechargeWallet($order);
-        } else {
-            foreach ($order->orderItems as $orderItem) {
+        foreach ($order->orderItems as $orderItem) {
                 $sale = Sale::createSales($orderItem, $order->payment_method);
                 Accounting::create([
                     'user_id' => $orderItem->user_id,
@@ -386,7 +380,6 @@ class PersonalizationController extends Controller
                     $this->updateProductOrder($sale, $orderItem);
                 }
             }
-        }
 
         Cart::emptyCart($order->user_id);
     }
@@ -396,13 +389,7 @@ class PersonalizationController extends Controller
     {
         $cashbackAccounting = new CashbackAccounting();
 
-        if ($order->is_charge_account) {
-            Accounting::charge($order, $requestId);
-
-            $cashbackAccounting->rechargeWallet($order);
-        } else {
             foreach ($order->orderItems as $orderItem) {
-//                $sale = Sale::createSales($orderItem, $order->payment_method);
                 $seller_id = OrderItem::getSeller($orderItem);
                 $sale = Sale::create([
                     'buyer_id' => $orderItem->user_id,
@@ -431,7 +418,7 @@ class PersonalizationController extends Controller
                 Accounting::create([
                     'user_id' => $orderItem->user_id,
                     'order_item_id' => $orderItem->id,
-                    'amount' => 60,
+                    'amount' => 999000,
                     'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
                     'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
                     'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
@@ -441,7 +428,7 @@ class PersonalizationController extends Controller
                     'installment_payment_id' => $orderItem->installment_payment_id ?? null,
                     'product_id' => $orderItem->product_id ?? null,
                     'gift_id' => $orderItem->gift_id ?? null,
-                    'type' => Accounting::$addiction,
+                    'type' => Accounting::$deduction,
                     'type_account' => Accounting::$asset,
                     'description' => trans('course.Syllabus support'),
                     'created_at' => time(),
@@ -452,7 +439,6 @@ class PersonalizationController extends Controller
                     $this->updateProductOrder($sale, $orderItem);
                 }
             }
-        }
 
         Cart::emptyCart($order->user_id);
     }

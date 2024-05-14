@@ -196,6 +196,7 @@ class PaymentController extends Controller
 
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&ipnUrl=".$ipnUrl."&orderId=".$orderId."&orderInfo=".$orderInfo."&partnerCode=".$partnerCode."&redirectUrl=".$redirectUrl."&requestId=".$requestId."&requestType=".$requestType;
+        Log::info('Payment request signature: ' . $rawHash);
         $signature = hash_hmac("sha256", $rawHash, $serectkey);
         $data = array(
             'partnerCode' => $partnerCode,
@@ -214,6 +215,8 @@ class PaymentController extends Controller
         );
         $result = execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true);
+        Log::info('Payment request requestid: ' . $requestId );
+
         return $jsonResult;
     }
 
@@ -269,6 +272,7 @@ class PaymentController extends Controller
                         ->get();
                     $groupUser = GroupUser::where('user_id', $getUser->id)->first();
 
+                    Log::info('Paymentt checkout order: ' . json_encode($order));
                     if ($groupUser != null) {
                         $groupUser->group_id = $groups->first()->id;
                         $groupUser->save();

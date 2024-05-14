@@ -66,6 +66,7 @@ class WebinarController extends Controller
         $totalDurations = deepClone($query)->sum('duration');
         $totalSales = deepClone($query)->join('sales', 'webinars.id', '=', 'sales.webinar_id')
             ->select(DB::raw('count(sales.webinar_id) as sales_count'))
+            ->where('sales.type', '<>' ,'personalization')
             ->whereNotNull('sales.webinar_id')
             ->whereNull('sales.refund_at')
             ->first();
@@ -112,6 +113,7 @@ class WebinarController extends Controller
                     $query->where('webinar_id', $webinar->id);
                     $query->orWhereIn('gift_id', $giftsIds);
                 })
+                ->where('type', '<>' ,'personalization')
                 ->whereNull('refund_at')
                 ->get();
 

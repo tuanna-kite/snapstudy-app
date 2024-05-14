@@ -110,7 +110,7 @@
 
             <div class="d-flex align-items-center justify-content-between">
 
-                <a href="" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                <a href="{{ getAdminPanelUrl() }}/financial/documents/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
             </div>
 
             <div class="row">

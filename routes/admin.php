@@ -516,6 +516,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
                 Route::post('/store', 'DocumentController@store');
                 Route::post('/status/{id}', 'DocumentController@updateStatus');
                 Route::get('/{id}/print', 'DocumentController@printer');
+                Route::get('/excel', 'DocumentController@exportExcel')->name('document.export');
             });
 
             Route::group(['prefix' => 'subscribes'], function () {

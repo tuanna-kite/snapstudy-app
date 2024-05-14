@@ -52,6 +52,7 @@ class WebinarStatisticController extends Controller
 
         if (!empty($webinar)) {
             $studentsIds = Sale::where('webinar_id', $webinarId)
+                ->where('type', '<>' ,'personalization')
                 ->whereNull('refund_at')
                 ->pluck('buyer_id')
                 ->toArray();

@@ -359,7 +359,7 @@ class PersonalizationController extends Controller
                 Accounting::create([
                     'user_id' => $orderItem->user_id,
                     'order_item_id' => $orderItem->id,
-                    'amount' => 60,
+                    'amount' => 999000,
                     'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
                     'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
                     'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
@@ -369,7 +369,7 @@ class PersonalizationController extends Controller
                     'installment_payment_id' => $orderItem->installment_payment_id ?? null,
                     'product_id' => $orderItem->product_id ?? null,
                     'gift_id' => $orderItem->gift_id ?? null,
-                    'type' => Accounting::$addiction,
+                    'type' => Accounting::$deduction,
                     'type_account' => Accounting::$asset,
                     'description' => trans('course.Syllabus support'),
                     'created_at' => time(),

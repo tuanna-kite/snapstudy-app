@@ -99,7 +99,7 @@
         </div>
         <div class='flex flex-col pt-4 pb-8 gap-12 md:flex-row container mx-auto'>
             <div class="flex-1">
-                <img src="{{ asset('img/image-footer.png') }}" />
+{{--                <img src="{{ asset('img/image-footer.png') }}" />--}}
             </div>
             <div class="flex flex-1 items-start">
                 <div class="flex-1 space-y-2">

@@ -466,7 +466,7 @@ class PaymentController extends Controller
                 } else {
                     // webinar and meeting and product and bundle
 
-                    Accounting::createAccounting($orderItem, $type);
+                    Accounting::createAccounting($orderItem, $type, null , $requestId);
                     TicketUser::useTicket($orderItem);
 
                     if (!empty($orderItem->product_id)) {

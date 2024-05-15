@@ -1541,4 +1541,5 @@ By enabling this feature, newly registered users will require approval using thi
 'school' => 'School',
 'campus' => 'Campus',
 'subject2' => 'Subject',
+'spoints' => 'Top up your wallet',
 ];

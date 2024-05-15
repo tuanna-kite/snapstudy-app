@@ -1542,6 +1542,6 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'school' => 'School',
 'campus' => 'Campus',
 'subject' => 'Subject',
-
+'spoints' => 'Nạp tiền vào ví',
 ];
 

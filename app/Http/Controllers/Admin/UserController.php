@@ -142,11 +142,13 @@ class UserController extends Controller
         $additions = Accounting::where('type', Accounting::$addiction)
             ->where('system', false)
             ->where('tax', false)
+            ->where('type_account', 'asset')
             ->sum('amount');
 
         $deductions = Accounting::where('type', Accounting::$deduction)
             ->where('system', false)
             ->where('tax', false)
+            ->where('type_account', 'asset')
             ->sum('amount');
 
         $balance = $additions - $deductions;

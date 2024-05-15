@@ -44,8 +44,14 @@ class DocumentController extends Controller
             $webinarModel = Webinar::where('id', $webinar)->first();
         }
 
-        if (isset($type) && $type !== 'all') {
+        if (isset($type) && $type !== 'all' && $type !== 'spoint') {
             $documents->where('type', $type);
+        }
+        if (isset($type) && $type == 'spoint') {
+            $documents->where('type', 'addiction')
+                ->whereNull('order_item_id')
+            ->where('type_account', 'asset')
+            ->where('store_type', 'automatic');
         }
 
         if (isset($typeAccount) && $typeAccount !== 'all') {
@@ -62,6 +68,7 @@ class DocumentController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         }
+
 
 
         $data = [

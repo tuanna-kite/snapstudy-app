@@ -78,6 +78,8 @@
                                                 @if(request()->get('type',null) == 'addiction') selected="selected" @endif>{{ trans('admin/main.addiction') }}</option>
                                         <option value="deduction"
                                                 @if(request()->get('type',null) == 'deduction') selected="selected" @endif>{{ trans('admin/main.deduction') }}</option>
+                                        <option value="spoint"
+                                                @if(request()->get('type_account',null) == 'spoint') selected="selected" @endif>{{ trans('admin/main.spoints') }}</option>
 
                                     </select>
                                 </div>
@@ -92,7 +94,6 @@
                                                 @if(request()->get('type_account',null) == 'asset') selected="selected" @endif>{{ trans('admin/main.asset') }}</option>
                                         <option value="income"
                                                 @if(request()->get('type_account',null) == 'income') selected="selected" @endif>{{ trans('admin/main.income') }}</option>
-
                                     </select>
                                 </div>
                             </div>

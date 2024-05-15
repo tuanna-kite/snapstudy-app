@@ -86,9 +86,9 @@ class Accounting extends Model
         return $this->belongsTo(Gift::class, 'gift_id', 'id');
     }
 
-    public static function createAccounting($orderItem, $type = null, $amount = null)
+    public static function createAccounting($orderItem, $type = null, $amount = null, $requestId = null)
     {
-        self::createAccountingBuyer($orderItem, $type, $amount);
+        self::createAccountingBuyer($orderItem, $type, $amount, $requestId);
 
 
         if ($orderItem->tax_price and $orderItem->tax_price > 0) {
@@ -102,7 +102,7 @@ class Accounting extends Model
         }
     }
 
-    public static function createAccountingBuyer($orderItem, $type = null, $amount = null)
+    public static function createAccountingBuyer($orderItem, $type = null, $amount = null, $requestId = null)
     {
         $amount_new = !empty($amount) ? $amount : $orderItem->total_amount;
         if ($type !== 'credit') {
@@ -122,6 +122,7 @@ class Accounting extends Model
                 'type' => Accounting::$addiction,
                 'type_account' => Accounting::$asset,
                 'description' => trans('public.paid_for_sale'),
+                'chargeId' => !empty($requestId) ? $requestId : null,
                 'created_at' => time()
             ]);
         }
@@ -153,6 +154,7 @@ class Accounting extends Model
             'type' => Accounting::$deduction,
             'type_account' => Accounting::$asset,
             'description' => $deductionDescription,
+            'chargeId' => !empty($requestId) ? $requestId : null,
             'created_at' => time()
         ]);
 

@@ -1,21 +1,21 @@
 @props(['listTab'])
 
-<div x-data="{ activeTab: 1 }" class="rounded-3xl bg-white">
+<div x-data="tabComponent()" class="rounded-3xl bg-white">
     <!-- Tab Buttons -->
     <nav class="rounded-t-3xl flex px-6 py-4">
-        <button @click="activeTab = 1" class="p-3  font-semibold text-sm"
+        <button @click="setActiveTab(1)" class="p-3  font-semibold text-sm"
             :class="{
                 'border-b-2 border-primary.main text-text.light.primary': activeTab ===
                     1,
                 'text-text.light.secondary': activeTab !== 1
             }">{{ $listTab[0] }}</button>
-        <button @click="activeTab = 2" class="p-3  font-semibold text-sm"
+        <button @click="setActiveTab(2)" class="p-3  font-semibold text-sm"
             :class="{
                 'border-b-2 border-primary.main text-text.light.primary': activeTab ===
                     2,
                 'text-text.light.secondary': activeTab !== 2
             }">{{ $listTab[1] }}</button>
-        <button @click="activeTab = 3" class="p-3  font-semibold text-sm"
+        <button @click="setActiveTab(3)" class="p-3  font-semibold text-sm"
             :class="{
                 'border-b-2 border-primary.main text-text.light.primary': activeTab ===
                     3,
@@ -40,3 +40,17 @@
         </div>
     </div>
 </div>
+
+@push('scripts_bottom')
+    <script>
+        function tabComponent() {
+            return {
+                activeTab: localStorage.getItem('activeTab') ? parseInt(localStorage.getItem('activeTab')) : 1,
+                setActiveTab(tab) {
+                    this.activeTab = tab;
+                    localStorage.setItem('activeTab', tab);
+                }
+            }
+        }
+    </script>
+@endpush

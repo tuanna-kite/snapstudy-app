@@ -266,7 +266,12 @@
                         <th>{{ trans('admin/main.total_purchase_price') }}</th>
                         <th>{{ trans('admin/main.total_price') }}</th>
                         <th>{{ trans('admin/main.classes') }}</th>
-                        <th>{{ trans('admin/main.wallet_charge') }}</th>
+                        <th>
+                            <a href="{{ route('admin.student', array_merge(request()->except('sort_order'), ['sort_order' => request()->get('sort_order') === 'asc' ? 'desc' : 'asc'])) }}">
+                                {{ trans('admin/main.wallet_charge') }} @if (request()->get('sort_order') === 'asc') (▲) @else (▼) @endif
+                            </a>
+
+                        </th>
                         <th>{{ trans('admin/main.income') }}</th>
                         <th>{{ trans('admin/main.user_group') }}</th>
                         <th>{{ trans('admin/main.register_date') }}</th>

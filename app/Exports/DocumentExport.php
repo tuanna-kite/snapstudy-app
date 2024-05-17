@@ -84,7 +84,7 @@ class DocumentExport implements FromCollection, WithHeadings, WithMapping
             $title,
             $documents->user->full_name,
             $documents->user->email,
-            handlePrice($documents->amount),
+            $documents->amount,
             $type,
             $creator,
             trans('admin/main.'.$documents->type_account),

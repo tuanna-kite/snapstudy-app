@@ -256,6 +256,7 @@ class ClassesController extends Controller
     {
         $subject = $request->get('subject');
         $search = $request->get('search');
+        $subject_title = Category::where('slug', $subject)->first();
         $subject_id = Category::where('slug', $subject)->pluck('id')->toArray();
 
         $outlines = $this->outlineQuery(Webinar::$webinar, $subject_id, $search);
@@ -265,7 +266,7 @@ class ClassesController extends Controller
             'outlines' => $outlines,
             'exams' => $exams,
             'questions' => $questions,
-            'subject' => $subject
+            'subject' => $subject_title
         ];
         return view('web_v2.pages.outline', $data);
     }

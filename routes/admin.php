@@ -58,7 +58,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
         });
 
         Route::group(['prefix' => 'students'], function () {
-            Route::get('/', 'UserController@students');
+            Route::get('/', 'UserController@students')->name('admin.student');
             Route::get('/excel', 'UserController@exportExcelStudents');
         });
 

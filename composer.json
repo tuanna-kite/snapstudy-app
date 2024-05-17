@@ -36,6 +36,7 @@
         "league/flysystem": "^3.15",
         "league/flysystem-aws-s3-v3": "^3.15",
         "league/omnipay": "^3.2",
+        "livewire/livewire": "^2.12",
         "lokielse/omnipay-global-alipay": "^3.0",
         "lucassmacedo/omnipay-mercadopago": "~1.1",
         "lyracom/rest-php-sdk": "^4.0",

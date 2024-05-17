@@ -50,7 +50,7 @@
                     {{-- TODO: open view after handle logic --}}
                     @if ($hasBought)
                         <div>
-                            <x-pages.course-detail.button-support :course="$course"/>
+                            <x-pages.course-detail.button-support :course="$course" />
                         </div>
                     @endif
                 </div>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Scrolled Table of Contents  --}}
+                    {{-- Scroll Btn  --}}
                     @if ($hasBought)
                         <div x-show='scrolled'>
                             <div x-data="{ showModal: false, buttonPosition: { top: 0, right: 0 } }">
@@ -112,12 +112,14 @@
                             {{ trans('course.Content') }}
                         </h3>
                         @if (!$hasBought)
+                            {{-- Content Preview --}}
                             <div id="document-content" class="relative">
                                 {!! $docTrans->preview_content !!}
                                 <div class="h-40 w-full absolute bottom-0"
                                     style="background: linear-gradient(360deg, #FFFFFF 0%, rgba(245, 246, 250, 0.1) 100%);">
                                 </div>
                             </div>
+                            {{-- Buy Btn --}}
                             <div class="flex flex-col items-center space-y-3">
                                 <form method="post" action="/course/direct-payment">
                                     @csrf
@@ -132,7 +134,8 @@
                                     @else
                                         <button type="button" onclick="showModalAuth()"
                                             class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                            <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span>
+                                            <span>{{ trans('course.Read more') }}
+                                                ({{ handlePrice($course->price) }})</span>
                                             <x-component.material-icon name="arrow_downward" />
                                         </button>
                                     @endif
@@ -143,6 +146,7 @@
                                 </p>
                             </div>
                         @else
+                            {{-- Content Detail --}}
                             <div id="document-content" style="overflow: hidden; max-width: 100vw !important;">
                                 {!! $docTrans->content !!}
                             </div>
@@ -174,3 +178,5 @@
         });
     });
 </script>
+
+

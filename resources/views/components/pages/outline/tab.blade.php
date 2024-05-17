@@ -52,5 +52,8 @@
                 }
             }
         }
+        // window.addEventListener('beforeunload', function() {
+        //     localStorage.removeItem('activeTab');
+        // });
     </script>
 @endpush

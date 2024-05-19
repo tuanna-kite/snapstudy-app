@@ -109,7 +109,7 @@
                     {{--  Content  --}}
                     <div class="space-y-6  mx-auto">
                         <h3 class="font-bold text-3xl text-primary.main">
-                            {{ trans('course.Content') }}
+                            {{ trans('course.DETAILED INSTRUCTION') }}
                         </h3>
                         @if (!$hasBought)
                             {{-- Content Preview --}}
@@ -142,7 +142,7 @@
 
                                 </form>
                                 <p class="font-normal text-sm text-text.light.secondary">
-                                    {{ trans('course.Documents cannot be previewed') }}
+                                    {{ trans('course.Charge your account to get a detailed instruction for the assignment') }}
                                 </p>
                             </div>
                         @else
@@ -178,5 +178,6 @@
         });
     });
 </script>
+
 
 

@@ -114,7 +114,7 @@
 
                                 </form>
                                 <p class="font-normal text-sm text-text.light.secondary">
-                                    {{ trans('course.Documents cannot be previewed') }}
+                                    {{ trans('course.Charge your account to get a detailed instruction for the assignment') }}
                                 </p>
                             </div>
                         @else

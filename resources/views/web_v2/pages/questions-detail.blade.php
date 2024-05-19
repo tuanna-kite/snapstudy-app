@@ -3,23 +3,6 @@
 @section('title', 'Question Detail')
 
 
-@push('styles_top')
-    <style>
-        .table_contents h2 {
-            display: none;
-        }
-
-        .table_contents ul li {
-            color: #032482;
-        }
-
-        .table_contents ul li ul li {
-            padding-left: 20px;
-        }
-    </style>
-@endpush
-
-
 @section('content')
     <x-layouts.home-layout>
         <div class="py-20 bg-primary.light">
@@ -49,7 +32,7 @@
                 <div class="max-w-[960px] mx-auto space-y-16">
                     {{--  Content  --}}
                     <div class="space-y-6 mx-auto">
-                        <livewire:quiz />
+                        <x-pages.question-detail.quiz />
                     </div>
                 </div>
             </div>

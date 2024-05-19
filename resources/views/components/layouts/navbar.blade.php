@@ -1,4 +1,4 @@
-{{--<x-layouts.notice-card />--}}
+{{-- <x-layouts.notice-card /> --}}
 <nav x-data="{ isScrolled: false, lastScrollTop: 0 }"
     x-on:scroll.window="
        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;

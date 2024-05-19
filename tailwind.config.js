@@ -31,7 +31,7 @@ export default {
 
                 // Secondary
                 'secondary.main': '#F02D00',
-
+                'success.main': '#36B37E',
                 // Text Color
                 'text.light.primary': '#212B36',
                 'text.light.secondary': '#637381',

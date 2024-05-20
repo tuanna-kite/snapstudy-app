@@ -240,7 +240,7 @@ class QuizController extends Controller
                 'attempt' => $data['attempt'] ?? null,
                 'pass_mark' => $data['pass_mark'] ?? 1,
                 'time' => $data['time'] ?? null,
-                'status' => Quiz::ACTIVE,
+                'status' => Quiz::INACTIVE,
                 'certificate' => (!empty($data['certificate']) and $data['certificate'] == 'on'),
                 'display_questions_randomly' => (!empty($data['display_questions_randomly']) and $data['display_questions_randomly'] == 'on'),
                 'expiry_days' => (!empty($data['expiry_days']) and $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
@@ -581,5 +581,83 @@ class QuizController extends Controller
             'title' => trans('public.request_success'),
             'msg' => trans('update.items_sorted_successful')
         ]);
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $this->authorize('admin_quizzes_edit');
+
+        $quizz = Quiz::query()
+            ->findOrFail($id);
+
+        $webinar = Webinar::query()->findOrFail($quizz->webinar_id);
+
+        $quizz->update([
+            'status' => Quiz::ACTIVE
+        ]);
+
+        $webinar->update([
+            'status' => Webinar::$active
+        ]);
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('update.course_status_changes_to_approved'),
+            'status' => 'success'
+        ];
+
+        return redirect(getAdminPanelUrl().'/quizzes')->with(['toast' => $toastData]);
+    }
+
+    public function reject(Request $request, $id)
+    {
+        $this->authorize('admin_quizzes_edit');
+
+        $quizz = Quiz::query()
+            ->findOrFail($id);
+
+        $webinar = Webinar::query()->findOrFail($quizz->webinar_id);
+
+        $quizz->update([
+            'status' => Quiz::INACTIVE
+        ]);
+
+        $webinar->update([
+            'status' => Webinar::$inactive
+        ]);
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('update.course_status_changes_to_rejected'),
+            'status' => 'success'
+        ];
+
+        return redirect(getAdminPanelUrl().'/quizzes')->with(['toast' => $toastData]);
+    }
+
+    public function unpublish(Request $request, $id)
+    {
+        $this->authorize('admin_quizzes_edit');
+
+        $quizz = Quiz::query()
+            ->findOrFail($id);
+
+        $webinar = Webinar::query()->findOrFail($quizz->webinar_id);
+
+        $quizz->update([
+            'status' => Quiz::INACTIVE
+        ]);
+
+        $webinar->update([
+            'status' => Webinar::$pending
+        ]);
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('update.course_status_changes_to_unpublished'),
+            'status' => 'success'
+        ];
+
+        return redirect(getAdminPanelUrl().'/quizzes')->with(['toast' => $toastData]);
     }
 }

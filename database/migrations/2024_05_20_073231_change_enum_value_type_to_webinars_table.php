@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('webinars', function (Blueprint $table) {
-            //
+            $table->enum('type', ['webinar', 'course', 'text_lesson'])->after('category_id');
         });
+
     }
 
     /**
      * Reverse the migrations.
-     *
+     *m
      * @return void
      */
     public function down()

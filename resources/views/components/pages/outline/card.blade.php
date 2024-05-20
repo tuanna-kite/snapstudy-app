@@ -11,4 +11,7 @@
             @endif
         @endforeach
     </div>
+    <div class="mt-20 pb-10">
+        {{ $outlines->appends(['subject' => request()->query('subject')])->links('components.pagination.index') }}
+    </div>
 </div>

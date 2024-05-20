@@ -21,6 +21,12 @@
                     3,
                 'text-text.light.secondary': activeTab !== 3
             }">{{ $listTab[2] }}</button>
+        <button @click="setActiveTab(4)" class="p-3  font-semibold text-sm"
+                :class="{
+                'border-b-2 border-primary.main text-text.light.primary': activeTab ===
+                    4,
+                'text-text.light.secondary': activeTab !== 3
+            }">{{ $listTab[3] }}</button>
     </nav>
 
     <!-- Tab Content -->
@@ -37,6 +43,10 @@
         <div x-show="activeTab === 3" class="">
             <!-- Content for Tab 3 -->
             {{ $tab3 ?? '' }}
+        </div>
+        <div x-show="activeTab === 4" class="">
+            <!-- Content for Tab 4 -->
+            {{ $tab4 ?? '' }}
         </div>
     </div>
 </div>

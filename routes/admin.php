@@ -316,6 +316,10 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/result/{result_id}/delete', 'QuizController@resultDelete');
             Route::get('/excel', 'QuizController@exportExcel');
             Route::post('/{id}/order-items', 'QuizController@orderItems');
+            Route::get('/{id}/preview', 'QuizController@preview')->name('quizzes.preview');
+            Route::get('/{id}/approve', 'QuizController@approve')->name('quizzes.approve');
+            Route::get('/{id}/reject', 'QuizController@reject')->name('quizzes.reject');
+            Route::get('/{id}/unpublish', 'QuizController@unpublish')->name('quizzes.unpublish');
         });
 
         Route::group(['prefix' => 'quizzes-questions'], function () {

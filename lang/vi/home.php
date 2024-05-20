@@ -118,6 +118,6 @@ return [
     'Question' => 'Câu hỏi',
     'Back to home' => 'Quay lại trang chủ',
     'Oops! Page Not Found' => 'Rất tiếc! Trang không được tìm thấy',
-    'Sorry, this site doesn’t exist or is being upgraded' => 'Xin lỗi, trang web này không tồn tại hoặc đang được nâng cấp,<br/> vui lòng thử lại sau, cảm ơn bạn!'
-
+    'Sorry, this site doesn’t exist or is being upgraded' => 'Xin lỗi, trang web này không tồn tại hoặc đang được nâng cấp,<br/> vui lòng thử lại sau, cảm ơn bạn!',
+    'quizz' => 'Quizz',
 ];

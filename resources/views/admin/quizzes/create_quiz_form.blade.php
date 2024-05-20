@@ -82,7 +82,7 @@
                 </div>
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.seo_description') }}</label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][seo_description]" value="{{ !empty($quiz) ? $quiz->webinar->seo_description : old('seo_description') }}"  class="js-ajax-seo_description form-control " placeholder=""/>
+                    <textarea type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][seo_description]" rows="5"  class="js-ajax-seo_description form-control " placeholder="">{{ !empty($quiz) ? $quiz->webinar->seo_description : old('seo_description') }}</textarea>
                     <div class="invalid-feedback"></div>
                 </div>
 
@@ -222,7 +222,7 @@
             <div class="d-flex justify-content-between align-items-center pb-20">
                 <h2 class="section-title after-line">{{ trans('public.questions') }}</h2>
                 <button id="add_multiple_question" data-quiz-id="{{ $quiz->id }}" type="button" class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_multiple_choice') }}</button>
-                <button id="add_descriptive_question" data-quiz-id="{{ $quiz->id }}" type="button" class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_descriptive') }}</button>
+{{--                <button id="add_descriptive_question" data-quiz-id="{{ $quiz->id }}" type="button" class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_descriptive') }}</button>--}}
             </div>
             @if($quizQuestions)
                 <ul class="draggable-questions-lists draggable-questions-lists-{{ $quiz->id }}" data-drag-class="draggable-questions-lists-{{ $quiz->id }}" data-order-table="quizzes_questions" data-quiz="{{ $quiz->id }}">

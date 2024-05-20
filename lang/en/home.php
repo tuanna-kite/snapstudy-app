@@ -119,8 +119,8 @@ return [
     'Question' => 'Question',
     'Back to home' => 'Back to home',
     'Oops! Page Not Found' => 'Oops! Page Not Found',
-    'Sorry, this site doesn’t exist or is being upgraded' => 'Sorry, this site doesn’t exist or is being upgraded,<br/> please try again later, thank you!'
-
+    'Sorry, this site doesn’t exist or is being upgraded' => 'Sorry, this site doesn’t exist or is being upgraded,<br/> please try again later, thank you!',
+    'quizz' => 'Quizz',
 
 
 ];

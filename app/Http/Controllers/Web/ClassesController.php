@@ -248,7 +248,7 @@ class ClassesController extends Controller
         }
         $data = $outlineQuery->where('webinars.type', $type)
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
         return $data;
     }
 
@@ -258,7 +258,24 @@ class ClassesController extends Controller
         $search = $request->get('search');
         $subject_title = Category::where('slug', $subject)->first();
         $subject_id = Category::where('slug', $subject)->pluck('id')->toArray();
+        $quizzeQuery = Webinar::with('quizzes')
+            ->where('webinars.status', 'active')
+            ->where('private', false);
+        if (!empty($subject_id)) {
+            $quizzeQuery->whereIn('webinars.category_id', $subject_id);
+        }
 
+        if (!empty($search)) {
+            $quizzeQuery->where(function ($query) use ($search) {
+                $query->whereTranslationLike('title', "%$search%")
+                    ->orWhereTranslationLike('description', "%$search%")
+                    ->orWhereTranslationLike('seo_description', "%$search%")
+                    ->orWhereTranslationLike('webinar_id', "%$search%");
+            });
+        }
+        $quizzes = $quizzeQuery->where('webinars.type', Webinar::$quizz)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         $outlines = $this->outlineQuery(Webinar::$webinar, $subject_id, $search);
         $exams = $this->outlineQuery(Webinar::$course, $subject_id, $search);
         $questions = $this->outlineQuery(Webinar::$textLesson, $subject_id, $search);
@@ -266,7 +283,8 @@ class ClassesController extends Controller
             'outlines' => $outlines,
             'exams' => $exams,
             'questions' => $questions,
-            'subject' => $subject_title
+            'subject' => $subject_title,
+            'quizzes' => $quizzes
         ];
         return view('web_v2.pages.outline', $data);
     }

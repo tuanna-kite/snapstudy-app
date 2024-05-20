@@ -256,6 +256,10 @@
                 </div>
         </div>
 
+        @php
+
+        @endphp
+
         <div class="card-body">
             <div class="table-responsive text-center">
                 <table class="table table-striped font-14">
@@ -266,7 +270,12 @@
                         <th>{{ trans('admin/main.total_purchase_price') }}</th>
                         <th>{{ trans('admin/main.total_price') }}</th>
                         <th>{{ trans('admin/main.classes') }}</th>
-                        <th>{{ trans('admin/main.wallet_charge') }}</th>
+                        <th>
+                            <a href="{{ route('admin.student', array_merge(request()->except('sort_order'), ['sort_order' => empty(request()->get('sort_order')) ? 'desc' : (request()->get('sort_order') == 'asc' ? 'desc' : 'asc')])) }}">
+                                {{ trans('admin/main.wallet_charge') }} @if (request()->get('sort_order') == 'asc' || empty(request()->get('sort_order')) ) (▲) @elseif (request()->get('sort_order') == 'desc') (▼) @endif
+                            </a>
+
+                        </th>
                         <th>{{ trans('admin/main.income') }}</th>
                         <th>{{ trans('admin/main.user_group') }}</th>
                         <th>{{ trans('admin/main.register_date') }}</th>

@@ -15,8 +15,7 @@
         <div class="block md:hidden">
             <x-search.search-mobile />
         </div>
-        {{-- NOTE: OPEN Trans for VN version --}}
-        <x-component.btn-language />
+         <x-component.btn-language />
         <div class='flex items-center gap-4'>
             <a href="{{ route('Notification.index') }}">
                 <button class="flex justify-center items-center p-2 rounded-full" onclick="handleClick()">

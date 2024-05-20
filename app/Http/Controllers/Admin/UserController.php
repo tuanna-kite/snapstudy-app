@@ -157,6 +157,7 @@ class UserController extends Controller
 
     public function students(Request $request, $is_export_excel = false)
     {
+        $sort_order = $request->get('sort_order', 'asc');
         $this->authorize('admin_users_list');
 
         $query = User::where('role_name', Role::$user);
@@ -181,13 +182,23 @@ class UserController extends Controller
             ->orderBy('users.created_at', 'desc')
             ->get();
 
+        $queryUser = User::where('role_name', Role::$user);
 
-        $query = $this->filters($query, $request);
+        if (!empty($sort_order)) {
+            $queryUser = $queryUser->select('users.*', DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM accounting WHERE user_id = users.id AND type = "addiction") -
+            (SELECT COALESCE(SUM(amount), 0) FROM accounting WHERE user_id = users.id AND type = "deduction") AS balance'));
+        }
+
+        $queryUser = $this->filters($queryUser, $request);
+        if (!empty($sort_order)) {
+            $queryUser = $queryUser->groupBy('users.id')
+                ->orderBy('balance', $sort_order);
+        }
 
         if ($is_export_excel) {
-            $users = $query->orderBy('users.created_at', 'desc')->get();
+            $users = $queryUser->orderBy('users.created_at', 'desc')->get();
         } else {
-            $users = $query->orderBy('users.created_at', 'desc')
+            $users = $queryUser->orderBy('users.created_at', 'desc')
                 ->paginate(10);
         }
 

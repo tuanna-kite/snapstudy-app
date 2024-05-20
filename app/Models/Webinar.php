@@ -30,6 +30,7 @@ class Webinar extends Model implements TranslatableContract
     static $webinar = 'webinar';
     static $course = 'course';
     static $textLesson = 'text_lesson';
+    static $quizz = 'quizz';
 
     static $statuses = [
         'active', 'pending', 'is_draft', 'inactive'

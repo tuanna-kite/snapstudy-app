@@ -9,12 +9,14 @@ use App\Models\Quiz;
 use App\Models\QuizzesQuestion;
 use App\Models\QuizzesResult;
 use App\Models\Translation\QuizTranslation;
+use App\Models\Translation\WebinarTranslation;
 use App\Models\Webinar;
 use App\Models\WebinarChapter;
 use App\Models\WebinarChapterItem;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -178,8 +180,10 @@ class QuizController extends Controller
 
         $rules = [
             'title' => 'required|max:255',
-            'webinar_id' => 'required|exists:webinars,id',
-            'pass_mark' => 'required',
+            'seo_description' => 'required|max:500',
+            'price' => 'required',
+//            'webinar_id' => 'required|exists:webinars,id',
+//            'pass_mark' => 'required',
         ];
 
         $validate = Validator::make($data, $rules);
@@ -191,9 +195,34 @@ class QuizController extends Controller
             ], 422);
         }
 
+        if (empty($data['slug'])) {
+            $data['slug'] = Webinar::makeSlug($data['title']);
+        }
 
-        $webinar = Webinar::where('id', $data['webinar_id'])
-            ->first();
+        $webinar = Webinar::create([
+            'type' => Webinar::$quizz,
+            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '',
+                    str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
+            'teacher_id' => $data['teacher_id'],
+            'creator_id' => $data['creator_id'],
+//            'category_id' => $data['category_id'],
+            'thumbnail' => $data['thumbnail'] ?? null,
+            'price' => $data['price'],
+            'status' => Webinar::$pending,
+            'created_at' => time(),
+            'updated_at' => time(),
+
+        ]);
+
+        if ($webinar) {
+            WebinarTranslation::updateOrCreate([
+                'webinar_id' => $webinar->id,
+                'locale' => mb_strtolower($data['locale']),
+                'title' => $data['title'],
+                'seo_description' => $data['seo_description'],
+            ]);
+        }
+
 
         if (!empty($webinar)) {
             $chapter = null;
@@ -209,9 +238,9 @@ class QuizController extends Controller
                 'chapter_id' => !empty($chapter) ? $chapter->id : null,
                 'creator_id' => $webinar->creator_id,
                 'attempt' => $data['attempt'] ?? null,
-                'pass_mark' => $data['pass_mark'],
+                'pass_mark' => $data['pass_mark'] ?? 1,
                 'time' => $data['time'] ?? null,
-                'status' => (!empty($data['status']) and $data['status'] == 'on') ? Quiz::ACTIVE : Quiz::INACTIVE,
+                'status' => Quiz::ACTIVE,
                 'certificate' => (!empty($data['certificate']) and $data['certificate'] == 'on'),
                 'display_questions_randomly' => (!empty($data['display_questions_randomly']) and $data['display_questions_randomly'] == 'on'),
                 'expiry_days' => (!empty($data['expiry_days']) and $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
@@ -265,6 +294,7 @@ class QuizController extends Controller
                     $query->with('quizzesQuestionsAnswers');
                 },
             ])
+            ->with('webinar')
             ->first();
 
         if (empty($quiz)) {
@@ -319,8 +349,8 @@ class QuizController extends Controller
 
         $rules = [
             'title' => 'required|max:255',
-            'webinar_id' => 'required|exists:webinars,id',
-            'pass_mark' => 'required',
+            'seo_description' => 'required|max:500',
+            'price' => 'required',
             'display_number_of_questions' => 'required_if:display_limited_questions,on|nullable|between:1,' . $quizQuestionsCount
         ];
 
@@ -333,11 +363,13 @@ class QuizController extends Controller
             ], 422);
         }
 
-        $webinar = null;
         $chapter = null;
+        if (empty($data['slug'])) {
+            $data['slug'] = Webinar::makeSlug($data['title']);
+        }
 
-        if (!empty($data['webinar_id'])) {
-            $webinar = Webinar::where('id', $data['webinar_id'])->first();
+        if ($quiz) {
+            $webinar = Webinar::where('id', $quiz->webinar_id)->first();
 
             if (!empty($webinar) and !empty($data['chapter_id'])) {
                 $chapter = WebinarChapter::where('id', $data['chapter_id'])
@@ -346,18 +378,28 @@ class QuizController extends Controller
             }
         }
 
+        $webinar->update([
+            'slug' => $data['slug'],
+            'price' => $data['price'],
+            'category_id' => $data['category_id'] ?? null,
+            'updated_at' => time(),
+        ]);
+
+        if ($webinar) {
+            WebinarTranslation::updateOrCreate([
+                'webinar_id' => $webinar->id,
+                'locale' => mb_strtolower($data['locale']),
+            ], [
+                'title' => $data['title'],
+                'seo_description' => $data['seo_description'],
+            ]);
+        }
+
         $quiz->update([
-            'webinar_id' => !empty($webinar) ? $webinar->id : null,
             'chapter_id' => !empty($chapter) ? $chapter->id : null,
             'attempt' => $data['attempt'] ?? null,
-            'pass_mark' => $data['pass_mark'],
+            'pass_mark' => $data['pass_mark'] ?? 1,
             'time' => $data['time'] ?? null,
-            'status' => (!empty($data['status']) and $data['status'] == 'on') ? Quiz::ACTIVE : Quiz::INACTIVE,
-            'certificate' => (!empty($data['certificate']) and $data['certificate'] == 'on'),
-            'display_limited_questions' => (!empty($data['display_limited_questions']) and $data['display_limited_questions'] == 'on'),
-            'display_number_of_questions' => (!empty($data['display_limited_questions']) and $data['display_limited_questions'] == 'on' and !empty($data['display_number_of_questions'])) ? $data['display_number_of_questions'] : null,
-            'display_questions_randomly' => (!empty($data['display_questions_randomly']) and $data['display_questions_randomly'] == 'on'),
-            'expiry_days' => (!empty($data['expiry_days']) and $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
             'updated_at' => time(),
         ]);
 

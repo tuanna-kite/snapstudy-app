@@ -30,31 +30,31 @@
                     <input type="hidden" name="[{{ !empty($quiz) ? $quiz->id : 'new' }}][locale]" value="{{ getDefaultLocale() }}">
                 @endif
 
-                @if(empty($selectedWebinar))
-                    @if(!empty($webinars) and count($webinars))
-                        <div class="form-group mt-3">
-                            <label class="input-label">{{ trans('panel.webinar') }}</label>
-                            <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" class="js-ajax-webinar_id custom-select">
-                                <option {{ !empty($quiz) ? 'disabled' : 'selected disabled' }} value="">{{ trans('panel.choose_webinar') }}</option>
-                                @foreach($webinars as $webinar)
-                                    <option value="{{ $webinar->id }}" {{  (!empty($quiz) and $quiz->webinar_id == $webinar->id) ? 'selected' : '' }}>{{ $webinar->title }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    @else
-                        <div class="form-group">
-                            <label class="input-label d-block">{{ trans('admin/main.webinar') }}</label>
-                            <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" class="js-ajax-webinar_id form-control search-webinar-select2" data-placeholder="{{ trans('admin/main.search_webinar') }}">
+{{--                @if(empty($selectedWebinar))--}}
+{{--                    @if(!empty($webinars) and count($webinars))--}}
+{{--                        <div class="form-group mt-3">--}}
+{{--                            <label class="input-label">{{ trans('panel.webinar') }}</label>--}}
+{{--                            <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" class="js-ajax-webinar_id custom-select">--}}
+{{--                                <option {{ !empty($quiz) ? 'disabled' : 'selected disabled' }} value="">{{ trans('panel.choose_webinar') }}</option>--}}
+{{--                                @foreach($webinars as $webinar)--}}
+{{--                                    <option value="{{ $webinar->id }}" {{  (!empty($quiz) and $quiz->webinar_id == $webinar->id) ? 'selected' : '' }}>{{ $webinar->title }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            <div class="invalid-feedback"></div>--}}
+{{--                        </div>--}}
+{{--                    @else--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="input-label d-block">{{ trans('admin/main.webinar') }}</label>--}}
+{{--                            <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" class="js-ajax-webinar_id form-control search-webinar-select2" data-placeholder="{{ trans('admin/main.search_webinar') }}">--}}
 
-                            </select>
+{{--                            </select>--}}
 
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    @endif
-                @else
-                    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" value="{{ $selectedWebinar->id }}">
-                @endif
+{{--                            <div class="invalid-feedback"></div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                @else--}}
+{{--                    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" value="{{ $selectedWebinar->id }}">--}}
+{{--                @endif--}}
 
                 @if(!empty($quiz))
                     <div class="form-group">
@@ -70,11 +70,81 @@
                     <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][chapter_id]" value="" class="chapter-input">
                 @endif
 
+                <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][teacher_id]" value="{{ Auth::user()->id }}"
+                       id="">
+                <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][creator_id]" value="{{ Auth::user()->id }}"
+                       id="">
+
                 <div class="form-group">
                     <label class="input-label">{{ trans('quiz.quiz_title') }}</label>
                     <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][title]" value="{{ !empty($quiz) ? $quiz->title : old('title') }}"  class="js-ajax-title form-control " placeholder=""/>
                     <div class="invalid-feedback"></div>
                 </div>
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.seo_description') }}</label>
+                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][seo_description]" value="{{ !empty($quiz) ? $quiz->webinar->seo_description : old('seo_description') }}"  class="js-ajax-seo_description form-control " placeholder=""/>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.price') }}</label>
+                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][price]" value="{{ !empty($quiz) ? $quiz->webinar->price : old('price') }}"  class="js-ajax-price form-control " placeholder=""/>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+{{--                <div class="form-group">--}}
+{{--                    <label class="input-label">{{ trans('public.choose_school') }}</label>--}}
+{{--                    <select id="school" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][school_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-school' : '' }}">--}}
+{{--                        @foreach($userLanguages as $lang => $language)--}}
+{{--                            <option value="{{ $lang }}" @if(mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>{{ $language }}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                    <div class="invalid-feedback"></div>--}}
+{{--                </div>--}}
+
+{{--                <div class="form-group">--}}
+{{--                    <label class="input-label">{{ trans('auth.language') }}</label>--}}
+{{--                    <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][locale]" class="form-control {{ !empty($quiz) ? 'js-edit-content-locale' : '' }}">--}}
+{{--                        @foreach($userLanguages as $lang => $language)--}}
+{{--                            <option value="{{ $lang }}" @if(mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>{{ $language }}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                    <div class="invalid-feedback"></div>--}}
+{{--                </div>--}}
+
+{{--                <div class="form-group mt-15">--}}
+{{--                    <label class="input-label">{{ trans('public.choose_school') }}</label>--}}
+{{--                    <select id="school"--}}
+{{--                            class="custom-select @error('school_id')  is-invalid @enderror"--}}
+{{--                            name="school_id" required>--}}
+{{--                        <option {{ !empty($school) ? '' : 'selected' }} disabled>--}}
+{{--                            {{ trans('public.choose_school') }}</option>--}}
+{{--                        @foreach ($categories as $category)--}}
+{{--                            <option  value="{{ $category->id }}"--}}
+{{--                                {{ (!empty($school) and $school->id == $category->id) ? 'selected' : '' }}>--}}
+{{--                                {{ $category->title }}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--                <div class="form-group mt-15">--}}
+{{--                    <label class="input-label">{{ trans('public.choose_major') }}</label>--}}
+{{--                    <select id="major"--}}
+{{--                            class="custom-select"--}}
+{{--                            name="major_id" required>--}}
+{{--                            <option {{ !empty($webinar) ? '' : 'selected' }} disabled>--}}
+{{--                                {{ trans('public.choose_major') }}</option>--}}
+
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--                <div class="form-group mt-15">--}}
+{{--                    <label class="input-label">{{ trans('public.choose_subject') }}</label>--}}
+{{--                    <select id="subject"--}}
+{{--                            class="custom-select @error('category_id')  is-invalid @enderror"--}}
+{{--                            name="category_id" required>--}}
+{{--                            <option {{ !empty($webinar) ? '' : 'selected' }} disabled>--}}
+{{--                                {{ trans('public.choose_subject') }}</option>--}}
+{{--                    </select>--}}
+{{--                </div>--}}
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.time') }} <span class="braces">({{ trans('public.minutes') }})</span></label>

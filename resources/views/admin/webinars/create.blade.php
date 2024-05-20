@@ -240,11 +240,6 @@
                                                     @if(!empty($webinar) && $webinar->category_id)
                                                         <option value="{{ $major->id }}">
                                                             {{ $major->title }}</option>
-{{--                                                        @foreach ($major_list as $major_item)--}}
-{{--                                                            <option class="major-option" value="{{ $major_item->id }}"--}}
-{{--                                                                {{ (!empty($webinar) and $major->id == $major_item->id) ? 'selected' : '' }}>--}}
-{{--                                                                {{ $major_item->title }}</option>--}}
-{{--                                                        @endforeach--}}
                                                     @else
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_major') }}</option>

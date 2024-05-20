@@ -5,8 +5,8 @@
     <x-layouts.home-layout>
         <div class="container mx-auto py-24">
             {{-- Search Bar --}}
-            <div class="flex items-center gap-2 mb-12 md:mb-24">
-                <div class="flex-1">
+            <div class="flex w-full justify-center">
+                <div class="items-center gap-2 mb-12 md:mb-24 md:w-1/2">
                     <x-search.search-doc/>
                 </div>
                 <div class="block lg:hidden">

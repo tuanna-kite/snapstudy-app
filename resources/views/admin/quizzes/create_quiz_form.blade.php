@@ -92,59 +92,36 @@
                     <div class="invalid-feedback"></div>
                 </div>
 
-{{--                <div class="form-group">--}}
-{{--                    <label class="input-label">{{ trans('public.choose_school') }}</label>--}}
-{{--                    <select id="school" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][school_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-school' : '' }}">--}}
-{{--                        @foreach($userLanguages as $lang => $language)--}}
-{{--                            <option value="{{ $lang }}" @if(mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>{{ $language }}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                    <div class="invalid-feedback"></div>--}}
-{{--                </div>--}}
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.choose_school') }}</label>
+                    <select id="school" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][school_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-school_id' : '' }}">
+                        <option {{ !empty($school) ? '' : 'selected' }} disabled>
+                            {{ trans('public.choose_school') }}</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" >{{ $category->title }}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-{{--                <div class="form-group">--}}
-{{--                    <label class="input-label">{{ trans('auth.language') }}</label>--}}
-{{--                    <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][locale]" class="form-control {{ !empty($quiz) ? 'js-edit-content-locale' : '' }}">--}}
-{{--                        @foreach($userLanguages as $lang => $language)--}}
-{{--                            <option value="{{ $lang }}" @if(mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>{{ $language }}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                    <div class="invalid-feedback"></div>--}}
-{{--                </div>--}}
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.choose_major') }}</label>
+                    <select id="major" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][major_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-major_id' : '' }}">
+                        <option {{ !empty($quiz) ? '' : 'selected' }} disabled>
+                            {{ trans('public.choose_major') }}</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-{{--                <div class="form-group mt-15">--}}
-{{--                    <label class="input-label">{{ trans('public.choose_school') }}</label>--}}
-{{--                    <select id="school"--}}
-{{--                            class="custom-select @error('school_id')  is-invalid @enderror"--}}
-{{--                            name="school_id" required>--}}
-{{--                        <option {{ !empty($school) ? '' : 'selected' }} disabled>--}}
-{{--                            {{ trans('public.choose_school') }}</option>--}}
-{{--                        @foreach ($categories as $category)--}}
-{{--                            <option  value="{{ $category->id }}"--}}
-{{--                                {{ (!empty($school) and $school->id == $category->id) ? 'selected' : '' }}>--}}
-{{--                                {{ $category->title }}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                </div>--}}
-{{--                <div class="form-group mt-15">--}}
-{{--                    <label class="input-label">{{ trans('public.choose_major') }}</label>--}}
-{{--                    <select id="major"--}}
-{{--                            class="custom-select"--}}
-{{--                            name="major_id" required>--}}
-{{--                            <option {{ !empty($webinar) ? '' : 'selected' }} disabled>--}}
-{{--                                {{ trans('public.choose_major') }}</option>--}}
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.choose_major') }}</label>
+                    <select id="subject" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][category_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-category_id' : '' }}">
+                        <option {{ !empty($quiz) ? '' : 'selected' }} disabled>
+                            {{ trans('public.choose_subject') }}</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-{{--                    </select>--}}
-{{--                </div>--}}
-{{--                <div class="form-group mt-15">--}}
-{{--                    <label class="input-label">{{ trans('public.choose_subject') }}</label>--}}
-{{--                    <select id="subject"--}}
-{{--                            class="custom-select @error('category_id')  is-invalid @enderror"--}}
-{{--                            name="category_id" required>--}}
-{{--                            <option {{ !empty($webinar) ? '' : 'selected' }} disabled>--}}
-{{--                                {{ trans('public.choose_subject') }}</option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.time') }} <span class="braces">({{ trans('public.minutes') }})</span></label>

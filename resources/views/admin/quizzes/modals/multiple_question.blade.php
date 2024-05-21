@@ -43,37 +43,45 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('public.image') }} ({{ trans('public.optional') }})</label>
-
-                        <div class="input-group mr-10">
-                            <div class="input-group-prepend">
-                                <button type="button" class="input-group-text admin-file-manager" data-input="questionImageInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" data-preview="holder">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                            </div>
-                            <input type="text" name="ajax[image]" id="questionImageInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" value="{{ !empty($question_edit) ? $question_edit->image : '' }}" class="js-ajax-image form-control" placeholder=""/>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="input-label">{{ trans('Explaination') }}</label>
+                            <input type="text" name="ajax[correct]" class="js-ajax-correct form-control" value="{{ !empty($question_edit) ? $question_edit->correct : '' }}"/>
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('update.video') }} ({{ trans('public.optional') }})</label>
+{{--                <div class="col-12 col-md-6">--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label class="input-label">{{ trans('public.image') }} ({{ trans('public.optional') }})</label>--}}
 
-                        <div class="input-group mr-10">
-                            <div class="input-group-prepend">
-                                <button type="button" class="input-group-text admin-file-manager" data-input="questionVideoInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" data-preview="holder">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                            </div>
-                            <input type="text" name="ajax[video]" id="questionVideoInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" value="{{ !empty($question_edit) ? $question_edit->video : '' }}" class="js-ajax-video form-control" placeholder=""/>
-                            <span class="invalid-feedback"></span>
-                        </div>
-                    </div>
-                </div>
+{{--                        <div class="input-group mr-10">--}}
+{{--                            <div class="input-group-prepend">--}}
+{{--                                <button type="button" class="input-group-text admin-file-manager" data-input="questionImageInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" data-preview="holder">--}}
+{{--                                    <i class="fa fa-upload"></i>--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <input type="text" name="ajax[image]" id="questionImageInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" value="{{ !empty($question_edit) ? $question_edit->image : '' }}" class="js-ajax-image form-control" placeholder=""/>--}}
+{{--                            <span class="invalid-feedback"></span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <div class="col-12 col-md-6">--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label class="input-label">{{ trans('update.video') }} ({{ trans('public.optional') }})</label>--}}
+
+{{--                        <div class="input-group mr-10">--}}
+{{--                            <div class="input-group-prepend">--}}
+{{--                                <button type="button" class="input-group-text admin-file-manager" data-input="questionVideoInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" data-preview="holder">--}}
+{{--                                    <i class="fa fa-upload"></i>--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <input type="text" name="ajax[video]" id="questionVideoInput_{{ !empty($question_edit) ? $question_edit->id : 'record' }}" value="{{ !empty($question_edit) ? $question_edit->video : '' }}" class="js-ajax-video form-control" placeholder=""/>--}}
+{{--                            <span class="invalid-feedback"></span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
 
             <div class="mt-3">

@@ -3,7 +3,7 @@
     <div class="flex items-center gap-2 max-w-full overflow-hidden">
         <x-component.material-icon name="menu_book" />
         <div class="flex flex-col max-w-72 overflow-hidden">
-            <a href="{{ $outline->getUrl() }}" id="title"
+            <a href="{{ $outline->type == 'quizz' ? route('quizzes',['slug' => $outline->slug]) : $outline->getUrl() }}" id="title"
                 class="truncate font-semibold text-base text-text.light.primary">
                 {{ clean($outline->title, 'title') }}
             </a>

@@ -32,7 +32,7 @@
                 <div class="max-w-[960px] mx-auto space-y-16">
                     {{--  Content  --}}
                     <div class="space-y-6 mx-auto">
-                        <x-pages.question-detail.quiz />
+                        <x-pages.question-detail.quiz :quizQuestions="$quizQuestions" :totalQuestionsCount="$totalQuestionsCount"/>
                     </div>
                 </div>
             </div>

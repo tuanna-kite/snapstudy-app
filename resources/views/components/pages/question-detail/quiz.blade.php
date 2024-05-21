@@ -1,163 +1,180 @@
 @php
     $orderType = ['A', 'B', 'C', 'D'];
-    $data = [
-        [
-            'ques' =>
-                'Which of the following correctly describes vision statement and mission statement, respectively?',
-            'choices' => [
-                'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
-                'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
-            ],
-            'correct' => 1,
-            'explaination' => 'Đáp án đúng B: Bởi vì nó dài nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
-                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
-                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
-                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
-                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
-                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
-                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
-                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
-                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
-                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-        [
-            'ques' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'A company rs.',
-                'A company fooducts sold by competitors.',
-                'A compts innyo cut costs.',
-                'A company focusese an expert in that segment.',
-            ],
-            'correct' => 2,
-            'explaination' => 'Đáp án đúắn nhất',
-        ],
-    ];
+    $data = [];
+    foreach ($quizQuestions as $quizQuestion){
+        $ques = [];
+        $answser = [];
+        $correct = 0;
+        $ques['ques'] = $quizQuestion->title;
+        foreach ($quizQuestion->quizzesQuestionsAnswers as $key => $quizzesQuestionsAnswers){
+            array_push($answser, [$quizzesQuestionsAnswers->title]);
+            if ($quizzesQuestionsAnswers->correct){
+                $correct = $key;
+            }
+        }
+        $ques['choices'] = $answser;
+        $ques['correct'] = $correct;
+        $ques['explaination'] = $quizQuestion->correct;
+        array_push($data, $ques);
+    }
+//    $data = [
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes vision statement and mission statement, respectively?',
+//            'choices' => [
+//                'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
+//                'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
+//            ],
+//            'correct' => 1,
+//            'explaination' => 'Đáp án đúng B: Bởi vì nó dài nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
+//                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
+//                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
+//                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
+//                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
+//                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
+//                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
+//                'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
+//                'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
+//                'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúng: C: Bởi vì câu này ngắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúắn nhất',
+//        ],
+//        [
+//            'ques' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'A company rs.',
+//                'A company fooducts sold by competitors.',
+//                'A compts innyo cut costs.',
+//                'A company focusese an expert in that segment.',
+//            ],
+//            'correct' => 2,
+//            'explaination' => 'Đáp án đúng nhất',
+//        ],
+//    ];
 @endphp
 
 
@@ -183,7 +200,7 @@
         </div>
         <div>
             <!-- Question -->
-            <h3 class="font-bold text-3xl text-primary.main mb-6">Questions - 120/120</h3>
+            <h3 class="font-bold text-3xl text-primary.main mb-6">Questions - {{ $totalQuestionsCount }}</h3>
             <div class="space-y-6">
                 <div class="space-y-8">
                     <template x-for="(item, key) in questions" :key="key">

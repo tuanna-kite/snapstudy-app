@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\QuizResultsExport;
 use App\Exports\QuizzesAdminExport;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\QuizzesQuestion;
 use App\Models\QuizzesResult;
@@ -163,9 +164,11 @@ class QuizController extends Controller
     public function create()
     {
         $this->authorize('admin_quizzes_create');
-
+        $categories = Category::where('parent_id', null)
+            ->get();
         $data = [
             'pageTitle' => trans('quiz.new_quiz'),
+            'categories' => $categories
         ];
 
         return view('admin.quizzes.create', $data);
@@ -324,6 +327,9 @@ class QuizController extends Controller
             $chapters = $quiz->webinar->chapters;
         }
 
+        $categories = Category::where('parent_id', null)
+            ->get();
+
         $data = [
             'pageTitle' => trans('public.edit') . ' ' . $quiz->title,
             'webinars' => $webinars,
@@ -333,6 +339,7 @@ class QuizController extends Controller
             'chapters' => $chapters,
             'locale' => mb_strtolower($locale),
             'defaultLocale' => getDefaultLocale(),
+            'categories' => $categories,
         ];
 
         return view('admin.quizzes.edit', $data);

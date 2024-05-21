@@ -20,6 +20,7 @@ class QuizQuestionController extends Controller
         $rules = [
             'quiz_id' => 'required|exists:quizzes,id',
             'title' => 'required',
+            'correct' => 'required',
             'grade' => 'required|integer',
             'type' => 'required',
             'image' => 'nullable|max:255',

@@ -532,10 +532,19 @@ class QuizController extends Controller
     {
         $user = auth()->user();
         $quiz = Quiz::where('id', $id)->first();
+        $newQuizStart = QuizzesResult::create([
+            'quiz_id' => $quiz->id,
+            'user_id' => $user->id,
+            'results' => '',
+            'user_grade' => 0,
+            'status' => 'waiting',
+            'created_at' => time()
+        ]);
 
         if ($quiz) {
-            $results = $request->get('question');
-            $quizResultId = $request->get('quiz_result_id');
+            $results = $request->get('answers');
+//            $results = $request->get('question');
+            $quizResultId = $newQuizStart->id;
 
             if (!empty($quizResultId)) {
 
@@ -551,7 +560,7 @@ class QuizController extends Controller
 
                     if (!empty($results)) {
                         foreach ($results as $questionId => $result) {
-
+                            dd($questionId);
                             if (!is_array($result)) {
                                 unset($results[$questionId]);
 
@@ -583,10 +592,6 @@ class QuizController extends Controller
                         }
                     }
 
-                    if (empty($status)) {
-                        $status = ($totalMark >= $passMark) ? QuizzesResult::$passed : QuizzesResult::$failed;
-                    }
-
                     $results["attempt_number"] = $request->get('attempt_number');
 
                     $quizResult->update([
@@ -596,26 +601,7 @@ class QuizController extends Controller
                         'created_at' => time()
                     ]);
 
-                    if ($quizResult->status == QuizzesResult::$waiting) {
-                        $notifyOptions = [
-                            '[c.title]' => $quiz->webinar ? $quiz->webinar->title : '-',
-                            '[student.name]' => $user->full_name,
-                            '[q.title]' => $quiz->title,
-                        ];
-                        sendNotification('waiting_quiz', $notifyOptions, $quiz->creator_id);
-                    }
-
-                    if ($quizResult->status == QuizzesResult::$passed) {
-                        $passTheQuizReward = RewardAccounting::calculateScore(Reward::PASS_THE_QUIZ);
-                        RewardAccounting::makeRewardAccounting($quizResult->user_id, $passTheQuizReward, Reward::PASS_THE_QUIZ, $quiz->id, true);
-
-                        if ($quiz->certificate) {
-                            $certificateReward = RewardAccounting::calculateScore(Reward::CERTIFICATE);
-                            RewardAccounting::makeRewardAccounting($quizResult->user_id, $certificateReward, Reward::CERTIFICATE, $quiz->id, true);
-                        }
-                    }
-
-                    return redirect()->route('quiz_status', ['quizResultId' => $quizResult]);
+                    dd('Thanh cong');
                 }
             }
         }

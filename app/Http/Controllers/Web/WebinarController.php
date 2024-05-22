@@ -239,9 +239,9 @@ class WebinarController extends Controller
                 }
             }
 
-            if (!empty($course->quizzes) and count($course->quizzes)) {
-                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
-            }
+//            if (!empty($course->quizzes) and count($course->quizzes)) {
+//                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
+//            }
         }
 
         $pageRobot = getPageRobot('course_show'); // index

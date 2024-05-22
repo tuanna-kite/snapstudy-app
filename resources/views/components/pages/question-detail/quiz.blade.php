@@ -1,79 +1,80 @@
 @php
-    // $data = [];
-    // foreach ($quizQuestions as $quizQuestion){
-    //     $ques = [];
-    //     $answser = [];
-    //     $correct = 0;
-    //     $ques['ques'] = $quizQuestion->title;
-    //     foreach ($quizQuestion->quizzesQuestionsAnswers as $key => $quizzesQuestionsAnswers){
-    //         array_push($answser, [$quizzesQuestionsAnswers->title]);
-    //         if ($quizzesQuestionsAnswers->correct){
-    //             $correct = $key;
-    //         }
-    //     }
-    //     $ques['choices'] = $answser;
-    //     $ques['correct'] = $correct;
-    //     $ques['explaination'] = $quizQuestion->correct;
-    //     array_push($data, $ques);
-    // }
-    $data = [
-        [
-            'id' => 'idques1',
-            'title' =>
-                'Which of the following correctly describes vision statement and mission statement, respectively?',
-            'choices' => [
-                'idanswer1' =>
-                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'idanswer2' =>
-                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'idanswer3' =>
-                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
-                'idanswer4' =>
-                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
-            ],
-            'correct' => 'idanswer1',
-            'explaination' => 'Bởi vì nó dài nhất',
-        ],
-        [
-            'id' => 'idques2',
-            'title' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'idanswer1' =>
-                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'idanswer2' =>
-                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-                'idanswer3' =>
-                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
-                'idanswer4' =>
-                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
-            ],
-            'correct' => 'idanswer2',
-            'explaination' => ' Bởi vì câu này ngắn nhất',
-        ],
-        [
-            'id' => 'idques3',
-            'title' =>
-                'Which of the following correctly describes an example of following the differentiation strategy?',
-            'choices' => [
-                'idanswer1' =>
-                    'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
-                'idanswer2' =>
-                    'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
-                'idanswer3' =>
-                    'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
-                'idanswer4' =>
-                    'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
-            ],
-            'correct' => 'idanswer2',
-            'explaination' => ' Bởi vì câu này ngắn nhất',
-        ],
-    ];
+     $data = [];
+     foreach ($quizQuestions as $quizQuestion){
+         $ques = [];
+         $answser = [];
+         $correct = 0;
+         $ques['id'] = $quizQuestion->id;
+         $ques['title'] = $quizQuestion->title;
+         foreach ($quizQuestion->quizzesQuestionsAnswers as $key => $quizzesQuestionsAnswers){
+             $answser[$quizzesQuestionsAnswers->id] = $quizzesQuestionsAnswers->title;
+             if ($quizzesQuestionsAnswers->correct){
+                 $correct = $quizzesQuestionsAnswers->id;
+             }
+         }
+         $ques['choices'] = $answser;
+         $ques['correct'] = $correct;
+         $ques['explaination'] = $quizQuestion->correct;
+         array_push($data, $ques);
+     }
+//    $data = [
+//        [
+//            'id' => 'idques1',
+//            'title' =>
+//                'Which of the following correctly describes vision statement and mission statement, respectively?',
+//            'choices' => [
+//                'idanswer1' =>
+//                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'idanswer2' =>
+//                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'idanswer3' =>
+//                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
+//                'idanswer4' =>
+//                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
+//            ],
+//            'correct' => 'idanswer1',
+//            'explaination' => 'Bởi vì nó dài nhất',
+//        ],
+//        [
+//            'id' => 'idques2',
+//            'title' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'idanswer1' =>
+//                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'idanswer2' =>
+//                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
+//                'idanswer3' =>
+//                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
+//                'idanswer4' =>
+//                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
+//            ],
+//            'correct' => 'idanswer2',
+//            'explaination' => ' Bởi vì câu này ngắn nhất',
+//        ],
+//        [
+//            'id' => 'idques3',
+//            'title' =>
+//                'Which of the following correctly describes an example of following the differentiation strategy?',
+//            'choices' => [
+//                'idanswer1' =>
+//                    'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
+//                'idanswer2' =>
+//                    'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
+//                'idanswer3' =>
+//                    'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
+//                'idanswer4' =>
+//                    'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
+//            ],
+//            'correct' => 'idanswer2',
+//            'explaination' => ' Bởi vì câu này ngắn nhất',
+//        ],
+//    ];
 
     $answers = [
-        'idques1' => 'idanswer3',
-        'idques2' => 'idanswer2',
-        'idques3' => 'idanswer2',
+//        'idques1' => 'idanswer3',
+//        'idques2' => 'idanswer2',
+//        'idques3' => 'idanswer2',
     ];
 
     $isSubmit = false;
@@ -236,8 +237,23 @@
             score: score || 0,
             submitQuiz() {
                 this.showSubmitModal = false;
-                // Submit answer and save in BE
-                // return isSubmit true
+                console.log(answers);
+                $.ajax({
+                    url: '{{ route('quizzes.result', ['id' => $quiz->id]) }}',
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'answers': answers
+                    },
+                    success: function(response) {
+                        alert('Quiz updated successfully');
+                        // Xử lý sau khi cập nhật thành công
+                    },
+                    error: function(xhr) {
+                        alert('Failed to update quiz');
+                        console.log(xhr.responseText);
+                    }
+                });
             },
             retakeQuiz() {
                 // Refresh Answers in BE

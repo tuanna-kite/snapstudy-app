@@ -1102,9 +1102,6 @@ video {
 .min-w-\[320px\] {
   min-width: 320px;
 }
-.min-w-\[672px\] {
-  min-width: 672px;
-}
 .min-w-full {
   min-width: 100%;
 }
@@ -1119,6 +1116,9 @@ video {
 }
 .max-w-60 {
   max-width: 15rem;
+}
+.max-w-72 {
+  max-width: 18rem;
 }
 .max-w-\[240px\] {
   max-width: 240px;
@@ -1491,16 +1491,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(240 45 0 / var(--tw-bg-opacity));
 }
+.bg-success\.main {
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 179 126 / var(--tw-bg-opacity));
+}
 .bg-transparent {
   background-color: transparent;
 }
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.bg-success\.main {
-  --tw-bg-opacity: 1;
-  background-color: rgb(54 179 126 / var(--tw-bg-opacity));
 }
 .bg-cover {
   background-size: cover;
@@ -1858,10 +1858,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
-}
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -1886,6 +1882,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(240 45 0 / var(--tw-text-opacity));
 }
+.text-success\.main {
+  --tw-text-opacity: 1;
+  color: rgb(54 179 126 / var(--tw-text-opacity));
+}
 .text-text\.light\.disabled {
   --tw-text-opacity: 1;
   color: rgb(145 158 171 / var(--tw-text-opacity));
@@ -1901,10 +1901,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-success\.main {
-  --tw-text-opacity: 1;
-  color: rgb(54 179 126 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -2232,10 +2228,6 @@ video {
     min-width: 368px;
   }
 
-  .md\:min-w-\[672px\] {
-    min-width: 672px;
-  }
-
   .md\:max-w-64 {
     max-width: 16rem;
   }
@@ -2248,12 +2240,12 @@ video {
     max-width: 24rem;
   }
 
-  .md\:max-w-md {
-    max-width: 28rem;
-  }
-
   .md\:max-w-\[672px\] {
     max-width: 672px;
+  }
+
+  .md\:max-w-md {
+    max-width: 28rem;
   }
 
   .md\:flex-1 {

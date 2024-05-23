@@ -1,3 +1,15 @@
+@php
+    if(!empty($quiz)) {
+        $subject = \App\Models\Category::find($quiz->webinar->category_id);
+        $major = \App\Models\Category::where('id', $subject->parent_id)
+            ->with('subCategories')
+            ->first();
+
+        $school = \App\Models\Category::where('id', $major->parent_id)
+            ->with('subCategories')
+            ->first();
+    }
+@endphp
 <div data-action="{{ getAdminPanelUrl() }}/quizzes/{{ !empty($quiz) ? $quiz->id .'/update' : 'store' }}" class="js-content-form quiz-form webinar-form">
     {{ csrf_field() }}
     <section>
@@ -95,10 +107,10 @@
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_school') }}</label>
                     <select id="school" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][school_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-school_id' : '' }}">
-                        <option {{ !empty($school) ? '' : 'selected' }} disabled>
+                        <option {{ !empty($school) ? '' : 'selected' }} >
                             {{ trans('public.choose_school') }}</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" >{{ $category->title }}</option>
+                            <option value="{{ $category->id }}" {{ (!empty($school) and $school->id == $category->id) ? 'selected' : '' }} >{{ $category->title }}</option>
                         @endforeach
                     </select>
                     <div class="invalid-feedback"></div>
@@ -107,8 +119,13 @@
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_major') }}</label>
                     <select id="major" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][major_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-major_id' : '' }}">
-                        <option {{ !empty($quiz) ? '' : 'selected' }} disabled>
+                        @if(!empty($quiz) && $quiz->webinar->category_id)
+                            <option value="{{ $major->id }}">
+                                {{ $major->title }}</option>
+                        @else
+                        <option {{ !empty($quiz) ? '' : 'selected' }} >
                             {{ trans('public.choose_major') }}</option>
+                        @endif
                     </select>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -116,8 +133,13 @@
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_subject') }}</label>
                     <select id="subject" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][category_id]" class="form-control js-ajax-category_id {{ !empty($quiz) ? 'js-edit-content-category_id' : '' }}">
-                        <option {{ !empty($quiz) ? '' : 'selected' }} disabled>
+                        @if(!empty($quiz) && $quiz->webinar->category_id)
+                            <option value="{{ $subject->id }}">
+                                {{ $subject->title }}</option>
+                        @else
+                        <option {{ !empty($quiz) ? '' : 'selected' }} >
                             {{ trans('public.choose_subject') }}</option>
+                        @endif
                     </select>
                     <div class="invalid-feedback"></div>
                 </div>

@@ -92,6 +92,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::group(['prefix' => 'quizzes'], function () {
         Route::get('/{slug}', 'QuizController@detail')->name('quizzes');
         Route::post('/{id}/store-result', 'QuizController@quizzesStoreResult')->name('quizzes.result');
+        Route::post('/{id}/destroy-result', 'QuizController@destroyQuizResult')->name('quizzes.destroy');
     });
 
     Route::group(['prefix' => 'course'], function () {

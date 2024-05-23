@@ -3,7 +3,7 @@
 @section('title', 'Outline Page')
 
 @php
-    $listTab = [trans('home.Outline'), trans('home.Exam'), trans('home.Question'), trans('home.quizz')];
+    $listTab = [trans('home.Outline'), trans('home.Exam'), trans('home.Question')];
 @endphp
 
 @section('content')
@@ -28,9 +28,6 @@
                         <x-pages.outline.card :outlines="$exams" />
                     </x-slot>
                     <x-slot name="tab3">
-                        <x-pages.outline.card :outlines="$questions" />
-                    </x-slot>
-                    <x-slot name="tab4">
                         <x-pages.outline.card :outlines="$quizzes" />
                     </x-slot>
                 </x-pages.outline.tab>

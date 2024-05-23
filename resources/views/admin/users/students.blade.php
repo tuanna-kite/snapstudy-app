@@ -267,6 +267,7 @@
                     <th>#</th>
                         <th>ID</th>
                         <th>{{ trans('admin/main.name') }}</th>
+                        <th>{{ trans('admin/main.email') }}</th>
                         <th>{{ trans('admin/main.total_purchase_price') }}</th>
                         <th>{{ trans('admin/main.total_price') }}</th>
                         <th>{{ trans('admin/main.classes') }}</th>
@@ -302,12 +303,13 @@
                                         @if($user->mobile)
                                             <div class="text-primary text-small font-600-bold">{{ $user->mobile }}</div>
                                         @endif
-
-                                        @if($user->email)
-                                            <div class="text-primary text-small font-600-bold">{{ $user->email }}</div>
-                                        @endif
                                     </div>
                                 </div>
+                            </td>
+                            <td class="text-left">
+                                @if($user->email)
+                                    <div class="text-primary text-small font-600-bold">{{ $user->email }}</div>
+                                @endif
                             </td>
                             <td>
                                 <div class="media-body">

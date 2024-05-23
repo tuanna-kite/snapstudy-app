@@ -830,18 +830,18 @@ class QuizController extends Controller
         abort(404);
     }
 
-    public function destroyQuizResult($quizResultId)
+    public function destroyQuizResult($quizId)
     {
         $user = auth()->user();
 
-        $quizzesIds = Quiz::where('creator_id', $user->id)->pluck('id')->toArray();
+        $quizResults = QuizzesResult::where('quiz_id', $quizId)
+            ->where('user_id', $user->id)
+            ->get();
 
-        $quizResult = QuizzesResult::where('id', $quizResultId)
-            ->whereIn('quiz_id', $quizzesIds)
-            ->first();
-
-        if (!empty($quizResult)) {
-            $quizResult->delete();
+        if (!empty($quizResults)) {
+            foreach ($quizResults as $quizResult) {
+                $quizResult->delete();
+            }
 
             return response()->json([
                 'code' => 200

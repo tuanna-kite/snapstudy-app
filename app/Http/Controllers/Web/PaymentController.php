@@ -92,7 +92,7 @@ class PaymentController extends Controller
             $orderItem = OrderItem::where('order_id', $order->id)->first();
             if($orderItem){
                 $webinar = Webinar::find($orderItem->webinar_id);
-                return redirect(route('course', ['slug' => $webinar->slug]));
+                return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
             }
             return redirect('/payments/status');
         } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
@@ -287,7 +287,7 @@ class PaymentController extends Controller
                     $orderItem = OrderItem::where('order_id', $order->id)->first();
                     if($orderItem){
                         $webinar = Webinar::find($orderItem->webinar_id);
-                        return redirect(route('course', ['slug' => $webinar->slug]));
+                        return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
                     }
                     return redirect('/payments/status');
                 }

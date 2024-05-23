@@ -107,7 +107,7 @@
                                 </template>
                             </div>
                             {{-- Explaination --}}
-                            @if ($hasBought)
+                            @if ($hasBought && $isSubmit)
                                 <div class="space-y-2 border border-primary.main rounded-lg p-4">
                                     <p class="font-semibold text-sm"
                                         :class="{
@@ -211,9 +211,23 @@
             retakeQuiz() {
                 this.isSubmit = false;
                 this.answers = {};
-                this.questions = shuffle(this.question);
+                // this.questions = shuffle(this.question);
                 this.score = 0;
-                // Handle Ajax here
+                $.ajax({
+                    url: '{{ route('quizzes.destroy', ['id' => $quiz->id]) }}',
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        this.isSubmit = true;
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('Failed to destroy quiz');
+                        console.log(xhr.responseText);
+                    }
+                });
             }
         };
     }

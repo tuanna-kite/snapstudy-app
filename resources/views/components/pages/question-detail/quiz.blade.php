@@ -1,89 +1,38 @@
 @php
-     $data = [];
-     foreach ($quizQuestions as $quizQuestion){
-         $ques = [];
-         $answser = [];
-         $correct = 0;
-         $ques['id'] = $quizQuestion->id;
-         $ques['title'] = $quizQuestion->title;
-         foreach ($quizQuestion->quizzesQuestionsAnswers as $key => $quizzesQuestionsAnswers){
-             $answser[$quizzesQuestionsAnswers->id] = $quizzesQuestionsAnswers->title;
-             if ($quizzesQuestionsAnswers->correct){
-                 $correct = $quizzesQuestionsAnswers->id;
-             }
-         }
-         $ques['choices'] = $answser;
-         $ques['correct'] = $correct;
-         $ques['explaination'] = $quizQuestion->correct;
-         array_push($data, $ques);
-     }
-//    $data = [
-//        [
-//            'id' => 'idques1',
-//            'title' =>
-//                'Which of the following correctly describes vision statement and mission statement, respectively?',
-//            'choices' => [
-//                'idanswer1' =>
-//                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-//                'idanswer2' =>
-//                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-//                'idanswer3' =>
-//                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
-//                'idanswer4' =>
-//                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
-//            ],
-//            'correct' => 'idanswer1',
-//            'explaination' => 'Bởi vì nó dài nhất',
-//        ],
-//        [
-//            'id' => 'idques2',
-//            'title' =>
-//                'Which of the following correctly describes an example of following the differentiation strategy?',
-//            'choices' => [
-//                'idanswer1' =>
-//                    'The mission statement describes what the organization, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-//                'idanswer2' =>
-//                    'The vision statement describes what the organization intends to be or become and answers the question, “Who are we?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “What do we do?”',
-//                'idanswer3' =>
-//                    'The vision statement describes what the organizars the question, “What do we do?” The vision statement guides subsequently the development of the mission statement. The mission statement describes what the organization is committed to do or how it will act and answers the question, “Who are we?”',
-//                'idanswer4' =>
-//                    'The mission statement describes what the organizand answers the question, “Who are we?” The mission statement guides subsequently the development of the vision statement. The vision statement describes what the organization intends to be or become and answers the question, “What do we do?”',
-//            ],
-//            'correct' => 'idanswer2',
-//            'explaination' => ' Bởi vì câu này ngắn nhất',
-//        ],
-//        [
-//            'id' => 'idques3',
-//            'title' =>
-//                'Which of the following correctly describes an example of following the differentiation strategy?',
-//            'choices' => [
-//                'idanswer1' =>
-//                    'A company focuses its advertisements on how its product costsny focuses its  less than similar products sold by competitors.',
-//                'idanswer2' =>
-//                    'A company focuses its advertisements on hny focuses its ow its product is s product is s product is higher quality than similar products sold by competitors.',
-//                'idanswer3' =>
-//                    'A company chooses not to advertise its product as a way tls products innyls products innyo cut costs.',
-//                'idanswer4' =>
-//                    'A company focuses its advertisements on how it sells products inny focuses its  one industry segment and is therefore an expert in that segment.',
-//            ],
-//            'correct' => 'idanswer2',
-//            'explaination' => ' Bởi vì câu này ngắn nhất',
-//        ],
-//    ];
-     $answers = [];
-     if($hasBought && $isSubmit && !empty($userQuiz->results)){
-         foreach (json_decode($userQuiz->results) as $question => $result){
-             $answers[$question] = $result;
-         }
-     }
+    // interface IQuestion: id, title, choices[idChoice=>string], correct, explaination
+    $questions = [];
+    foreach ($quizQuestions as $quizQuestion) {
+        $ques = [];
+        $answser = [];
+        $correct = 0;
+        $ques['id'] = $quizQuestion->id;
+        $ques['title'] = $quizQuestion->title;
+        foreach ($quizQuestion->quizzesQuestionsAnswers as $key => $quizzesQuestionsAnswers) {
+            $answser[$quizzesQuestionsAnswers->id] = $quizzesQuestionsAnswers->title;
+            if ($quizzesQuestionsAnswers->correct) {
+                $correct = $quizzesQuestionsAnswers->id;
+            }
+        }
+        $ques['choices'] = $answser;
+        $ques['correct'] = $correct;
+        $ques['explaination'] = $quizQuestion->correct;
+        array_push($questions, $ques);
+    }
 
-//    $hasBought = false;
+    // interface answers: [quesId => choiceId]
+    $answers = [];
+    if ($isSubmit && !empty($userQuiz->results)) {
+        foreach (json_decode($userQuiz->results) as $question => $result) {
+            $answers[$question] = $result;
+        }
+    }
+
     $score = 0;
 @endphp
 
 
 
-<div x-data="quizApp({{ json_encode($data) }}, {{ json_encode($answers) }}, {{ json_encode($isSubmit) }}, {{ json_encode($hasBought) }}, {{ json_encode($score) }})" class="p-6" id="quiz">
+<div x-data="quizApp({{ json_encode($questions) }}, {{ json_encode($answers) }}, {{ json_encode($isSubmit) }}, {{ json_encode($hasBought) }}, {{ json_encode($score) }})" class="p-6" id="quiz">
 
     <!-- Btn Popup -->
     <x-pages.question-detail.btn-popup />
@@ -91,17 +40,18 @@
 
     <div class="space-y-6">
         {{-- Result --}}
-        <div x-show="isSubmit && isBought" id='result'
-            class="flex border border-primary.main rounded-2xl justify-between p-6 items-center">
-            <p class="font-bold text-3xl text-secondary.main">
-                Your score: <span x-text="score"></span>/{{ count($data) }}
-            </p>
-            <button type="button" @click="retakeQuiz"
-                class="flex items-center gap-2 border border-primary.main py-2 px-5 rounded-2xl">
-                <span class="font-normal text-sm text-primary.main">Retest</span>
-                <x-component.material-icon name='restart_alt' class="w-6 h-6 aspect-square text-primary.main" />
-            </button>
-        </div>
+        @if ($isSubmit && $hasBought)
+            <div id='result' class="flex border border-primary.main rounded-2xl justify-between p-6 items-center">
+                <p class="font-bold text-3xl text-secondary.main">
+                    Your score: <span x-text="score"></span>/{{ count($questions) }}
+                </p>
+                <button type="button" @click="retakeQuiz"
+                    class="flex items-center gap-2 border border-primary.main py-2 px-5 rounded-2xl">
+                    <span class="font-normal text-sm text-primary.main">Retest</span>
+                    <x-component.material-icon name='restart_alt' class="w-6 h-6 aspect-square text-primary.main" />
+                </button>
+            </div>
+        @endif
 
         <div>
             <!-- Question -->
@@ -129,11 +79,11 @@
                                                 :class="{
                                                     'text-primary.main': !isSubmit && answers[question.id] ==
                                                         keyChoice,
-                                                    'text-secondary.main': isSubmit && isBought && answers[
+                                                    'text-secondary.main': isSubmit && hasBought && answers[
                                                             question.id] ==
                                                         keyChoice && answers[
                                                             question.id] !== question.correct,
-                                                    'text-success.main': isSubmit && isBought && keyChoice === question
+                                                    'text-success.main': isSubmit && hasBought && keyChoice === question
                                                         .correct
                                                 }">
                                                 <span x-text="orderType[idxChoice]"></span>.
@@ -142,11 +92,11 @@
                                                 :class="{
                                                     'text-primary.main': !isSubmit && answers[question.id] ==
                                                         keyChoice,
-                                                    'text-secondary.main': isSubmit && isBought && answers[
+                                                    'text-secondary.main': isSubmit && hasBought && answers[
                                                             question.id] ==
                                                         keyChoice && answers[
                                                             question.id] !== question.correct,
-                                                    'text-success.main': isSubmit && isBought && keyChoice === question
+                                                    'text-success.main': isSubmit && hasBought && keyChoice === question
                                                         .correct
 
                                                 }">
@@ -157,25 +107,28 @@
                                 </template>
                             </div>
                             {{-- Explaination --}}
-                            <div class="space-y-2 border border-primary.main rounded-lg p-4" x-show="isBought">
-                                <p class="font-semibold text-sm"
-                                    :class="{
-                                        'text-secondary.main': isSubmit && answers[question.id] !== question
-                                            .correct,
-                                        'text-success.main': isSubmit && answers[question.id] === question
-                                            .correct,
-                                    }">
-                                    <span
-                                        x-text="isSubmit && answers[question.id] !== question.correct ? 'Sai' : 'Đúng'"></span>
-                                </p>
-                                <p class="text-base text-primary.main">
-                                    Đáp án đúng - <span
-                                        x-text="orderType[Object.keys(question.choices).indexOf(question.correct)]"></span>
-                                </p>
-                                <p class="text-base text-primary.main">
-                                    Giải thích: <span x-text="question.explaination"></span>
-                                </p>
-                            </div>
+                            @if ($hasBought)
+                                <div class="space-y-2 border border-primary.main rounded-lg p-4">
+                                    <p class="font-semibold text-sm"
+                                        :class="{
+                                            'text-secondary.main': isSubmit && answers[question.id] !== question
+                                                .correct,
+                                            'text-success.main': isSubmit && answers[question.id] === question
+                                                .correct,
+                                        }">
+                                        <span
+                                            x-text="isSubmit && answers[question.id] !== question.correct ? 'Sai' : 'Đúng'"></span>
+                                    </p>
+                                    <p class="text-base text-primary.main">
+                                        Đáp án đúng - <span
+                                            x-text="orderType[Object.keys(question.choices).indexOf(question.correct)]"></span>
+                                    </p>
+                                    <p class="text-base text-primary.main">
+                                        Giải thích: <span x-text="question.explaination"></span>
+                                    </p>
+                                </div>
+                            @endif
+
                         </div>
                     </template>
                 </div>
@@ -184,26 +137,26 @@
                     <div class="flex flex-col items-center space-y-3">
                         <form method="post" action="/course/direct-payment">
                             @csrf
-                             <input class="hidden" type="number" name="item_id" value="{{ $webinar->id }}">
+                            <input class="hidden" type="number" name="item_id" value="{{ $webinar->id }}">
                             <input class="hidden" type="text" name="item_name" value="webinar_id">
                             @if (auth()->user())
                                 <button type="submit"
                                     class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                    {{-- <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span> --}}
-                                    <span>{{ trans('course.Read more') }} {{ handlePrice($webinar->price) }}</span>
+                                    {{-- <span>{{ trans('Nhận kết quả') }} ({{ handlePrice($course->price) }})</span> --}}
+                                    <span>{{ trans('Nhận kết quả') }} {{ handlePrice($webinar->price) }}</span>
                                     <x-component.material-icon name="arrow_downward" />
                                 </button>
                             @else
                                 <button type="button" onclick="showModalAuth()"
                                     class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                    <span>{{ trans('course.Read more') }} {{ handlePrice($webinar->price) }}</span>
+                                    <span>{{ trans('Nhận kết quả') }} {{ handlePrice($webinar->price) }}</span>
                                     <x-component.material-icon name="arrow_downward" />
                                 </button>
                             @endif
 
                         </form>
                         <p class="font-normal text-sm text-text.light.secondary">
-                            {{ trans('course.Đăng ký để nhận kết quả') }}
+                            {{ trans('Đăng ký để nhận kết quả') }}
                         </p>
                     </div>
                 @endif
@@ -224,7 +177,7 @@
 </div>
 
 <script>
-    function quizApp(questions, answers, isSubmit, isBought, score) {
+    function quizApp(questions, answers, isSubmit, hasBought, score) {
         return {
             orderType: ['A', 'B', 'C', 'D'],
             showModal: false,
@@ -232,7 +185,7 @@
             questions: questions,
             answers: answers || {},
             isSubmit: isSubmit || false,
-            isBought: isBought || false,
+            hasBought: hasBought || false,
             score: score || 0,
             submitQuiz() {
                 this.showSubmitModal = false;
@@ -245,7 +198,8 @@
                         'answers': this.answers
                     },
                     success: function(response) {
-                        alert('Quiz updated successfully');
+                        this.isSubmit = true;
+                        location.reload();
                         // Xử lý sau khi cập nhật thành công
                     },
                     error: function(xhr) {
@@ -255,9 +209,11 @@
                 });
             },
             retakeQuiz() {
-                // Refresh Answers in BE
-                // isSubmit false
-                // shuffle question and choice
+                this.isSubmit = false;
+                this.answers = {};
+                this.questions = shuffle(this.question);
+                this.score = 0;
+                // Handle Ajax here
             }
         };
     }

@@ -24,21 +24,19 @@
             <div class="space-y-6">
                 <h3 class="text-3xl text-text.light.primary text-center">Questions</h3>
                 <div class="flex flex-wrap gap-2">
-                    <template x-for="(item, index) in questions" :key="index">
-                        <a :href="'#question' + index" @click="showModal = false">
+                    <template x-for="(question, idxQues) in questions" :key="idxQues">
+                        <a :href="'#question' + idxQues" @click="showModal = false">
                             <div class="rounded-full border w-8 h-8 flex justify-center items-center aspect-square border-text.light.primary"
                                 :class="{
-                                    'border-none bg-primary.main': answers[index],
-                                    'border-none bg-secondary.main': isSubmit && parseInt(answers[index]) !== item
-                                        .correct,
-                                    'border-none bg-success.main': isSubmit && parseInt(answers[index]) === item
-                                        .correct,
-
-
+                                    'border-none bg-primary.main': answers[question.id],
+                                    'border-none bg-secondary.main': isSubmit && hasBought && parseInt(answers[
+                                        question.id]) !== question.correct,
+                                    'border-none bg-success.main': isSubmit && hasBought && parseInt(answers[question.id]) ===
+                                    question.correct,
                                 }">
-                                <span class="font-semibold text-sm text-text.light.primary" x-text="index + 1"
+                                <span class="font-semibold text-sm text-text.light.primary" x-text="idxQues + 1"
                                     :class="{
-                                        'text-white': answers[index]
+                                        'text-white': answers[question.id]
                                     }">
                                 </span>
                             </div>

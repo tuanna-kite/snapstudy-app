@@ -32,7 +32,8 @@
                 <div class="max-w-[960px] mx-auto space-y-16">
                     {{--  Content  --}}
                     <div class="space-y-6 mx-auto">
-                        <x-pages.question-detail.quiz :quizQuestions="$quizQuestions" :totalQuestionsCount="$totalQuestionsCount" :quiz="$quiz"/>
+                        <x-pages.question-detail.quiz :quizQuestions="$quizQuestions" :totalQuestionsCount="$totalQuestionsCount"
+                                                      :quiz="$quiz" :isSubmit="$isSubmit" :userQuiz="$userQuiz" :webinar="$webinar" :hasBought="$hasBought"/>
                     </div>
                 </div>
             </div>

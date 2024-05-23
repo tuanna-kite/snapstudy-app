@@ -70,21 +70,20 @@
 //            'explaination' => ' Bởi vì câu này ngắn nhất',
 //        ],
 //    ];
+     $answers = [];
+     if($hasBought && $isSubmit && !empty($userQuiz->results)){
+         foreach (json_decode($userQuiz->results) as $question => $result){
+             $answers[$question] = $result;
+         }
+     }
 
-    $answers = [
-//        'idques1' => 'idanswer3',
-//        'idques2' => 'idanswer2',
-//        'idques3' => 'idanswer2',
-    ];
-
-    $isSubmit = false;
-    $isBought = false;
+//    $hasBought = false;
     $score = 0;
 @endphp
 
 
 
-<div x-data="quizApp({{ json_encode($data) }}, {{ json_encode($answers) }}, {{ json_encode($isSubmit) }}, {{ json_encode($isBought) }}, {{ json_encode($score) }})" class="p-6" id="quiz">
+<div x-data="quizApp({{ json_encode($data) }}, {{ json_encode($answers) }}, {{ json_encode($isSubmit) }}, {{ json_encode($hasBought) }}, {{ json_encode($score) }})" class="p-6" id="quiz">
 
     <!-- Btn Popup -->
     <x-pages.question-detail.btn-popup />
@@ -181,23 +180,23 @@
                     </template>
                 </div>
                 {{-- Buy Btn --}}
-                @if ($isSubmit && !$isBought)
+                @if ($isSubmit && !$hasBought)
                     <div class="flex flex-col items-center space-y-3">
                         <form method="post" action="/course/direct-payment">
                             @csrf
-                            {{-- <input class="hidden" type="number" name="item_id" value="{{ $course->id }}"> --}}
+                             <input class="hidden" type="number" name="item_id" value="{{ $webinar->id }}">
                             <input class="hidden" type="text" name="item_name" value="webinar_id">
                             @if (auth()->user())
                                 <button type="submit"
                                     class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
                                     {{-- <span>{{ trans('course.Read more') }} ({{ handlePrice($course->price) }})</span> --}}
-                                    <span>{{ trans('course.Read more') }} 1000k</span>
+                                    <span>{{ trans('course.Read more') }} {{ handlePrice($webinar->price) }}</span>
                                     <x-component.material-icon name="arrow_downward" />
                                 </button>
                             @else
                                 <button type="button" onclick="showModalAuth()"
                                     class="rounded-lg py-3 px-5 text-white bg-primary.main flex gap-2">
-                                    <span>{{ trans('course.Read more') }} 1000k</span>
+                                    <span>{{ trans('course.Read more') }} {{ handlePrice($webinar->price) }}</span>
                                     <x-component.material-icon name="arrow_downward" />
                                 </button>
                             @endif
@@ -237,13 +236,13 @@
             score: score || 0,
             submitQuiz() {
                 this.showSubmitModal = false;
-                console.log(answers);
+                console.log(this.answers);
                 $.ajax({
                     url: '{{ route('quizzes.result', ['id' => $quiz->id]) }}',
                     type: 'POST',
                     data: {
                         '_token': '{{ csrf_token() }}',
-                        'answers': answers
+                        'answers': this.answers
                     },
                     success: function(response) {
                         alert('Quiz updated successfully');

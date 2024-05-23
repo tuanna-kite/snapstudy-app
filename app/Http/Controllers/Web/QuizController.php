@@ -464,27 +464,16 @@ class QuizController extends Controller
             }
 
 
-            $userQuizDone = QuizzesResult::where('quiz_id', $quiz->id)
+            $userQuiz = QuizzesResult::where('quiz_id', $quiz->id)
                 ->where('user_id', $user->id)
-                ->get();
-
-            $status_pass = false;
-            foreach ($userQuizDone as $result) {
-                if ($result->status == QuizzesResult::$passed) {
-                    $status_pass = true;
-                }
+                ->orderBy('id', 'desc')
+                ->first();
+            $isSubmit = false;
+            if ($userQuiz) {
+                $isSubmit = true;
             }
 
-            if (!isset($quiz->attempt) or ($userQuizDone->count() < $quiz->attempt and !$status_pass)) {
-//                $newQuizStart = QuizzesResult::create([
-//                    'quiz_id' => $quiz->id,
-//                    'user_id' => $user->id,
-//                    'results' => '',
-//                    'user_grade' => 0,
-//                    'status' => 'waiting',
-//                    'created_at' => time()
-//                ]);
-
+            if ($quiz) {
                 $quizQuestionsQuery = QuizzesQuestion::query()
                     ->where('quiz_id', $quiz->id)
                     ->with('quizzesQuestionsAnswers');
@@ -509,8 +498,8 @@ class QuizController extends Controller
                     'quiz' => $quiz,
                     'webinar' => $webinar,
                     'quizQuestions' => $quizQuestions,
-                    'attempt_count' => $userQuizDone->count() + 1,
-//                    'newQuizStart' => $newQuizStart,
+                    'isSubmit' => $isSubmit,
+                    'userQuiz' => $userQuiz,
                     'totalQuestionsCount' => $totalQuestionsCount,
                     'hasBought' => $hasBought,
                 ];
@@ -543,65 +532,51 @@ class QuizController extends Controller
 
         if ($quiz) {
             $results = $request->get('answers');
-//            $results = $request->get('question');
             $quizResultId = $newQuizStart->id;
 
             if (!empty($quizResultId)) {
-
                 $quizResult = QuizzesResult::where('id', $quizResultId)
                     ->where('user_id', $user->id)
                     ->first();
 
                 if (!empty($quizResult)) {
-
                     $passMark = $quiz->pass_mark;
                     $totalMark = 0;
                     $status = '';
 
                     if (!empty($results)) {
                         foreach ($results as $questionId => $result) {
-                            dd($questionId);
-                            if (!is_array($result)) {
+                            if (empty($result)) {
                                 unset($results[$questionId]);
-
                             } else {
-
                                 $question = QuizzesQuestion::where('id', $questionId)
                                     ->where('quiz_id', $quiz->id)
                                     ->first();
 
-                                if ($question and !empty($result['answer'])) {
-                                    $answer = QuizzesQuestionsAnswer::where('id', $result['answer'])
+                                if ($questionId and $result) {
+                                    $answer = QuizzesQuestionsAnswer::where('id', $result)
                                         ->where('question_id', $question->id)
                                         ->where('creator_id', $quiz->creator_id)
                                         ->first();
 
-                                    $results[$questionId]['status'] = false;
-                                    $results[$questionId]['grade'] = $question->grade;
-
                                     if ($answer and $answer->correct) {
-                                        $results[$questionId]['status'] = true;
-                                        $totalMark += (int)$question->grade;
-                                    }
-
-                                    if ($question->type == 'descriptive') {
-                                        $status = 'waiting';
+                                        $totalMark += 1;
                                     }
                                 }
                             }
                         }
                     }
 
-                    $results["attempt_number"] = $request->get('attempt_number');
-
                     $quizResult->update([
                         'results' => json_encode($results),
                         'user_grade' => $totalMark,
-                        'status' => $status,
                         'created_at' => time()
                     ]);
 
-                    dd('Thanh cong');
+                    return response()->json([
+                        'success' => true,
+                        'data' => $quizResult
+                    ]);
                 }
             }
         }

@@ -19,7 +19,7 @@
                         </span>
                     </div>
                 </div>
-                <button type="submit" class="px-4 py-1.5 bg-primary.main rounded-xl">
+                <button type="submit" class="px-4 py-1.5 bg-primary.main rounded-xl min-w-28">
                     <span class="text-white text-sm font-medium">
                         {{ trans('public.send_require') }}
                     </span>

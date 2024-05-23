@@ -6,7 +6,7 @@
             'comment' => trans('home.The most fascinating thing about SNAPS'),
         ],
         [
-            'name' => 'Phu Tho',
+            'name' => 'Mai Phuong',
             'major' => trans('home.Economics & Finance at RMIT'),
             'comment' => trans('home.The most fascinating thing about SNAPS'),
         ],

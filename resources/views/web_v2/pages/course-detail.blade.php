@@ -50,7 +50,7 @@
                     {{-- TODO: open view after handle logic --}}
                     @if ($hasBought)
                         <div>
-                            <x-pages.course-detail.button-support :course="$course"/>
+                            <x-pages.course-detail.button-support :course="$course" />
                         </div>
                     @endif
                 </div>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Scrolled Table of Contents  --}}
+                    {{-- Scroll Btn  --}}
                     @if ($hasBought)
                         <div x-show='scrolled'>
                             <div x-data="{ showModal: false, buttonPosition: { top: 0, right: 0 } }">
@@ -109,15 +109,17 @@
                     {{--  Content  --}}
                     <div class="space-y-6  mx-auto">
                         <h3 class="font-bold text-3xl text-primary.main">
-                            {{ trans('course.Content') }}
+                            {{ trans('course.DETAILED INSTRUCTION') }}
                         </h3>
                         @if (!$hasBought)
+                            {{-- Content Preview --}}
                             <div id="document-content" class="relative">
                                 {!! $docTrans->preview_content !!}
                                 <div class="h-40 w-full absolute bottom-0"
                                     style="background: linear-gradient(360deg, #FFFFFF 0%, rgba(245, 246, 250, 0.1) 100%);">
                                 </div>
                             </div>
+                            {{-- Buy Btn --}}
                             <div class="flex flex-col items-center space-y-3">
                                 <form method="post" action="/course/direct-payment">
                                     @csrf
@@ -139,10 +141,11 @@
 
                                 </form>
                                 <p class="font-normal text-sm text-text.light.secondary">
-                                    {{ trans('course.Documents cannot be previewed') }}
+                                    {{ trans('course.Charge your account to get a detailed instruction for the assignment') }}
                                 </p>
                             </div>
                         @else
+                            {{-- Content Detail --}}
                             <div id="document-content" style="overflow: hidden; max-width: 100vw !important;">
                                 {!! !empty($docTrans) ? $docTrans->content : '' !!}
                             </div>

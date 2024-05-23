@@ -222,10 +222,10 @@ class WebinarController extends Controller
 
         $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
 
-        $quizzes = $course->quizzes->whereNull('chapter_id');
+//        $quizzes = $course->quizzes->whereNull('chapter_id');
 
         if ($user) {
-            $quizzes = $this->checkQuizzesResults($user, $quizzes);
+//            $quizzes = $this->checkQuizzesResults($user, $quizzes);
 
             if (!empty($course->chapters) and count($course->chapters)) {
                 foreach ($course->chapters as $chapter) {
@@ -239,9 +239,9 @@ class WebinarController extends Controller
                 }
             }
 
-            if (!empty($course->quizzes) and count($course->quizzes)) {
-                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
-            }
+//            if (!empty($course->quizzes) and count($course->quizzes)) {
+//                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
+//            }
         }
 
         $pageRobot = getPageRobot('course_show'); // index
@@ -287,7 +287,7 @@ class WebinarController extends Controller
             'sessionsWithoutChapter' => $sessionsWithoutChapter,
             'filesWithoutChapter' => $filesWithoutChapter,
             'textLessonsWithoutChapter' => $textLessonsWithoutChapter,
-            'quizzes' => $quizzes,
+//            'quizzes' => $quizzes,
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
         ];

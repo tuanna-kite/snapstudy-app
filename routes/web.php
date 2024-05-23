@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     });
 
     Route::fallback(function () {
-        return view("errors.404", ['pageTitle' => trans('public.error_404_page_title')]);
+        return view("web_v2.pages.not-found");
     });
 
     // set Locale
@@ -88,6 +88,12 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::get('/', 'HomeController@index')->name('home');
 
     Route::get('/getDefaultAvatar', 'DefaultAvatarController@make');
+
+    Route::group(['prefix' => 'quizzes'], function () {
+        Route::get('/{slug}', 'QuizController@detail')->name('quizzes');
+        Route::post('/{id}/store-result', 'QuizController@quizzesStoreResult')->name('quizzes.result');
+        Route::post('/{id}/destroy-result', 'QuizController@destroyQuizResult')->name('quizzes.destroy');
+    });
 
     Route::group(['prefix' => 'course'], function () {
         Route::get('/{slug}', 'WebinarController@course')->name('course');

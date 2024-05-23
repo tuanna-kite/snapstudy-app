@@ -30,6 +30,7 @@ class Webinar extends Model implements TranslatableContract
     static $webinar = 'webinar';
     static $course = 'course';
     static $textLesson = 'text_lesson';
+    static $quizz = 'quizz';
 
     static $statuses = [
         'active', 'pending', 'is_draft', 'inactive'
@@ -135,7 +136,7 @@ class Webinar extends Model implements TranslatableContract
 
     public function quizzes()
     {
-        return $this->hasMany('App\Models\Quiz', 'webinar_id', 'id');
+        return $this->hasOne('App\Models\Quiz', 'webinar_id', 'id');
     }
 
     public function webinarPartnerTeacher()

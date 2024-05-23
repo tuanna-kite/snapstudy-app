@@ -245,9 +245,16 @@
 
                                             <td>
                                                 @can('admin_quizzes_results')
-                                                    <a href="{{ getAdminPanelUrl() }}/quizzes/{{ $quiz->id }}/results" class="btn-transparent btn-sm text-primary" data-toggle="tooltip" title="{{ trans('admin/main.quiz_results') }}">
-                                                        <i class="fa fa-poll fa-1x"></i>
-                                                    </a>
+                                                    @if($quiz->status == \App\Models\Quiz::INACTIVE)
+                                                        <a href="{{ route('quizzes.approve', ['id' => $quiz->id])  }}" class="btn-transparent btn-sm text-primary" data-toggle="tooltip" title="{{ trans('admin/main.approve') }}">
+                                                            <i class="fa fa-solid fa-check"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('quizzes.unpublish', ['id' => $quiz->id])  }}" class="btn-transparent btn-sm text-primary" data-toggle="tooltip" title="{{ trans('admin/main.unpublish') }}">
+                                                            <i class="fa fa-solid fa-check text-danger"></i>
+                                                        </a>
+                                                    @endif
+
                                                 @endcan
 
                                                 @can('admin_quizzes_edit')

@@ -17,9 +17,9 @@ return [
     // Course Detail
     'Table of Contents' => 'Mục lục',
     'Registed' => 'Đã đăng ký',
-    'Content' => 'Nội dung',
+    'DETAILED INSTRUCTION' => 'HƯỚNG DẪN CHI TIẾT',
     'Read more' => 'Đọc thêm',
-    'Documents cannot be previewed' => 'Tài liệu không thể xem trước. Để xem đầy đủ, bạn cần phải thanh toán phí',
+    'Charge your account to get a detailed instruction for the assignment' => 'Nạp phí tài khoản của bạn để nhận được hướng dẫn chi tiết cho bài tập',
     'School' => 'Trường học',
     'Search outline' => 'Tìm kiếm tóm tắt',
     'Buy now' => 'Mua ngay',

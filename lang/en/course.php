@@ -18,9 +18,9 @@ return [
     // Course Detail
     'Table of Contents' => 'Table of Contents',
     'Registed' => 'Registed',
-    'Content' => 'Content',
+    'DETAILED INSTRUCTION' => 'DETAILED INSTRUCTION',
     'Read more' => 'Read more',
-    'Documents cannot be previewed' => 'Documents cannot be previewed. To view them in full, you need to pay a fee',
+    'Charge your account to get a detailed instruction for the assignment' => 'Charge your account to get a detailed instruction for the assignment',
     'School' => 'School',
     'Search outline' => 'Search outline',
     'Buy now' => 'Buy now',

@@ -37,7 +37,7 @@
     <ul x-show.transition="open" @click.away="open = false"
         class="absolute z-10 bg-white mt-6 rounded-xl overflow-hidden shadow-lg w-40 flex flex-col">
         @foreach ($localLanguage as $language => $languageName)
-            <li class="flex-1 hover:bg-gray-400">
+            <li class="flex-1 hover:bg-gray-200">
                 <form action="{{ route('appLocaleRoute') }}" method="POST" class="mb-0">
                     @csrf
                     <input type="hidden" name="locale" value="{{ $language }}">

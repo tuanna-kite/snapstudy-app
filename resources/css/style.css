@@ -52,3 +52,7 @@ div {
     overflow: auto;
     white-space: nowrap;
 }
+
+input[type='radio'] {
+    accent-color: #032482;
+}

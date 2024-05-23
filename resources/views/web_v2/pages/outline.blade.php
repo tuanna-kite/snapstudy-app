@@ -3,15 +3,7 @@
 @section('title', 'Outline Page')
 
 @php
-$outline_type = [
-        'name' => 'Outline',
-        ];
-$exam_type = [
-        'name' => 'Exam',
-        ];
-$question_type = [
-        'name' => 'Question',
-        ];
+    $listTab = [trans('home.Outline'), trans('home.Exam'), trans('home.Question')];
 @endphp
 
 @section('content')
@@ -23,13 +15,23 @@ $question_type = [
                     {{ !empty($subject) ? $subject->title : '' }}
                 </h1>
                 <div class="w-full md:max-w-80">
-                    <x-search.search-outline/>
+                    <x-search.search-outline />
                 </div>
             </div>
             {{-- Content --}}
-            <x-pages.outline.card :type="$outline_type" :outlines="$outlines"/>
-            <x-pages.outline.card :type="$exam_type" :outlines="$exams"/>
-            <x-pages.outline.card :type="$question_type" :outlines="$questions"/>
+            <div class="rounded-3xl bg-white">
+                <x-pages.outline.tab :listTab="$listTab">
+                    <x-slot name="tab1">
+                        <x-pages.outline.card :outlines="$outlines" />
+                    </x-slot>
+                    <x-slot name="tab2">
+                        <x-pages.outline.card :outlines="$exams" />
+                    </x-slot>
+                    <x-slot name="tab3">
+                        <x-pages.outline.card :outlines="$quizzes" />
+                    </x-slot>
+                </x-pages.outline.tab>
+            </div>
         </div>
     </x-layouts.home-layout>
 @endsection

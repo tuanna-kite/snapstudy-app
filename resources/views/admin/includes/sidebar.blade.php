@@ -133,14 +133,14 @@
                 </li>
             @endcan() --}}
 
-            {{-- @can('admin_quizzes')
+            @can('admin_quizzes')
                 <li class="{{ (request()->is(getAdminPanelUrl('/quizzes*', false))) ? 'active' : '' }}">
                     <a class="nav-link " href="{{ getAdminPanelUrl() }}/quizzes">
                         <i class="fas fa-file"></i>
                         <span>{{ trans('admin/main.quizzes') }}</span>
                     </a>
                 </li>
-            @endcan() --}}
+            @endcan()
 
             {{-- @can('admin_certificate')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/certificates*', false))) ? 'active' : '' }}">

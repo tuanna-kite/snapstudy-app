@@ -185,6 +185,7 @@ class QuizController extends Controller
             'title' => 'required|max:255',
             'seo_description' => 'required|max:500',
             'price' => 'required',
+            'category_id' => 'required',
 //            'webinar_id' => 'required|exists:webinars,id',
 //            'pass_mark' => 'required',
         ];
@@ -208,7 +209,7 @@ class QuizController extends Controller
                     str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
             'teacher_id' => $data['teacher_id'],
             'creator_id' => $data['creator_id'],
-//            'category_id' => $data['category_id'],
+            'category_id' => $data['category_id'],
             'thumbnail' => $data['thumbnail'] ?? null,
             'price' => $data['price'],
             'status' => Webinar::$pending,
@@ -349,7 +350,6 @@ class QuizController extends Controller
     {
         $quiz = Quiz::query()->findOrFail($id);
         $user = $quiz->creator;
-        $quizQuestionsCount = $quiz->quizQuestions->count();
 
         $data = $request->get('ajax')[$id];
         $locale = $data['locale'] ?? getDefaultLocale();
@@ -358,7 +358,7 @@ class QuizController extends Controller
             'title' => 'required|max:255',
             'seo_description' => 'required|max:500',
             'price' => 'required',
-            'display_number_of_questions' => 'required_if:display_limited_questions,on|nullable|between:1,' . $quizQuestionsCount
+            'category_id' => 'required',
         ];
 
         $validate = Validator::make($data, $rules);
@@ -388,7 +388,7 @@ class QuizController extends Controller
         $webinar->update([
             'slug' => $data['slug'],
             'price' => $data['price'],
-            'category_id' => $data['category_id'] ?? null,
+            'category_id' => $data['category_id'],
             'updated_at' => time(),
         ]);
 

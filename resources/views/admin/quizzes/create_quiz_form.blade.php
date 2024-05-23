@@ -56,19 +56,19 @@
 {{--                    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" value="{{ $selectedWebinar->id }}">--}}
 {{--                @endif--}}
 
-                @if(!empty($quiz))
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('public.chapter') }}</label>
-                        <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][chapter_id]" class="js-ajax-chapter_id form-control">
-                            @foreach($chapters as $ch)
-                                <option value="{{ $ch->id }}" {{ ($quiz->chapter_id == $ch->id) ? 'selected' : '' }}>{{ $ch->title }}</option>
-                            @endforeach
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                @else
-                    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][chapter_id]" value="" class="chapter-input">
-                @endif
+{{--                @if(!empty($quiz))--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label class="input-label">{{ trans('public.chapter') }}</label>--}}
+{{--                        <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][chapter_id]" class="js-ajax-chapter_id form-control">--}}
+{{--                            @foreach($chapters as $ch)--}}
+{{--                                <option value="{{ $ch->id }}" {{ ($quiz->chapter_id == $ch->id) ? 'selected' : '' }}>{{ $ch->title }}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                        <div class="invalid-feedback"></div>--}}
+{{--                    </div>--}}
+{{--                @else--}}
+{{--                    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][chapter_id]" value="" class="chapter-input">--}}
+{{--                @endif--}}
 
                 <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][teacher_id]" value="{{ Auth::user()->id }}"
                        id="">
@@ -114,8 +114,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="input-label">{{ trans('public.choose_major') }}</label>
-                    <select id="subject" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][category_id]" class="form-control {{ !empty($quiz) ? 'js-edit-content-category_id' : '' }}">
+                    <label class="input-label">{{ trans('public.choose_subject') }}</label>
+                    <select id="subject" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][category_id]" class="form-control js-ajax-category_id {{ !empty($quiz) ? 'js-edit-content-category_id' : '' }}">
                         <option {{ !empty($quiz) ? '' : 'selected' }} disabled>
                             {{ trans('public.choose_subject') }}</option>
                     </select>
@@ -149,21 +149,21 @@
                     <p class="font-12 text-gray mt-1">{{ trans('update.quiz_expiry_days_hint') }}</p>
                 </div>
 
-                @if(!empty($quiz))
-                    <div class="form-group mt-4 d-flex align-items-center justify-content-between">
-                        <label class="cursor-pointer input-label" for="displayLimitedQuestionsSwitch{{ $quiz->id }}">{{ trans('update.display_limited_questions') }}</label>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][display_limited_questions]" class="js-ajax-display_limited_questions custom-control-input" id="displayLimitedQuestionsSwitch{{ $quiz->id }}" {{ ($quiz->display_limited_questions) ? 'checked' : ''}}>
-                            <label class="custom-control-label" for="displayLimitedQuestionsSwitch{{ $quiz->id }}"></label>
-                        </div>
-                    </div>
+{{--                @if(!empty($quiz))--}}
+{{--                    <div class="form-group mt-4 d-flex align-items-center justify-content-between">--}}
+{{--                        <label class="cursor-pointer input-label" for="displayLimitedQuestionsSwitch{{ $quiz->id }}">{{ trans('update.display_limited_questions') }}</label>--}}
+{{--                        <div class="custom-control custom-switch">--}}
+{{--                            <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][display_limited_questions]" class="js-ajax-display_limited_questions custom-control-input" id="displayLimitedQuestionsSwitch{{ $quiz->id }}" {{ ($quiz->display_limited_questions) ? 'checked' : ''}}>--}}
+{{--                            <label class="custom-control-label" for="displayLimitedQuestionsSwitch{{ $quiz->id }}"></label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="form-group js-display-limited-questions-count-field {{ ($quiz->display_limited_questions) ? '' : 'd-none' }}">
-                        <label class="input-label">{{ trans('update.number_of_questions') }} ({{ trans('update.total_questions') }}: {{ $quiz->quizQuestions->count() }})</label>
-                        <input type="number" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][display_number_of_questions]" value="{{ $quiz->display_number_of_questions }}" class="js-ajax-display_number_of_questions form-control " min="1"/>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                @endif
+{{--                    <div class="form-group js-display-limited-questions-count-field {{ ($quiz->display_limited_questions) ? '' : 'd-none' }}">--}}
+{{--                        <label class="input-label">{{ trans('update.number_of_questions') }} ({{ trans('update.total_questions') }}: {{ $quiz->quizQuestions->count() }})</label>--}}
+{{--                        <input type="number" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][display_number_of_questions]" value="{{ $quiz->display_number_of_questions }}" class="js-ajax-display_number_of_questions form-control " min="1"/>--}}
+{{--                        <div class="invalid-feedback"></div>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
 
                 <div class="form-group mt-20 d-flex align-items-center justify-content-between">
                     <label class="cursor-pointer input-label" for="displayQuestionsRandomlySwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('update.display_questions_randomly') }}</label>
@@ -174,21 +174,21 @@
                     <div class="invalid-feedback"></div>
                 </div>
 
-                <div class="form-group mt-4 d-flex align-items-center justify-content-between">
-                    <label class="cursor-pointer" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.certificate_included') }}</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][certificate]" class="custom-control-input" id="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->certificate ? 'checked' : ''}}>
-                        <label class="custom-control-label" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>
-                    </div>
-                </div>
+{{--                <div class="form-group mt-4 d-flex align-items-center justify-content-between">--}}
+{{--                    <label class="cursor-pointer" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.certificate_included') }}</label>--}}
+{{--                    <div class="custom-control custom-switch">--}}
+{{--                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][certificate]" class="custom-control-input" id="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->certificate ? 'checked' : ''}}>--}}
+{{--                        <label class="custom-control-label" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="form-group mt-4 d-flex align-items-center justify-content-between">
-                    <label class="cursor-pointer" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.active_quiz') }}</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][status]" class="custom-control-input" id="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->status ? 'checked' : ''}}>
-                        <label class="custom-control-label" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>
-                    </div>
-                </div>
+{{--                <div class="form-group mt-4 d-flex align-items-center justify-content-between">--}}
+{{--                    <label class="cursor-pointer" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.active_quiz') }}</label>--}}
+{{--                    <div class="custom-control custom-switch">--}}
+{{--                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][status]" class="custom-control-input" id="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->status ? 'checked' : ''}}>--}}
+{{--                        <label class="custom-control-label" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
         </div>

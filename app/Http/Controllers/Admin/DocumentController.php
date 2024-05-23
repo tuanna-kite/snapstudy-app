@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DocumentExport;
 use App\Http\Controllers\Controller;
 use App\Mixins\Financial\MultiCurrency;
 use App\Models\Accounting;
@@ -12,10 +13,11 @@ use App\Models\Sale;
 use App\Models\Webinar;
 use App\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $is_export_excel = false)
     {
         $this->authorize('admin_documents_list');
 
@@ -42,17 +44,32 @@ class DocumentController extends Controller
             $webinarModel = Webinar::where('id', $webinar)->first();
         }
 
-        if (isset($type) && $type !== 'all') {
+        if (isset($type) && $type !== 'all' && $type !== 'spoint') {
             $documents->where('type', $type);
+        }
+        if (isset($type) && $type == 'spoint') {
+            $documents->where('type', 'addiction')
+                ->whereNull('order_item_id')
+            ->where('type_account', 'asset')
+            ->where('store_type', 'automatic');
         }
 
         if (isset($typeAccount) && $typeAccount !== 'all') {
             $documents->where('type_account', $typeAccount);
         }
 
-        $documents = $documents->orderBy('created_at', 'desc')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        if ($is_export_excel){
+            $documents = $documents->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
+                ->get();
+            return  $documents;
+        } else {
+            $documents = $documents->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        }
+
+
 
         $data = [
             'pageTitle' => trans('admin/pages/financial.document_page_title'),
@@ -73,7 +90,7 @@ class DocumentController extends Controller
             'pageTitle' => trans('admin/pages/financial.new_document_page_title'),
             'requestPayment' => RequestPayment::query()->latest()->paginate(5)
         ];
-       
+
         return view('admin.financial.documents.new', $data);
     }
 
@@ -162,9 +179,18 @@ class DocumentController extends Controller
 
         sendNotification('new_financial_document', $notifyOptions, $user->id);
 
-        // return redirect(getAdminPanelUrl() . '/financial/documents');
-        // dd($amount);
-        
         return response()->json(['success' => true]);
+    }
+
+    public function exportExcel(Request $request)
+
+    {
+        $this->authorize('admin_documents_list');
+        $documents = $this->index($request, true);
+
+        $webinarExport = new DocumentExport($documents);
+
+        return Excel::download($webinarExport, 'financial.xlsx');
+
     }
 }

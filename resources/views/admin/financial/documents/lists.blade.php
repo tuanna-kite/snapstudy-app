@@ -78,6 +78,8 @@
                                                 @if(request()->get('type',null) == 'addiction') selected="selected" @endif>{{ trans('admin/main.addiction') }}</option>
                                         <option value="deduction"
                                                 @if(request()->get('type',null) == 'deduction') selected="selected" @endif>{{ trans('admin/main.deduction') }}</option>
+                                        <option value="spoint"
+                                                @if(request()->get('type_account',null) == 'spoint') selected="selected" @endif>{{ trans('admin/main.spoints') }}</option>
 
                                     </select>
                                 </div>
@@ -92,7 +94,6 @@
                                                 @if(request()->get('type_account',null) == 'asset') selected="selected" @endif>{{ trans('admin/main.asset') }}</option>
                                         <option value="income"
                                                 @if(request()->get('type_account',null) == 'income') selected="selected" @endif>{{ trans('admin/main.income') }}</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -110,7 +111,7 @@
 
             <div class="d-flex align-items-center justify-content-between">
 
-                <a href="" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                <a href="{{ getAdminPanelUrl() }}/financial/documents/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
             </div>
 
             <div class="row">
@@ -143,8 +144,12 @@
                                                         @endif
 
                                                         @if(!empty($document->webinar_id))
-                                                            @if(!$document->is_cashback)
+                                                            @if(!$document->is_cashback && !$document->is_personalization)
                                                                 <span class="d-block font-weight-bold">{{ trans('admin/main.item_purchased') }}</span>
+                                                            @endif
+
+                                                            @if($document->is_personalization)
+                                                                <span class="d-block font-weight-bold">{{ trans('course.Syllabus support') }}</span>
                                                             @endif
 
                                                             <a href="{{ !empty($document->webinar) ? $document->webinar->getUrl() : '' }}"

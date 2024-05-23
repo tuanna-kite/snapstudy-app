@@ -24,6 +24,7 @@ use App\PaymentChannels\ChannelManager;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UploadFileManager ;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -114,7 +115,7 @@ class PersonalizationController extends Controller
         $user = auth()->user();
         $userId = $user->id;
         $gateway = $request->input('gateway');
-        $amount = $request->input('amount', 10);
+        $amount = $request->input('amount', 60);
         $orderId = $request->input('order_id')."-".time();
 
         $order = Order::where('id', $orderId)
@@ -122,10 +123,9 @@ class PersonalizationController extends Controller
             ->first();
 
         if ($gateway === 'credit') {
-            if ($user->getAccountingCharge() < $order->total_amount) {
+            if ($user->getAccountingCharge() < $amount) {
                 $order->update(['status' => Order::$fail]);
-                session()->put($this->order_session_key, $order->id);
-                return redirect('/payments/status');
+                return view('web.default.pages.failCheckout');
             }
 
             $order->update([
@@ -154,10 +154,14 @@ class PersonalizationController extends Controller
                     'user_id' => $getUser->id,
                 ]);
             }
-
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if($orderItem){
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect(route('course', ['slug' => $webinar->slug]));
+            }
             return redirect('/payments/status');
         } elseif ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC') {
-            $respone = $this->payment($orderId, $gateway, $order->total_amount);
+            $respone = $this->payment($orderId, $gateway, $amount);
             if ($respone['resultCode'] == 0) {
                 return redirect()->to($respone['payUrl']);
             } else {
@@ -204,7 +208,7 @@ class PersonalizationController extends Controller
         }
     }
 
-    public function paypalPayment($order, $amount)
+    public function payment($orderId, $gateway, $total_amount)
     {
 
         $provider = new PayPalClient;
@@ -281,21 +285,15 @@ class PersonalizationController extends Controller
             }
             return redirect('/payments/status');
         }
-        return redirect()->route('support.tickets');
+        return redirect()->route('paypal.cancel');
     }
 
     public function setPaymentAccounting($order, $type = null, $requestId = null)
     {
         $cashbackAccounting = new CashbackAccounting();
-
-        if ($order->is_charge_account) {
-            Accounting::charge($order, $requestId);
-
-            $cashbackAccounting->rechargeWallet($order);
-        } else {
-            foreach ($order->orderItems as $orderItem) {
+        foreach ($order->orderItems as $orderItem) {
                 $sale = Sale::createSales($orderItem, $order->payment_method);
-                $acc = Accounting::create([
+                Accounting::create([
                     'user_id' => $orderItem->user_id,
                     'order_item_id' => $orderItem->id,
                     'amount' => 60,
@@ -315,82 +313,89 @@ class PersonalizationController extends Controller
                     'is_personalization' => 1,
                 ]);
 
+                Accounting::create([
+                    'user_id' => $orderItem->user_id,
+                    'order_item_id' => $orderItem->id,
+                    'amount' => 60,
+                    'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
+                    'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
+                    'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
+                    'subscribe_id' => $orderItem->subscribe_id ?? null,
+                    'promotion_id' => $orderItem->promotion_id ?? null,
+                    'registration_package_id' => $orderItem->registration_package_id ?? null,
+                    'installment_payment_id' => $orderItem->installment_payment_id ?? null,
+                    'product_id' => $orderItem->product_id ?? null,
+                    'gift_id' => $orderItem->gift_id ?? null,
+                    'type' => Accounting::$deduction,
+                    'type_account' => Accounting::$asset,
+                    'description' => trans('course.Syllabus support'),
+                    'created_at' => time(),
+                    'is_personalization' => 1,
+                ]);
+
                 if (!empty($orderItem->product_id)) {
                     $this->updateProductOrder($sale, $orderItem);
                 }
             }
-        }
 
         Cart::emptyCart($order->user_id);
     }
 
 
-    public function setPaymentAccounting_v2($order, $type = null, $amount = null)
+    public function setPaymentAccounting_v2($order, $type = null, $amount = null, $requestId = null)
     {
         $cashbackAccounting = new CashbackAccounting();
 
-        if ($order->is_charge_account) {
-            Accounting::charge($order);
-
-        } else {
             foreach ($order->orderItems as $orderItem) {
-                $sale = Sale::createSales($orderItem, $order->payment_method);
+                $seller_id = OrderItem::getSeller($orderItem);
+                $sale = Sale::create([
+                    'buyer_id' => $orderItem->user_id,
+                    'seller_id' => $seller_id,
+                    'order_id' => $orderItem->order_id,
+                    'webinar_id' => (empty($orderItem->gift_id) and !empty($orderItem->webinar_id)) ? $orderItem->webinar_id : null,
+                    'bundle_id' => (empty($orderItem->gift_id) and !empty($orderItem->bundle_id)) ? $orderItem->bundle_id : null,
+                    'meeting_id' => !empty($orderItem->reserve_meeting_id) ? $orderItem->reserveMeeting->meeting_id : null,
+                    'meeting_time_id' => !empty($orderItem->reserveMeeting) ? $orderItem->reserveMeeting->meeting_time_id : null,
+                    'subscribe_id' => $orderItem->subscribe_id,
+                    'promotion_id' => $orderItem->promotion_id,
+                    'registration_package_id' => $orderItem->registration_package_id,
+                    'product_order_id' => (!empty($orderItem->product_order_id)) ? $orderItem->product_order_id : null,
+                    'installment_payment_id' => $orderItem->installment_payment_id ?? null,
+                    'gift_id' => $orderItem->gift_id ?? null,
+                    'type' => 'personalization',
+                    'payment_method' => $order->payment_method,
+                    'amount' => $orderItem->amount,
+                    'tax' => $orderItem->tax_price,
+                    'commission' => $orderItem->commission_price,
+                    'discount' => $orderItem->discount,
+                    'total_amount' => $orderItem->total_amount,
+                    'product_delivery_fee' => $orderItem->product_delivery_fee,
+                    'created_at' => time(),
+                ]);
+                Accounting::create([
+                    'user_id' => $orderItem->user_id,
+                    'order_item_id' => $orderItem->id,
+                    'amount' => 999000,
+                    'webinar_id' => !empty($orderItem->webinar_id) ? $orderItem->webinar_id : null,
+                    'bundle_id' => !empty($orderItem->bundle_id) ? $orderItem->bundle_id : null,
+                    'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
+                    'subscribe_id' => $orderItem->subscribe_id ?? null,
+                    'promotion_id' => $orderItem->promotion_id ?? null,
+                    'registration_package_id' => $orderItem->registration_package_id ?? null,
+                    'installment_payment_id' => $orderItem->installment_payment_id ?? null,
+                    'product_id' => $orderItem->product_id ?? null,
+                    'gift_id' => $orderItem->gift_id ?? null,
+                    'type' => Accounting::$deduction,
+                    'type_account' => Accounting::$asset,
+                    'description' => trans('course.Syllabus support'),
+                    'created_at' => time(),
+                    'is_personalization' => 1,
+                ]);
 
-                if (!empty($orderItem->reserve_meeting_id)) {
-                    $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
-                    $reserveMeeting->update([
-                        'sale_id' => $sale->id,
-                        'reserved_at' => time()
-                    ]);
-
-                    $reserver = $reserveMeeting->user;
-
-                    if ($reserver) {
-                        $this->handleMeetingReserveReward($reserver);
-                    }
-                }
-
-                if (!empty($orderItem->gift_id)) {
-                    $gift = $orderItem->gift;
-
-                    $gift->update([
-                        'status' => 'active'
-                    ]);
-
-                    $gift->sendNotificationsWhenActivated($orderItem->total_amount);
-                }
-
-                if (!empty($orderItem->subscribe_id)) {
-                    Accounting::createAccountingForSubscribe($orderItem, $type);
-                } elseif (!empty($orderItem->promotion_id)) {
-                    Accounting::createAccountingForPromotion($orderItem, $type);
-                } elseif (!empty($orderItem->registration_package_id)) {
-                    Accounting::createAccountingForRegistrationPackage($orderItem, $type);
-
-                    if (!empty($orderItem->become_instructor_id)) {
-                        BecomeInstructor::where('id', $orderItem->become_instructor_id)
-                            ->update([
-                                'package_id' => $orderItem->registration_package_id
-                            ]);
-                    }
-                } elseif (!empty($orderItem->installment_payment_id)) {
-                    Accounting::createAccountingForInstallmentPayment($orderItem, $type);
-
-                    $this->updateInstallmentOrder($orderItem, $sale);
-                } else {
-                    // webinar and meeting and product and bundle
-
-                    Accounting::createAccounting($orderItem, $type, $amount);
-                    TicketUser::useTicket($orderItem);
-
-                    if (!empty($orderItem->product_id)) {
-                        $this->updateProductOrder($sale, $orderItem);
-                    }
+                if (!empty($orderItem->product_id)) {
+                    $this->updateProductOrder($sale, $orderItem);
                 }
             }
-            // Set Cashback Accounting For All Order Items
-            $cashbackAccounting->setAccountingForOrderItems($order->orderItems);
-        }
 
         Cart::emptyCart($order->user_id);
     }

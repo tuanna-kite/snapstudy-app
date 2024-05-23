@@ -1057,10 +1057,10 @@ class WebinarController extends Controller
         $query = Sale::query()
             ->where(function ($query) use ($user, $giftsIds) {
                 $query->where('sales.buyer_id', $user->id)
-                ->where(function ($query) use ($giftsIds) {
-                    $query->whereNotNull('sales.webinar_id')
-                        ->orWhereNotNull('sales.bundle_id');
-                });
+                    ->where(function ($query) use ($giftsIds) {
+                        $query->whereNotNull('sales.webinar_id')
+                            ->orWhereNotNull('sales.bundle_id');
+                    });
                 // $query->orWhereIn('sales.gift_id', $giftsIds);
             })
             ->whereNull('sales.refund_at')
@@ -1118,6 +1118,7 @@ class WebinarController extends Controller
                     ]);
                 }
             ])
+            ->groupBy('webinar_id')
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 

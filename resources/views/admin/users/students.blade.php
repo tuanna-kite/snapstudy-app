@@ -74,6 +74,66 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon">
+                        <i class="fas fa-money"></i></div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{ trans('admin/main.total_purchase_price') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ handlePrice($totalPurchasedsSum) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon">
+                        <i class="fas fa-money"></i></div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{ trans('admin/main.total_price') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ handlePrice($totalAccountingBalance + $totalPurchasedsSum) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon">
+                        <i class="fas fa-money"></i></div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{ trans('admin/main.classes') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $totalPurchasedsCnt }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon">
+                        <i class="fas fa-money"></i></div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{ trans('admin/main.wallet_charge') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ handlePrice($totalAccountingBalance) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <section class="card">
@@ -179,7 +239,7 @@
                     </div>
                 </form>
             </div>
-        </section> 
+        </section>
     </div>
 
     <div class="card">
@@ -192,7 +252,7 @@
                     @php
                         $countUser = $users->total();
                     @endphp
-                    <strong> {{__('home.Total results') }} : {{$countUser}}</strong>   
+                    <strong> {{__('home.Total results') }} : {{$countUser}}</strong>
                 </div>
         </div>
 
@@ -206,7 +266,12 @@
                         <th>{{ trans('admin/main.total_purchase_price') }}</th>
                         <th>{{ trans('admin/main.total_price') }}</th>
                         <th>{{ trans('admin/main.classes') }}</th>
-                        <th>{{ trans('admin/main.wallet_charge') }}</th>
+                        <th>
+                            <a href="{{ route('admin.student', array_merge(request()->except('sort_order'), ['sort_order' => empty(request()->get('sort_order')) ? 'desc' : (request()->get('sort_order') == 'asc' ? 'desc' : 'asc')])) }}">
+                                {{ trans('admin/main.wallet_charge') }} @if (request()->get('sort_order') == 'asc' || empty(request()->get('sort_order')) ) (▲) @elseif (request()->get('sort_order') == 'desc') (▼) @endif
+                            </a>
+
+                        </th>
                         <th>{{ trans('admin/main.income') }}</th>
                         <th>{{ trans('admin/main.user_group') }}</th>
                         <th>{{ trans('admin/main.register_date') }}</th>

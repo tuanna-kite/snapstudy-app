@@ -136,7 +136,7 @@ class AccountingController extends Controller
         $gateway = $request->input('gateway');
         $amount = (str_replace(',', '', $amount));
 
-        if ($gateway == 'momopay'){
+        if ($gateway === 'captureWallet' || $gateway === 'payWithATM' || $gateway === 'payWithCC'){
             $respone = $this->payment_momo($amount, $gateway);
             if ($respone['resultCode'] == 0) {
                 return redirect()->away($respone['payUrl']);

@@ -73,7 +73,7 @@
                                 <x-component.material-icon name="expand_less" x-show="openTab === 1" />
                             </div>
                             <div class="table_contents px-6 py-4" x-show="openTab === 1">
-                                {!! $docTrans->table_contents !!}
+                                {!! !empty($docTrans) ? $docTrans->table_contents : '' !!}
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                     <div class="table_contents bg-white p-6">
                                         <h3 class="text-lg my-4 font-semibold">{{ trans('course.Table of Contents') }}</h3>
                                         <!-- Modal content -->
-                                        {!! $docTrans->table_contents !!}
+                                        {!! !empty($docTrans) ? $docTrans->table_contents : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                             </div>
                         @else
                             <div id="document-content" style="overflow: hidden; max-width: 100vw !important;">
-                                {!! $docTrans->content !!}
+                                {!! !empty($docTrans) ? $docTrans->content : '' !!}
                             </div>
                         @endif
                     </div>

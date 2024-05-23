@@ -196,6 +196,7 @@ class PaymentController extends Controller
 
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=".$accessKey."&amount=".$amount."&extraData=".$extraData."&ipnUrl=".$ipnUrl."&orderId=".$orderId."&orderInfo=".$orderInfo."&partnerCode=".$partnerCode."&redirectUrl=".$redirectUrl."&requestId=".$requestId."&requestType=".$requestType;
+        Log::info('Payment request signature: ' . $rawHash);
         $signature = hash_hmac("sha256", $rawHash, $serectkey);
         $data = array(
             'partnerCode' => $partnerCode,
@@ -214,6 +215,8 @@ class PaymentController extends Controller
         );
         $result = execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true);
+        Log::info('Payment request requestid: ' . $requestId );
+
         return $jsonResult;
     }
 
@@ -269,6 +272,7 @@ class PaymentController extends Controller
                         ->get();
                     $groupUser = GroupUser::where('user_id', $getUser->id)->first();
 
+                    Log::info('Paymentt checkout order: ' . json_encode($order));
                     if ($groupUser != null) {
                         $groupUser->group_id = $groups->first()->id;
                         $groupUser->save();
@@ -280,6 +284,11 @@ class PaymentController extends Controller
                     }
 
                     session()->put($this->order_session_key, $order->id);
+                    $orderItem = OrderItem::where('order_id', $order->id)->first();
+                    if($orderItem){
+                        $webinar = Webinar::find($orderItem->webinar_id);
+                        return redirect(route('course', ['slug' => $webinar->slug]));
+                    }
                     return redirect('/payments/status');
                 }
 
@@ -457,7 +466,7 @@ class PaymentController extends Controller
                 } else {
                     // webinar and meeting and product and bundle
 
-                    Accounting::createAccounting($orderItem, $type);
+                    Accounting::createAccounting($orderItem, $type, null , $requestId);
                     TicketUser::useTicket($orderItem);
 
                     if (!empty($orderItem->product_id)) {

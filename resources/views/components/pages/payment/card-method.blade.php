@@ -5,7 +5,7 @@
         <input class="radio checked:accent-secondary.main" name="{{ $data['name'] }}" value="{{ $data['value'] }}" type="radio">
     </div>
     <div class="flex flex-col items-center gap-3 pb-6">
-        <img src="{{ $data['img'] }}" class="w-36 h-12" />
+        <img src="{{ $data['img'] }}" class=" h-12" />
         <div class="text-center">
             <p class="font-semibold text-base">
                 {{ $data['title'] }}

@@ -14,7 +14,7 @@
             }
         }
         $ques['choices'] = $answser;
-        $ques['correct'] = $correct;
+        $ques['correct'] = (string) $correct;
         $ques['explaination'] = $quizQuestion->correct;
         array_push($questions, $ques);
     }
@@ -26,8 +26,10 @@
             $answers[$question] = $result;
         }
     }
-
     $score = 0;
+    if ($isSubmit) {
+        $score = $userQuiz->user_grade ?? 0;
+    }
 @endphp
 
 
@@ -79,10 +81,9 @@
                                                 :class="{
                                                     'text-primary.main': !isSubmit && answers[question.id] ==
                                                         keyChoice,
-                                                    'text-secondary.main': isSubmit && hasBought && answers[
-                                                            question.id] ==
-                                                        keyChoice && answers[
-                                                            question.id] !== question.correct,
+                                                    'text-secondary.main': isSubmit && hasBought && answers[question
+                                                            .id] ==
+                                                        keyChoice && answers[question.id] !== question.correct,
                                                     'text-success.main': isSubmit && hasBought && keyChoice === question
                                                         .correct
                                                 }">
@@ -92,13 +93,11 @@
                                                 :class="{
                                                     'text-primary.main': !isSubmit && answers[question.id] ==
                                                         keyChoice,
-                                                    'text-secondary.main': isSubmit && hasBought && answers[
-                                                            question.id] ==
-                                                        keyChoice && answers[
-                                                            question.id] !== question.correct,
+                                                    'text-secondary.main': isSubmit && hasBought && answers[question
+                                                            .id] ==
+                                                        keyChoice && answers[question.id] !== question.correct,
                                                     'text-success.main': isSubmit && hasBought && keyChoice === question
                                                         .correct
-
                                                 }">
                                                 <span x-text="question.choices[keyChoice]"></span>
                                             </label>

@@ -29,9 +29,9 @@
                             <div class="rounded-full border w-8 h-8 flex justify-center items-center aspect-square border-text.light.primary"
                                 :class="{
                                     'border-none bg-primary.main': answers[question.id],
-                                    'border-none bg-secondary.main': isSubmit && hasBought && parseInt(answers[
-                                        question.id]) !== question.correct,
-                                    'border-none bg-success.main': isSubmit && hasBought && parseInt(answers[question.id]) ===
+                                    'border-none bg-secondary.main': isSubmit && hasBought && answers[
+                                        question.id] !== question.correct,
+                                    'border-none bg-success.main': isSubmit && hasBought && answers[question.id] ===
                                     question.correct,
                                 }">
                                 <span class="font-semibold text-sm text-text.light.primary" x-text="idxQues + 1"

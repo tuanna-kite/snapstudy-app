@@ -114,7 +114,9 @@ return [
     'Verify' => 'Xác minh',
     'Resend code' => 'Gửi lại mã',
     'Verification code' => 'Mã xác minh',
-    'Enter your code' => 'Nhập mã của bạn'
+    'Enter your code' => 'Nhập mã của bạn',
+    'Referral Code' => "Mã giới thiệu",
+    'Enter your code (optional)' => 'Nhập mã của bạn (tùy chọn)'
 
 
 ];

@@ -105,15 +105,17 @@ return [
     "Enter your email" => "Enter your email",
     'Password' => 'Password',
     'Enter your password' => 'Enter your password',
-    'Full Name'=>'Full Name',
-    'Enter your full name'=>'Enter your full name',
+    'Full Name' => 'Full Name',
+    'Enter your full name' => 'Enter your full name',
     'Old password' => 'Old password',
     'New password' => 'New password',
 
-    'Account verification'=>'Account verification',
-    'We have to sent the code verification to your mail'=>'We have to sent the code verification to your mail',
-    'Verify'=>'Verify',
-    'Resend code'=>'Resend code',
-    'Verification code'=>'Verification code',
-    'Enter your code'=>'Enter your code'
+    'Account verification' => 'Account verification',
+    'We have to sent the code verification to your mail' => 'We have to sent the code verification to your mail',
+    'Verify' => 'Verify',
+    'Resend code' => 'Resend code',
+    'Verification code' => 'Verification code',
+    'Enter your code' => 'Enter your code',
+    'Referral Code' => 'Referral Code',
+    'Enter your code (optional)' => 'Enter your code (optional)'
 ];

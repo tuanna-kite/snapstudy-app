@@ -17,6 +17,12 @@
         'placeholder' => trans('auth.Enter your password'),
     ];
 
+    $codeInput = [
+        'name' => 'referral_code',
+        'label' => trans('auth.Referral Code'),
+        'placeholder' => trans('auth.Enter your code (optional)'),
+    ];
+
 @endphp
 
 <div class="">
@@ -38,6 +44,7 @@
                     <x-input.input-label :data="$fullNameInput" />
                     <x-input.input-label :data="$emailInput" />
                     <x-input.input-password :data="$passwordInput" />
+                    <x-input.input-label :data="$codeInput" />
                 </div>
                 <div id="errorSignup" style="color: red;"></div>
                 <div class="space-y-6">

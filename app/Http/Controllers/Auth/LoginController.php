@@ -228,7 +228,7 @@ class LoginController extends Controller
         return redirect('/login')->with(['login_failed_active_session' => $toastData]);
     }
 
-    public function afterLogged(Request $request, $verify = false)
+    public function afterLogged(Request $request, $verify = false, $is_ajax = null)
     {
         $user = auth()->user();
 
@@ -296,7 +296,11 @@ class LoginController extends Controller
         $cartManagerController = new CartManagerController();
         $cartManagerController->storeCookieCartsToDB();
 
-        return redirect(route('admin.dashboard'));
+        if ($is_ajax) {
+            return response()->json(['success' => true]);
+        } else {
+            return redirect(route('admin.dashboard'));
+        }
 
 //        if ($user->isAdmin()) {
 ////            return redirect(getAdminPanelUrl() . '');

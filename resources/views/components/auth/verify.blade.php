@@ -47,8 +47,8 @@
                     @enderror
                 </div>
                 <div class="space-y-6">
-                    <button type="submit" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white"
-                        id="loginBtn">
+                    <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white"
+                        id="verifyBtn">
                         <span class="font-medium text-sm">
                             {{ trans('auth.Verify') }}
                         </span>
@@ -63,3 +63,39 @@
         </div>
     </div>
 </div>
+
+@push('scripts_bottom')
+    <script>
+        document.getElementById("verifyBtn").addEventListener("click", function() {
+            var formData = {
+                username: document.getElementById("username").value,
+                code: document.getElementById("code").value,
+                _token: '{{ csrf_token() }}'
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('popup_verification') }}",
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success) {
+                        console.log('success');
+                        window.location.href = window.location.href = '{{ route('admin.dashboard') }}';
+                    } else {
+                        // Display validation errors
+                        var errorContainer = document.getElementById("errorSignup");
+                        errorContainer.innerHTML = ''; // Clear previous errors
+                        for (var error in data.errors) {
+                            console.log(data.errors[error]);
+                            errorContainer.innerHTML += '<p>' + data.errors[error] + '</p>';
+                        }
+                    }
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    </script>
+@endpush

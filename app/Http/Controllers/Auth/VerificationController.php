@@ -9,6 +9,7 @@ use App\Models\Affiliate;
 use App\Models\Verification;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Mail;
@@ -200,6 +201,89 @@ class VerificationController extends Controller
             }
 
             return $loginController->sendFailedLoginResponse($request);
+        }
+    }
+
+    public function popup_confirmCode(Request $request)
+    {
+        $value = $request->get('username');
+        $code = $request->get('code');
+        $username = $this->username($value);
+        $request[$username] = $value;
+        $time = time();
+
+        Verification::where($username, $value)
+            ->whereNull('verified_at')
+            ->where('code', $code)
+            ->where('created_at', '>', $time - 24 * 60 * 60)
+            ->update([
+                'verified_at' => $time,
+                'expired_at' => $time + 50,
+            ]);
+
+        $rules = [
+            'code' => [
+                'required',
+                Rule::exists('verifications')->where(function ($query) use ($value, $code, $time, $username) {
+                    $query->where($username, $value)
+                        ->where('code', $code)
+                        ->whereNotNull('verified_at')
+                        ->where('expired_at', '>', $time);
+                }),
+            ],
+        ];
+
+        if ($username == 'mobile') {
+            $rules['mobile'] = 'required';
+            $value = ltrim($value, '+');
+        } else {
+            $rules['email'] = 'required|email';
+        }
+        $validator = Validator::make($request->all(), $rules);
+
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
+        }
+
+        $authUser = auth()->check() ? auth()->user() : null;
+
+        $referralCode = session()->get('referralCode', null);
+
+        if (empty($authUser)) {
+            $authUser = User::where($username, $value)
+                ->first();
+
+            $loginController = new LoginController();
+
+            if (!empty($authUser)) {
+                if (\Auth::loginUsingId($authUser->id)) {
+
+                    if (!empty($referralCode)) {
+                        Affiliate::storeReferral($authUser, $referralCode);
+                    }
+
+                    $enableRegistrationBonus = false;
+                    $registrationBonusAmount = null;
+                    $registrationBonusSettings = getRegistrationBonusSettings();
+                    if (!empty($registrationBonusSettings['status']) and !empty($registrationBonusSettings['registration_bonus_amount'])) {
+                        $enableRegistrationBonus = true;
+                        $registrationBonusAmount = $registrationBonusSettings['registration_bonus_amount'];
+                    }
+
+                    $authUser->update([
+                        'enable_registration_bonus' => $enableRegistrationBonus,
+                        'registration_bonus_amount' => $registrationBonusAmount,
+                    ]);
+
+                    $registrationBonusAccounting = new RegistrationBonusAccounting();
+                    $registrationBonusAccounting->storeRegistrationBonusInstantly($authUser);
+
+                    return $loginController->afterLogged($request, true, true);
+                }
+            }
+
+            return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
         }
     }
 

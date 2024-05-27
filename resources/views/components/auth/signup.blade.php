@@ -6,7 +6,7 @@
     ];
 
     $emailInput = [
-        'name' => 'email_signup',
+        'name' => 'username',
         'label' => trans('auth.Email'),
         'placeholder' => trans('auth.Enter your email'),
     ];
@@ -70,7 +70,7 @@
         document.getElementById("signupbtn").addEventListener("click", function() {
             var formData = {
                 full_name: document.getElementById("full_name").value,
-                email: document.getElementById("email_signup").value,
+                email: document.getElementById("username").value,
                 password: document.getElementById("password_signup").value,
                 _token: '{{ csrf_token() }}'
             };
@@ -82,7 +82,7 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success) {
-
+                        showPage('verify');
                     } else {
                         // Display validation errors
                         var errorContainer = document.getElementById("errorSignup");

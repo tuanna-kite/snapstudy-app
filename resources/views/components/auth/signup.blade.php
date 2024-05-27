@@ -38,7 +38,7 @@
         </div>
         <div>
             {{-- TODO: check form field to post --}}
-            <form method="post" action="{{ route('register') }}" class="px-12 sm:w-96">
+            <form method="post" action="{{ route('popup_register') }}" class="px-12 sm:w-96">
                 {{-- Form input --}}
                 <div class="space-y-4">
                     <x-input.input-label :data="$fullNameInput" />
@@ -77,12 +77,12 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('store_register') }}",
+                url: "{{ route('popup_register') }}",
                 data: formData,
                 dataType: 'json',
                 success: function(data) {
                     if (data.success) {
-                        window.location.href = '{{ route('home') }}';
+
                     } else {
                         // Display validation errors
                         var errorContainer = document.getElementById("errorSignup");

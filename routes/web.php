@@ -55,6 +55,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['check_mobile_app', 'share
     Route::get('/logout', 'LoginController@logout')->name('logout');
     Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
     Route::post('/register', 'RegisterController@register')->name('store_register');
+    Route::post('/register', 'RegisterController@popup_register')->name('popup_register');
     Route::post('/register/form-fields', 'RegisterController@getFormFieldsByUserType');
     Route::get('/verification', 'VerificationController@index');
     Route::post('/verification', 'VerificationController@confirmCode');

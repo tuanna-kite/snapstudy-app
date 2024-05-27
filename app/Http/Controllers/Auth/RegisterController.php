@@ -317,4 +317,140 @@ class RegisterController extends Controller
         }
     }
 
+    public function popup_register(Request $request)
+    {
+//        Remove if user register but unverified
+        if ($request->get('email')) {
+            $existedEmail = User::where('email', $request->get('email'))->first();
+            if ($existedEmail && $existedEmail->verification && !$existedEmail->verification->verified_at) {
+                $existedEmail->delete();
+            }
+        }
+
+        $validate = $this->validator($request->all());
+
+        if ($validate->fails()) {
+            $errors = $validate->errors();
+
+            $form = $this->getFormFieldsByType($request->get('account_type'));
+
+            if (!empty($form)) {
+                $fieldErrors = $this->checkFormRequiredFields($request, $form);
+
+                if (!empty($fieldErrors) and count($fieldErrors)) {
+                    foreach ($fieldErrors as $id => $error) {
+                        $errors->add($id, $error);
+                    }
+                }
+            }
+
+            throw new ValidationException($validate);
+        } else {
+            $form = $this->getFormFieldsByType($request->get('account_type'));
+            $errors = [];
+
+            if (!empty($form)) {
+                $fieldErrors = $this->checkFormRequiredFields($request, $form);
+
+                if (!empty($fieldErrors) and count($fieldErrors)) {
+                    foreach ($fieldErrors as $id => $error) {
+                        $errors[$id] = $error;
+                    }
+                }
+            }
+
+            if (count($errors)) {
+                return back()->withErrors($errors)->withInput($request->all());
+            }
+        }
+
+
+        $data = $request->all();
+
+        if (!empty($data['mobile']) and !empty($data['country_code'])) {
+            $data['mobile'] = $data['country_code'].ltrim($data['mobile'], '0');
+        }
+
+
+        if (!empty($data['mobile'])) {
+            $checkIsValid = checkMobileNumber($data['mobile']);
+
+            if (!$checkIsValid) {
+                $errors['mobile'] = [trans('update.mobile_number_is_not_valid')];
+                return back()->withErrors($errors)->withInput($request->all());
+            }
+        }
+
+        $user = $this->create($request->all());
+
+        event(new Registered($user));
+
+        $notifyOptions = [
+            '[u.name]' => $user->full_name,
+            '[u.role]' => trans("update.role_{$user->role_name}"),
+            '[time.date]' => dateTimeFormat($user->created_at, 'j M Y H:i'),
+        ];
+        sendNotification("new_registration", $notifyOptions, 1);
+
+        $registerMethod = getGeneralSettings('register_method') ?? 'mobile';
+
+
+        $value = $request->get($registerMethod);
+        if ($registerMethod == 'mobile') {
+            $value = $request->get('country_code').ltrim($request->get('mobile'), '0');
+        }
+
+        $referralCode = $request->get('referral_code', null);
+        if (!empty($referralCode)) {
+            session()->put('referralCode', $referralCode);
+        }
+
+        $verificationController = new VerificationController();
+        $checkConfirmed = $verificationController->checkConfirmed($user, $registerMethod, $value);
+
+        $referralCode = $request->get('referral_code', null);
+
+        if ($checkConfirmed['status'] == 'send') {
+            if (!empty($referralCode)) {
+                session()->put('referralCode', $referralCode);
+            }
+            return response()->json(['success' => true]);
+//            return redirect('/verification');
+        } elseif ($checkConfirmed['status'] == 'verified') {
+            $this->guard()->login($user);
+
+            $enableRegistrationBonus = false;
+            $registrationBonusAmount = null;
+            $registrationBonusSettings = getRegistrationBonusSettings();
+            if (!empty($registrationBonusSettings['status']) and !empty($registrationBonusSettings['registration_bonus_amount'])) {
+                $enableRegistrationBonus = true;
+                $registrationBonusAmount = $registrationBonusSettings['registration_bonus_amount'];
+            }
+
+
+            $user->update([
+                'status' => User::$active,
+                'enable_registration_bonus' => $enableRegistrationBonus,
+                'registration_bonus_amount' => $registrationBonusAmount,
+            ]);
+
+            $registerReward = RewardAccounting::calculateScore(Reward::REGISTER);
+            RewardAccounting::makeRewardAccounting($user->id, $registerReward, Reward::REGISTER, $user->id, true);
+
+            if (!empty($referralCode)) {
+                Affiliate::storeReferral($user, $referralCode);
+            }
+
+            $registrationBonusAccounting = new RegistrationBonusAccounting();
+            $registrationBonusAccounting->storeRegistrationBonusInstantly($user);
+
+            if ($response = $this->registered($request, $user)) {
+                return $response;
+            }
+
+            return $request->wantsJson()
+                ? new JsonResponse([], 201)
+                : redirect($this->redirectPath());
+        }
+    }
 }

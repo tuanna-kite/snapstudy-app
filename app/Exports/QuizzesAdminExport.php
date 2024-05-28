@@ -26,6 +26,9 @@ class QuizzesAdminExport implements FromCollection, WithHeadings, WithMapping
         return [
             '#',
             trans('admin/pages/quiz.title'),
+            trans('admin/main.subject2'),
+            trans('admin/main.campus'),
+            trans('admin/main.school'),
             trans('admin/pages/quiz.instructor'),
             trans('admin/pages/quiz.question_count'),
             trans('admin/pages/quiz.students_count'),
@@ -48,6 +51,9 @@ class QuizzesAdminExport implements FromCollection, WithHeadings, WithMapping
         return [
             $quiz->id,
             $quiz_name,
+            $quiz->webinar->category->title ?? '',
+            $quiz->webinar->category->category->title ?? '',
+            $quiz->webinar->category->category->category->title ?? '',
             $quiz->teacher->full_name,
             $quiz->quizQuestions->count(),
             $quiz->quizResults->pluck('user_id')->count(),

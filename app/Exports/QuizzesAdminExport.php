@@ -32,6 +32,7 @@ class QuizzesAdminExport implements FromCollection, WithHeadings, WithMapping
             trans('admin/pages/quiz.instructor'),
             trans('admin/pages/quiz.question_count'),
             trans('admin/pages/quiz.students_count'),
+            trans('admin/pages/quiz.price'),
             trans('admin/pages/quiz.average_grade'),
             trans('admin/pages/quiz.certificate'),
             trans('admin/main.status'),
@@ -57,6 +58,7 @@ class QuizzesAdminExport implements FromCollection, WithHeadings, WithMapping
             $quiz->teacher->full_name,
             $quiz->quizQuestions->count(),
             $quiz->quizResults->pluck('user_id')->count(),
+            $quiz->webinar->price,
             $quiz->quizResults->avg('user_grade'),
             $certificate,
             $status

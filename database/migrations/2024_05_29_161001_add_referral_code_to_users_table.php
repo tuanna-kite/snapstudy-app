@@ -13,21 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('webinars', function (Blueprint $table) {
-            $table->enum('type', ['webinar', 'course', 'text_lesson'])->after('category_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('referral_code')->nullable();
         });
-
     }
 
     /**
      * Reverse the migrations.
-     *m
+     *
      * @return void
      */
     public function down()
     {
-        Schema::table('webinars', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('referral_code');
         });
     }
 };

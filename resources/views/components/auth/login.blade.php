@@ -31,7 +31,7 @@
                     <x-input.input-password :data="$passwordInput" />
                     <div id="errorContainer" style="color: red;"></div>
                     <div>
-                        <a href="#">
+                        <a href="{{ route('forget_password') }}">
                             <span class="text-sm text-primary.main">
                                 {{ trans('auth.Forgot password?') }}
                             </span>

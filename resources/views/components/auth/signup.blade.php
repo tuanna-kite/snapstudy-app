@@ -15,6 +15,7 @@
         'name' => 'password_signup',
         'label' => trans('auth.Password'),
         'placeholder' => trans('auth.Enter your password'),
+
     ];
 
     $codeInput = [
@@ -46,7 +47,7 @@
                     <x-input.input-password :data="$passwordInput" />
                     <x-input.input-label :data="$codeInput" />
                 </div>
-                <div id="errorSignup" style="color: red;"></div>
+                <div class="mt-1" id="errorSignup" style="color: red;"></div>
                 <div class="space-y-6">
                     <button type="button" class="rounded-lg w-full px-5 py-2 mt-12 bg-primary.main text-white"
                         id="signupbtn">
@@ -72,6 +73,7 @@
                 full_name: document.getElementById("full_name").value,
                 email: document.getElementById("username").value,
                 password: document.getElementById("password_signup").value,
+                referral_code: document.getElementById("referral_code").value,
                 _token: '{{ csrf_token() }}'
             };
 

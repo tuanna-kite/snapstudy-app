@@ -60,8 +60,9 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['check_mobile_app', 'share
     Route::get('/verification', 'VerificationController@index');
     Route::post('/verification', 'VerificationController@confirmCode');
     Route::post('/popup_verification', 'VerificationController@popup_confirmCode')->name('popup_verification');
-    Route::get('/verification/resend', 'VerificationController@resendCode');
-    Route::get('/forget-password', 'ForgotPasswordController@showLinkRequestForm');
+    Route::get('/verification/resend', 'VerificationController@resendCode')->name('resendCode');
+    Route::get('/verification/resend', 'VerificationController@popup_resendCode')->name('popup_resendCode');
+    Route::get('/forget-password', 'ForgotPasswordController@showLinkRequestForm')->name('forget_password');
     Route::post('/forget-password', 'ForgotPasswordController@forgot');
     Route::get('reset-password/{token}', 'ResetPasswordController@showResetForm');
     Route::post('/reset-password', 'ResetPasswordController@updatePassword');

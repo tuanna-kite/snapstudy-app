@@ -54,11 +54,12 @@
                         </span>
                     </button>
                     <div class="text-center mt-6">
-                        <a href="/verification/resend"
+                        <a href="#" id="resendbtn"
                             class="font-normal text-sm text-primary.main">{{ trans('auth.Resend code') }}</a>
                     </div>
 
                 </div>
+                <div class="mt-1" id="errorVerify" style="color: red;"></div>
             </form>
         </div>
     </div>
@@ -66,6 +67,23 @@
 
 @push('scripts_bottom')
     <script>
+        document.getElementById("resendbtn").addEventListener("click", function() {
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('popup_resendCode') }}",
+                dataType: 'json',
+                success: function(data) {
+                    var resend = document.getElementById("errorVerify");
+                    resend.innerHTML = '';
+                    resend.innerHTML += '<p>' + 'Chúng tôi đã gửi mã xác minh đến email của bạn' + '</p>';
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+
         document.getElementById("verifyBtn").addEventListener("click", function() {
             var formData = {
                 username: document.getElementById("username").value,
@@ -84,7 +102,7 @@
                         window.location.href = window.location.href = '{{ route('admin.dashboard') }}';
                     } else {
                         // Display validation errors
-                        var errorContainer = document.getElementById("errorSignup");
+                        var errorContainer = document.getElementById("errorVerify");
                         errorContainer.innerHTML = ''; // Clear previous errors
                         for (var error in data.errors) {
                             console.log(data.errors[error]);

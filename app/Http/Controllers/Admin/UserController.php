@@ -340,6 +340,7 @@ class UserController extends Controller
         $from = $request->input('from');
         $to = $request->input('to');
         $full_name = $request->get('full_name');
+        $referral_code = $request->get('referral_code');
         $sort = $request->get('sort');
         $group_id = $request->get('group_id');
         $status = $request->get('status');
@@ -353,6 +354,12 @@ class UserController extends Controller
                 $query->where('full_name', 'like', "%$full_name%")
                       ->orWhere('email', 'like', "%$full_name%")
                       ->orWhere('id', 'like', "%$full_name%");
+            });
+        }
+
+        if (!empty($referral_code)) {
+            $query->where(function($query) use ($referral_code) {
+                $query->where('referral_code', $referral_code);
             });
         }
 

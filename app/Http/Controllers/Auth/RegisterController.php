@@ -161,6 +161,7 @@ class RegisterController extends Controller
             'access_content' => $accessContent,
             'password' => Hash::make($data['password']),
             'affiliate' => $usersAffiliateStatus,
+            'referral_code' => $data['referral_code'] ?? null,
             'timezone' => $data['timezone'] ?? null,
             'created_at' => time()
         ]);
@@ -327,10 +328,19 @@ class RegisterController extends Controller
             }
         }
 
-        $validate = $this->validator($request->all());
 
-        if ($validate->fails()) {
-            $errors = $validate->errors();
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
+        }
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
 
             $form = $this->getFormFieldsByType($request->get('account_type'));
 
@@ -344,7 +354,7 @@ class RegisterController extends Controller
                 }
             }
 
-            throw new ValidationException($validate);
+            throw new ValidationException($validator);
         } else {
             $form = $this->getFormFieldsByType($request->get('account_type'));
             $errors = [];

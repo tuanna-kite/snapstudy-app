@@ -150,6 +150,13 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label class="input-label">{{ trans('admin/main.referral_code') }}</label>
+                                <input name="referral_code" type="text" class="form-control" value="{{ request()->get('referral_code') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <label class="input-label">{{ trans('admin/main.start_date') }}</label>
                                 <div class="input-group">
                                     <input type="date" id="from" class="text-center form-control" name="from" value="{{ request()->get('from') }}" placeholder="Start Date">

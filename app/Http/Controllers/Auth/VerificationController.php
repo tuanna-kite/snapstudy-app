@@ -68,6 +68,29 @@ class VerificationController extends Controller
         return redirect('/login');
     }
 
+    public function popup_resendCode()
+    {
+        $verificationId = session()->get('verificationId', null);
+
+        if (!empty($verificationId)) {
+            $verification = Verification::where('id', $verificationId)
+                ->whereNull('verified_at')
+                ->where('expired_at', '>', time())
+                ->first();
+            if (!empty($verification)) {
+                if (!empty($verification->mobile)) {
+                    $verification->sendSMSCode();
+                } else {
+                    Mail::to($verification['email'])->send(new SendMail($verification));
+                }
+
+                return response()->json(['success' => true]);
+            }
+        }
+
+        return response()->json(['success' => false]);
+    }
+
     public function checkConfirmed($user = null, $username, $value)
     {
         if (!empty($value)) {

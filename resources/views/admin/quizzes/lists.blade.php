@@ -192,10 +192,16 @@
                             <div class="table-responsive">
                                 <table class="table table-striped font-14">
                                     <tr>
+                                        <th>#</th>
+                                        <th>{{trans('admin/main.id')}}</th>
                                         <th class="text-left">{{ trans('admin/main.title') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.school') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.campus') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.subject2') }}</th>
                                         <th class="text-left">{{ trans('admin/main.instructor') }}</th>
                                         <th class="text-center">{{ trans('admin/main.question_count') }}</th>
                                         <th class="text-center">{{ trans('admin/main.students_count') }}</th>
+                                        <th class="text-center">{{ trans('admin/main.price') }}</th>
                                         <th class="text-center">{{ trans('admin/main.average_grade') }}</th>
                                         <th class="text-center">{{ trans('admin/main.certificate') }}</th>
                                         <th class="text-center">{{ trans('admin/main.status') }}</th>
@@ -203,11 +209,31 @@
                                     </tr>
 
                                     @foreach($quizzes as $quiz)
+                                        @php
+                                            $count = $quizzes->firstItem() + $loop->iteration - 1;
+                                        @endphp
                                         <tr>
+                                            <td>{{$count}}</td>
+                                            <td>{{ $quiz->webinar->id }}</td>
                                             <td>
                                                 <span>{{ $quiz->title }}</span>
+                                            </td>
+
+                                            <td>
                                                 @if(!empty($quiz->webinar))
-                                                    <small class="d-block text-left text-primary">{{ $quiz->webinar->title }}</small>
+                                                    <small class="d-block text-left text-primary">{{ $quiz->webinar->category->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($quiz->webinar))
+                                                    <small class="d-block text-left text-primary">{{ $quiz->webinar->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($quiz->webinar))
+                                                    <small class="d-block text-left text-primary">{{ $quiz->webinar->category->title }}</small>
                                                 @endif
                                             </td>
 
@@ -224,6 +250,8 @@
                                                 <span>{{ $quiz->quizResults->pluck('user_id')->count() }}</span>
                                                 <span class="d-block text-primary font-12">({{ trans('admin/main.passed') }}: {{ $quiz->quizResults->where('status','passed')->count() }})</span>
                                             </td>
+
+                                            <td class="text-center">{{ handlePrice($quiz->webinar->price) }} </td>
 
                                             <td class="text-center">{{ round($quiz->quizResults->avg('user_grade'),2) }} </td>
 

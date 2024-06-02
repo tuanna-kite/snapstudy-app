@@ -452,6 +452,11 @@ class WebinarController extends Controller
 
         ]);
 
+        $code = $this->createWebinarCode($webinar);
+        $webinar->update([
+            'code' => $code ?? '',
+        ]);
+
         if ($webinar) {
             WebinarTranslation::updateOrCreate([
                 'webinar_id' => $webinar->id,
@@ -1574,5 +1579,30 @@ class WebinarController extends Controller
         ];
 
         return view('admin.webinars.course-preview', $data);
+    }
+
+    public function createWebinarCode($webinar)
+    {
+        $year = date("Y");
+        $lastTwoDigits = substr($year, -2);
+        $code = '';
+        switch ($webinar->type){
+            case "webinar":
+                $type = '01';
+                break;
+            case "course":
+                $type = '02';
+                break;
+            case "quizz":
+                $type = '03';
+                break;
+            default:
+                $type = '00';
+        }
+        $code = 'VN' . $webinar->category->category->category->prefix . $webinar->category->category->campus_code . $lastTwoDigits .
+            $webinar->category->subject_code . $type . $webinar->id;
+
+        return $code;
+
     }
 }

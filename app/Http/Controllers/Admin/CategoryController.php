@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Translation\CategoryTranslation;
+use App\Models\Webinar;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -125,6 +126,10 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
+        $updateCode = false;
+        if ($category->prefix != $data['prefix']) {
+            $updateCode = true;
+        }
 
         $category->update([
             'icon' => $data['icon'],
@@ -133,6 +138,15 @@ class CategoryController extends Controller
             'prefix' => $data['prefix'],
             'level' => 1,
         ]);
+
+        if ($updateCode) {
+            $campus_arr = Category::where('parent_id', $category->id)->pluck('id')->toArray();
+            $subject_arr = Category::whereIn('parent_id', $campus_arr)->pluck('id')->toArray();
+            $webinars = Webinar::whereIn('category_id', $subject_arr)->get();
+            foreach ($webinars as $webinar){
+                $this->createWebinarCode($webinar);
+            }
+        }
 
         CategoryTranslation::updateOrCreate([
             'category_id' => $category->id,
@@ -211,6 +225,7 @@ class CategoryController extends Controller
 
                 if (!empty($subCategory['title'])) {
                     $checkSlug = 0;
+                    $updateCode = false;
                     if (!empty($subCategory['slug'])) {
                         $checkSlug = Category::query()->where('slug', $subCategory['slug'])->count();
                     }
@@ -218,6 +233,9 @@ class CategoryController extends Controller
                     $slug = (!empty($subCategory['slug']) and ($checkSlug == 0 or ($checkSlug == 1 and $check->slug == $subCategory['slug']))) ? $subCategory['slug'] : Category::makeSlug($subCategory['title']);
 
                     if (!empty($check)) {
+                        if ($check->campus_code != $subCategory['campus_code']) {
+                            $updateCode = true;
+                        }
                         $check->update([
                             'order' => $order,
                             'icon' => $subCategory['icon'] ?? null,
@@ -225,6 +243,13 @@ class CategoryController extends Controller
                             'level' => 2,
                             'campus_code' => $subCategory['campus_code'] ?? null,
                         ]);
+                        if ($updateCode) {
+                            $subject_arr = Category::where('parent_id', $check->id)->pluck('id')->toArray();
+                            $webinars = Webinar::whereIn('category_id', $subject_arr)->get();
+                            foreach ($webinars as $webinar){
+                                $this->createWebinarCode($webinar);
+                            }
+                        }
 
                         CategoryTranslation::updateOrCreate([
                             'category_id' => $check->id,
@@ -274,6 +299,7 @@ class CategoryController extends Controller
 
         if (!empty($subjects)) {
             foreach ($subjects as $key => $subject) {
+
                 $check = Category::where('id', $key)
                     ->where('level', 3)
                     ->first();
@@ -281,40 +307,52 @@ class CategoryController extends Controller
                 if (is_numeric($key)) {
                     $oldIds[] = $key;
                 }
+                $updateCode = false;
 
-                if (!empty($subject['title'])) {
-                    if (!empty($check)) {
-                        CategoryTranslation::updateOrCreate([
-                            'category_id' => $check->id,
-                            'locale' => mb_strtolower($locale),
-                        ], [
-                            'title' => $subject['title'],
-                            'description' => $subject['description']
-                        ]);
-                    } else {
-                        $data = [
-                            'parent_id' => $subCategoryID,
-                            'icon' => $subject['icon'] ?? null,
-                            'slug' => Category::makeSlug($subject['title']),
-                            'order' => $order,
-                            'level' => 3,
-                            'subject_code' => $subject['subject_code'] ?? null,
-                        ];
-                        $new = Category::create($data);
-
-                        CategoryTranslation::updateOrCreate([
-                            'category_id' => $new->id,
-                            'locale' => mb_strtolower($locale),
-                        ], [
-                            'title' => $subject['title'],
-                            'description' => $subject['description']
-                        ]);
-
-                        $oldIds[] = $new->id;
+                if (!empty($check)) {
+                    if ($check->subject_code !== $subject['subject_code']) {
+                        $updateCode = true;
                     }
+                    CategoryTranslation::updateOrCreate([
+                        'category_id' => $check->id,
+                        'locale' => mb_strtolower($locale),
+                    ], [
+                        'title' => $subject['title'],
+                        'description' => $subject['description']
+                    ]);
+                    $check->update([
+                        'subject_code' => $subject['subject_code'] ?? null,
+                    ]);
+                    if ($updateCode) {
+                        $webinars = Webinar::where('category_id', $check->id)->get();
+                        foreach ($webinars as $webinar){
+                            $this->createWebinarCode($webinar);
+                        }
+                    }
+                } else {
+                    $data = [
+                        'parent_id' => $subCategoryID,
+                        'icon' => $subject['icon'] ?? null,
+                        'slug' => Category::makeSlug($subject['title']),
+                        'order' => $order,
+                        'level' => 3,
+                        'subject_code' => $subject['subject_code'] ?? null,
+                    ];
+                    $new = Category::create($data);
 
-                    $order += 1;
+                    CategoryTranslation::updateOrCreate([
+                        'category_id' => $new->id,
+                        'locale' => mb_strtolower($locale),
+                    ], [
+                        'title' => $subject['title'],
+                        'description' => $subject['description']
+                    ]);
+
+                    $oldIds[] = $new->id;
                 }
+
+                $order += 1;
+
             }
         }
 
@@ -349,5 +387,34 @@ class CategoryController extends Controller
             'code' => 200,
             'subjects' => $subjects
         ]);
+    }
+
+    public function createWebinarCode($webinar)
+    {
+        $year = date("Y");
+        $lastTwoDigits = substr($year, -2);
+        $code = '';
+        switch ($webinar->type){
+            case "webinar":
+                $type = '01';
+                break;
+            case "course":
+                $type = '02';
+                break;
+            case "quizz":
+                $type = '03';
+                break;
+            default:
+                $type = '00';
+        }
+        $code = 'VN' . $webinar->category->category->category->prefix . $webinar->category->category->campus_code . $lastTwoDigits .
+            $webinar->category->subject_code . $type . $webinar->id;
+
+        $webinar->update([
+           'code' =>  $code,
+        ]);
+
+        return $webinar;
+
     }
 }

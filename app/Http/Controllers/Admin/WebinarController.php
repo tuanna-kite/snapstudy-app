@@ -1518,7 +1518,7 @@ class WebinarController extends Controller
 
         $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
 
-        $quizzes = $course->quizzes->whereNull('chapter_id');
+//        $quizzes = $course->quizzes->whereNull('chapter_id');
 
         if ($user) {
 
@@ -1573,7 +1573,6 @@ class WebinarController extends Controller
             'sessionsWithoutChapter' => $sessionsWithoutChapter,
             'filesWithoutChapter' => $filesWithoutChapter,
             'textLessonsWithoutChapter' => $textLessonsWithoutChapter,
-            'quizzes' => $quizzes,
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
         ];

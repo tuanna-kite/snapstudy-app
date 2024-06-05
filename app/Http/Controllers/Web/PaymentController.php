@@ -109,12 +109,8 @@ class PaymentController extends Controller
             }
         } elseif ($gateway == 'paypal') {
             return $this->paypalPayment($order);
-        } elseif ($gateway === '9pay') {
-            $this->ninepaycontroller->createPayment();
-        } elseif ($gateway === '9pay_domestic') {
-            $this->ninepaycontroller->createDomesticCardPayment();
-        } elseif ($gateway === '9pay_visa') {
-            $this->ninepaycontroller->createVisaCardPayment();
+        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+            $this->ninepaycontroller->createPayment($orderId, $order->total_amount, $gateway);
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)

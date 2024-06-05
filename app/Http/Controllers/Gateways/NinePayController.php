@@ -18,58 +18,34 @@ class NinePayController extends Controller
         $this->secretKey = env('9PAY_SECRET_KEY');
     }
 
-    public function createPayment($orderId, $amount, $description)
+    public function createPayment($orderId, $amount, $gateway)
     {
+        $description = 'Thanh toán khóa học';
+        $time = time();
         $params = [
             'merchantKey' => $this->merchantKey,
-            'time' => time(),
+            'time' => $time,
             'invoice_no' => $orderId,
             'amount' => $amount,
             'description' => $description,
+            'method' => $gateway,
             'return_url' => route('payment.notify'),
         ];
-
-        $params['signature'] = $this->generateSignature($params);
-
-        $response = Http::post($this->apiUrl . '/payment/create', $params);
-
-        return $response->json();
-    }
-
-    public function createDomesticCardPayment($orderId, $amount, $description, $bankCode)
-    {
-        $params = [
-            'merchantKey' => $this->merchantKey,
-            'time' => time(),
-            'invoice_no' => $orderId,
-            'amount' => $amount,
-            'description' => $description,
-            'return_url' => route('payment.notify'),
+        $message = [
+            'time' => $time,
+            'url' => $this->apiUrl . '/payments/create',
+            'method' => 'POST',
+            'data' => $params,
         ];
-
-        $params['signature'] = $this->generateSignature($params);
-
-        $response = Http::post($this->apiUrl . '/domestic-card/payment/create', $params);
-
-        return $response->json();
-    }
-
-    public function createVisaCardPayment($orderId, $amount, $description)
-    {
-        $params = [
-            'merchantKey' => $this->merchantKey,
-            'time' => time(),
-            'invoice_no' => $orderId,
-            'amount' => $amount,
-            'description' => $description,
-            'return_url' => route('payment.notify'),
+        $signature = hash_hmac('sha256', json_encode($message), $this->secretKey);
+        $httpData = [
+            'baseEncode' => base64_encode(json_encode($params, JSON_UNESCAPED_UNICODE)),
+            'signature' => $signature,
         ];
+        $queryParams = http_build_query($httpData);
+        $redirectUrl = $this->apiUrl . '/portal?' . $queryParams;
 
-        $params['signature'] = $this->generateSignature($params);
-
-        $response = Http::post($this->apiUrl . '/visa-card/payment/create', $params);
-
-        return $response->json();
+       return redirect($redirectUrl);
     }
 
     protected function generateSignature($params)

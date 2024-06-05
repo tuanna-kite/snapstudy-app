@@ -24,7 +24,7 @@ return [
 
     'The service provides detailed outlines for all student assignments' => 'The service provides detailed outlines for all student assignments',
     'Hong Linh Education Investment and Development Joint Stock Company' => 'Hong Linh Education Investment and Development Joint Stock Company',
-    'Address: 37 Xa Dan, Hanoi, Vietnam' => 'Address: 37 Xa Dan, Hanoi, Vietnam',
+    'Address: No. 159 Thinh Quang Lane, Thinh Quang Street, Thinh Quang Ward, Dong Da District, Hanoi City, Vietnam.' => 'Address: No. 159 Thinh Quang Lane, Thinh Quang Street, Thinh Quang Ward, Dong Da District, Hanoi City, Vietnam.',
     'Information' => 'Information',
     'Support' => 'Support',
     'Introduction' => 'Introduction',

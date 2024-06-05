@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateways\NinePayController;
 use App\Mixins\Cashback\CashbackAccounting;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
@@ -22,16 +23,20 @@ use App\Models\TicketUser;
 use App\Models\Webinar;
 use App\PaymentChannels\ChannelManager;
 use App\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use PhpParser\Node\Expr\FuncCall;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentController extends Controller
 {
     protected $order_session_key = 'payment.order_id';
+    protected $ninepaycontroller;
+
+    public function __construct(NinePayController $ninepaycontroller)
+    {
+        $this->ninepaycontroller = $ninepaycontroller;
+    }
 
     public function paymentRequest(Request $request)
     {
@@ -104,6 +109,12 @@ class PaymentController extends Controller
             }
         } elseif ($gateway == 'paypal') {
             return $this->paypalPayment($order);
+        } elseif ($gateway === '9pay') {
+            $this->ninepaycontroller->createPayment();
+        } elseif ($gateway === '9pay_domestic') {
+            $this->ninepaycontroller->createDomesticCardPayment();
+        } elseif ($gateway === '9pay_visa') {
+            $this->ninepaycontroller->createVisaCardPayment();
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)

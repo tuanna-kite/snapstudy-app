@@ -15,7 +15,7 @@ class NinePayController extends Controller
     {
         $this->apiUrl = env('9PAY_END_POINT');
         $this->merchantKey = env('9PAY_MERCHANT_KEY');
-        $this->secretKey = env('9PAY_SECRET_KEY');
+        $this->secretKey = env('9PAY_MERCHANT_SECRET_KEY');
     }
 
     public function createPayment($orderId, $amount, $gateway)
@@ -25,27 +25,27 @@ class NinePayController extends Controller
         $params = [
             'merchantKey' => $this->merchantKey,
             'time' => $time,
-            'invoice_no' => $orderId,
+            'invoice_no' => $time,
             'amount' => $amount,
             'description' => $description,
             'method' => $gateway,
-            'return_url' => route('payment.notify'),
+            'return_url' => route('ninepay.result'),
+            'back_url' => route('home'),
         ];
-        $message = [
-            'time' => $time,
-            'url' => $this->apiUrl . '/payments/create',
-            'method' => 'POST',
-            'data' => $params,
-        ];
-        $signature = hash_hmac('sha256', json_encode($message), $this->secretKey);
+
+        $stringToSign = "POST\n" . $this->apiUrl . "/payments/create\n" . $time . "\n" . http_build_query($params);
+
+        // Tạo chữ ký
+        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $this->secretKey, true) );
+//        $signature =  base64_encode(HMACSHA256());
         $httpData = [
             'baseEncode' => base64_encode(json_encode($params, JSON_UNESCAPED_UNICODE)),
             'signature' => $signature,
         ];
-        $queryParams = http_build_query($httpData);
-        $redirectUrl = $this->apiUrl . '/portal?' . $queryParams;
 
-       return redirect($redirectUrl);
+        $redirectUrl = $this->apiUrl . '/portal?' . http_build_query($httpData);
+        header("Location: " . $redirectUrl);
+        exit();
     }
 
     protected function generateSignature($params)

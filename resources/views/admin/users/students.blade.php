@@ -285,6 +285,7 @@
 
                         </th>
                         <th>{{ trans('admin/main.income') }}</th>
+                        <th>{{ trans('admin/main.referral_code') }}</th>
                         <th>{{ trans('admin/main.user_group') }}</th>
                         <th>{{ trans('admin/main.register_date') }}</th>
                         <th>{{ trans('admin/main.status') }}</th>
@@ -340,6 +341,10 @@
                             <td>{{ handlePrice($user->getAccountingBalance()) }}</td>
 
                             <td>{{ handlePrice($user->getIncome()) }}</td>
+
+                            <td>
+                                {{ !empty($user) ? $user->referral_code : '' }}
+                            </td>
 
                             <td>
                                 {{ !empty($user->userGroup) ? $user->userGroup->group->name : '' }}

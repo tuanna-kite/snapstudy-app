@@ -433,7 +433,7 @@ class QuizController extends Controller
             ->with('quizzes')
             ->first();
 
-        $quiz = Quiz::where('id', $webinar->quizzes->id)->first();
+        $quiz = Quiz::where('id', $webinar->one_quizzes->id)->first();
 
         $hasBought = $webinar->checkUserHasBought($user, true, true);
         if ($quiz) {

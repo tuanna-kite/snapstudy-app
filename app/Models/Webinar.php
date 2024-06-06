@@ -136,6 +136,11 @@ class Webinar extends Model implements TranslatableContract
 
     public function quizzes()
     {
+        return $this->hasMany('App\Models\Quiz', 'webinar_id', 'id');
+    }
+
+    public function one_quizzes()
+    {
         return $this->hasOne('App\Models\Quiz', 'webinar_id', 'id');
     }
 

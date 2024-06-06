@@ -32,9 +32,10 @@
                 'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
                 'value' => 'credit',
             ];
-        if ($payment_type == 'checkout' || $payment_type == 'personalization'){
-            array_push($methods, $spoint);
-        }
+        // TODO: Uncomment when website verified
+        // if ($payment_type == 'checkout' || $payment_type == 'personalization'){
+        //     array_push($methods, $spoint);
+        // }
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">

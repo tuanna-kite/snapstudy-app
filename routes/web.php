@@ -228,6 +228,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::group(['prefix' => 'personalization'], function () {
         Route::post('/payment-request', 'PersonalizationController@paymentRequest')->name('personalization.request');
         Route::get('/payment/success/{gateway}/{orderId}', 'PersonalizationController@checkout')->name('personalization.success');
+        Route::get('/ninepay/result', 'PersonalizationController@ninePayResult')->name('personalization.result');
     });
 
     Route::group(['prefix' => 'subscribes'], function () {

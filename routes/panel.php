@@ -241,7 +241,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
          Route::get('/account/success', 'AccountingController@paypalSuccess')->name('account.paypal.success');
         Route::post('/account/cancel/{id}', 'AccountingController@cancelRequest');
         Route::get('/momo-request-charge', 'AccountingController@request_charge')->name('momo.request-charge');
-        Route::get('/9pay/result', 'AccountingController@ninePayResule')->name('9pay.result');
+        Route::get('/9pay/result', 'AccountingController@ninePayResult')->name('9pay.result');
 
         // Route::post('/charge', 'AccountingController@charge');
 

@@ -77,4 +77,32 @@ class NinePayController extends Controller
         header("Location: " . $redirectUrl);
         exit();
     }
+
+    public function createPaymentPersonalization($orderId, $amount, $gateway)
+    {
+        $description = 'Thanh toán khóa học';
+        $time = time();
+        $params = [
+            'amount' => round($amount),
+            'back_url' => route('home'),
+            'description' => $description,
+            'invoice_no' => $orderId,
+            'merchantKey' => $this->merchantKey,
+            'method' => $gateway,
+            'return_url' => route('personalization.result'),
+            'time' => $time,
+        ];
+
+        $stringToSign = "POST\n" . $this->apiUrl . "/payments/create\n" . $time . "\n" . http_build_query($params);
+        // Tạo chữ ký
+        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $this->secretKey, true));
+        $httpData = [
+            'baseEncode' => base64_encode(json_encode($params, JSON_UNESCAPED_UNICODE)),
+            'signature' => $signature,
+        ];
+
+        $redirectUrl = $this->apiUrl . '/portal?' . http_build_query($httpData);
+        header("Location: " . $redirectUrl);
+        exit();
+    }
 }

@@ -630,7 +630,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function result(Request $request) {
+    public function ninePayResult(Request $request) {
         $keychecksum = env('9PAY_KEY_CHECKSUM');
         $result = $request->query('result');
         $checksum = $request->query('checksum');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateways\NinePayController;
 use App\Mixins\Cashback\CashbackAccounting;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
@@ -31,6 +32,12 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PersonalizationController extends Controller
 {
+    protected $ninepaycontroller;
+
+    public function __construct(NinePayController $ninepaycontroller)
+    {
+        $this->ninepaycontroller = $ninepaycontroller;
+    }
     public function createSupport(Request $request)
     {
         $user = auth()->user();
@@ -169,6 +176,8 @@ class PersonalizationController extends Controller
             }
         } elseif ($gateway == 'paypal') {
             return $this->paypalPayment($order, $amount);
+        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+            $this->ninepaycontroller->createPaymentPersonalization($orderId, $amount, $gateway);
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)
@@ -461,5 +470,66 @@ class PersonalizationController extends Controller
             }
 
         Cart::emptyCart($order->user_id);
+    }
+
+    public function ninePayResult(Request $request)
+    {
+        $keychecksum = env('9PAY_KEY_CHECKSUM');
+        $result = $request->query('result');
+        $checksum = $request->query('checksum');
+        $user = auth()->user();
+
+        $data = json_decode(base64_decode($result), true);
+
+        $expectedChecksum = strtoupper(hash('sha256', $result . $keychecksum));
+
+        if ($checksum !== $expectedChecksum) {
+            return view('web.default.pages.failCheckout');
+        }
+
+
+        if ($data['status'] == 5) {
+            $userId = $user->id;
+            $id = explode("-", $data['invoice_no'])[0];
+            $order = Order::where('id', $id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+            $this->setPaymentAccounting($order, '9pay', $data['payment_no']);
+            $order->update([
+                'status' => Order::$paid
+            ]);
+            $getUser = User::find($userId);
+            $score = RewardAccounting::where('user_id', $userId)->sum('score');
+            $groups = Group::where('min_score', '<=', $score)
+                ->where('max_score', '>=', $score)
+                ->get();
+            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+
+            Log::info('Payment checkout order: ' . json_encode($order));
+            if ($groupUser != null) {
+                $groupUser->group_id = $groups->first()->id;
+                $groupUser->save();
+            } else {
+                GroupUser::create([
+                    'group_id' => $groups->first()->id,
+                    'user_id' => $getUser->id,
+                ]);
+            }
+
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if ($orderItem) {
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
+            }
+            return redirect('/payments/status');
+
+            return response()->json(['message' => 'Payment successful']);
+        } else {
+            return view('web.default.pages.failCheckout');
+        }
     }
 }

@@ -279,7 +279,7 @@ class PaymentController extends Controller
                         ->get();
                     $groupUser = GroupUser::where('user_id', $getUser->id)->first();
 
-                    Log::info('Paymentt checkout order: ' . json_encode($order));
+                    Log::info('Payment checkout order: ' . json_encode($order));
                     if ($groupUser != null) {
                         $groupUser->group_id = $groups->first()->id;
                         $groupUser->save();
@@ -627,6 +627,67 @@ class PaymentController extends Controller
                 sendNotification("paid_installment_step", $notifyOptions, $installmentOrder->user_id);
                 sendNotification("paid_installment_step_for_admin", $notifyOptions, 1); // For Admin
             }
+        }
+    }
+
+    public function result(Request $request) {
+        $keychecksum = env('9PAY_KEY_CHECKSUM');
+        $result = $request->query('result');
+        $checksum = $request->query('checksum');
+        $user = auth()->user();
+
+        $data = json_decode(base64_decode($result), true);
+
+        $expectedChecksum = strtoupper(hash('sha256', $result . $keychecksum));
+
+        if ($checksum !== $expectedChecksum) {
+            return view('web.default.pages.failCheckout');
+        }
+
+
+        if ($data['status'] == 5) {
+            $userId = $user->id;
+            $id = explode("-", $data['invoice_no'])[0];
+            $order = Order::where('id', $id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+            $this->setPaymentAccounting($order, '9pay', $data['payment_no']);
+            $order->update([
+                'status' => Order::$paid
+            ]);
+            $getUser = User::find($userId);
+            $score = RewardAccounting::where('user_id', $userId)->sum('score');
+            $groups = Group::where('min_score', '<=', $score)
+                ->where('max_score', '>=', $score)
+                ->get();
+            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+
+            Log::info('Payment checkout order: ' . json_encode($order));
+            if ($groupUser != null) {
+                $groupUser->group_id = $groups->first()->id;
+                $groupUser->save();
+            } else {
+                GroupUser::create([
+                    'group_id' => $groups->first()->id,
+                    'user_id' => $getUser->id,
+                ]);
+            }
+
+            session()->put($this->order_session_key, $order->id);
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if ($orderItem) {
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
+            }
+            return redirect('/payments/status');
+
+            return response()->json(['message' => 'Payment successful']);
+        } else {
+            return view('web.default.pages.failCheckout');
         }
     }
 }

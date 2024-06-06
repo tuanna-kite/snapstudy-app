@@ -19,10 +19,18 @@ use Intervention\Image\Facades\Image;
 use Redirect;
 use Illuminate\Support\Facades\Log;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use App\Http\Controllers\Gateways\NinePayController;
 
 
 class AccountingController extends Controller
 {
+    protected $ninepaycontroller;
+
+    public function __construct(NinePayController $ninepaycontroller)
+    {
+        $this->ninepaycontroller = $ninepaycontroller;
+    }
+
     public function index()
     {
         $userAuth = auth()->user();
@@ -145,6 +153,8 @@ class AccountingController extends Controller
             }
         } else if ($gateway == 'paypal') {
             return $this->paypalPayment($amount);
+        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+            $this->ninepaycontroller->createPaymentAccount($amount, $gateway);
         }
 
     }
@@ -433,6 +443,43 @@ class AccountingController extends Controller
             }
         }
         return redirect()->route('paypal.cancel');
+    }
+
+    public function ninePayResult(Request $request) {
+        $keychecksum = env('9PAY_KEY_CHECKSUM');
+        $result = $request->query('result');
+        $checksum = $request->query('checksum');
+
+        $data = json_decode(base64_decode($result), true);
+
+        $expectedChecksum = strtoupper(hash('sha256', $result . $keychecksum));
+
+        if ($checksum !== $expectedChecksum) {
+            return view('web.default.pages.failCheckout');
+        }
+
+        if ($data['status'] == 5) {
+            $userId = auth()->user()->id;
+            $accounting = new Accounting();
+            $accounting->user_id = $userId;
+            $accounting->amount = $data['amount'];
+            $accounting->system = 0;
+            $accounting->tax = 0;
+            $accounting->is_registration_bonus = 0;
+            $accounting->is_cashback = 0;
+            $accounting->type = Accounting::$addiction;
+            $accounting->type_account = Accounting::$asset;
+            $accounting->created_at = time();
+            $accounting->chargeId = $data['payment_no'];
+            $accounting->save();
+            if ($accounting->save()) {
+                return redirect(route('dashboard'))->with('msg', 'Nạp tiền thành công!');
+            } else {
+                return view('web.default.pages.failCheckout');
+            }
+        } else {
+            return view('web.default.pages.failCheckout');
+        }
     }
 
 }

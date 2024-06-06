@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Gateways;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 class NinePayController extends Controller
 {
     protected $apiUrl;
-    protected $partnerCode;
+    protected $merchantKey;
     protected $secretKey;
+    protected $checkSum;
 
     public function __construct()
     {
         $this->apiUrl = env('9PAY_END_POINT');
         $this->merchantKey = env('9PAY_MERCHANT_KEY');
-        $this->secretKey = env('9PAY_MERCHANT_SECRET_KEY');
+        $this->secretKey = env('9PAY_SECRET_KEY');
+        $this->checkSum = env('9PAY_KEY_CHECKSUM');
     }
 
     public function createPayment($orderId, $amount, $gateway)
@@ -23,21 +26,20 @@ class NinePayController extends Controller
         $description = 'Thanh toán khóa học';
         $time = time();
         $params = [
-            'merchantKey' => $this->merchantKey,
-            'time' => $time,
-            'invoice_no' => $time,
-            'amount' => $amount,
+            'amount' => round($amount),
+            'back_url' => route('home'),
             'description' => $description,
+            'invoice_no' => $orderId,
+            'merchantKey' => $this->merchantKey,
             'method' => $gateway,
             'return_url' => route('ninepay.result'),
-            'back_url' => route('home'),
+            'time' => $time,
         ];
 
         $stringToSign = "POST\n" . $this->apiUrl . "/payments/create\n" . $time . "\n" . http_build_query($params);
 
         // Tạo chữ ký
-        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $this->secretKey, true) );
-//        $signature =  base64_encode(HMACSHA256());
+        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $this->secretKey, true));
         $httpData = [
             'baseEncode' => base64_encode(json_encode($params, JSON_UNESCAPED_UNICODE)),
             'signature' => $signature,
@@ -48,10 +50,31 @@ class NinePayController extends Controller
         exit();
     }
 
-    protected function generateSignature($params)
-    {
-        ksort($params);
-        $query = http_build_query($params);
-        return hash_hmac('sha256', $query, $this->secretKey);
+    public function createPaymentAccount($amount, $gateway) {
+        $description = 'Nạp Spoint';
+        $time = time();
+        $params = [
+            'amount' => round($amount),
+            'back_url' => route('home'),
+            'description' => $description,
+            'invoice_no' => $time,
+            'merchantKey' => $this->merchantKey,
+            'method' => $gateway,
+            'return_url' => route('9pay.result'),
+            'time' => $time,
+        ];
+
+        $stringToSign = "POST\n" . $this->apiUrl . "/payments/create\n" . $time . "\n" . http_build_query($params);
+
+        // Tạo chữ ký
+        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $this->secretKey, true));
+        $httpData = [
+            'baseEncode' => base64_encode(json_encode($params, JSON_UNESCAPED_UNICODE)),
+            'signature' => $signature,
+        ];
+
+        $redirectUrl = $this->apiUrl . '/portal?' . http_build_query($httpData);
+        header("Location: " . $redirectUrl);
+        exit();
     }
 }

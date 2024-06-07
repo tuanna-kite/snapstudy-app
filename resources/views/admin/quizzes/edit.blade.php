@@ -19,7 +19,6 @@
 
         <div class="section-body">
 
-
             <div class="row">
                 <div class="col-12 col-md-12">
                     <div class="card">
@@ -38,6 +37,7 @@
 @endsection
 
 @push('scripts_bottom')
+
     <script src="/assets/default/vendors/feather-icons/dist/feather.min.js"></script>
     <script src="/assets/default/vendors/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
@@ -47,4 +47,5 @@
     </script>
 
     <script src="/assets/default/js/admin/quiz.min.js"></script>
+
 @endpush

@@ -120,19 +120,20 @@
                                 </div>
 
                                 <div id="subCategories" class="ml-0 {{ (!empty($subCategories) and !$subCategories->isEmpty()) ? '' : ' d-none' }}">
+                                    {{-- Add Major Row --}}
                                     <div class="d-flex align-items-center justify-content-between mb-4">
                                         <strong class="d-block">{{ trans('admin/main.add_majors') }}</strong>
-
                                         <button type="button" class="btn btn-success add-btn"><i class="fa fa-plus"></i> Add</button>
                                     </div>
 
-                                    <ul class="draggable-lists list-group">
-
+                                    <ul class="draggable-lists list-group"
+                                    x-data="{ showCourseLists: {} }"
+                                    >
                                         @if((!empty($subCategories) and !$subCategories->isEmpty()))
                                             @foreach($subCategories as $key => $subCategory)
                                                 <input type="hidden" name="subCategory_id" value="{{ $subCategory->id }}">
-                                                <li class="form-group list-group draggable-lists-outline_{{ $subCategory->id }}">
-
+                                                <li class="form-group list-group draggable-lists-outline_{{ $subCategory->id }}"
+                                                    >
                                                     <div class="p-2 border rounded-sm">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
@@ -169,23 +170,29 @@
                                                                    value="{{ $subCategory->campus_code }}"
                                                                    placeholder="{{ trans('admin/main.code') }}"/>
                                                         </div>
-
                                                     </div>
+                                                    {{-- Add Course Row --}}
                                                     @if($subCategory)
                                                         <div class="d-flex align-items-center justify-content-between mb-2 mt-2 ml-4">
                                                             <strong class="d-block">{{ trans('admin/main.add_subject') }}</strong>
-                                                            <button type="button" onclick="handleOutlineAddBtnClick(event, {{ $subCategory->id }})" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                                                            <div>
+                                                                <button type="button" @click="showCourseLists[{{ $subCategory->id }}] = !showCourseLists[{{ $subCategory->id }}]" class="btn btn-success">
+                                                                    <span x-text="showCourseLists[{{ $subCategory->id }}] ? 'Hide' : 'Show'"></span>
+                                                                </button>
+                                                                 <button type="button" onclick="handleOutlineAddBtnClick(event, {{ $subCategory->id }})" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                                                            </div>
                                                         </div>
                                                     @endif
-                                            @php
-                                                $outlines = \App\Models\Category::where('parent_id', $subCategory->id)
-                                                ->where('level', 3)
-                                                ->orderBy('order', 'asc')
-                                                ->get();
-                                            @endphp
+                                                @php
+                                                    $outlines = \App\Models\Category::where('parent_id', $subCategory->id)
+                                                    ->where('level', 3)
+                                                    ->orderBy('order', 'asc')
+                                                    ->get();
+                                                @endphp
+                                                {{-- Course List  --}}
                                                 @if((!empty($outlines)))
                                                     @foreach($outlines as $key => $outline)
-                                                        <li class="form-group list-group ml-4">
+                                                        <li x-show="showCourseLists[{{ $subCategory->id }}]" class="form-group list-group ml-4">
                                                             <div class="p-2 border rounded-sm">
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
@@ -195,9 +202,9 @@
                                                                     </div>
 
                                                                     <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][title]"
-                                                                           class="form-control w-auto flex-grow-1"
-                                                                           value="{{ $outline->title }}"
-                                                                           placeholder="{{ trans('admin/main.title_subject') }}"/>
+                                                                        class="form-control w-auto flex-grow-1"
+                                                                        value="{{ $outline->title }}"
+                                                                        placeholder="{{ trans('admin/main.title_subject') }}"/>
 
                                                                     <div class="input-group-append">
                                                                         <button type="button" class="btn remove-btn btn-danger"><i class="fa fa-times"></i></button>
@@ -206,16 +213,16 @@
 
                                                                 <div class="input-group mt-1">
                                                                     <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][description]"
-                                                                           class="form-control w-auto flex-grow-1"
-                                                                           value="{{ $outline->description }}"
-                                                                           placeholder="{{ trans('admin/main.description_subject') }}"/>
+                                                                        class="form-control w-auto flex-grow-1"
+                                                                        value="{{ $outline->description }}"
+                                                                        placeholder="{{ trans('admin/main.description_subject') }}"/>
                                                                 </div>
 
                                                                 <div class="input-group mt-1">
                                                                     <input type="text" name="outline_{{ $subCategory->id }}[{{ $outline->id }}][subject_code]"
-                                                                           class="form-control w-auto flex-grow-1"
-                                                                           value="{{ $outline->subject_code }}"
-                                                                           placeholder="{{ trans('admin/main.code') }}"/>
+                                                                        class="form-control w-auto flex-grow-1"
+                                                                        value="{{ $outline->subject_code }}"
+                                                                        placeholder="{{ trans('admin/main.code') }}"/>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -306,6 +313,7 @@
 
 @push('scripts_bottom')
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script src="/assets/default/js/admin/categories.min.js"></script>
     <script>

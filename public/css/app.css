@@ -919,6 +919,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.mt-8 {
+  margin-top: 2rem;
+}
 .box-content {
   box-sizing: content-box;
 }

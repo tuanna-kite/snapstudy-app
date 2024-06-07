@@ -136,7 +136,6 @@
                                             <div class="d-flex justify-content-between mb-1">
                                                 <label class="input-label">{{ trans('public.description') }}</label>
                                                 <button type="button" class="btn btn-primary" id="edit_description">Edit</button>
-
                                             </div>
 
                                             <textarea name="description" id="description_mce"
@@ -479,6 +478,7 @@
         });
 
         $('#edit_preview').on('click', function() {
+            console.log('abc')
             $('#preview_content_mce').addClass('tinymce');
             initTinymce();
         });

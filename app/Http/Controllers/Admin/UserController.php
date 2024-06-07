@@ -122,7 +122,7 @@ class UserController extends Controller
             ->whereNull('subscribe_id')
             ->sum('total_amount');
 
-       return $data;
+        return $data;
     }
 
     public function purchasedsCount()
@@ -223,6 +223,35 @@ class UserController extends Controller
         ];
 
         return view('admin.users.students', $data);
+    }
+
+    public function queryStatisticStudent()
+    {
+        $query = User::where('role_name', Role::$user);
+
+        $totalStudents = deepClone($query)->count();
+        $inactiveStudents = deepClone($query)->where('status', 'inactive')
+            ->count();
+        $banStudents = deepClone($query)->where('ban', true)
+            ->whereNotNull('ban_end_at')
+            ->where('ban_end_at', '>', time())
+            ->count();
+
+        $totalOrganizationsStudents = User::where('role_name', Role::$user)
+            ->whereNotNull('organ_id')
+            ->count();
+
+
+        $data = [
+            'totalStudents' => $totalStudents,
+            'inactiveStudents' => $inactiveStudents,
+            'banStudents' => $banStudents,
+            'totalOrganizationsStudents' => $totalOrganizationsStudents,
+            'totalPurchasedsSum' => $this->purchasedsSum(),
+            'totalPurchasedsCnt' => $this->purchasedsCount(),
+            'totalAccountingBalance' => $this->getTotalAccountingBalance(),
+        ];
+        return $data;
     }
 
     public function instructors(Request $request, $is_export_excel = false)
@@ -349,16 +378,16 @@ class UserController extends Controller
 
         $query = fromAndToDateFilter($from, $to, $query, 'users.created_at');
 
-       if (!empty($full_name)) {
-            $query->where(function($query) use ($full_name) {
+        if (!empty($full_name)) {
+            $query->where(function ($query) use ($full_name) {
                 $query->where('full_name', 'like', "%$full_name%")
-                      ->orWhere('email', 'like', "%$full_name%")
-                      ->orWhere('id', 'like', "%$full_name%");
+                    ->orWhere('email', 'like', "%$full_name%")
+                    ->orWhere('id', 'like', "%$full_name%");
             });
         }
 
         if (!empty($referral_code)) {
-            $query->where(function($query) use ($referral_code) {
+            $query->where(function ($query) use ($referral_code) {
                 $query->where('referral_code', $referral_code);
             });
         }

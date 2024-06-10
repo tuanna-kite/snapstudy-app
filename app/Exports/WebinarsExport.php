@@ -32,6 +32,9 @@ class WebinarsExport implements FromCollection, WithHeadings, WithMapping
         return [
             trans('admin/main.id'),
             trans('admin/pages/webinars.title'),
+            trans('admin/main.subject2'),
+            trans('admin/main.campus'),
+            trans('admin/main.school'),
             trans('admin/pages/webinars.course_type'),
             trans('admin/pages/webinars.teacher_name'),
             trans('admin/pages/webinars.sale_count'),
@@ -49,6 +52,9 @@ class WebinarsExport implements FromCollection, WithHeadings, WithMapping
         return [
             $webinar->id,
             $webinar->title,
+            $webinar->category->category->category->title ?? '',
+            $webinar->category->category->title ?? '',
+            $webinar->category->title ?? '',
             $webinar->type,
             $webinar->teacher->full_name,
             $webinar->sales->count(),

@@ -367,12 +367,17 @@ class CategoryController extends Controller
     {
         $majors = Category::where('parent_id', $school_id)
             ->where('level', 2)
-            ->orderBy('order', 'asc')
-            ->get();
-
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
+        $values = [];
+        foreach ($majors as $subject) {
+            $values[] = $subject;
+        }
         return response()->json([
             'code' => 200,
-            'majors' => $majors
+            'majors' => $values
         ]);
     }
 
@@ -380,12 +385,17 @@ class CategoryController extends Controller
     {
         $subjects = Category::where('parent_id', $major_id)
             ->where('level', 3)
-            ->orderBy('order', 'asc')
-            ->get();
-
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
+        $values = [];
+        foreach ($subjects as $subject) {
+            $values[] = $subject;
+        }
         return response()->json([
             'code' => 200,
-            'subjects' => $subjects
+            'subjects' => $values
         ]);
     }
 

@@ -263,6 +263,9 @@
                                         <th>#</th>
                                         <th>{{trans('admin/main.id')}}</th>
                                         <th class="text-left">{{trans('admin/main.title')}}</th>
+                                        <th class="text-left">{{ trans('admin/main.school') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.campus') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.subject2') }}</th>
                                         <th class="text-left">{{trans('admin/main.instructor')}}</th>
                                         <th>{{trans('admin/main.price')}}</th>
                                         <th>{{trans('admin/main.sales')}}</th>
@@ -291,6 +294,24 @@
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
                                                 @else
                                                     <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->title }}</small>
                                                 @endif
                                             </td>
 

@@ -165,7 +165,10 @@ class QuizController extends Controller
     {
         $this->authorize('admin_quizzes_create');
         $categories = Category::where('parent_id', null)
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
         $data = [
             'pageTitle' => trans('quiz.new_quiz'),
             'categories' => $categories
@@ -329,7 +332,10 @@ class QuizController extends Controller
         }
 
         $categories = Category::where('parent_id', null)
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
 
         $data = [
             'pageTitle' => trans('public.edit') . ' ' . $quiz->title,
@@ -386,7 +392,8 @@ class QuizController extends Controller
         }
 
         $webinar->update([
-            'slug' => $data['slug'],
+            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '',
+                    str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
             'price' => $data['price'],
             'category_id' => $data['category_id'],
             'updated_at' => time(),

@@ -361,7 +361,6 @@
             let html = '';
             $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
                 if (result && result.code === 200) {
-                    console.log(result)
 
                     if (result.majors && result.majors.length) {
                         for (let major of result.majors) {

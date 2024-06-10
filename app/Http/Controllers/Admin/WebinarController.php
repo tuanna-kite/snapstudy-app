@@ -72,7 +72,10 @@ class WebinarController extends Controller
             ->first();
 
         $categories = Category::where('parent_id', null)
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
 
         $inProgressWebinars = $this->getInProgressWebinarsCount();
 
@@ -348,7 +351,11 @@ class WebinarController extends Controller
         removeContentLocale();
 
         $teachers = User::where('role_name', Role::$teacher)->get();
-        $categories = Category::where('parent_id', null)->get();
+        $categories = Category::where('parent_id', null)
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
         $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
             ->where('is_personalization', 1)
             ->groupBy('user_id')
@@ -562,7 +569,10 @@ class WebinarController extends Controller
 
         $categories = Category::where('parent_id', null)
             ->with('subCategories')
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
 
         $teacherQuizzes = Quiz::where('webinar_id', null)
             ->where('creator_id', $webinar->teacher_id)

@@ -21,7 +21,7 @@ class QuizQuestionController extends Controller
             'quiz_id' => 'required|exists:quizzes,id',
             'title' => 'required',
             'correct' => 'required',
-            'grade' => 'required|integer',
+//            'grade' => 'required|integer',
             'type' => 'required',
             'image' => 'nullable|max:255',
             'video' => 'nullable|max:255',
@@ -73,7 +73,7 @@ class QuizQuestionController extends Controller
             $quizQuestion = QuizzesQuestion::create([
                 'quiz_id' => $data['quiz_id'],
                 'creator_id' => $creator->id,
-                'grade' => $data['grade'],
+                'grade' => 0,
                 'type' => $data['type'],
                 'image' => $data['image'] ?? null,
                 'video' => $data['video'] ?? null,
@@ -206,7 +206,7 @@ class QuizQuestionController extends Controller
         $rules = [
             'quiz_id' => 'required|exists:quizzes,id',
             'title' => 'required',
-            'grade' => 'required',
+//            'grade' => 'required',
             'type' => 'required',
             'image' => 'nullable|max:255',
             'video' => 'nullable|max:255',
@@ -260,12 +260,12 @@ class QuizQuestionController extends Controller
                 ->first();
 
             if (!empty($quizQuestion)) {
-                $quiz->decreaseTotalMark($quizQuestion->grade);
+//                $quiz->decreaseTotalMark($quizQuestion->grade);
 
                 $quizQuestion->update([
                     'quiz_id' => $data['quiz_id'],
                     'creator_id' => $creator->id,
-                    'grade' => $data['grade'],
+                    'grade' => 0,
                     'type' => $data['type'],
                     'image' => $data['image'] ?? null,
                     'video' => $data['video'] ?? null,

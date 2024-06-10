@@ -50,14 +50,6 @@
                                     <i class="fa fa-upload"></i>
                                 </button>
                             </div>
-                            <input type="text" name="thumbnail" id="thumbnail"
-                                value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
-                                class="form-control @error('thumbnail')  is-invalid @enderror" />
-                            <div class="input-group-append">
-                                <button type="button" class="input-group-text admin-file-view" data-input="thumbnail">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </div>
                             @error('thumbnail')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -65,14 +57,10 @@
                             @enderror
                         </div>
                         <textarea name="ajax[title]" id="question_title"
-                            class="form-control @error('preview_content')  is-invalid @enderror tinymce" rows="5"
+                            class="js-ajax-title form-control tinymce" rows="5"
                             value="{{ !empty($question_edit) ? $question_edit->title : '' }}"
-                            placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($preview_content) ? $preview_content : old('preview_content') !!}</textarea>
-                        @error('preview_content')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                            placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($question_edit) ? $question_edit->title : '' !!}</textarea>
+                        <span class="invalid-feedback"></span>
                     </div>
                 </div>
 
@@ -97,36 +85,10 @@
                         <div class="form-group d-flex justify-content-between align-items-center mb-1">
                             <label>Giải thích</label>
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button type="button" class="input-group-text admin-file-manager"
-                                    data-input="thumbnail" data-preview="holder">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                            </div>
-                            <input type="text" name="thumbnail" id="thumbnail"
-                                value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
-                                class="form-control @error('thumbnail')  is-invalid @enderror" />
-                            <div class="input-group-append">
-                                <button type="button" class="input-group-text admin-file-view" data-input="thumbnail">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </div>
-                            @error('thumbnail')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
                         <textarea name="ajax[correct]" id="explaination"
-                            class="form-control @error('preview_content')  is-invalid @enderror tinymce" rows="5"
+                            class="js-ajax-correct form-control tinymce" rows="5"
                             value="{{ !empty($question_edit) ? $question_edit->correct : '' }}"
-                            placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($preview_content) ? $preview_content : old('preview_content') !!}</textarea>
-                        @error('preview_content')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                            placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($question_edit) ? $question_edit->correct : '' !!}</textarea>
                     </div>
                 </div>
 

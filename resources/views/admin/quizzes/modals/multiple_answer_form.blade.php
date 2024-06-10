@@ -14,7 +14,6 @@
             <div class="form-group">
                 <div class="form-group d-flex justify-content-between align-items-center mb-1">
                     <label>{{ trans('quiz.answer_title') }}</label>
-                    <button type="button" class="btn btn-sm btn-primary" id="edit_preview">Edit</button>
                 </div>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -39,7 +38,7 @@
                     @enderror
                 </div>
                 <textarea name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][title]" id="preview_content_mce"
-                          class="form-control @error('preview_content')  is-invalid @enderror" rows="5"
+                          class="form-control @error('preview_content')  is-invalid @enderror tinymce" rows="5"
                             value="{{ !empty($answer) ? $answer->title : '' }}"
                           placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) && !empty($preview_content)) ? $preview_content : old('preview_content') !!}</textarea>
                 @error('preview_content')

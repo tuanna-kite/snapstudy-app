@@ -1,5 +1,4 @@
-<div
-    class="@if (!empty($quiz)) multipleQuestionModal{{ $quiz->id }} @endif {{ empty($question_edit) ? 'd-none' : '' }}">
+<div class="multipleQuestionModal{{ $quiz->id }} {{ empty($question_edit) ? 'd-none' : '' }}">
     <div class="custom-modal-body">
         <h2 class="section-title after-line">{{ trans('quiz.multiple_choice_question') }}</h2>
 
@@ -43,7 +42,6 @@
                     <div class="form-group">
                         <div class="form-group d-flex justify-content-between align-items-center mb-1">
                             <label>{{ trans('quiz.question_title') }}</label>
-                            <button type="button" class="btn btn-sm btn-primary" id="edit_question_title">Edit</button>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -66,8 +64,9 @@
                                 </div>
                             @enderror
                         </div>
-                        <textarea name="ajax[title]" id="question_title" class="form-control @error('preview_content')  is-invalid @enderror"
-                            rows="5" value="{{ !empty($question_edit) ? $question_edit->title : '' }}"
+                        <textarea name="ajax[title]" id="question_title"
+                            class="form-control @error('preview_content')  is-invalid @enderror tinymce" rows="5"
+                            value="{{ !empty($question_edit) ? $question_edit->title : '' }}"
                             placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($preview_content) ? $preview_content : old('preview_content') !!}</textarea>
                         @error('preview_content')
                             <div class="invalid-feedback">
@@ -97,7 +96,6 @@
                     <div class="form-group">
                         <div class="form-group d-flex justify-content-between align-items-center mb-1">
                             <label>Giải thích</label>
-                            <button type="button" class="btn btn-sm btn-primary" id="edit_explaination">Edit</button>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -120,8 +118,9 @@
                                 </div>
                             @enderror
                         </div>
-                        <textarea name="ajax[correct]" id="explaination" class="form-control @error('preview_content')  is-invalid @enderror"
-                            rows="5" value="{{ !empty($question_edit) ? $question_edit->correct : '' }}"
+                        <textarea name="ajax[correct]" id="explaination"
+                            class="form-control @error('preview_content')  is-invalid @enderror tinymce" rows="5"
+                            value="{{ !empty($question_edit) ? $question_edit->correct : '' }}"
                             placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($preview_content) ? $preview_content : old('preview_content') !!}</textarea>
                         @error('preview_content')
                             <div class="invalid-feedback">
@@ -195,31 +194,7 @@
                     class="close-swl btn btn-sm btn-danger ml-2">{{ trans('public.close') }}</button>
             </div>
 
+
         </div>
     </div>
 </div>
-
-@push('scripts_bottom')
-    <script src="https://cdn.tiny.cloud/1/wliji6ewtvzu9zn08ui3ac9gy1iu2oia3894vltejkc9tznl/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        function initTinymce() {
-            tinymce.init({
-                selector: 'textarea.tinymce',
-                plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker permanentpen advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags inlinecss markdown',
-                toolbar: 'fullscreen tableofcontents blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                images_file_types: 'jpg,svg,webp,png',
-                height: 600,
-            });
-        }
-
-        $('#edit_question_title').on('click', function() {
-            $('#question_title').addClass('tinymce');
-            initTinymce();
-        });
-        $('#edit_explaination').on('click', function() {
-            $('#explaination').addClass('tinymce');
-            initTinymce();
-        });
-    </script>
-@endpush

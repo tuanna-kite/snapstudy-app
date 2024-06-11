@@ -61,27 +61,27 @@
                     </span>
                     <ul class="space-y-2 mt-3">
                         <li class="text-sm font-medium text-text.light.secondary">
-                            <a href="#">
+                            <a target="_blank" href="{{ asset('tutorial/1. HƯỚNG DẪN MUA TÀI LIỆU.pdf') }}">
                                 Hướng dẫn mua khóa học ôn tập
                             </a>
                         </li>
                         <li class="text-sm font-medium text-text.light.secondary">
-                            <a href="#">
+                            <a target="_blank" href="{{ asset('tutorial/5. CHÍNH SÁCH THANH TOÁN.pdf') }}">
                                 Chính sách thanh toán
                             </a>
                         </li>
                         <li class="text-sm font-medium text-text.light.secondary">
-                            <a href="#">
+                            <a target="_blank" href="{{ asset('tutorial/3. CHÍNH SÁCH BẢO MẬT THÔNG TIN KHÁCH HÀNG.pdf') }}">
                                 Chính sách bảo mật thông tin khách hàng
                             </a>
                         </li>
                         <li class="text-sm font-medium text-text.light.secondary">
-                            <a href="#">
+                            <a target="_blank" href="{{ asset('tutorial/2. CHÍNH SÁCH ĐỔI TRẢ VÀ HOÀN TIỀN.pdf') }}">
                                 Chính sách đổi trả và hoàn tiền
                             </a>
                         </li>
                         <li class="text-sm font-medium text-text.light.secondary">
-                            <a href="#">
+                            <a target="_blank" href="{{ asset('tutorial/4. QUY TRÌNH TIẾP NHẬN VÀ GIẢI QUYẾT KHIẾU NẠI.pdf') }}">
                                 Quy trình tiếp nhận và xử lý khiếu nại
                             </a>
                         </li>

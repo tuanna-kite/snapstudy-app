@@ -176,7 +176,7 @@ class PersonalizationController extends Controller
             }
         } elseif ($gateway == 'paypal') {
             return $this->paypalPayment($order, $amount);
-        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+        } elseif ($gateway == '9PAY' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
             $this->ninepaycontroller->createPaymentPersonalization($orderId, $amount, $gateway);
         }
 

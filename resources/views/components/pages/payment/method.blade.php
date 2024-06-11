@@ -2,26 +2,26 @@
 @php
     $user = auth()->user();
         $methods = [
-            [
-                'name' => 'gateway',
-                'img' => asset('img/visa.png'),
-                'title' => trans('payment.Pay with card'),
-                'sub' => 'Visa, Master, JCB...',
-                'value' => 'CREDIT_CARD',
-            ],
-            [
-                'name' => 'gateway',
-                'img' => asset('img/atm.png'),
-                'title' => trans('payment.Pay with ATM'),
-                'sub' => trans('9PAY'),
-                'value' => 'ATM_CARD',
-            ],
+//            [
+//                'name' => 'gateway',
+//                'img' => asset('img/visa.png'),
+//                'title' => trans('payment.Pay with card'),
+//                'sub' => 'Visa, Master, JCB...',
+//                'value' => 'CREDIT_CARD',
+//            ],
+//            [
+//                'name' => 'gateway',
+//                'img' => asset('img/atm.png'),
+//                'title' => trans('payment.Pay with ATM'),
+//                'sub' => trans('9PAY'),
+//                'value' => 'ATM_CARD',
+//            ],
             [
                 'name' => 'gateway',
                 'img' => asset('img/9pay.svg'),
                 'title' => trans('Pay with 9PAY'),
                 'sub' => trans('9Pay'),
-                'value' => 'WALLET',
+                'value' => '9PAY',
             ],
         ];
 

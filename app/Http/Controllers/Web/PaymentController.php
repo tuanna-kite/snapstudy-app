@@ -109,7 +109,7 @@ class PaymentController extends Controller
             }
         } elseif ($gateway == 'paypal') {
             return $this->paypalPayment($order);
-        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+        } elseif ($gateway == '9PAY' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
             $this->ninepaycontroller->createPayment($orderId, $order->total_amount, $gateway);
         }
 

@@ -153,7 +153,7 @@ class AccountingController extends Controller
             }
         } else if ($gateway == 'paypal') {
             return $this->paypalPayment($amount);
-        } elseif ($gateway == 'WALLET' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
+        } elseif ($gateway == '9PAY' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
             $this->ninepaycontroller->createPaymentAccount($amount, $gateway);
         }
 

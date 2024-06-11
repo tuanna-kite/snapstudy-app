@@ -31,7 +31,7 @@ class NinePayController extends Controller
             'description' => $description,
             'invoice_no' => $orderId,
             'merchantKey' => $this->merchantKey,
-            'method' => $gateway,
+//            'method' => $gateway,
             'return_url' => route('ninepay.result'),
             'time' => $time,
         ];
@@ -59,7 +59,7 @@ class NinePayController extends Controller
             'description' => $description,
             'invoice_no' => $time,
             'merchantKey' => $this->merchantKey,
-            'method' => $gateway,
+//            'method' => $gateway,
             'return_url' => route('9pay.result'),
             'time' => $time,
         ];
@@ -88,7 +88,7 @@ class NinePayController extends Controller
             'description' => $description,
             'invoice_no' => $orderId,
             'merchantKey' => $this->merchantKey,
-            'method' => $gateway,
+//            'method' => $gateway,
             'return_url' => route('personalization.result'),
             'time' => $time,
         ];

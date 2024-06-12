@@ -222,6 +222,18 @@
                             </div>
 
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="input-label">{{trans('admin/main.webinar_creator')}}</label>
+                                    <select name="creator_ids[]" multiple="multiple" data-search-option="just_creator_role" class="form-control search-creator-select2"
+                                            data-placeholder="Search teachers">
+
+                                        @if(!empty($creators) and $creators->count() > 0)
+                                            @foreach($creators as $creator)
+                                                <option value="{{ $creator->id }}" selected>{{ $creator->full_name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-3">

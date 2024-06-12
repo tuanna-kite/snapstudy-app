@@ -123,9 +123,6 @@ class WebinarController extends Controller
             $webinar->sales = $sales;
         }
 
-        $creators = User::select('id', 'full_name')
-            ->where('role_id', '<>', 1)->get();
-
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),
@@ -143,6 +140,10 @@ class WebinarController extends Controller
         if (!empty($teacher_ids)) {
             $data['teachers'] = User::select('id', 'full_name')->whereIn('id', $teacher_ids)->get();
         }
+        $creator_ids = $request->get('creator_ids', null);
+        if (!empty($creator_ids)) {
+            $data['creators'] = User::select('id', 'full_name')->whereIn('id', $creator_ids)->get();
+        }
 
         return view('admin.webinars.lists', $data);
     }
@@ -159,6 +160,7 @@ class WebinarController extends Controller
         $subject_id = $request->get('subject_id', null);
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
+        $creator_ids = $request->get('creator_ids', null);
 
         $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
 
@@ -173,6 +175,10 @@ class WebinarController extends Controller
 
         if (!empty($teacher_ids) and count($teacher_ids)) {
             $query->whereIn('teacher_id', $teacher_ids);
+        }
+
+        if (!empty($creator_ids) and count($creator_ids)) {
+            $query->whereIn('creator_id', $creator_ids);
         }
 
         if (!empty($school_id) && empty($campus_id) && empty($subject_id)) {

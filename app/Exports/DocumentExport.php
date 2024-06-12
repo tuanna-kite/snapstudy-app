@@ -31,7 +31,10 @@ class DocumentExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
+            trans('admin/main.content_type'),
+            trans('admin/main.id'),
             trans('admin/main.title'),
+            trans('User ID'),
             trans('admin/main.user'),
             trans('admin/main.email'),
             trans('admin/main.amount'),
@@ -48,11 +51,11 @@ class DocumentExport implements FromCollection, WithHeadings, WithMapping
     public function map($documents): array
     {
         if (!empty($documents->webinar_id)) {
-            $title = ($documents->is_personalization  ? trans('course.Syllabus support') : trans('update.product_purchased')) . '-' . $documents->webinar_id . '-' . (!empty($documents->webinar) ? $documents->webinar->title : '');
+            $title = ($documents->is_personalization  ? trans('course.Syllabus support') : trans('update.product_purchased'));
         } elseif (!empty($documents->bundle_id)) {
-            $title = trans('update.product_purchased') . '-' . $documents->product_id . (!empty($documents->bundle) ? $documents->bundle->title : '');
+            $title = trans('update.product_purchased');
         } elseif (!empty($documents->product_id)) {
-            $title = trans('update.product_purchased') . '-' . $documents->product_id . (!empty($documents->product) ? $documents->product->title : '');
+            $title = trans('update.product_purchased');
         } elseif (!empty($documents->meeting_time_id)){
             $title = trans('update.meeting');
         } elseif (!empty($documents->subscribe_id)){
@@ -82,8 +85,11 @@ class DocumentExport implements FromCollection, WithHeadings, WithMapping
 
         return [
             $title,
-            $documents->user->full_name,
-            $documents->user->email,
+            $documents->webinar_id,
+            $documents->webinar ? $documents->webinar->title : '',
+            $documents->user ? $documents->user->id : '',
+            $documents->user ? $documents->user->full_name : '',
+            $documents->user ? $documents->user->email : '',
             $documents->amount,
             $type,
             $creator,

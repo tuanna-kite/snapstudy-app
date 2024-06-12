@@ -463,11 +463,14 @@ class QuizController extends Controller
                 }
             }
 
+            $userQuiz = null;
+            if ($user) {
+                $userQuiz = QuizzesResult::where('quiz_id', $quiz->id)
+                    ->where('user_id', $user->id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
 
-            $userQuiz = QuizzesResult::where('quiz_id', $quiz->id)
-                ->where('user_id', $user->id)
-                ->orderBy('id', 'desc')
-                ->first();
             $isSubmit = false;
             if ($userQuiz) {
                 $isSubmit = true;

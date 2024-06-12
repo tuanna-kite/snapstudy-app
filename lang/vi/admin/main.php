@@ -819,6 +819,7 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'trend_categories' => 'Danh mục thịnh hành',
 'organizations_section' => 'Mục tổ chức',
 'instructors' => 'Người hướng dẫn',
+'webinar_creator' => 'Người tạo tài liệu',
 'video_or_image_section' => 'Phần Video/Hình ảnh',
 'settings_navbar_links' => 'Top Navbar Links',
 'navbar_links' => 'Top Navbar Links',

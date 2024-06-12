@@ -1292,6 +1292,10 @@ class UserController extends Controller
             $users->where('role_name', Role::$teacher);
         }
 
+        if ($option === "just_creator_role") {
+            $users->where('role_id', '<>' , 1);
+        }
+
         if ($option === "just_student_role") {
             $users->where('role_name', Role::$user);
         }

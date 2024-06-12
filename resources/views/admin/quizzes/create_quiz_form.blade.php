@@ -14,10 +14,8 @@
     class="js-content-form quiz-form webinar-form">
     {{ csrf_field() }}
     <section>
-
         <div class="row">
             <div class="col-12 col-md-4">
-
 
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="">
@@ -315,7 +313,7 @@
 
 @if (!empty($quiz))
     @include('admin.quizzes.modals.multiple_question')
-    {{-- @include('admin.quizzes.modals.descriptive_question') --}}
+    @include('admin.quizzes.modals.descriptive_question')
 @endif
 
 @push('scripts_bottom')
@@ -323,6 +321,7 @@
         referrerpolicy="origin"></script>
     <script>
         function initTinymce() {
+            console.log("INIT TINY MCEEEEEE")
             tinymce.init({
                 selector: 'textarea.tinymce',
                 plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker permanentpen advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags inlinecss markdown',
@@ -333,14 +332,5 @@
         }
 
         initTinymce()
-
-        // $('#edit_question_title').on('click', function() {
-        //     $('#question_title').addClass('tinymce');
-        //     initTinymce();
-        // });
-        // $('#edit_explaination').on('click', function() {
-        //     $('#explaination').addClass('tinymce');
-        //     initTinymce();
-        // });
     </script>
 @endpush

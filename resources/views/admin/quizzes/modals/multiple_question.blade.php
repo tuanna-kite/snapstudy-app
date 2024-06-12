@@ -1,4 +1,7 @@
-<div class="multipleQuestionModal{{ $quiz->id }} {{ empty($question_edit) ? 'd-none' : '' }}">
+<div class="multipleQuestionModal{{ $quiz->id }}
+
+    {{-- {{ empty($question_edit) ? 'd-none' : '' }} --}}
+    ">
     <div class="custom-modal-body">
         <h2 class="section-title after-line">{{ trans('quiz.multiple_choice_question') }}</h2>
 
@@ -56,8 +59,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <textarea name="ajax[title]" id="question_title"
-                            class="js-ajax-title form-control tinymce" rows="5"
+                        <textarea name="ajax[title]" id="question_title" class="js-ajax-title form-control tinymce" rows="5"
                             value="{{ !empty($question_edit) ? $question_edit->title : '' }}"
                             placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($question_edit) ? $question_edit->title : '' !!}</textarea>
                         <span class="invalid-feedback"></span>
@@ -85,8 +87,7 @@
                         <div class="form-group d-flex justify-content-between align-items-center mb-1">
                             <label>Giải thích</label>
                         </div>
-                        <textarea name="ajax[correct]" id="explaination"
-                            class="js-ajax-correct form-control tinymce" rows="5"
+                        <textarea name="ajax[correct]" id="explaination" class="js-ajax-correct form-control tinymce" rows="5"
                             value="{{ !empty($question_edit) ? $question_edit->correct : '' }}"
                             placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($question_edit) ? $question_edit->correct : '' !!}</textarea>
                     </div>
@@ -139,7 +140,7 @@
                 </div>
             </div>
 
-            <div class="add-answer-container">
+            <div class="add-answer-container" style="overflow-y: visible;height:auto">
 
                 @if (!empty($question_edit->quizzesQuestionsAnswers) and !$question_edit->quizzesQuestionsAnswers->isEmpty())
                     @foreach ($question_edit->quizzesQuestionsAnswers as $answer)

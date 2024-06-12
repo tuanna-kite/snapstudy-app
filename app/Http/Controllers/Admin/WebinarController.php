@@ -123,9 +123,6 @@ class WebinarController extends Controller
             $webinar->sales = $sales;
         }
 
-        $creators = User::select('id', 'full_name')
-            ->where('role_id', '<>', 1)->get();
-
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),

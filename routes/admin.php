@@ -324,7 +324,8 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
 
         Route::group(['prefix' => 'quizzes-questions'], function () {
             Route::post('/store', 'QuizQuestionController@store');
-            Route::get('/{id}/edit', 'QuizQuestionController@edit');
+            Route::get('/{id}/edit', 'QuizQuestionController@edit')->name('quizzes-question.edit');
+            Route::get('/{quizID}/create', 'QuizQuestionController@get_create')->name('quizzes-question.create');
             Route::get('/{id}/getQuestionByLocale', 'QuizQuestionController@getQuestionByLocale');
             removeContentLocale();
             Route::post('/{id}/update', 'QuizQuestionController@update');

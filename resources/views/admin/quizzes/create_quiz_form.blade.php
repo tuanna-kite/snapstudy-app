@@ -253,8 +253,8 @@
             <div class="d-flex justify-content-between align-items-center pb-20">
                 <h2 class="section-title after-line">{{ trans('public.questions') }}</h2>
                 {{-- TODO: navigate to create_multiple_ques  --}}
-                <button id="add_multiple_question" data-quiz-id="{{ $quiz->id }}" type="button"
-                    class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_multiple_choice') }}</button>
+                <a  href="{{ route('quizzes-question.create', ['quizID' => $quiz->id]) }}"
+                    class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_multiple_choice') }}</a>
                 {{-- <button id="add_descriptive_question" data-quiz-id="{{ $quiz->id }}" type="button" class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_descriptive') }}</button> --}}
             </div>
             @if ($quizQuestions)
@@ -280,8 +280,8 @@
                                 </button>
                                 <div class="dropdown-menu text-left">
                                     {{-- TODO: navigate to create_multiple_ques  --}}
-                                    <button type="button" data-question-id="{{ $question->id }}"
-                                        class="edit_question btn btn-sm btn-transparent">{{ trans('public.edit') }}</button>
+                                    <a type="button" href="{{ route('quizzes-question.edit',['id' => $question->id]) }}"
+                                        class="btn btn-sm btn-transparent">{{ trans('public.edit') }}</a>
                                     @include('admin.includes.delete_button', [
                                         'url' => getAdminPanelUrl(
                                             '/quizzes-questions/' . $question->id . '/delete'),

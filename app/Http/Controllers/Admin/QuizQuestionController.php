@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Validator;
 
 class QuizQuestionController extends Controller
 {
+
+    public function get_create($quizID)
+    {
+        $quiz = Quiz::find($quizID);
+
+        if (!empty($quiz)) {
+            $locale = app()->getLocale();
+
+            $data = [
+                'pageTitle' => $quiz->title,
+                'quiz' => $quiz,
+                'locale' => mb_strtolower($locale),
+                'defaultLocale' => getDefaultLocale(),
+            ];
+        }
+
+        return view('admin.quizzes.create_multiple_question', $data);
+
+    }
+
     public function store(Request $request)
     {
         $data = $request->get('ajax');
@@ -117,9 +137,7 @@ class QuizQuestionController extends Controller
                 }
             }
 
-            return response()->json([
-                'code' => 200
-            ], 200);
+            return redirect(route('adminEditQuiz', ['id' => $quiz->id]));
         }
 
         return response()->json([
@@ -151,9 +169,7 @@ class QuizQuestionController extends Controller
                     $html = (string)\View::make('admin.quizzes.modals.descriptive_question', $data);
                 }
 
-                return response()->json([
-                    'html' => $html
-                ], 200);
+                return view('admin.quizzes.create_multiple_question', $data);
             }
         }
 

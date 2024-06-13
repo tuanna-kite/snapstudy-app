@@ -17,7 +17,7 @@
         </div>
 
         <div class="section-body">
-            @include('admin.quizzes.modals.multiple_question')
+            @include('admin.quizzes.modals.multiple_question', ['quiz' => $quiz])
         </div>
     </section>
 @endsection
@@ -43,7 +43,7 @@
                 plugins: 'fullscreen anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker permanentpen advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags inlinecss markdown',
                 toolbar: 'fullscreen tableofcontents blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                 images_file_types: 'jpg,svg,webp,png',
-                height: 600,
+                height: 300,
             });
         }
 

@@ -1,4 +1,6 @@
-
+@php
+    $rand = empty($answer) ? $random  : '';
+@endphp
 <div
     class="add-answer-card mt-4 {{ (empty($answer) or !empty($loop) and $loop->iteration == 1) ? 'main-answer-box' : '' }}">
     <button type="button"
@@ -18,7 +20,7 @@
                 <div class="form-group d-flex justify-content-between align-items-center mb-1">
                     <label>{{ trans('quiz.answer_title') }}</label>
                 </div>
-                <textarea name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][title]" id=""
+                <textarea name="ajax[answers][{{ !empty($answer) ? $answer->id : $rand }}][title]" id=""
                     class="form-control tinymce {{ !empty($answer) ? 'js-ajax-answer-title-' . $answer->id : '' }}" rows="5"
                     value="{!! !empty($answer) ? $answer->title : '' !!}" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($answer) ? $answer->title : '' !!}</textarea>
             </div>
@@ -33,12 +35,12 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button type="button" class="input-group-text admin-file-manager"
-                            data-input="file{{ !empty($answer) ? $answer->id : 'ans_tmp' }}" data-preview="holder">
+                            data-input="file{{ !empty($answer) ? $answer->id : $rand }}" data-preview="holder">
                             <i class="fa fa-arrow-up" class="text-white"></i>
                         </button>
                     </div>
-                    <input id="file{{ !empty($answer) ? $answer->id : 'ans_tmp' }}" type="text"
-                        name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][file]"
+                    <input id="file{{ !empty($answer) ? $answer->id : $rand }}" type="text"
+                        name="ajax[answers][{{ !empty($answer) ? $answer->id : $rand }}][file]"
                         value="{{ !empty($answer) ? $answer->image : '' }}" class="form-control lfm-input" />
                 </div>
             </div>
@@ -46,13 +48,13 @@
         <div class="col-12 col-md-4">
             <div class="form-group mt-2 d-flex align-items-center justify-content-between js-switch-parent">
                 <label class="js-switch"
-                    for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}">{{ trans('quiz.correct_answer') }}</label>
+                    for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : $rand }}">{{ trans('quiz.correct_answer') }}</label>
                 <div class="custom-control custom-switch">
-                    <input id="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}" type="checkbox"
-                        name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][correct]"
+                    <input id="correctAnswerSwitch{{ !empty($answer) ? $answer->id : $rand }}" type="checkbox"
+                        name="ajax[answers][{{ !empty($answer) ? $answer->id : $rand }}][correct]"
                         @if (!empty($answer) and $answer->correct) checked @endif class="custom-control-input js-switch">
                     <label class="custom-control-label js-switch"
-                        for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}"></label>
+                        for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : $rand }}"></label>
                 </div>
             </div>
         </div>

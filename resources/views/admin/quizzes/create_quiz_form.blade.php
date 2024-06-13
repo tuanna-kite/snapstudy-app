@@ -264,7 +264,7 @@
                     @foreach ($quizQuestions as $question)
                         <li data-id="{{ $question->id }}" class="quiz-question-card d-flex align-items-center mt-4">
                             <div class="flex-grow-1">
-                                <h4 class="question-title">{{ $question->title }}</h4>
+                                <h4 class="question-title">{!! $question->title !!} </h4>
                                 <div class="font-12 mt-3 question-infos">
                                     <span>{{ $question->type === App\Models\QuizzesQuestion::$multiple ? trans('quiz.multiple_choice') : trans('quiz.descriptive') }}
                                         | {{ trans('quiz.grade') }}: {{ $question->grade }}</span>

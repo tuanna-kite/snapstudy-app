@@ -43,6 +43,11 @@
                             placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($question_edit) ? $question_edit->title : '' !!}</textarea>
                         <span class="invalid-feedback"></span>
                     </div>
+                    @error('title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class="col-12">
@@ -72,14 +77,17 @@
                 </div>
             </div>
 
-            <div class="add-answer-container" style="overflow-y: visible;height:auto">
 
+            <div class="add-answer-container" style="overflow-y: visible;height:auto">
                 @if (!empty($question_edit->quizzesQuestionsAnswers) and !$question_edit->quizzesQuestionsAnswers->isEmpty())
                     @foreach ($question_edit->quizzesQuestionsAnswers as $answer)
                         @include('admin.quizzes.modals.multiple_answer_form', ['answer' => $answer])
                     @endforeach
                 @else
-                    @include('admin.quizzes.modals.multiple_answer_form')
+                    @include('admin.quizzes.modals.multiple_answer_form', ['random' => random_str(5)])
+                    @include('admin.quizzes.modals.multiple_answer_form', ['random' => random_str(5)])
+                    @include('admin.quizzes.modals.multiple_answer_form', ['random' => random_str(5)])
+                    @include('admin.quizzes.modals.multiple_answer_form', ['random' => random_str(5)])
                 @endif
             </div>
 

@@ -50,10 +50,9 @@ class QuizQuestionController extends Controller
         $validate = Validator::make($data, $rules);
 
         if ($validate->fails()) {
-            return response()->json([
-                'code' => 422,
-                'errors' => $validate->errors()
-            ], 422);
+            return back()->withErrors([
+                'data' => [trans('Sai dnh dang data')],
+            ]);
         }
 
         if (!empty($data['image']) and !empty($data['video'])) {
@@ -75,12 +74,9 @@ class QuizQuestionController extends Controller
             }
 
             if (!$hasCorrect) {
-                return response([
-                    'code' => 422,
-                    'errors' => [
-                        'current_answer' => [trans('quiz.current_answer_required')]
-                    ],
-                ], 422);
+                return back()->withErrors([
+                    'data' => [trans('quiz.current_answer_required')],
+                ]);
             }
         }
 
@@ -350,9 +346,10 @@ class QuizQuestionController extends Controller
 
                 removeContentLocale();
 
-                return response()->json([
-                    'code' => 200
-                ], 200);
+//                return response()->json([
+//                    'code' => 200
+//                ], 200);
+                return redirect(route('adminEditQuiz', ['id' => $quiz->id]));
             }
         }
 

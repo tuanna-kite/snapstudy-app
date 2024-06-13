@@ -39,6 +39,7 @@
     $('body').on('click', '.add-answer-btn', function (e) {
         e.preventDefault();
         var mainRow = $('.add-answer-container .main-answer-box');
+        console.log("🚀 ~ mainRow:", mainRow)
 
         var copy = mainRow.clone();
         copy.removeClass('main-answer-box');

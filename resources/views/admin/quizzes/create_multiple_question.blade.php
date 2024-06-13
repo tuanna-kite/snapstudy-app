@@ -32,6 +32,7 @@
     </script>
 
     <script src="/assets/default/js/admin/quiz.min.js"></script>
+
     <script src="https://cdn.tiny.cloud/1/8mkg9v8whf8cy0r8589h2cvrm67v8gw6xzf1k9ey6c4shsea/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>

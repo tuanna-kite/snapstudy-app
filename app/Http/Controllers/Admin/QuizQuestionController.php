@@ -92,6 +92,8 @@ class QuizQuestionController extends Controller
                 'grade' => 0,
                 'type' => $data['type'],
                 'image' => $data['image'] ?? null,
+                'title_image' => $data['title_image'] ?? null,
+                'correct_image' => $data['correct_image'] ?? null,
                 'video' => $data['video'] ?? null,
                 'order' => $order,
                 'created_at' => time()

@@ -14,10 +14,8 @@
     class="js-content-form quiz-form webinar-form">
     {{ csrf_field() }}
     <section>
-
         <div class="row">
             <div class="col-12 col-md-4">
-
 
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="">
@@ -254,8 +252,9 @@
         <section class="mt-5">
             <div class="d-flex justify-content-between align-items-center pb-20">
                 <h2 class="section-title after-line">{{ trans('public.questions') }}</h2>
-                <button id="add_multiple_question" data-quiz-id="{{ $quiz->id }}" type="button"
-                    class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_multiple_choice') }}</button>
+                {{-- TODO: navigate to create_multiple_ques  --}}
+                <a  href="{{ route('quizzes-question.create', ['quizID' => $quiz->id]) }}"
+                    class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_multiple_choice') }}</a>
                 {{-- <button id="add_descriptive_question" data-quiz-id="{{ $quiz->id }}" type="button" class="btn btn-primary btn-sm ml-2 mt-3">{{ trans('quiz.add_descriptive') }}</button> --}}
             </div>
             @if ($quizQuestions)
@@ -265,7 +264,7 @@
                     @foreach ($quizQuestions as $question)
                         <li data-id="{{ $question->id }}" class="quiz-question-card d-flex align-items-center mt-4">
                             <div class="flex-grow-1">
-                                <h4 class="question-title">{{ $question->title }}</h4>
+                                <h4 class="question-title">{!! $question->title !!} </h4>
                                 <div class="font-12 mt-3 question-infos">
                                     <span>{{ $question->type === App\Models\QuizzesQuestion::$multiple ? trans('quiz.multiple_choice') : trans('quiz.descriptive') }}
                                         | {{ trans('quiz.grade') }}: {{ $question->grade }}</span>
@@ -280,8 +279,9 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </button>
                                 <div class="dropdown-menu text-left">
-                                    <button type="button" data-question-id="{{ $question->id }}"
-                                        class="edit_question btn btn-sm btn-transparent">{{ trans('public.edit') }}</button>
+                                    {{-- TODO: navigate to create_multiple_ques  --}}
+                                    <a type="button" href="{{ route('quizzes-question.edit',['id' => $question->id]) }}"
+                                        class="btn btn-sm btn-transparent">{{ trans('public.edit') }}</a>
                                     @include('admin.includes.delete_button', [
                                         'url' => getAdminPanelUrl(
                                             '/quizzes-questions/' . $question->id . '/delete'),
@@ -312,11 +312,11 @@
 </div>
 
 
-
-@if (!empty($quiz))
+{{-- NOTE: Remove Modal --}}
+{{-- @if (!empty($quiz))
     @include('admin.quizzes.modals.multiple_question')
-    {{-- @include('admin.quizzes.modals.descriptive_question') --}}
-@endif
+    @include('admin.quizzes.modals.descriptive_question')
+@endif --}}
 
 @push('scripts_bottom')
     <script src="https://cdn.tiny.cloud/1/8mkg9v8whf8cy0r8589h2cvrm67v8gw6xzf1k9ey6c4shsea/tinymce/7/tinymce.min.js"
@@ -333,14 +333,5 @@
         }
 
         initTinymce()
-
-        // $('#edit_question_title').on('click', function() {
-        //     $('#question_title').addClass('tinymce');
-        //     initTinymce();
-        // });
-        // $('#edit_explaination').on('click', function() {
-        //     $('#explaination').addClass('tinymce');
-        //     initTinymce();
-        // });
     </script>
 @endpush

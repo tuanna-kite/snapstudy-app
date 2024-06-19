@@ -200,6 +200,9 @@
                                 @endphp
                                 <strong> {{__('home.Total results') }} : {{$countSales}}</strong>
                              </div>
+                                <div class="ml-5">
+                                    <strong> {{__('Tổng số tiền:') }} : {{ handlePrice($totalFilter) }}</strong>
+                                </div>
                         </div>
 
                         <div class="card-body">
@@ -232,7 +235,7 @@
                                             </td>
 
                                             <td class="text-left">
-                                                {{$sale->buyer->email}}
+                                                {{ !empty($sale->buyer) ? $sale->buyer->email : ''}}
                                             </td>
 
                                             <td class="text-left">

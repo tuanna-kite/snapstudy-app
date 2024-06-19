@@ -39,6 +39,7 @@ class SaleController extends Controller
         $failedSales = Order::where('status', Order::$fail)->count();
 
         $salesQuery = $this->getSalesFilters($query, $request);
+        $totalFilter = deepClone($query)->sum('total_amount');
 
         $sales = $salesQuery->orderBy('created_at', 'desc')
             ->with([
@@ -68,6 +69,7 @@ class SaleController extends Controller
             'classesSales' => $classesSales,
             'appointmentSales' => $appointmentSales,
             'failedSales' => $failedSales,
+            'totalFilter' => $totalFilter
         ];
 
         $teacher_ids = $request->get('teacher_ids');

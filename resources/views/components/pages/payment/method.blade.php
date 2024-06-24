@@ -18,6 +18,13 @@
 //            ],
             [
                 'name' => 'gateway',
+                'img' => asset('img/momo.png'),
+                'title' => trans('payment.Pay with MoMo'),
+                'sub' => trans('payment.MoMo Wallet'),
+                'value' => 'captureWallet',
+            ],
+            [
+                'name' => 'gateway',
                 'img' => asset('img/9pay.svg'),
                 'title' => trans('Pay with 9PAY'),
                 'sub' => trans('9Pay'),
@@ -25,16 +32,16 @@
             ],
         ];
 
-        $spoint = [
-                'name' => 'gateway',
-                'img' => asset('img/wallet.jpg'),
-                'title' => 'Pay with your wallet',
-                'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
-                'value' => 'credit',
-            ];
-        if ($payment_type == 'checkout' || $payment_type == 'personalization'){
-            array_push($methods, $spoint);
-        }
+//        $spoint = [
+//                'name' => 'gateway',
+//                'img' => asset('img/wallet.jpg'),
+//                'title' => 'Pay with your wallet',
+//                'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
+//                'value' => 'credit',
+//            ];
+//        if ($payment_type == 'checkout' || $payment_type == 'personalization'){
+//            array_push($methods, $spoint);
+//        }
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">

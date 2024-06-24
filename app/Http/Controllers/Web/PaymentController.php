@@ -252,12 +252,11 @@ class PaymentController extends Controller
         $partnerSignature = hash_hmac("sha256", $rawHash, $secretKey);
         if ($m2signature == $partnerSignature) {
             if ($resultCode == 0) {
-                $user = auth()->user();
-                $userId = $user->id;
                 $id = explode("-", $orderId)[0];
                 $order = Order::where('id', $id)
-                    ->where('user_id', $user->id)
                     ->first();
+                $user = auth()->user();
+                $userId = !empty($user) ? $user->id : $order->user_id;
                 if ($order->type === Order::$meeting) {
                     $orderItem = OrderItem::where('order_id', $order->id)->first();
                     $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
@@ -646,12 +645,11 @@ class PaymentController extends Controller
 
 
         if ($data['status'] == 5) {
-            $userId = $user->id;
             $id = explode("-", $data['invoice_no'])[0];
             $order = Order::where('id', $id)
-                ->where('user_id', $user->id)
                 ->first();
-
+            $user = auth()->user();
+            $userId = !empty($user) ? $user->id : $order->user_id;
             $order->update([
                 'payment_method' => Order::$credit
             ]);

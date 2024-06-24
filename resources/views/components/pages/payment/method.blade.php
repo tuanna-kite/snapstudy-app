@@ -22,6 +22,7 @@
                 'title' => trans('payment.Pay with MoMo'),
                 'sub' => trans('payment.MoMo Wallet'),
                 'value' => 'captureWallet',
+                'checked' => true,
             ],
             [
                 'name' => 'gateway',
@@ -29,6 +30,7 @@
                 'title' => trans('Pay with 9PAY'),
                 'sub' => trans('9Pay'),
                 'value' => '9PAY',
+                'checked' => false,
             ],
         ];
 

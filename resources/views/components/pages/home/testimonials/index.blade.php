@@ -1,11 +1,13 @@
 @php
     $testimonials = [
         [
+            'avatar' => asset('img/logo/avatar2.png'),
             'name' => 'Phu Son',
             'major' => trans('home.Economics & Finance at RMIT'),
             'comment' => trans('home.The most fascinating thing about SNAPS'),
         ],
         [
+            'avatar' => asset('img/logo/avatar.png'),
             'name' => 'Mai Phuong',
             'major' => trans('home.Economics & Finance at RMIT'),
             'comment' => trans('home.The most fascinating thing about SNAPS'),

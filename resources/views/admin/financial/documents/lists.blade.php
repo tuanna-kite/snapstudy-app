@@ -11,6 +11,127 @@
             </div>
         </div>
         <div class="section-filters">
+            {{-- Statistic --}}
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-primary">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.total_students') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $totalStudents }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-briefcase"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.organizations_students') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $totalOrganizationsStudents }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-info-circle"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.inactive_students') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $inactiveStudents }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="fas fa-ban"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.ban_students') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $banStudents }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon">
+                            <i class="fas fa-money"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.total_purchase_price') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ handlePrice($totalPurchasedsSum) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon">
+                            <i class="fas fa-money"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.total_price') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ handlePrice($totalAccountingBalance + $totalPurchasedsSum) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon">
+                            <i class="fas fa-money"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.classes') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $totalPurchasedsCnt }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon">
+                            <i class="fas fa-money"></i></div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>{{ trans('admin/main.wallet_charge') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ handlePrice($totalAccountingBalance) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <section class="card">
                 <div class="card-body">
                     <div class="mt-3">

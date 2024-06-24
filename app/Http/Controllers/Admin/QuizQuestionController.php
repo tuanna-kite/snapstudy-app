@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Validator;
 
 class QuizQuestionController extends Controller
 {
+
+    public function get_create($quizID)
+    {
+        $quiz = Quiz::find($quizID);
+
+        if (!empty($quiz)) {
+            $locale = app()->getLocale();
+
+            $data = [
+                'pageTitle' => $quiz->title,
+                'quiz' => $quiz,
+                'locale' => mb_strtolower($locale),
+                'defaultLocale' => getDefaultLocale(),
+            ];
+        }
+
+        return view('admin.quizzes.create_multiple_question', $data);
+
+    }
+
     public function store(Request $request)
     {
         $data = $request->get('ajax');
@@ -21,7 +41,7 @@ class QuizQuestionController extends Controller
             'quiz_id' => 'required|exists:quizzes,id',
             'title' => 'required',
             'correct' => 'required',
-            'grade' => 'required|integer',
+//            'grade' => 'required|integer',
             'type' => 'required',
             'image' => 'nullable|max:255',
             'video' => 'nullable|max:255',
@@ -30,10 +50,9 @@ class QuizQuestionController extends Controller
         $validate = Validator::make($data, $rules);
 
         if ($validate->fails()) {
-            return response()->json([
-                'code' => 422,
-                'errors' => $validate->errors()
-            ], 422);
+            return back()->withErrors([
+                'data' => [trans('Sai dnh dang data')],
+            ]);
         }
 
         if (!empty($data['image']) and !empty($data['video'])) {
@@ -55,12 +74,9 @@ class QuizQuestionController extends Controller
             }
 
             if (!$hasCorrect) {
-                return response([
-                    'code' => 422,
-                    'errors' => [
-                        'current_answer' => [trans('quiz.current_answer_required')]
-                    ],
-                ], 422);
+                return back()->withErrors([
+                    'data' => [trans('quiz.current_answer_required')],
+                ]);
             }
         }
 
@@ -73,9 +89,11 @@ class QuizQuestionController extends Controller
             $quizQuestion = QuizzesQuestion::create([
                 'quiz_id' => $data['quiz_id'],
                 'creator_id' => $creator->id,
-                'grade' => $data['grade'],
+                'grade' => 0,
                 'type' => $data['type'],
                 'image' => $data['image'] ?? null,
+                'title_image' => $data['title_image'] ?? null,
+                'correct_image' => $data['correct_image'] ?? null,
                 'video' => $data['video'] ?? null,
                 'order' => $order,
                 'created_at' => time()
@@ -117,9 +135,7 @@ class QuizQuestionController extends Controller
                 }
             }
 
-            return response()->json([
-                'code' => 200
-            ], 200);
+            return redirect(route('adminEditQuiz', ['id' => $quiz->id]));
         }
 
         return response()->json([
@@ -151,9 +167,7 @@ class QuizQuestionController extends Controller
                     $html = (string)\View::make('admin.quizzes.modals.descriptive_question', $data);
                 }
 
-                return response()->json([
-                    'html' => $html
-                ], 200);
+                return view('admin.quizzes.create_multiple_question', $data);
             }
         }
 
@@ -206,7 +220,7 @@ class QuizQuestionController extends Controller
         $rules = [
             'quiz_id' => 'required|exists:quizzes,id',
             'title' => 'required',
-            'grade' => 'required',
+//            'grade' => 'required',
             'type' => 'required',
             'image' => 'nullable|max:255',
             'video' => 'nullable|max:255',
@@ -260,12 +274,12 @@ class QuizQuestionController extends Controller
                 ->first();
 
             if (!empty($quizQuestion)) {
-                $quiz->decreaseTotalMark($quizQuestion->grade);
+//                $quiz->decreaseTotalMark($quizQuestion->grade);
 
                 $quizQuestion->update([
                     'quiz_id' => $data['quiz_id'],
                     'creator_id' => $creator->id,
-                    'grade' => $data['grade'],
+                    'grade' => 0,
                     'type' => $data['type'],
                     'image' => $data['image'] ?? null,
                     'video' => $data['video'] ?? null,
@@ -334,9 +348,10 @@ class QuizQuestionController extends Controller
 
                 removeContentLocale();
 
-                return response()->json([
-                    'code' => 200
-                ], 200);
+//                return response()->json([
+//                    'code' => 200
+//                ], 200);
+                return redirect(route('adminEditQuiz', ['id' => $quiz->id]));
             }
         }
 

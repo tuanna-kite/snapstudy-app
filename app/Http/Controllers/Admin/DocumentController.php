@@ -17,6 +17,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentController extends Controller
 {
+
+    protected $userController;
+
+    public function __construct(UserController $userController)
+    {
+        $this->userController = $userController;
+    }
     public function index(Request $request, $is_export_excel = false)
     {
         $this->authorize('admin_documents_list');
@@ -50,19 +57,19 @@ class DocumentController extends Controller
         if (isset($type) && $type == 'spoint') {
             $documents->where('type', 'addiction')
                 ->whereNull('order_item_id')
-            ->where('type_account', 'asset')
-            ->where('store_type', 'automatic');
+                ->where('type_account', 'asset')
+                ->where('store_type', 'automatic');
         }
 
         if (isset($typeAccount) && $typeAccount !== 'all') {
             $documents->where('type_account', $typeAccount);
         }
 
-        if ($is_export_excel){
+        if ($is_export_excel) {
             $documents = $documents->orderBy('created_at', 'desc')
                 ->orderBy('id', 'desc')
                 ->get();
-            return  $documents;
+            return $documents;
         } else {
             $documents = $documents->orderBy('created_at', 'desc')
                 ->orderBy('id', 'desc')
@@ -77,6 +84,8 @@ class DocumentController extends Controller
             'users' => $users,
             'webinar' => $webinarModel,
         ];
+        $statistic_data = $this->userController->queryStatisticStudent();
+        $data = [...$data, ...$statistic_data];
 
         return view('admin.financial.documents.lists', $data);
     }
@@ -183,7 +192,6 @@ class DocumentController extends Controller
     }
 
     public function exportExcel(Request $request)
-
     {
         $this->authorize('admin_documents_list');
         $documents = $this->index($request, true);

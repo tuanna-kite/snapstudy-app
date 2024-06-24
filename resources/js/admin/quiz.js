@@ -39,6 +39,7 @@
     $('body').on('click', '.add-answer-btn', function (e) {
         e.preventDefault();
         var mainRow = $('.add-answer-container .main-answer-box');
+        console.log("🚀 ~ mainRow:", mainRow)
 
         var copy = mainRow.clone();
         copy.removeClass('main-answer-box');
@@ -361,7 +362,6 @@
             let html = '';
             $.get(adminPanelPrefix + '/categories/get-major/' + schoolId, function (result) {
                 if (result && result.code === 200) {
-                    console.log(result)
 
                     if (result.majors && result.majors.length) {
                         for (let major of result.majors) {

@@ -72,7 +72,10 @@ class WebinarController extends Controller
             ->first();
 
         $categories = Category::where('parent_id', null)
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
 
         $inProgressWebinars = $this->getInProgressWebinarsCount();
 
@@ -137,6 +140,10 @@ class WebinarController extends Controller
         if (!empty($teacher_ids)) {
             $data['teachers'] = User::select('id', 'full_name')->whereIn('id', $teacher_ids)->get();
         }
+        $creator_ids = $request->get('creator_ids', null);
+        if (!empty($creator_ids)) {
+            $data['creators'] = User::select('id', 'full_name')->whereIn('id', $creator_ids)->get();
+        }
 
         return view('admin.webinars.lists', $data);
     }
@@ -153,6 +160,7 @@ class WebinarController extends Controller
         $subject_id = $request->get('subject_id', null);
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
+        $creator_ids = $request->get('creator_ids', null);
 
         $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
 
@@ -167,6 +175,10 @@ class WebinarController extends Controller
 
         if (!empty($teacher_ids) and count($teacher_ids)) {
             $query->whereIn('teacher_id', $teacher_ids);
+        }
+
+        if (!empty($creator_ids) and count($creator_ids)) {
+            $query->whereIn('creator_id', $creator_ids);
         }
 
         if (!empty($school_id) && empty($campus_id) && empty($subject_id)) {
@@ -348,7 +360,11 @@ class WebinarController extends Controller
         removeContentLocale();
 
         $teachers = User::where('role_name', Role::$teacher)->get();
-        $categories = Category::where('parent_id', null)->get();
+        $categories = Category::where('parent_id', null)
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
         $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
             ->where('is_personalization', 1)
             ->groupBy('user_id')
@@ -450,6 +466,11 @@ class WebinarController extends Controller
             'created_at' => time(),
             'updated_at' => time(),
 
+        ]);
+
+        $code = $this->createWebinarCode($webinar);
+        $webinar->update([
+            'code' => $code ?? '',
         ]);
 
         if ($webinar) {
@@ -557,7 +578,10 @@ class WebinarController extends Controller
 
         $categories = Category::where('parent_id', null)
             ->with('subCategories')
-            ->get();
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
 
         $teacherQuizzes = Quiz::where('webinar_id', null)
             ->where('creator_id', $webinar->teacher_id)
@@ -1513,7 +1537,7 @@ class WebinarController extends Controller
 
         $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
 
-        $quizzes = $course->quizzes->whereNull('chapter_id');
+//        $quizzes = $course->quizzes->whereNull('chapter_id');
 
         if ($user) {
 
@@ -1568,11 +1592,35 @@ class WebinarController extends Controller
             'sessionsWithoutChapter' => $sessionsWithoutChapter,
             'filesWithoutChapter' => $filesWithoutChapter,
             'textLessonsWithoutChapter' => $textLessonsWithoutChapter,
-            'quizzes' => $quizzes,
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
         ];
 
         return view('admin.webinars.course-preview', $data);
+    }
+
+    public function createWebinarCode($webinar)
+    {
+        $year = date("Y");
+        $lastTwoDigits = substr($year, -2);
+        $code = '';
+        switch ($webinar->type){
+            case "webinar":
+                $type = '01';
+                break;
+            case "course":
+                $type = '02';
+                break;
+            case "quizz":
+                $type = '03';
+                break;
+            default:
+                $type = '00';
+        }
+        $code = 'VN' . $webinar->category->category->category->prefix . $webinar->category->category->campus_code . $lastTwoDigits .
+            $webinar->category->subject_code . $type . $webinar->id;
+
+        return $code;
+
     }
 }

@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-success">
                         <i class="fas fa-briefcase"></i></div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-warning">
@@ -285,6 +285,7 @@
 
                         </th>
                         <th>{{ trans('admin/main.income') }}</th>
+                        <th>{{ trans('admin/main.referral_code') }}</th>
                         <th>{{ trans('admin/main.user_group') }}</th>
                         <th>{{ trans('admin/main.register_date') }}</th>
                         <th>{{ trans('admin/main.status') }}</th>
@@ -340,6 +341,10 @@
                             <td>{{ handlePrice($user->getAccountingBalance()) }}</td>
 
                             <td>{{ handlePrice($user->getIncome()) }}</td>
+
+                            <td>
+                                {{ !empty($user) ? $user->referral_code : '' }}
+                            </td>
 
                             <td>
                                 {{ !empty($user->userGroup) ? $user->userGroup->group->name : '' }}

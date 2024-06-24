@@ -222,6 +222,18 @@
                             </div>
 
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="input-label">{{trans('admin/main.webinar_creator')}}</label>
+                                    <select name="creator_ids[]" multiple="multiple" data-search-option="just_creator_role" class="form-control search-creator-select2"
+                                            data-placeholder="Search teachers">
+
+                                        @if(!empty($creators) and $creators->count() > 0)
+                                            @foreach($creators as $creator)
+                                                <option value="{{ $creator->id }}" selected>{{ $creator->full_name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-3">
@@ -263,6 +275,9 @@
                                         <th>#</th>
                                         <th>{{trans('admin/main.id')}}</th>
                                         <th class="text-left">{{trans('admin/main.title')}}</th>
+                                        <th class="text-left">{{ trans('admin/main.school') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.campus') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.subject2') }}</th>
                                         <th class="text-left">{{trans('admin/main.instructor')}}</th>
                                         <th>{{trans('admin/main.price')}}</th>
                                         <th>{{trans('admin/main.sales')}}</th>
@@ -291,6 +306,24 @@
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
                                                 @else
                                                     <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->category->title }}</small>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if(!empty($webinar->category))
+                                                    <small class="d-block text-left text-primary">{{ $webinar->category->title }}</small>
                                                 @endif
                                             </td>
 

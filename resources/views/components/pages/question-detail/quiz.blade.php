@@ -14,6 +14,8 @@
             }
         }
         $ques['choices'] = $answser;
+        $ques['title_image'] = $quizQuestion->title_image;
+        $ques['correct_image'] = $quizQuestion->correct_image;
         $ques['correct'] = (string) $correct;
         $ques['explaination'] = $quizQuestion->correct;
         array_push($questions, $ques);
@@ -30,6 +32,7 @@
     if ($isSubmit) {
         $score = $userQuiz->user_grade ?? 0;
     }
+
 @endphp
 
 
@@ -64,18 +67,21 @@
                         <div class="space-y-4">
                             {{-- Question --}}
                             <p class="font-bold text-lg text-black" :id="'question' + idxQues">
-                                Question <span x-text="idxQues + 1"></span>: <span x-text="question.title"></span>
+                                Question <span x-text="idxQues + 1"></span>: <span x-html="question.title"
+                                    style="display: inline-block"></span>
                             </p>
                             {{-- Choices --}}
                             <div class="space-y-4">
                                 <template x-for="(keyChoice, idxChoice) in Object.keys(question.choices)"
                                     :key="keyChoice">
                                     <div class="flex gap-2 items-start">
-                                        <input :disabled="isSubmit" type="radio"
-                                            :id="'question' + question.id + '-choice' + idxChoice"
-                                            :name="'question' + question.id + '-choice' + idxChoice"
-                                            :value="keyChoice" x-model="answers[question.id]"
-                                            class="w-6 h-6 aspect-square">
+                                        <div>
+                                            <input :disabled="isSubmit" type="radio"
+                                                :id="'question' + question.id + '-choice' + idxChoice"
+                                                :name="'question' + question.id + '-choice' + idxChoice"
+                                                :value="keyChoice" x-model="answers[question.id]"
+                                                class="w-6 h-6 aspect-square">
+                                        </div>
                                         <div class="flex gap-2">
                                             <p class="font-semibold"
                                                 :class="{
@@ -99,7 +105,7 @@
                                                     'text-success.main': isSubmit && hasBought && keyChoice === question
                                                         .correct
                                                 }">
-                                                <span x-text="question.choices[keyChoice]"></span>
+                                                <span x-html="question.choices[keyChoice]"></span>
                                             </label>
                                         </div>
                                     </div>
@@ -123,7 +129,8 @@
                                             x-text="orderType[Object.keys(question.choices).indexOf(question.correct)]"></span>
                                     </p>
                                     <p class="text-base text-primary.main">
-                                        Giải thích: <span x-text="question.explaination"></span>
+                                        Giải thích: <span x-html="question.explaination"
+                                            style="display: inline-block"></span>
                                     </p>
                                 </div>
                             @endif

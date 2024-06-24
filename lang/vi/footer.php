@@ -24,7 +24,7 @@ return [
 
     'The service provides detailed outlines for all student assignments' => 'Dịch vụ cung cấp các outline chi tiết cho tất cả các bài tập của sinh viên',
     'Hong Linh Education Investment and Development Joint Stock Company' => 'Công ty Cổ phần Đầu tư và Phát triển Giáo dục Hồng Linh',
-    'Address: 37 Xa Dan, Hanoi, Vietnam' => 'Địa chỉ: 37 Xã Đàn, Hà Nội, Việt Nam',
+    'Address: No. 159 Thinh Quang Lane, Thinh Quang Street, Thinh Quang Ward, Dong Da District, Hanoi City, Vietnam.' => 'Địa chỉ: Số 159 ngõ Thịnh Quang, Phố Thịnh Quang, Phường Thịnh Quang, Quận Đống Đa, Thành phố Hà Nội, Việt Nam.',
     'Information' => 'Thông tin',
     'Support' => 'Hỗ trợ',
     'Introduction' => 'Giới thiệu',

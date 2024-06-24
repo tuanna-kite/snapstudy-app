@@ -433,7 +433,7 @@ class QuizController extends Controller
             ->with('quizzes')
             ->first();
 
-        $quiz = Quiz::where('id', $webinar->quizzes->id)->first();
+        $quiz = Quiz::where('id', $webinar->one_quizzes->id)->first();
 
         $hasBought = $webinar->checkUserHasBought($user, true, true);
         if ($quiz) {
@@ -463,11 +463,14 @@ class QuizController extends Controller
                 }
             }
 
+            $userQuiz = null;
+            if ($user) {
+                $userQuiz = QuizzesResult::where('quiz_id', $quiz->id)
+                    ->where('user_id', $user->id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
 
-            $userQuiz = QuizzesResult::where('quiz_id', $quiz->id)
-                ->where('user_id', $user->id)
-                ->orderBy('id', 'desc')
-                ->first();
             $isSubmit = false;
             if ($userQuiz) {
                 $isSubmit = true;

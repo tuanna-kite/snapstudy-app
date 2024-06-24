@@ -1316,27 +1316,27 @@
                 </li>
             @endcan --}}
 
-            @can('admin_product_discount')
-                <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/financial/special_offers*', false))) ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                        <i class="fa fa-fire"></i>
-                        <span>{{ trans('admin/main.special_offers') }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        @can('admin_product_discount_list')
-                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/special_offers', false))) ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/special_offers">{{ trans('admin/main.lists') }}</a>
-                            </li>
-                        @endcan
+{{--            @can('admin_product_discount')--}}
+{{--                <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/financial/special_offers*', false))) ? 'active' : '' }}">--}}
+{{--                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">--}}
+{{--                        <i class="fa fa-fire"></i>--}}
+{{--                        <span>{{ trans('admin/main.special_offers') }}</span>--}}
+{{--                    </a>--}}
+{{--                    <ul class="dropdown-menu">--}}
+{{--                        @can('admin_product_discount_list')--}}
+{{--                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/special_offers', false))) ? 'active' : '' }}">--}}
+{{--                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/special_offers">{{ trans('admin/main.lists') }}</a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
 
-                        @can('admin_product_discount_create')
-                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/special_offers/new', false))) ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/special_offers/new">{{ trans('admin/main.new') }}</a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
-            @endcan
+{{--                        @can('admin_product_discount_create')--}}
+{{--                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/special_offers/new', false))) ? 'active' : '' }}">--}}
+{{--                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/special_offers/new">{{ trans('admin/main.new') }}</a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
         <!--    @can('admin_feature_webinars')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/webinars/features*', false))) ? 'active' : '' }}">
@@ -1444,6 +1444,29 @@
                     </ul>
                 </li>
             @endcan --}}
+
+            @can('admin_promotion')
+                <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/financial/promotion-code*', false))) ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                        <i class="fas fa-rocket"></i>
+                        <span>{{ trans('admin/main.promotions') }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('admin_promotion_list')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/promotion-code', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/promotion-code">{{ trans('admin/main.plans') }}</a>
+                            </li>
+                        @endcan
+
+                        @can('admin_promotion_create')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/financial/promotion-code/create', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/financial/promotion-code/create">{{ trans('Thêm') }}</a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
 <!--
             @can('admin_advertising')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/advertising*', false)) and !request()->is(getAdminPanelUrl('/advertising_modal*', false))) ? 'active' : '' }}">

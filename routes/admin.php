@@ -543,6 +543,12 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
                 Route::get('/{id}/delete', 'PromotionsController@delete');
             });
 
+            Route::group(['prefix' => 'promotion-code'], function () {
+                Route::get('/', 'PromotionCodeController@index');
+                Route::get('/create', 'PromotionCodeController@create');
+                Route::post('/store', 'PromotionCodeController@store');
+            });
+
             Route::group(['prefix' => 'registration-packages'], function () {
                 Route::get('/', 'RegistrationPackagesController@index')->name('adminRegistrationPackagesLists');
                 Route::get('/new', 'RegistrationPackagesController@create');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Gateways\PaypalController;
+use App\Http\Controllers\Gateways\NinePayController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/paypal', 'dev');
@@ -221,11 +222,13 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);
         Route::get('/status', 'PaymentController@payStatus');
         Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
+        Route::get('/ninepay/result', 'PaymentController@ninePayResult')->name('ninepay.result');
     });
 
     Route::group(['prefix' => 'personalization'], function () {
         Route::post('/payment-request', 'PersonalizationController@paymentRequest')->name('personalization.request');
         Route::get('/payment/success/{gateway}/{orderId}', 'PersonalizationController@checkout')->name('personalization.success');
+        Route::get('/ninepay/result', 'PersonalizationController@ninePayResult')->name('personalization.result');
     });
 
     Route::group(['prefix' => 'subscribes'], function () {

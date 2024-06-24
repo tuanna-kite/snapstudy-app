@@ -7,14 +7,14 @@
 //                'img' => asset('img/visa.png'),
 //                'title' => trans('payment.Pay with card'),
 //                'sub' => 'Visa, Master, JCB...',
-//                'value' => 'payWithCC',
+//                'value' => 'CREDIT_CARD',
 //            ],
 //            [
 //                'name' => 'gateway',
 //                'img' => asset('img/atm.png'),
 //                'title' => trans('payment.Pay with ATM'),
-//                'sub' => trans('payment.by Momo'),
-//                'value' => 'payWithATM',
+//                'sub' => trans('9PAY'),
+//                'value' => 'ATM_CARD',
 //            ],
             [
                 'name' => 'gateway',
@@ -23,19 +23,25 @@
                 'sub' => trans('payment.MoMo Wallet'),
                 'value' => 'captureWallet',
             ],
+            [
+                'name' => 'gateway',
+                'img' => asset('img/9pay.svg'),
+                'title' => trans('Pay with 9PAY'),
+                'sub' => trans('9Pay'),
+                'value' => '9PAY',
+            ],
         ];
 
-        $spoint = [
-                'name' => 'gateway',
-                'img' => asset('img/wallet.jpg'),
-                'title' => 'Pay with your wallet',
-                'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
-                'value' => 'credit',
-            ];
-        // TODO: Uncomment when website verified
-        // if ($payment_type == 'checkout' || $payment_type == 'personalization'){
-        //     array_push($methods, $spoint);
-        // }
+//        $spoint = [
+//                'name' => 'gateway',
+//                'img' => asset('img/wallet.jpg'),
+//                'title' => 'Pay with your wallet',
+//                'sub' => '(' .  $user->getAccountingCharge() . ' SPoint)',
+//                'value' => 'credit',
+//            ];
+//        if ($payment_type == 'checkout' || $payment_type == 'personalization'){
+//            array_push($methods, $spoint);
+//        }
 @endphp
 
 <div class="p-6 rounded-3xl bg-white shadow-lg">

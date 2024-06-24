@@ -3,7 +3,7 @@
 <div class="p-6 rounded-3xl gap-4 bg-white">
     <div class="flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <img src="{{ asset('img/logo/avatar.png') }}" alt="" width="48" height="48">
+            <img src="{{ $item['avatar'] }}" alt="" width="48" height="48">
             <div>
                 <div>
                     <span class="font-semibold text-base text-text.light.primary">

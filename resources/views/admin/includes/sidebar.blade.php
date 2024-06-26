@@ -1449,7 +1449,7 @@
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/financial/promotion-code*', false))) ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-rocket"></i>
-                        <span>{{ trans('admin/main.promotions') }}</span>
+                        <span>{{ trans('Mã giảm giá') }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         @can('admin_promotion_list')

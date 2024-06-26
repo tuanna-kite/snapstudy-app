@@ -20,42 +20,27 @@
                             <div class="table-responsive">
                                 <table class="table table-striped font-14">
                                     <tr>
-                                        <th></th>
-                                        <th>{{ trans('admin/main.title') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.sale_count') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.price') }}</th>
-                                        <th class="text-center">{{ trans('public.days') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.is_popular') }}</th>
+                                        <th>ID</th>
+                                        <th>{{ trans('Code') }}</th>
+                                        <th class="text-center">{{ trans('Discount') }}</th>
+                                        <th class="text-center">{{ trans('Trạng thái') }}</th>
+                                        <th class="text-center">{{ trans('Ngày hết hạn') }}</th>
                                         <th class="text-center">{{ trans('admin/main.created_at') }}</th>
                                         <th>{{ trans('admin/main.actions') }}</th>
                                     </tr>
 
                                     @foreach($promotions as $promotion)
                                         <tr>
+                                            <td>{{ $promotion->id }}</td>
+                                            <td>{{ $promotion->code }}</td>
+                                            <td class="text-center">{{ $promotion->discount }}</td>
+                                            <td class="text-center">{{ $promotion->is_used ? 'Đã sử dụng' : 'Chưa sử dụng' }}</td>
+                                            <td class="text-center">{{ $promotion->expires_at }}</td>
+                                            <td class="text-center">{{ $promotion->created_at}}</td>
                                             <td>
-                                                <img src="{{ $promotion->icon }}" width="50" height="50" alt="">
-                                            </td>
-                                            <td>{{ $promotion->title }}</td>
-                                            <td class="text-center">{{ $promotion->sales->count() }}</td>
-                                            <td class="text-center">{{ handlePrice($promotion->price) }}</td>
-                                            <td class="text-center">{{ $promotion->days }} {{ trans('public.day') }}</td>
-                                            <td class="text-center">
-                                                @if($promotion->is_popular)
-                                                    <span class="fas fa-check text-success"></span>
-                                                @else
-                                                    <span class="fas fa-times text-danger"></span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">{{ dateTimeFormat($promotion->created_at, 'Y M j | H:i') }}</td>
-                                            <td>
-                                                @can('admin_promotion_edit')
-                                                    <a href="{{ getAdminPanelUrl() }}/financial/promotions/{{ $promotion->id }}/edit" class="btn-sm btn-transparent text-primary" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                @endcan
 
                                                 @can('admin_promotion_delete')
-                                                    @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/financial/promotions/'. $promotion->id.'/delete','btnClass' => ''])
+                                                    @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/financial/promotion-code/'. $promotion->id.'/delete','btnClass' => ''])
                                                 @endcan
                                             </td>
                                         </tr>

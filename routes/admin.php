@@ -544,9 +544,10 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             });
 
             Route::group(['prefix' => 'promotion-code'], function () {
-                Route::get('/', 'PromotionCodeController@index');
+                Route::get('/', 'PromotionCodeController@index')->name('promotion_code.lists');
                 Route::get('/create', 'PromotionCodeController@create');
                 Route::post('/store', 'PromotionCodeController@store');
+                Route::get('/{id}/delete', 'PromotionCodeController@delete');
             });
 
             Route::group(['prefix' => 'registration-packages'], function () {

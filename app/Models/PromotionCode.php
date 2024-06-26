@@ -10,5 +10,5 @@ class PromotionCode extends Model
     use HasFactory;
 
     protected $table = 'promotion_codes';
-    public $timestamps = false;
+    public $timestamps = true;
 }

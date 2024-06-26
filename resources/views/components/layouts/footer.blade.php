@@ -39,7 +39,7 @@
                     </li>
                     <li class="text-sm text-text.light.secondary">
                         <a href="#">
-                            Số điện thoại: 0868728123
+                            Số điện thoại: 0383664415
                         </a>
                     </li>
                     <li class="text-sm text-text.light.secondary">

@@ -11,4 +11,9 @@ class PromotionCode extends Model
 
     protected $table = 'promotion_codes';
     public $timestamps = true;
+
+    public function isValid()
+    {
+        return $this->expires_at >= now() || $this->is_used == 0;
+    }
 }

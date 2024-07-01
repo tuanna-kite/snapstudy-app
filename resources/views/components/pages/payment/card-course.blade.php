@@ -15,19 +15,19 @@
             {{ $webinar->seo_description }}
         </p>
         <div class="w-full flex justify-between border-text.light.disabled border rounded-xl px-4 py-3 my-4">
-            <input placeholder="Promo Code" class="placeholder-text.light.disabled text-base flex-1" />
-            <button class="px-2 py-1 bg-grey-300 rounded-md">
+            <input placeholder="Promo Code" name="promo_code" id="promo_code" class="placeholder-text.light.disabled text-base flex-1" />
+            <button class="px-2 py-1 bg-grey-300 rounded-md" id="apply-promo-code">
                 <span class="font-bold text-xs text-text.light.primary">Apply</span>
             </button>
         </div>
         <div class="space-y-2 mb-6">
             <div class="w-full flex justify-between">
                 <p class="text-sm text-text.light.secondary">Subtotal</p>
-                <p class="text-sm text-text.light.primary">210.000 VNĐ</p>
+                <p class="text-sm text-text.light.primary" id="total-amount">{{ handlePrice($webinar->price) }}</p>
             </div>
             <div class="w-full flex justify-between">
                 <p class="text-sm text-text.light.secondary">Discount</p>
-                <p class="text-sm text-success.main">0 VNĐ</p>
+                <p class="text-sm text-success.main" id="discount-amount">0 VNĐ</p>
             </div>
         </div>
     </div>
@@ -39,3 +39,34 @@
         </p>
     </div>
 </div>
+@push('scripts_bottom')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#apply-promo-code').on('click', function() {
+            let promoCode = $('#promo_code').val();
+            let price = {{ $webinar->price }};
+            $.ajax({
+                url: '{{ route('apply.promotion.code') }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    promo_code: promoCode,
+                    price : price
+                },
+                success: function(response) {
+                    $('#promo-code-message').text(response.message);
+                    if (response.success) {
+                        // Cập nhật giá trị giảm giá và tổng tiền nếu cần
+                        $('#discount-amount').text(response.discount);
+                        $('#total-amount').text(response.total);
+                    }
+                },
+                error: function(xhr) {
+                    $('#promo-code-message').text('Có lỗi xảy ra, vui lòng thử lại.');
+                }
+            });
+        });
+    });
+</script>
+@endpush

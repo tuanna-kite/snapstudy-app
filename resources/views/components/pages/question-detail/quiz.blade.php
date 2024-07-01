@@ -14,8 +14,6 @@
             }
         }
         $ques['choices'] = $answser;
-        $ques['title_image'] = $quizQuestion->title_image;
-        $ques['correct_image'] = $quizQuestion->correct_image;
         $ques['correct'] = (string) $correct;
         $ques['explaination'] = $quizQuestion->correct;
         array_push($questions, $ques);

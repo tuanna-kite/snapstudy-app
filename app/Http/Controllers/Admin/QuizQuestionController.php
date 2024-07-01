@@ -51,7 +51,7 @@ class QuizQuestionController extends Controller
 
         if ($validate->fails()) {
             return back()->withErrors([
-                'data' => [trans('Sai dnh dang data')],
+                'data' => [trans('Sai dinh dang data')],
             ]);
         }
 
@@ -92,8 +92,6 @@ class QuizQuestionController extends Controller
                 'grade' => 0,
                 'type' => $data['type'],
                 'image' => $data['image'] ?? null,
-                'title_image' => $data['title_image'] ?? null,
-                'correct_image' => $data['correct_image'] ?? null,
                 'video' => $data['video'] ?? null,
                 'order' => $order,
                 'created_at' => time()

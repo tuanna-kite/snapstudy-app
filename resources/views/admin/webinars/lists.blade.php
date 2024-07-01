@@ -461,6 +461,13 @@
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>
                                                         @endcan
+                                                        @can('admin_webinars_edit')
+
+                                                                <a href="" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="Copy" id="copy" onclick="copyCourse({{ $webinar->id }});">
+                                                                    <i class="fa fa-copy"></i>
+                                                                    <span class="ml-2">Copy</span>
+                                                                </a>
+                                                        @endcan
 
                                                         @can('admin_webinars_delete')
                                                             @include('admin.includes.delete_button',[
@@ -536,6 +543,23 @@
                 $('#subject').empty();
             }
         });
+
+        function copyCourse(courseId) {
+            $.ajax({
+                url: "{{ route('webinar.copy', '') }}/" + courseId,
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr) {
+                    alert(xhr.responseJSON.error);
+                }
+            });
+        }
+
     </script>
 
 @endpush

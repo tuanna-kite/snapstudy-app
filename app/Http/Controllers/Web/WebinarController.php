@@ -11,6 +11,7 @@ use App\Models\AdvertisingBanner;
 use App\Models\Cart;
 use App\Models\Favorite;
 use App\Models\File;
+use App\Models\PromotionCode;
 use App\Models\QuizzesResult;
 use App\Models\RewardAccounting;
 use App\Models\Sale;
@@ -928,5 +929,28 @@ class WebinarController extends Controller
         }
 
         return response()->json(['message' => 'Webinar đã được đánh dấu là đã xem']);
+    }
+
+    public function applyPromoCode(Request $request)
+    {
+        $code = $request->input('promo_code');
+        $price = $request->input('price');
+        $promoCode = PromotionCode::where('code', $code)->first();
+
+        if (!$promoCode || !$promoCode->isValid()) {
+            return response()->json(['success' => false, 'message' => 'Mã khuyến mãi không hợp lệ hoặc đã hết hạn.']);
+        }
+
+        $discount = ($promoCode->discount * $price)/100;
+        session(['discount' => $discount]);
+
+        $total = $price - $discount;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Áp dụng mã khuyến mãi thành công.',
+            'discount' => handlePrice($discount),
+            'total' => handlePrice($total)
+        ]);
     }
 }

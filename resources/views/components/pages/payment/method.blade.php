@@ -49,9 +49,9 @@
 <div class="p-6 rounded-3xl bg-white shadow-lg">
     <h2 class="font-semibold text-base text-text.light.primary mb-6 ">{{ trans('payment.Payment method') }}</h2>
     <div>
-        <form class="space-y-10"
-              action='{{ $payment_type == 'checkout' ? route('payment.request') : ($payment_type == 'personalization' ? route('personalization.request') : route('charge.pay')) }}' method="post">
-            @csrf
+{{--        <form class="space-y-10"--}}
+{{--              action='{{ $payment_type == 'checkout' ? route('payment.request') : ($payment_type == 'personalization' ? route('personalization.request') : route('charge.pay')) }}' method="post">--}}
+{{--            @csrf--}}
             @if ($payment_type == 'checkout')
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
             @elseif($payment_type == 'personalization')
@@ -65,12 +65,12 @@
                     <x-pages.payment.card-method :data="$method" />
                 @endforeach
             </div>
-            <button type="submit" class="rounded-lg px-6 py-1.5 bg-primary.main">
+            <button type="submit" class="rounded-lg px-6 py-1.5 bg-primary.main mt-5">
                 <span class="font-medium text-sm text-white">
                     {{ trans('payment.Start Payment') }}
                 </span>
             </button>
-        </form>
+{{--        </form>--}}
     </div>
 </div>
 

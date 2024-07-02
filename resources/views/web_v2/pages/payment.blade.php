@@ -18,14 +18,19 @@
                 </p>
             </div>
             @if ($payment_type == 'checkout')
-                <div class="flex flex-col-reverse items-start md:flex-row gap-6">
-                    <div class="w-full md:w-2/3 min-h-[350px]">
-                        <x-pages.payment.method :order="$order" :payment_type="$payment_type"/>
+                <form class="space-y-10"
+                      action='{{ $payment_type == 'checkout' ? route('payment.request') : ($payment_type == 'personalization' ? route('personalization.request') : route('charge.pay')) }}' method="post">
+                    @csrf
+                    <div class="flex flex-col-reverse items-start md:flex-row gap-6">
+
+                            <div class="w-full md:w-2/3 min-h-[350px]">
+                                <x-pages.payment.method :order="$order" :payment_type="$payment_type"/>
+                            </div>
+                            <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
+                                <x-pages.payment.card-course :webinar="$webinar" />
+                            </div>
                     </div>
-                    <div class="w-full md:w-1/3 min-h-[350px] lg:self-stretch">
-                        <x-pages.payment.card-course :webinar="$webinar" />
-                    </div>
-                </div>
+                </form>
             @elseif ($payment_type == 'personalization')
                 <div class="flex flex-col-reverse items-start md:flex-row gap-6">
                     <div class="w-full md:w-2/3 min-h-[350px]">

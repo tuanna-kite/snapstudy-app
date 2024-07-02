@@ -1623,4 +1623,32 @@ class WebinarController extends Controller
         return $code;
 
     }
+
+    public function copyCourse($id)
+    {
+        $webinar = Webinar::find($id);
+
+        if (!$webinar) {
+            return redirect()->back()->with('error', 'Khóa học không tồn tại.');
+        }
+
+        $newCourse = $webinar->replicate();
+        $newCourse->status = Webinar::$pending;
+        $newCourse->code = null;
+        $newCourse->created_at = time();
+        $newCourse->updated_at = time();
+        $newCourse->code = null;
+        $newCourse->slug = $webinar->slug . '-' . Str::random(5);
+        unset($newCourse->locale);
+        $newCourse->save();
+
+        $webinarTranslation = WebinarTranslation::where('webinar_id', $id)->first();
+        $webinarTranslationNew = $webinarTranslation->replicate();
+        $webinarTranslationNew->title = $webinar->title . ' (Copy)';
+        $webinarTranslationNew->webinar_id = $newCourse->id;
+        $webinarTranslationNew->save();
+
+
+        return redirect()->route('webinar.index')->with('success', 'Khóa học đã được sao chép thành công.');
+    }
 }

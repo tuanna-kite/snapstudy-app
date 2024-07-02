@@ -259,7 +259,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
         });
 
         Route::group(['prefix' => 'webinars'], function () {
-            Route::get('/', 'WebinarController@index');
+            Route::get('/', 'WebinarController@index')->name('webinar.index');
             Route::get('/create', 'WebinarController@create');
             Route::post('/store', 'WebinarController@store');
             Route::get('/{id}/edit', 'WebinarController@edit')->name('webinar.edit');
@@ -277,6 +277,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/add-student-to-course', 'WebinarController@addStudentToCourse');
             Route::post('/order-items', 'WebinarController@orderItems');
             Route::post('/{id}/getContentItemByLocale', 'WebinarController@getContentItemByLocale');
+            Route::post('/courses/copy/{id}', 'WebinarController@copyCourse')->name('webinar.copy');
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');
 

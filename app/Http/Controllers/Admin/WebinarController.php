@@ -66,14 +66,14 @@ class WebinarController extends Controller
         $totalDurations = deepClone($query)->sum('duration');
         $totalSales = deepClone($query)->join('sales', 'webinars.id', '=', 'sales.webinar_id')
             ->select(DB::raw('count(sales.webinar_id) as sales_count'))
-            ->where('sales.type', '<>' ,'personalization')
+            ->where('sales.type', '<>', 'personalization')
             ->whereNotNull('sales.webinar_id')
             ->whereNull('sales.refund_at')
             ->first();
 
         $categories = Category::where('parent_id', null)
             ->get()
-            ->sortBy(function($category) {
+            ->sortBy(function ($category) {
                 return $category->title;
             });
 
@@ -116,7 +116,7 @@ class WebinarController extends Controller
                     $query->where('webinar_id', $webinar->id);
                     $query->orWhereIn('gift_id', $giftsIds);
                 })
-                ->where('type', '<>' ,'personalization')
+                ->where('type', '<>', 'personalization')
                 ->whereNull('refund_at')
                 ->get();
 
@@ -166,7 +166,7 @@ class WebinarController extends Controller
 
 
         if (!empty($title)) {
-            $query->whereTranslationLike('title', '%'.$title.'%');
+            $query->whereTranslationLike('title', '%' . $title . '%');
         }
 
         if (!empty($title)) {
@@ -257,8 +257,12 @@ class WebinarController extends Controller
                     break;
                 case 'sales_asc':
                     $query->join('sales', 'webinars.id', '=', 'sales.webinar_id')
-                        ->select('webinars.*', 'sales.webinar_id', 'sales.refund_at',
-                            DB::raw('count(sales.webinar_id) as sales_count'))
+                        ->select(
+                            'webinars.*',
+                            'sales.webinar_id',
+                            'sales.refund_at',
+                            DB::raw('count(sales.webinar_id) as sales_count')
+                        )
                         ->whereNotNull('sales.webinar_id')
                         ->whereNull('sales.refund_at')
                         ->groupBy('sales.webinar_id')
@@ -266,8 +270,12 @@ class WebinarController extends Controller
                     break;
                 case 'sales_desc':
                     $query->join('sales', 'webinars.id', '=', 'sales.webinar_id')
-                        ->select('webinars.*', 'sales.webinar_id', 'sales.refund_at',
-                            DB::raw('count(sales.webinar_id) as sales_count'))
+                        ->select(
+                            'webinars.*',
+                            'sales.webinar_id',
+                            'sales.refund_at',
+                            DB::raw('count(sales.webinar_id) as sales_count')
+                        )
                         ->whereNotNull('sales.webinar_id')
                         ->whereNull('sales.refund_at')
                         ->groupBy('sales.webinar_id')
@@ -284,8 +292,13 @@ class WebinarController extends Controller
 
                 case 'income_asc':
                     $query->join('sales', 'webinars.id', '=', 'sales.webinar_id')
-                        ->select('webinars.*', 'sales.webinar_id', 'sales.total_amount', 'sales.refund_at',
-                            DB::raw('(sum(sales.total_amount) - (sum(sales.tax) + sum(sales.commission))) as amounts'))
+                        ->select(
+                            'webinars.*',
+                            'sales.webinar_id',
+                            'sales.total_amount',
+                            'sales.refund_at',
+                            DB::raw('(sum(sales.total_amount) - (sum(sales.tax) + sum(sales.commission))) as amounts')
+                        )
                         ->whereNotNull('sales.webinar_id')
                         ->whereNull('sales.refund_at')
                         ->groupBy('sales.webinar_id')
@@ -294,8 +307,13 @@ class WebinarController extends Controller
 
                 case 'income_desc':
                     $query->join('sales', 'webinars.id', '=', 'sales.webinar_id')
-                        ->select('webinars.*', 'sales.webinar_id', 'sales.total_amount', 'sales.refund_at',
-                            DB::raw('(sum(sales.total_amount) - (sum(sales.tax) + sum(sales.commission))) as amounts'))
+                        ->select(
+                            'webinars.*',
+                            'sales.webinar_id',
+                            'sales.total_amount',
+                            'sales.refund_at',
+                            DB::raw('(sum(sales.total_amount) - (sum(sales.tax) + sum(sales.commission))) as amounts')
+                        )
                         ->whereNotNull('sales.webinar_id')
                         ->whereNull('sales.refund_at')
                         ->groupBy('sales.webinar_id')
@@ -362,7 +380,7 @@ class WebinarController extends Controller
         $teachers = User::where('role_name', Role::$teacher)->get();
         $categories = Category::where('parent_id', null)
             ->get()
-            ->sortBy(function($category) {
+            ->sortBy(function ($category) {
                 return $category->title;
             });
         $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
@@ -388,7 +406,7 @@ class WebinarController extends Controller
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
             'slug' => 'max:255|unique:webinars,slug',
-//            'thumbnail' => 'required',
+            //            'thumbnail' => 'required',
             // 'image_cover' => 'required',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
@@ -425,8 +443,12 @@ class WebinarController extends Controller
             $data['video_demo_source'] = null;
         }
 
-        if (!empty($data['video_demo_source']) and !in_array($data['video_demo_source'],
-                ['upload', 'youtube', 'vimeo', 'external_link'])) {
+        if (
+            !empty($data['video_demo_source']) and !in_array(
+                $data['video_demo_source'],
+                ['upload', 'youtube', 'vimeo', 'external_link']
+            )
+        ) {
             $data['video_demo_source'] = 'upload';
         }
 
@@ -445,8 +467,11 @@ class WebinarController extends Controller
             // 'access_days' => $data['access_days'] ?? null,
             // 'points' => $data['points'] ?? null,
             'type' => $data['type'],
-            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '',
-                    str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
+            'slug' => preg_replace(
+                '/[^A-Za-z0-9\-]/',
+                '',
+                str_replace(' ', '-', strtolower($data['slug']))
+            ) . '-' . Str::random(5),
             'teacher_id' => $data['teacher_id'],
             'creator_id' => $data['creator_id'],
             'category_id' => $data['category_id'],
@@ -486,7 +511,7 @@ class WebinarController extends Controller
             ]);
         }
 
-        return redirect(getAdminPanelUrl().'/webinars/'.$webinar->id.'/edit?locale='.$data['locale']);
+        return redirect(getAdminPanelUrl() . '/webinars/' . $webinar->id . '/edit?locale=' . $data['locale']);
     }
 
     public function edit(Request $request, $id)
@@ -566,7 +591,7 @@ class WebinarController extends Controller
             ->with('subCategories')
             ->first();
 
-        if($school){
+        if ($school) {
             $major_list = Category::where('parent_id', $school->id)
                 ->with('subCategories')
                 ->get();
@@ -579,7 +604,7 @@ class WebinarController extends Controller
         $categories = Category::where('parent_id', null)
             ->with('subCategories')
             ->get()
-            ->sortBy(function($category) {
+            ->sortBy(function ($category) {
                 return $category->title;
             });
 
@@ -594,8 +619,17 @@ class WebinarController extends Controller
 
         $tags = $webinar->tags->pluck('title')->toArray();
 
+        if ($webinarTrans) {
+            $newContent = $this->convertHTMLImgSrc($webinarTrans->content);
+            $webinarTrans->content = $newContent;
+            $newPreviewContent = $this->convertHTMLImgSrc($webinarTrans->preview_content);
+            $webinarTrans->preview_content = $newPreviewContent;
+            $newTableContent =  $this->convertHTMLImgSrc($webinarTrans->table_contents);
+            $webinarTrans->table_contents = $newTableContent;
+        }
+
         $data = [
-            'pageTitle' => trans('admin/main.edit').' | '.$webinar->title,
+            'pageTitle' => trans('admin/main.edit') . ' | ' . $webinar->title,
             'categories' => $categories,
             'webinar' => $webinar,
             'webinarCategoryFilters' => !empty($webinar->category) ? $webinar->category->filters : null,
@@ -640,8 +674,8 @@ class WebinarController extends Controller
         $rules = [
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
-            'slug' => 'max:255|unique:webinars,slug,'.$webinar->id,
-//            'thumbnail' => 'required',
+            'slug' => 'max:255|unique:webinars,slug,' . $webinar->id,
+            //            'thumbnail' => 'required',
             // 'image_cover' => 'required',
             'description' => 'required',
             'content' => 'required',
@@ -760,8 +794,12 @@ class WebinarController extends Controller
             $data['video_demo_source'] = null;
         }
 
-        if (!empty($data['video_demo_source']) and !in_array($data['video_demo_source'],
-                ['upload', 'youtube', 'vimeo', 'external_link'])) {
+        if (
+            !empty($data['video_demo_source']) and !in_array(
+                $data['video_demo_source'],
+                ['upload', 'youtube', 'vimeo', 'external_link']
+            )
+        ) {
             $data['video_demo_source'] = 'upload';
         }
 
@@ -849,7 +887,7 @@ class WebinarController extends Controller
 
         $webinar->delete();
 
-        return redirect(getAdminPanelUrl().'/webinars');
+        return redirect(getAdminPanelUrl() . '/webinars');
     }
 
     public function approve(Request $request, $id)
@@ -868,7 +906,7 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl().'/webinars')->with(['toast' => $toastData]);
+        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
     }
 
     public function reject(Request $request, $id)
@@ -887,7 +925,7 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl().'/webinars')->with(['toast' => $toastData]);
+        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
     }
 
     public function unpublish(Request $request, $id)
@@ -906,7 +944,7 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl().'/webinars')->with(['toast' => $toastData]);
+        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
     }
 
     public function search(Request $request)
@@ -938,7 +976,8 @@ class WebinarController extends Controller
             ->with([
                 'teacher' => function ($qu) {
                     $qu->select('id', 'full_name');
-                }, 'sales'
+                },
+                'sales'
             ]);
 
         $webinars = $query->get();
@@ -1004,8 +1043,14 @@ class WebinarController extends Controller
                     $query->on('webinar_reviews.creator_id', 'users.id')
                         ->where('webinar_reviews.webinar_id', $webinar->id);
                 })
-                ->select('users.*', 'webinar_reviews.rates', 'sales.access_to_purchased_item', 'sales.id as sale_id',
-                    'sales.gift_id', DB::raw('min(sales.created_at) as purchase_date'))
+                ->select(
+                    'users.*',
+                    'webinar_reviews.rates',
+                    'sales.access_to_purchased_item',
+                    'sales.id as sale_id',
+                    'sales.gift_id',
+                    DB::raw('min(sales.created_at) as purchase_date')
+                )
                 ->where(function ($query) use ($webinar, $giftsIds, $installmentSalesIds) {
                     $query->where('sales.webinar_id', $webinar->id);
                     $query->orWhereIn('sales.gift_id', $giftsIds);
@@ -1051,8 +1096,10 @@ class WebinarController extends Controller
 
             $learningPercents = [];
             foreach ($allStudentsIds as $studentsId) {
-                $learningPercents[$studentsId] = $webinarStatisticController->getCourseProgressForStudent($webinar,
-                    $studentsId);
+                $learningPercents[$studentsId] = $webinarStatisticController->getCourseProgressForStudent(
+                    $webinar,
+                    $studentsId
+                );
             }
 
             foreach ($students as $key => $student) {
@@ -1067,8 +1114,10 @@ class WebinarController extends Controller
                             $receipt->access_to_purchased_item = $student->access_to_purchased_item;
                             $receipt->sale_id = $student->sale_id;
                             $receipt->purchase_date = $student->purchase_date;
-                            $receipt->learning = $webinarStatisticController->getCourseProgressForStudent($webinar,
-                                $receipt->id);
+                            $receipt->learning = $webinarStatisticController->getCourseProgressForStudent(
+                                $webinar,
+                                $receipt->id
+                            );
 
                             $learningPercents[$student->id] = $receipt->learning;
 
@@ -1102,8 +1151,10 @@ class WebinarController extends Controller
                 'totalStudents' => $students->total(),
                 'totalActiveStudents' => $students->total() - $totalExpireStudents,
                 'totalExpireStudents' => $totalExpireStudents,
-                'averageLearning' => count($learningPercents) ? round(array_sum($learningPercents) / count($learningPercents),
-                    2) : 0,
+                'averageLearning' => count($learningPercents) ? round(
+                    array_sum($learningPercents) / count($learningPercents),
+                    2
+                ) : 0,
             ];
 
             return view('admin.webinars.students', $data);
@@ -1214,7 +1265,8 @@ class WebinarController extends Controller
 
                     if (!empty($user->email) and env('APP_ENV') == 'production') {
                         \Mail::to($user->email)->send(new SendNotifications([
-                            'title' => $data['title'], 'message' => $data['message']
+                            'title' => $data['title'],
+                            'message' => $data['message']
                         ]));
                     }
                 }
@@ -1222,8 +1274,10 @@ class WebinarController extends Controller
 
             $toastData = [
                 'title' => trans('public.request_success'),
-                'msg' => trans('update.the_notification_was_successfully_sent_to_n_students',
-                    ['count' => count($webinar->sales)]),
+                'msg' => trans(
+                    'update.the_notification_was_successfully_sent_to_n_students',
+                    ['count' => count($webinar->sales)]
+                ),
                 'status' => 'success'
             ];
 
@@ -1464,8 +1518,14 @@ class WebinarController extends Controller
                             $query->where('status', 'active');
                             $query->with([
                                 'user' => function ($query) {
-                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar',
-                                        'avatar_settings');
+                                    $query->select(
+                                        'id',
+                                        'full_name',
+                                        'role_name',
+                                        'role_id',
+                                        'avatar',
+                                        'avatar_settings'
+                                    );
                                 }
                             ]);
                         }
@@ -1537,7 +1597,7 @@ class WebinarController extends Controller
 
         $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
 
-//        $quizzes = $course->quizzes->whereNull('chapter_id');
+        //        $quizzes = $course->quizzes->whereNull('chapter_id');
 
         if ($user) {
 
@@ -1562,18 +1622,31 @@ class WebinarController extends Controller
 
         if ($canSale and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
             $installmentPlans = new InstallmentPlans($user);
-            $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id,
-                $course->teacher_id);
+            $installments = $installmentPlans->getPlans(
+                'courses',
+                $course->id,
+                $course->type,
+                $course->category_id,
+                $course->teacher_id
+            );
         }
 
         /* Cashback Rules */
         if ($canSale and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
             $cashbackRulesMixin = new CashbackRules($user);
-            $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id,
-                $course->teacher_id);
+            $cashbackRules = $cashbackRulesMixin->getRules(
+                'courses',
+                $course->id,
+                $course->type,
+                $course->category_id,
+                $course->teacher_id
+            );
         }
 
         $docTrans = WebinarTranslation::where('webinar_id', '=', $course->id)->first();
+
+        $newDoc = $this->convertHTMLImgSrc($docTrans->content);
+        $docTrans->content = $newDoc;
 
         $data = [
             'pageTitle' => $course->title,
@@ -1599,12 +1672,35 @@ class WebinarController extends Controller
         return view('admin.webinars.course-preview', $data);
     }
 
+    public function convertHTMLImgSrc($htmlContent)
+    {
+        // Create a new DOMDocument
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'));
+
+        // Get all img tags
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $img) {
+            $src = $img->getAttribute('src');
+            if (strpos($src, '../../') === 0) {
+                $newSrc = str_replace('../../', 'https://snapstudy.vn/', $src);
+                $img->setAttribute('src', $newSrc);
+            }
+        }
+
+        $modifiedHtml = $dom->saveHTML();
+
+        return $modifiedHtml;
+    }
+
     public function createWebinarCode($webinar)
     {
         $year = date("Y");
         $lastTwoDigits = substr($year, -2);
         $code = '';
-        switch ($webinar->type){
+        switch ($webinar->type) {
             case "webinar":
                 $type = '01';
                 break;

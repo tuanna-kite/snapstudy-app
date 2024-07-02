@@ -16,7 +16,7 @@
         </p>
         <div class="w-full flex justify-between border-text.light.disabled border rounded-xl px-4 py-3 my-4">
             <input placeholder="Promo Code" name="promo_code" id="promo_code" class="placeholder-text.light.disabled text-base flex-1" />
-            <button class="px-2 py-1 bg-grey-300 rounded-md" id="apply-promo-code">
+            <button type="button" class="px-2 py-1 bg-grey-300 rounded-md" id="apply-promo-code">
                 <span class="font-bold text-xs text-text.light.primary">Apply</span>
             </button>
         </div>

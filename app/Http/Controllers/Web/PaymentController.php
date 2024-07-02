@@ -15,6 +15,7 @@ use App\Models\OrderItem;
 use App\Models\PaymentChannel;
 use App\Models\Product;
 use App\Models\ProductOrder;
+use App\Models\PromotionCode;
 use App\Models\ReserveMeeting;
 use App\Models\Reward;
 use App\Models\RewardAccounting;
@@ -48,10 +49,28 @@ class PaymentController extends Controller
         $userId = $user->id;
         $gateway = $request->input('gateway');
         $orderId = $request->input('order_id')."-".time();
+        $promo_code = $request->input('promo_code');
+        Log::info($promo_code);
 
         $order = Order::where('id', $orderId)
             ->where('user_id', $user->id)
             ->first();
+        if ($promo_code){
+            $promoCode = PromotionCode::where('code', $promo_code)->first();
+            if ($promoCode->isValid()){
+                $discount = ($promoCode->discount * $order->amount)/100;
+                $price = $order->amount - $discount;
+                $order->total_discount = $discount;
+                $order->total_amount = $price;
+                $order->promotion_code = $promo_code;
+                $order->save();
+            }
+            foreach ($order->orderItems as $orderItem) {
+                $orderItem->discount = $discount;
+                $orderItem->total_amount = $price;
+                $orderItem->save();
+            }
+        }
 
         if ($order->type === Order::$meeting) {
             $orderItem = OrderItem::where('order_id', $order->id)->first();
@@ -271,6 +290,11 @@ class PaymentController extends Controller
                     $order->update([
                         'status' => Order::$paid
                     ]);
+                    if (!empty($order->promotion_code)){
+                        $promo_code = PromotionCode::where('code', $order->promotion_code)->first();
+                        $promo_code->is_used = 1;
+                        $promo_code->save();
+                    }
                     $getUser = User::find($userId);
                     $score = RewardAccounting::where('user_id', $userId)->sum('score');
                     $groups = Group::where('min_score', '<=', $score)
@@ -657,6 +681,11 @@ class PaymentController extends Controller
             $order->update([
                 'status' => Order::$paid
             ]);
+            if (!empty($order->promotion_code)){
+                $promo_code = PromotionCode::where('code', $order->promotion_code)->first();
+                $promo_code->is_used = 1;
+                $promo_code->save();
+            }
             $getUser = User::find($userId);
             $score = RewardAccounting::where('user_id', $userId)->sum('score');
             $groups = Group::where('min_score', '<=', $score)

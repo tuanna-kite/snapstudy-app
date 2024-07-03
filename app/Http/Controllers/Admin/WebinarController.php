@@ -406,20 +406,35 @@ class WebinarController extends Controller
             'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
             'slug' => 'max:255|unique:webinars,slug',
-            //            'thumbnail' => 'required',
-            // 'image_cover' => 'required',
+            // //            'thumbnail' => 'required',
+            // // 'image_cover' => 'required',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
             'description' => 'required',
             'content' => 'required',
-            'table_contents' => 'required',
-            'preview_content' => 'required',
+            // 'table_contents' => 'required',
+            // 'preview_content' => 'required',
             // 'duration' => 'required|numeric'
             // 'start_date' => 'required_if:type,webinar',
             // 'capacity' => 'required_if:type,webinar',
         ]);
 
+
+
         $data = $request->all();
+
+        // Handle auto fill Table_Content
+        preg_match('/<div class="mce-toc">.*?<\/div>/s', $data['content'], $matches);
+        if (isset($matches[0])) {
+            $data['table_contents'] = $matches[0];
+            $data['content'] = preg_replace('/<div class="mce-toc">.*?<\/div>/s', '', $data['content']);
+        }
+        // Handle auto fill Preview Content
+        $previewLength = strlen($data['content']) / 5; // 1/4 of content
+        $lastTagPosition = strrpos(substr($data['content'], 0, $previewLength), '>');
+        $data['preview_content'] = substr($data['content'], 0, $lastTagPosition + 1);
+
+        // dd($data['table_contents'], $data['preview_content'], $data['content']);
 
         if ($data['type'] != Webinar::$webinar) {
             $data['start_date'] = null;
@@ -624,7 +639,7 @@ class WebinarController extends Controller
             $webinarTrans->content = $newContent;
             $newPreviewContent = $this->convertHTMLImgSrc($webinarTrans->preview_content);
             $webinarTrans->preview_content = $newPreviewContent;
-            $newTableContent =  $this->convertHTMLImgSrc($webinarTrans->table_contents);
+            $newTableContent = $this->convertHTMLImgSrc($webinarTrans->table_contents);
             $webinarTrans->table_contents = $newTableContent;
         }
 

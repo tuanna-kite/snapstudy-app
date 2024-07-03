@@ -26,6 +26,7 @@ return [
     'Send a personalization request' => 'Gửi yêu cầu cá nhân hóa',
     'Personalized 1-1' => 'Chữa bài 1-1 cá nhân hoá',
     'Send' => 'Gửi',
+    'Content' => 'Nội dung',
     'Set up personalized editing support' => 'Thiết lập hỗ trợ chỉnh sửa cá nhân hóa',
     'Syllabus support' => 'Hỗ trợ chương trình học',
     'Your phone number' => 'Số điện thoại của bạn',

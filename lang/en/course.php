@@ -25,13 +25,13 @@ return [
     'Search outline' => 'Search outline',
     'Buy now' => 'Buy now',
 
-    'Send a personalization request'=>'Send a personalization request',
-    'Personalized 1-1'=>'Personalized 1-1',
-    'Send'=>'Send',
-    'Set up personalized editing support'=>'Set up personalized editing support',
-    'Syllabus support'=>'Syllabus support',
-    'Your phone number'=>'Your phone number',
-    'Enter your phone number'=>'Enter your phone number'
-
+    'Send a personalization request' => 'Send a personalization request',
+    'Personalized 1-1' => 'Personalized 1-1',
+    'Send' => 'Send',
+    'Set up personalized editing support' => 'Set up personalized editing support',
+    'Syllabus support' => 'Syllabus support',
+    'Your phone number' => 'Your phone number',
+    'Enter your phone number' => 'Enter your phone number',
+    'Content' => 'Content'
 
 ];

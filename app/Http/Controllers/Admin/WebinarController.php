@@ -434,7 +434,24 @@ class WebinarController extends Controller
         $lastTagPosition = strrpos(substr($data['content'], 0, $previewLength), '>');
         $data['preview_content'] = substr($data['content'], 0, $lastTagPosition + 1);
 
-        // dd($data['table_contents'], $data['preview_content'], $data['content']);
+        $table_contents = [
+            'table_contents' => $data['table_contents']
+        ];
+
+        $validator = Validator::make($table_contents, [
+            'table_contents' => 'required',
+        ], [
+            'table_contents.required' => 'Vui lòng nhập mục lục ở nội dung',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $errors->add('content', $errors->first('table_contents'));
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
 
         if ($data['type'] != Webinar::$webinar) {
             $data['start_date'] = null;
@@ -637,10 +654,14 @@ class WebinarController extends Controller
         if ($webinarTrans) {
             $newContent = $this->convertHTMLImgSrc($webinarTrans->content);
             $webinarTrans->content = $newContent;
-            $newPreviewContent = $this->convertHTMLImgSrc($webinarTrans->preview_content);
-            $webinarTrans->preview_content = $newPreviewContent;
-            $newTableContent = $this->convertHTMLImgSrc($webinarTrans->table_contents);
-            $webinarTrans->table_contents = $newTableContent;
+            if (!empty($webinarTrans->preview_content)){
+                $newPreviewContent = $this->convertHTMLImgSrc($webinarTrans->preview_content);
+                $webinarTrans->preview_content = $newPreviewContent;
+            }
+            if (!empty($webinarTrans->table_contents)){
+                $newTableContent = $this->convertHTMLImgSrc($webinarTrans->table_contents);
+                $webinarTrans->table_contents = $newTableContent;
+            }
         }
 
         $data = [
@@ -721,6 +742,17 @@ class WebinarController extends Controller
                 return back()->with(['toast' => $toastData]);
             }
         }
+
+        // Handle auto fill Table_Content
+        preg_match('/<div class="mce-toc">.*?<\/div>/s', $data['content'], $matches);
+        if (isset($matches[0])) {
+            $data['table_contents'] = $matches[0];
+            $data['content'] = preg_replace('/<div class="mce-toc">.*?<\/div>/s', '', $data['content']);
+        }
+        // Handle auto fill Preview Content
+        $previewLength = strlen($data['content']) / 5; // 1/4 of content
+        $lastTagPosition = strrpos(substr($data['content'], 0, $previewLength), '>');
+        $data['preview_content'] = substr($data['content'], 0, $lastTagPosition + 1);
 
 
         if (empty($data['slug'])) {

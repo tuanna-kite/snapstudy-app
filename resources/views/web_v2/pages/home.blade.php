@@ -19,8 +19,8 @@
         <x-pages.home.slide />
         {{-- Search Document --}}
         <div class="flex flex-col gap-8 p-4 md:p-12 md:flex-row">
-            <div class="w-full xl:w-3/4 flex flex-col">
-                <div class="w-full xl:w-3/4 mx-auto">
+            <div class="w-full flex flex-col">
+                <div class="w-full mx-auto">
                     <x-search.search-doc />
                 </div>
                 <h1
@@ -34,10 +34,10 @@
                 </h1>
                 <x-pages.home.statistics />
             </div>
-            <div class="w-full xl:w-1/4  flex-col gap-4 hidden xl:flex">
-                <img src="img/banner(en)1.jpg" alt="banner1" class="w-full md:max-w-96 rounded-2xl">
-                <img src="img/banner(en)2.jpg" alt="banner2" class="w-full md:max-w-96 rounded-2xl">
-            </div>
+{{--            <div class="w-full xl:w-1/4  flex-col gap-4 hidden xl:flex">--}}
+{{--                <img src="img/banner(en)1.jpg" alt="banner1" class="w-full md:max-w-96 rounded-2xl">--}}
+{{--                <img src="img/banner(en)2.jpg" alt="banner2" class="w-full md:max-w-96 rounded-2xl">--}}
+{{--            </div>--}}
         </div>
 
         {{-- Video Tutorial --}}

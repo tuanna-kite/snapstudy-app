@@ -22,10 +22,13 @@ class Webinar extends Model implements TranslatableContract
     protected $dateFormat = 'U';
     protected $guarded = ['id'];
 
-    static $active = 'active';
-    static $pending = 'pending';
-    static $isDraft = 'is_draft';
-    static $inactive = 'inactive';
+    static $active = 'active'; // đã duyệt
+    static $pending = 'pending'; // chờ duyệt
+    static $isDraft = 'is_draft'; // nháp
+    static $inactive = 'inactive'; // không được duyệt
+    static $assigned = 'assigned'; // đang triển khai
+    static $reviewed = 'reviewed'; // Chờ review
+    static $reject = 'reject'; // từ chối
 
     static $webinar = 'webinar';
     static $course = 'course';

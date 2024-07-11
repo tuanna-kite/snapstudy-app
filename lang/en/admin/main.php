@@ -1543,4 +1543,7 @@ By enabling this feature, newly registered users will require approval using thi
 'campus' => 'Campus',
 'subject2' => 'Subject',
 'spoints' => 'Top up your wallet',
+
+    // webinar type
+    'webinar_type' => "Webinar Type"
 ];

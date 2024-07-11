@@ -1544,5 +1544,8 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'campus' => 'Campus',
 'subject' => 'Subject',
 'spoints' => 'Nạp tiền vào ví',
+
+// webinar type
+'webinar_type' => "Loại tài liệu"
 ];
 

@@ -1124,6 +1124,15 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
 
         });
 
+        Route::group(['prefix' => 'webinar-type'], function () {
+            Route::get('/', 'WebinarTypeController@index')->name('webinar.type');
+            Route::get('/create', 'WebinarTypeController@create')->name('webinar.type.create');
+            Route::post('/store', 'WebinarTypeController@store')->name('webinar.type.store');
+            Route::get('/{id}/edit', 'WebinarTypeController@edit')->name('webinar.type.edit');
+            Route::post('/{id}/update', 'WebinarTypeController@update')->name('webinar.type.update');
+            Route::get('/{id}/delete', 'WebinarTypeController@delete')->name('webinar.type.delete');
+        });
+
         /* End Admin Middleware */
     });
 });

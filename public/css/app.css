@@ -1099,11 +1099,17 @@ video {
 .min-w-80 {
   min-width: 20rem;
 }
+.min-w-\[200px\] {
+  min-width: 200px;
+}
 .min-w-\[320px\] {
   min-width: 320px;
 }
 .min-w-full {
   min-width: 100%;
+}
+.min-w-52 {
+  min-width: 13rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -2273,10 +2279,6 @@ video {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -2495,10 +2497,6 @@ video {
 
   .xl\:w-2\/5 {
     width: 40%;
-  }
-
-  .xl\:w-3\/4 {
-    width: 75%;
   }
 
   .xl\:w-3\/5 {

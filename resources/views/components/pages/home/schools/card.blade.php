@@ -14,10 +14,10 @@
         <div class="flex flex-col items-center md:flex-row md:items-start gap-3">
             <img src="{{ $school->icon }}" alt="cart" width="48" height="48" class="">
             <div class="text-center md:text-start">
-                <p class="font-semibold text-base text-primary.main line-clamp-2">
+                <p class="font-semibold text-base text-primary.main line-clamp-1">
                     {{ $school->getDescriptionAttribute('description') }}
                 </p>
-                <p class="text-base text-text.light.secondary">
+                <p class="text-base text-text.light.secondary line-clamp-1">
                     {{ $school->title }}
                 </p>
             </div>

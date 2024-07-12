@@ -247,6 +247,7 @@
                                         <th class="text-center">{{ trans('admin/main.email') }}</th>
                                         {{-- <th class="text-center">{{ trans('admin/main.system') }}</th> --}}
                                         <th>{{ trans('admin/main.amount') }}</th>
+                                        <th>{{ trans('admin/main.promotion') }}</th>
                                         <th>{{ trans('admin/main.type') }}</th>
                                         <th>{{ trans('admin/main.creator') }}</th>
                                         <th>{{ trans('admin/main.type_account') }}</th>
@@ -343,6 +344,10 @@
                                                 </td>
 
                                                 <td>
+                                                    <span class="text-success">{{ $document->orderItem->order->prmotion_code }}</span>
+                                                </td>
+
+                                                <td>
                                                     @switch($document->type)
                                                         @case(\App\Models\Accounting::$addiction)
                                                             <span class="text-success">{{ trans('admin/main.addiction') }}</span>
@@ -361,7 +366,7 @@
                                                     @endif
                                                 </td>
 
-                                                <td width="20%">
+                                                <td>
                                                     {{ trans('admin/main.'.$document->type_account) }}
                                                 </td>
 

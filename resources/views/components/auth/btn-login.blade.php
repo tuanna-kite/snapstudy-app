@@ -39,6 +39,9 @@
     <button id="login_button" class="rounded-full px-6 py-1.5 bg-primary.main text-white">
         <span class="font-medium text-sm">{{trans("auth.Login")}}</span>
     </button>
+    <button id="register_button" class="rounded-full px-6 py-1.5 bg-primary.main text-white">
+        <span class="font-medium text-sm">{{trans("auth.register")}}</span>
+    </button>
 
     <!-- Modal -->
     <div id='modal'
@@ -66,6 +69,7 @@
     <script>
         // Get references to elements
         const buttonLogin = document.getElementById('login_button');
+        const buttonRegister = document.getElementById('register_button');
         const modal = document.getElementById('modal');
         const overlay = document.getElementById('overlay');
         // const contentModal = document.getElementById('contentmodal');
@@ -77,6 +81,11 @@
         buttonLogin.addEventListener('click', function() {
             showModalAuth()
             showPage('login')
+        });
+
+        buttonRegister.addEventListener('click', function() {
+            showModalAuth()
+            showPage('signup')
         });
 
         // Event listener to close modal when overlay is clicked

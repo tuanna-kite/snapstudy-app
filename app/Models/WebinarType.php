@@ -9,6 +9,8 @@ class WebinarType extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     const ACTIVE = 'active';
     const INACTIVE = 'inactive';
 

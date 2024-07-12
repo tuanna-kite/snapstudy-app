@@ -269,6 +269,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'WebinarController@approve');
             Route::get('/{id}/reject', 'WebinarController@reject');
             Route::get('/{id}/unpublish', 'WebinarController@unpublish');
+            Route::get('/{id}/reviewed', 'WebinarController@reviewed');
             Route::post('/search', 'WebinarController@search');
             Route::get('/excel', 'WebinarController@exportExcel');
             Route::get('/{id}/students', 'WebinarController@studentsLists');
@@ -278,6 +279,18 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/order-items', 'WebinarController@orderItems');
             Route::post('/{id}/getContentItemByLocale', 'WebinarController@getContentItemByLocale');
             Route::post('/courses/copy/{id}', 'WebinarController@copyCourse')->name('webinar.copy');
+
+            // ctv
+            Route::group(['prefix' => 'assign'], function (){
+                Route::get('/', 'WebinarController@assignIndex')->name('webinar.assign.index');
+                Route::get('/{id}/edit', 'WebinarController@assignEdit')->name('webinar.assign.edit');
+                Route::post('/{id}/update', 'WebinarController@assignUpdate')->name('webinar.assign.update');
+            });
+
+            // qlxb
+            Route::group(['prefix' => 'publish'], function (){
+                Route::get('/', 'WebinarController@publishIndex')->name('webinar.publish.index');
+            });
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');
 

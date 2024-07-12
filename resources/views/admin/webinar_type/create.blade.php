@@ -25,14 +25,13 @@
                         <div class="card-body">
                             <form action="{{ getAdminPanelUrl() }}/webinar-type/{{ !empty($type) ? $type->id.'/update' : 'store' }}" method="Post">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                                 <div class="row">
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group @error('title') is-invalid @enderror">
                                             @if(empty($type))
                                                 <label>{{ trans('admin/main.title') }}</label>
                                             @endif
-                                            <input type="{{ !empty($type) ? 'hidden' : 'text' }}" name="title" class="form-control"
+                                            <input type="text" name="title" class="form-control"
                                                    value="{{ !empty($type) ? $type->title : old('title') }}"
                                                    placeholder=""/>
                                         </div>

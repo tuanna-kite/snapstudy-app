@@ -252,6 +252,27 @@
             @can('admin_categories')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/categories*', false))) ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                        <i class="fas fa-layer-group"></i>
+                        <span>{{ trans('admin/main.webinar_type') }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('admin_categories_list')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/webinar-type', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinar-type">{{ trans('admin/main.lists') }}</a>
+                            </li>
+                        @endcan()
+                        @can('admin_categories_create')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/webinar_type/create', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinar-type/create">{{ trans('admin/main.new') }}</a>
+                            </li>
+                        @endcan()
+                    </ul>
+                </li>
+            @endcan()
+
+            @can('admin_categories')
+                <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/categories*', false))) ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-th"></i>
                         <span>{{ trans('admin/main.categories') }}</span>
                     </a>

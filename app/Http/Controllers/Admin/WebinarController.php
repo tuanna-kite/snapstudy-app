@@ -994,6 +994,25 @@ class WebinarController extends Controller
         return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
     }
 
+    public function reviewed(Request $request, $id)
+    {
+        $this->authorize('admin_webinars_edit');
+
+        $webinar = Webinar::query()->findOrFail($id);
+
+        $webinar->update([
+            'status' => Webinar::$reviewed
+        ]);
+
+        $toastData = [
+            'title' => trans('public.request_success'),
+            'msg' => trans('Tài liệu đã được gửi phê duyệt thành công'),
+            'status' => 'success'
+        ];
+
+        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
+    }
+
     public function search(Request $request)
     {
         $term = $request->get('term');

@@ -34,8 +34,8 @@
                                     @foreach($types as $type)
                                         <tr>
                                             <td>{{$type->id}}</td>
-                                            <td class="text-left">{{$role->title}}</td>
-                                            <td>{{ $role->price }}</td>
+                                            <td class="text-left">{{$type->title}}</td>
+                                            <td>{{ $type->price }}</td>
                                             <td>
                                                 @if($type->status === \App\Models\WebinarType::ACTIVE)
                                                     <span class="text-success">{{ trans('admin/main.active') }}</span>
@@ -45,7 +45,7 @@
                                             </td>
                                             <td>{{ dateTimeFormat($type->created_at,'j M Y') }}</td>
                                             <td>
-                                                <a href="{{ getAdminPanelUrl() }}/roles/{{ $type->id }}/edit" class="btn-transparent text-primary">
+                                                <a href="{{ getAdminPanelUrl() }}/webinar-type/{{ $type->id }}/edit" class="btn-transparent text-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/webinar-type/'.$type->id.'/delete'])

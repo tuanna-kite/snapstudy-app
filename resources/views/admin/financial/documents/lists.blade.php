@@ -344,7 +344,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <span class="text-success">{{ $document->orderItem->order->prmotion_code }}</span>
+                                                    <span class="">{{ $document->orderItem->order->promotion_code }}</span>
                                                 </td>
 
                                                 <td>

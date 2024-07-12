@@ -259,7 +259,7 @@
                                                 <span class="">{{ handlePrice($sale->discount ?? 0) }}</span>
                                             </td>
                                             <td>
-                                                <span class="">{{ $sale->order->promotion_code }}</span>
+                                                <span class="">{{ $sale->order->promotion_code ?? '' }}</span>
                                             </td>
                                             <td>
                                                 <span class="">{{ handlePrice($sale->tax ?? 0) }}</span>

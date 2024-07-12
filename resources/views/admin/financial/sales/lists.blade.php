@@ -215,6 +215,7 @@
                                         <th class="text-left">{{ trans('admin/main.instructor') }}</th>
                                         <th>{{ trans('admin/main.paid_amount') }}</th>
                                         <th>{{ trans('admin/main.discount') }}</th>
+                                        <th>{{ trans('admin/main.promotion') }}</th>
                                         <th>{{ trans('admin/main.tax') }}</th>
                                         <th class="text-left">{{ trans('admin/main.item') }}</th>
                                         <th>{{ trans('admin/main.sale_type') }}</th>
@@ -256,6 +257,9 @@
                                             </td>
                                             <td>
                                                 <span class="">{{ handlePrice($sale->discount ?? 0) }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="">{{ $sale->order->promotion_code }}</span>
                                             </td>
                                             <td>
                                                 <span class="">{{ handlePrice($sale->tax ?? 0) }}</span>

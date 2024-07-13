@@ -272,12 +272,12 @@
                             <div class="table-responsive" style="min-height: 300px">
                                 <table class="table table-striped font-14">
                                     <tr>
-                                        <th>#</th>
-                                        <th>{{trans('admin/main.id')}}</th>
-                                        <th class="text-left">{{trans('admin/main.title')}}</th>
-                                        <th class="text-left">{{ trans('admin/main.school') }}</th>
-                                        <th class="text-left">{{ trans('admin/main.campus') }}</th>
-                                        <th class="text-left">{{ trans('admin/main.subject2') }}</th>
+                                        <th class="px-2">#</th>
+                                        <th class="px-2">{{trans('admin/main.id')}}</th>
+                                        <th class="text-left" style="min-width:180px" >{{trans('admin/main.title')}}</th>
+                                        <th class="text-left" style="min-width:180px">{{ trans('admin/main.school') }}</th>
+                                        <th class="text-left" style="min-width:180px">{{ trans('admin/main.campus') }}</th>
+                                        <th class="text-left" style="min-width:180px">{{ trans('admin/main.subject2') }}</th>
                                         <th class="text-left">{{trans('admin/main.instructor')}}</th>
                                         <th>{{trans('admin/main.price')}}</th>
                                         <th>{{trans('admin/main.sales')}}</th>
@@ -298,9 +298,9 @@
                                         $count = $webinars->firstItem() + $loop->iteration - 1;
                                     @endphp
                                         <tr class="text-center">
-                                           <td>{{$count}}</td>
-                                            <td>{{ $webinar->id }}</td>
-                                            <td width="18%" class="text-left">
+                                            <td class="px-2">{{$count}}</td>
+                                            <td class="px-2">{{ $webinar->id }}</td>
+                                            <td  class="text-left" style="min-width:180px">
                                                 <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
@@ -308,20 +308,17 @@
                                                     <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
                                                 @endif
                                             </td>
-
-                                            <td>
+                                            <td style="min-width:180px">
                                                 @if(!empty($webinar->category))
                                                     <small class="d-block text-left text-primary">{{ $webinar->category->category->category->title }}</small>
                                                 @endif
                                             </td>
-
-                                            <td>
+                                            <td style="min-width:180px">
                                                 @if(!empty($webinar->category))
                                                     <small class="d-block text-left text-primary">{{ $webinar->category->category->title }}</small>
                                                 @endif
                                             </td>
-
-                                            <td>
+                                            <td style="min-width:180px">
                                                 @if(!empty($webinar->category))
                                                     <small class="d-block text-left text-primary">{{ $webinar->category->title }}</small>
                                                 @endif

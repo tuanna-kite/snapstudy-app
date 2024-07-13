@@ -91,6 +91,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
 
     Route::get('/', 'HomeController@index')->name('home');
 
+    Route::get('/information/{slug}', 'InformationController@index')->name('information');
+
     Route::get('/getDefaultAvatar', 'DefaultAvatarController@make');
 
     Route::group(['prefix' => 'quizzes'], function () {

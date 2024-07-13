@@ -167,11 +167,26 @@
                 {{-- Submit Quiz --}}
                 @if (!$isSubmit)
                     <div class="py-6 border-t border-grey-300">
-                        <button type="button" @click="showSubmitModal = true"
+                        @if (auth()->user())
+                            <button type="button" @click="showSubmitModal = true"
+                                class="rounded-xl bg-primary.main px-5 py-2.5 flex items-center gap-2 active:opacity-95">
+                                <span class="text-white text-sm font-medium">Submit</span>
+                                <x-component.material-icon name="arrow_forward"
+                                    class="text-white w-6 h-6 aspect-square" />
+                            </button>
+                        @else
+                            <button type="button" onclick="showModalAuth()"
+                                class="rounded-xl bg-primary.main px-5 py-2.5 flex items-center gap-2 active:opacity-95">
+                                <span class="text-white text-sm font-medium">Submit</span>
+                                <x-component.material-icon name="arrow_forward"
+                                    class="text-white w-6 h-6 aspect-square" />
+                            </button>
+                        @endif
+                        {{-- <button type="button" @click="showSubmitModal = true"
                             class="rounded-xl bg-primary.main px-5 py-2.5 flex items-center gap-2 active:opacity-95">
                             <span class="text-white text-sm font-medium">Submit</span>
                             <x-component.material-icon name="arrow_forward" class="text-white w-6 h-6 aspect-square" />
-                        </button>
+                        </button> --}}
                     </div>
                 @endif
             </div>

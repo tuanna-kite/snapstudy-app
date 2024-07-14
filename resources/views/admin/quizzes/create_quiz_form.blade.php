@@ -319,7 +319,7 @@
 @endif --}}
 
 @push('scripts_bottom')
-    <script src="https://cdn.tiny.cloud/1/8mkg9v8whf8cy0r8589h2cvrm67v8gw6xzf1k9ey6c4shsea/tinymce/7/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/mrhf88ohoyer70c2hnb6gzpyy4uzrlhzt1ahdspfrwnw1k17/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         function initTinymce() {

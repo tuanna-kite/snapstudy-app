@@ -72,6 +72,18 @@
                             </li> -->
                         @endcan()
 
+                            @can('admin_webinars_ctv_list')
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/assign', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/assign">{{ trans('admin/main.live_classes') }}</a>
+                                </li>
+                            @endcan()
+
+                            @can('admin_webinars_publish')
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/publish', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/publish">{{ trans('admin/main.live_classes') }}</a>
+                                </li>
+                            @endcan()
+
                         @can('admin_webinars_create')
                             <li class="{{ (request()->is(getAdminPanelUrl('/webinars/create', false))) ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinars/create">{{ trans('admin/main.new') }}</a>
@@ -87,57 +99,6 @@
                     </ul>
                 </li>
             @endcan()
-
-                @can('admin_webinars')
-                    <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/webinars*', false)) and !request()->is(getAdminPanelUrl('/webinars/comments*', false))) ? 'active' : '' }}">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>{{ trans('panel.classes') }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            @can('admin_webinars_list')
-                                <!--   <li class="{{ (request()->is(getAdminPanelUrl('/webinars', false)) and request()->get('type') == 'course') ? 'active' : '' }}">
-                                <a class="nav-link @if(!empty($sidebarBeeps['courses']) and $sidebarBeeps['courses']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars?type=course">{{ trans('admin/main.courses') }}</a>
-                            </li> -->
-
-                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars">{{ trans('admin/main.live_classes') }}</a>
-                                </li>
-
-                                <!--   <li class="{{ (request()->is(getAdminPanelUrl('/webinars', false)) and request()->get('type') == 'text_lesson') ? 'active' : '' }}">
-                                <a class="nav-link @if(!empty($sidebarBeeps['textLessons']) and $sidebarBeeps['textLessons']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars?type=text_lesson">{{ trans('admin/main.text_courses') }}</a>
-                            </li> -->
-                            @endcan()
-
-                            @can('admin_webinars_ctv_list')
-                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/assign', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/assign">{{ trans('admin/main.live_classes') }}</a>
-                                </li>
-                            @endcan()
-
-                            @can('admin_webinars_publish')
-                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/publish', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/publish">{{ trans('admin/main.live_classes') }}</a>
-                                </li>
-                            @endcan()
-
-                            @can('admin_webinars_create')
-                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/create', false))) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinars/create">{{ trans('admin/main.new') }}</a>
-                                </li>
-                            @endcan()
-
-
-                            {{-- @can('admin_agora_history_list')
-                                <li class="{{ (request()->is(getAdminPanelUrl('/agora_history', false))) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ getAdminPanelUrl() }}/agora_history">{{ trans('update.agora_history') }}</a>
-                                </li>
-                            @endcan --}}
-
-                        </ul>
-
-                    </li>
-                @endcan()
 
             {{-- @can('admin_bundles')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/bundles*', false)) and !request()->is(getAdminPanelUrl('/bundles/comments*', false))) ? 'active' : '' }}">
@@ -1472,6 +1433,7 @@
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/gifts*', false))) ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-gift"></i>
+                        <span>{{ trans('update.gifts') }}</span>
                         <span>{{ trans('update.gifts') }}</span>
                     </a>
                     <ul class="dropdown-menu">

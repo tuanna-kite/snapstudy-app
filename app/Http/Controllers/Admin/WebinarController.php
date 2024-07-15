@@ -1862,7 +1862,6 @@ class WebinarController extends Controller
             }
         }
 
-        $webinar->sales = [];
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),
@@ -1934,8 +1933,6 @@ class WebinarController extends Controller
                 }
             }
         }
-
-        $webinar->sales = [];
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),

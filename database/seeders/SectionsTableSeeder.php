@@ -82,6 +82,8 @@ class SectionsTableSeeder extends Seeder
         Section::updateOrCreate(['id' => 164], ['name' => 'admin_agora_history_export', 'section_group_id' => 150, 'caption' => 'Agora history export']);
         Section::updateOrCreate(['id' => 165], ['name' => 'admin_course_question_forum_list', 'section_group_id' => 150, 'caption' => 'Forum Question Lists']);
         Section::updateOrCreate(['id' => 166], ['name' => 'admin_course_question_forum_answers', 'section_group_id' => 150, 'caption' => 'Forum Answers Lists']);
+        Section::updateOrCreate(['id' => 167], ['name' => 'admin_webinars_ctv_list', 'section_group_id' => 150, 'caption' => 'List webinar ctv list']);
+        Section::updateOrCreate(['id' => 168], ['name' => 'admin_webinars_ctv_edit', 'section_group_id' => 150, 'caption' => 'List webinar ctv edit']);
 
 
         // Categories 200 - 149

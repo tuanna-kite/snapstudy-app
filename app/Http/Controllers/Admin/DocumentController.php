@@ -28,7 +28,9 @@ class DocumentController extends Controller
     {
         $this->authorize('admin_documents_list');
 
-        $documents = Accounting::query();
+        $documents = Accounting::whereHas('user', function ($query) {
+            $query->where('test_mode', false);
+        });;
         $users = User::whereNull('deleted_at')->get()->keyBy('id');
 
         $from = $request->input('from');

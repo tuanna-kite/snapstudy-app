@@ -116,6 +116,9 @@ class UserController extends Controller
     public function purchasedsSum()
     {
         $data = Sale::whereNull('refund_at')
+            ->whereHas('buyer', function ($query) {
+                $query->where('test_mode', false);
+            })
             ->whereNotNull('webinar_id')
             ->whereNull('meeting_id')
             ->whereNull('promotion_id')
@@ -1038,6 +1041,8 @@ class UserController extends Controller
         $user->access_content = (!empty($data['access_content']) and $data['access_content'] == '1');
 
         $user->enable_ai_content = (!empty($data['enable_ai_content']) and $data['enable_ai_content'] == '1');
+
+        $user->test_mode = !empty($data['test_mode']) ? 1 : 0;
 
         $user->save();
 

@@ -26,6 +26,7 @@
         <div class="section-header">
             <h1>{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }} {{ trans('admin/main.class') }}
             </h1>
+
         </div>
         <div class="section-body">
             <div class="row">

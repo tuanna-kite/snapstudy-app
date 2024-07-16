@@ -280,16 +280,24 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/{id}/getContentItemByLocale', 'WebinarController@getContentItemByLocale');
             Route::post('/courses/copy/{id}', 'WebinarController@copyCourse')->name('webinar.copy');
 
+            Route::group(['prefix' => 'content'], function (){
+                Route::get('/', 'WebinarManagerController@contentIndex')->name('webinar.content.index');
+                Route::get('/create', 'WebinarManagerController@contentCreate')->name('webinar.content.create');
+                Route::post('/store', 'WebinarManagerController@contentStore')->name('webinar.content.store');
+                Route::get('/{id}/edit', 'WebinarManagerController@contentEdit')->name('webinar.content.edit');
+                Route::post('/{id}/update', 'WebinarManagerController@contentUpdate')->name('webinar.content.update');
+            });
+
             // ctv
             Route::group(['prefix' => 'assign'], function (){
-                Route::get('/', 'WebinarController@assignIndex')->name('webinar.assign.index');
-                Route::get('/{id}/edit', 'WebinarController@assignEdit')->name('webinar.assign.edit');
-                Route::post('/{id}/update', 'WebinarController@assignUpdate')->name('webinar.assign.update');
+                Route::get('/', 'WebinarManagerController@assignIndex')->name('webinar.assign.index');
+                Route::get('/{id}/edit', 'WebinarManagerController@assignEdit')->name('webinar.assign.edit');
+                Route::post('/{id}/update', 'WebinarManagerController@assignUpdate')->name('webinar.assign.update');
             });
 
             // qlxb
             Route::group(['prefix' => 'publish'], function (){
-                Route::get('/', 'WebinarController@publishIndex')->name('webinar.publish.index');
+                Route::get('/', 'WebinarManagerController@publishIndex')->name('webinar.publish.index');
             });
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');

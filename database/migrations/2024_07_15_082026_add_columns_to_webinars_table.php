@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('genre')->after('type')->nullable();
             $table->integer('assigned_user')->unsigned()->nullable();
             $table->float('implementation_cost', 15, 3)->after('price')->unsigned();
+            $table->integer('revision_count')->default(0);
         });
     }
 
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->dropColumn('genre');
             $table->dropColumn('assigned_user');
             $table->dropColumn('implementation_cost');
+            $table->dropColumn('revision_count');
         });
     }
 };

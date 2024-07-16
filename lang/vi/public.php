@@ -393,5 +393,6 @@ return [
     'choose_school' => 'Chọn trường',
     'choose_major' => 'Chọn ngành',
     'choose_subject' => 'Chọn môn',
+    'implementation_cost' => 'Chi phí triển khai'
 
 ];

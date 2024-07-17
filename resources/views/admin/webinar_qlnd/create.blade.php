@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="post" id="webinarForm" class="webinar-form"
-                                action="{{ getAdminPanelUrl() }}/webinars/assign/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
+                                action="{{ getAdminPanelUrl() }}/webinars/content/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -269,7 +269,7 @@
                                                         name="assigned_user" required>
                                                     <option {{ !empty($webinar->assigned_user) ? '' : 'selected' }} disabled>
                                                         {{ trans('Choose User') }}</option>
-                                                    @foreach ($users as $user)
+                                                    @foreach ($ctv as $user)
                                                         <option value="{{ $user->id }}"
                                                             {{ (!empty($webinar) and $webinar->assigned_user == $user->id) ? 'selected' : '' }}>
                                                             {{ $user->full_name }}</option>

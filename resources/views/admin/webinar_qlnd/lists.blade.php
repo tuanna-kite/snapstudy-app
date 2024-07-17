@@ -6,103 +6,10 @@
 
 @section('content')
     <section class="section">
-        <div class="section-header">
-            <h1>{{ trans('admin/main.type_'.$classesType.'s') }} {{trans('admin/main.list')}}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
-                </div>
-                <div class="breadcrumb-item">{{trans('admin/main.classes')}}</div>
 
-                <div class="breadcrumb-item">{{ trans('admin/main.type_'.$classesType.'s') }}</div>
-            </div>
-        </div>
 
         <div class="section-body">
 
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-file-video"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>{{trans('admin/main.total')}} {{ trans('admin/main.type_'.$classesType.'s') }}</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalWebinars }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-eye"></i>
-                        </div>
-
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>{{trans('admin/main.pending_review')}} {{ trans('admin/main.type_'.$classesType.'s') }}</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalPendingWebinars }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- @if($classesType == 'webinar')
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-history"></i>
-                            </div>
-
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>{{trans('admin/main.inprogress_live_classes')}}</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ $inProgressWebinars }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-history"></i>
-                            </div>
-
-                            <div class="card-wrap">
-                                <div class="card-header">
-                                    <h4>{{trans('admin/main.total_durations')}}</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ convertMinutesToHourAndMinute($totalDurations) }} {{ trans('home.hours') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif --}}
-
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-dollar-sign"></i></div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>{{trans('admin/main.total_sales')}}</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalSales }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <section class="card">
                 <div class="card-body">
@@ -178,13 +85,7 @@
                                     <select name="status" data-plugin-selectTwo class="form-control populate">
                                         <option value="">{{trans('admin/main.all_status')}}</option>
                                         <option value="pending" @if(request()->get('status') == 'pending') selected @endif>{{trans('admin/main.pending_review')}}</option>
-                                        @if($classesType == 'webinar')
-                                            <option value="active_not_conducted" @if(request()->get('status') == 'active_not_conducted') selected @endif>{{trans('admin/main.publish_not_conducted')}}</option>
-                                            <option value="active_in_progress" @if(request()->get('status') == 'active_in_progress') selected @endif>{{trans('admin/main.publish_inprogress')}}</option>
-                                            <option value="active_finished" @if(request()->get('status') == 'active_finished') selected @endif>{{trans('admin/main.publish_finished')}}</option>
-                                        @else
-                                            <option value="active" @if(request()->get('status') == 'active') selected @endif>{{trans('admin/main.published')}}</option>
-                                        @endif
+
                                         <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{trans('admin/main.rejected')}}</option>
                                         <option value="is_draft" @if(request()->get('status') == 'is_draft') selected @endif>{{trans('admin/main.draft')}}</option>
                                     </select>
@@ -260,12 +161,7 @@
                                 </div>
                             @endcan
                              <div class="h-10"></div>
-                            <div class="ml-3">
-                                @php
-                                    $countWebinar = $webinars->total();
-                                @endphp
-                              <strong> {{__('home.Total results') }} : {{$countWebinar}}</strong>
-                            </div>
+
                         </div>
 
                         <div class="card-body">
@@ -284,11 +180,6 @@
                                         <th>{{trans('admin/main.income')}}</th>
                                         <th>{{trans('admin/main.students_count')}}</th>
                                         <th>{{trans('admin/main.created_at')}}</th>
-                                        @if($classesType == 'webinar')
-                                            <th>{{trans('admin/main.start_date')}}</th>
-                                        @else
-                                            <th>{{trans('admin/main.updated_at')}}</th>
-                                        @endif
                                         <th>{{trans('admin/main.status')}}</th>
                                         <th width="120">{{trans('admin/main.actions')}}</th>
                                     </tr>

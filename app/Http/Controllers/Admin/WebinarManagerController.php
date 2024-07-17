@@ -53,7 +53,7 @@ class WebinarManagerController extends Controller
     use WebinarChangeCreator;
 
 
-    public function index(Request $request)
+    public function contentIndex(Request $request)
     {
         $this->authorize('admin_webinars_qlnd');
 
@@ -123,6 +123,7 @@ class WebinarManagerController extends Controller
 
             $webinar->sales = $sales;
         }
+
 
 
         $data = [
@@ -372,7 +373,7 @@ class WebinarManagerController extends Controller
         return $count;
     }
 
-    public function create()
+    public function contentCreate()
     {
         $this->authorize('admin_webinars_qlnd');
 
@@ -389,6 +390,10 @@ class WebinarManagerController extends Controller
             ->groupBy('user_id')
             ->get();
 
+        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->groupBy('user_id')
+            ->get();
+
         $genres = WebinarType::where('status', 'active')
             ->get();
 
@@ -397,15 +402,16 @@ class WebinarManagerController extends Controller
             'teachers' => $teachers,
             'categories' => $categories,
             'users' => $users,
-            'genres' => $genres
+            'genres' => $genres,
+            'ctv' => $ctv
         ];
 
-        return view('admin.webinars_qlxb.create', $data);
+        return view('admin.webinar_qlnd.create', $data);
     }
 
-    public function store(Request $request)
+    public function contentStore(Request $request)
     {
-        $this->authorize('admin_webinars_create');
+        $this->authorize('admin_webinars_qlnd');
         $user = Auth::user()->id;
         $request->validate([
             'title' => 'required|max:255',
@@ -420,26 +426,16 @@ class WebinarManagerController extends Controller
 
         $data = $request->all();
 
-        if ($data['type'] != Webinar::$webinar) {
-            $data['start_date'] = null;
-        }
-
-        if (!empty($data['start_date']) and $data['type'] == Webinar::$webinar) {
-            if (empty($data['timezone']) or !getFeaturesSettings('timezone_in_create_webinar')) {
-                $data['timezone'] = getTimezone();
-            }
-
-            $startDate = convertTimeToUTCzone($data['start_date'], $data['timezone']);
-
-            $data['start_date'] = $startDate->getTimestamp();
-        }
-
         if (empty($data['slug'])) {
             $data['slug'] = Webinar::makeSlug($data['title']);
         }
 
         if (empty($data['video_demo'])) {
             $data['video_demo_source'] = null;
+        }
+
+        if (!empty($data['genre'])) {
+            $data['price'] = WebinarType::find($data['genre'])->price;
         }
 
         if (
@@ -464,6 +460,7 @@ class WebinarManagerController extends Controller
             'teacher_id' => $data['teacher_id'],
             'creator_id' => $data['creator_id'],
             'category_id' => $data['category_id'],
+            'price' => $data['price'] ?? 0,
             'thumbnail' => $data['thumbnail'] ?? null,
             'implementation_cost' => $data['implementation_cost'],
             'support' => !empty($data['support']),
@@ -494,13 +491,14 @@ class WebinarManagerController extends Controller
                 'locale' => mb_strtolower($data['locale']),
                 'title' => $data['title'],
                 'seo_description' => $data['seo_description'],
+                'description' => $data['description'],
             ]);
         }
 
         return redirect(getAdminPanelUrl() . '/webinars/content/' . $webinar->id . '/edit?locale=' . $data['locale']);
     }
 
-    public function edit(Request $request, $id)
+    public function contentEdit(Request $request, $id)
     {
         $this->authorize('admin_webinars_qlnd');
 
@@ -608,18 +606,10 @@ class WebinarManagerController extends Controller
         $genres = WebinarType::where('status', 'active')
             ->get();
 
-        if ($webinarTrans) {
-            $newContent = $this->convertHTMLImgSrc($webinarTrans->content);
-            $webinarTrans->content = $newContent;
-            if (!empty($webinarTrans->preview_content)){
-                $newPreviewContent = $this->convertHTMLImgSrc($webinarTrans->preview_content);
-                $webinarTrans->preview_content = $newPreviewContent;
-            }
-            if (!empty($webinarTrans->table_contents)){
-                $newTableContent = $this->convertHTMLImgSrc($webinarTrans->table_contents);
-                $webinarTrans->table_contents = $newTableContent;
-            }
-        }
+        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->groupBy('user_id')
+            ->get();
+
 
         $data = [
             'pageTitle' => trans('admin/main.edit') . ' | ' . $webinar->title,
@@ -649,13 +639,14 @@ class WebinarManagerController extends Controller
             'major_list' => $major_list ?? null,
             'subject' => $subject,
             'users' => $users,
-            'genres' => $genres
+            'genres' => $genres,
+            'ctv' => $ctv
         ];
 
-        return view('admin.webinars_qlxb.create', $data);
+        return view('admin.webinar_qlnd.create', $data);
     }
 
-    public function update(Request $request, $id)
+    public function contentUpdate(Request $request, $id)
     {
         $this->authorize('admin_webinars_qlnd');
         $data = $request->all();
@@ -667,7 +658,6 @@ class WebinarManagerController extends Controller
 
         $rules = [
             'title' => 'required|max:255',
-            'slug' => 'max:255|unique:webinars,slug',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
             'description' => 'required',
@@ -761,6 +751,9 @@ class WebinarManagerController extends Controller
         ) {
             $data['video_demo_source'] = 'upload';
         }
+        if (!empty($data['genre'])) {
+            $data['price'] = WebinarType::find($data['genre'])->price;
+        }
 
         $newCreatorId = !empty($data['organ_id']) ? $data['organ_id'] : $data['teacher_id'];
         $changedCreator = ($webinar->creator_id != $newCreatorId);
@@ -770,21 +763,19 @@ class WebinarManagerController extends Controller
 
         $webinar->update([
             'slug' => $data['slug'],
-            'type' => $data['type'],
             'timezone' => $data['timezone'] ?? null,
             'duration' => $data['duration'] ?? null,
-            'support' => $data['support'],
-            'certificate' => $data['certificate'],
-            'private' => $data['private'],
-            'enable_waitlist' => $data['enable_waitlist'],
-            'downloadable' => $data['downloadable'],
-            'partner_instructor' => $data['partner_instructor'],
-            'subscribe' => $data['subscribe'],
-            'forum' => $data['forum'],
-            'access_days' => $data['access_days'] ?? null,
+            'enable_waitlist' => (!empty($data['enable_waitlist'])),
+            'downloadable' => !empty($data['downloadable']),
+            'support' => !empty($data['support']),
+            'partner_instructor' => !empty($data['partner_instructor']),
+            'subscribe' => !empty($data['subscribe']),
+            'private' => !empty($data['private']),
+            'forum' => !empty($data['forum']),
             'implementation_cost' => $data['implementation_cost'],
             'organization_price' => $data['organization_price'] ?? null,
             'category_id' => $data['category_id'],
+            'price' => $data['price'],
             'points' => $data['points'] ?? null,
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
             'personalization_user' => $data['personalization_user'] ?? null,
@@ -799,9 +790,9 @@ class WebinarManagerController extends Controller
                 'webinar_id' => $webinar->id,
                 'locale' => mb_strtolower($data['locale']),
             ], [
-                'content' => $data['content'],
-                'table_contents' => $data['table_contents'],
-                'preview_content' => $data['preview_content'],
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'seo_description' => $data['seo_description'],
             ]);
         }
 

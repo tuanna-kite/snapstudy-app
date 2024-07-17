@@ -12,6 +12,7 @@
     <!-- Material-UI Icons CSS via CDN -->
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> --}}
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"> --}}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- Include Alpine.js via CDN -->

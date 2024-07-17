@@ -12,8 +12,7 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
     {{-- <link rel="stylesheet" href="/assets/default/css/app.css"> --}}
     <link rel="stylesheet" href="/assets/default/css/global.css">
 </head>

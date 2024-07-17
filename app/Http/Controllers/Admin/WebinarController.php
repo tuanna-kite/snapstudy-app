@@ -1001,7 +1001,8 @@ class WebinarController extends Controller
         $option = $request->get('option', null);
 
         $query = Webinar::select('id')
-            ->whereTranslationLike('title', "%$term%");
+            ->whereTranslationLike('title', "%$term%")
+            ->orwhere('id', 'like', "%$term%");
 
         if (!empty($option) and $option == 'just_webinar') {
             $query->where('type', Webinar::$webinar);

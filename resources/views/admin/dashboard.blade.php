@@ -285,20 +285,20 @@
                                  <tr key={index} className=" hover:bg-gray-100">
                                      <td className="py-3 px-6">1</td>
                                      <td className="py-3 px-6">OUTLINE</td>
-                                     <td className="py-3 px-6">200.000 VND</td>
-                                     <td className="py-3 px-6">200.000 VND</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['webinar']) }}</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['webinar']) }}</td>
                                  </tr>
                                  <tr key={index} className=" hover:bg-gray-100">
                                      <td className="py-3 px-6">2</td>
                                      <td className="py-3 px-6">EXAM</td>
-                                     <td className="py-3 px-6">200.000 VND</td>
-                                     <td className="py-3 px-6">500.000 VND</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['exam']) }}</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['exam']) }}</td>
                                  </tr>
                                  <tr key={index} className=" hover:bg-gray-100">
                                      <td className="py-3 px-6">3</td>
                                      <td className="py-3 px-6">QUESTIONS</td>
-                                     <td className="py-3 px-6">200.000 VND</td>
-                                     <td className="py-3 px-6">700.000 VND</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['quizzes']) }}</td>
+                                     <td className="py-3 px-6">{{ handlePrice($totalSales['quizzes']) }}</td>
                                  </tr>
                              </tbody>
                          </table>

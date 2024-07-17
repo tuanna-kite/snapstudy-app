@@ -27,6 +27,15 @@ class DashboardController extends Controller
         $totalSales = [
             'count' => deepClone($query)->count(),
             'amount' => deepClone($query)->sum('total_amount'),
+            'webinar' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$webinar);
+            })->sum('total_amount'),
+            'exam' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$course);
+            })->sum('total_amount'),
+            'quizzes' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$quizz);
+            })->sum('total_amount'),
         ];
 
         if (Gate::allows('admin_general_dashboard_daily_sales_statistics')) {

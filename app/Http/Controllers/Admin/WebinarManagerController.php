@@ -147,7 +147,7 @@ class WebinarManagerController extends Controller
             $data['creators'] = User::select('id', 'full_name')->whereIn('id', $creator_ids)->get();
         }
 
-        return view('admin.webinars.lists', $data);
+        return view('admin.webinar_qlnd.lists', $data);
     }
 
     private function filterWebinar($query, $request)
@@ -162,7 +162,7 @@ class WebinarManagerController extends Controller
         $subject_id = $request->get('subject_id', null);
         $status = $request->get('status', null);
         $sort = $request->get('sort', null);
-        $creator_ids = $request->get('creator_ids', null);
+        $assigned_id = $request->get('assigned_id', null);
 
         $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
 
@@ -179,8 +179,8 @@ class WebinarManagerController extends Controller
             $query->whereIn('teacher_id', $teacher_ids);
         }
 
-        if (!empty($creator_ids) and count($creator_ids)) {
-            $query->whereIn('creator_id', $creator_ids);
+        if (!empty($assigned_id) and count($assigned_id)) {
+            $query->whereIn('assigned_user', $assigned_id);
         }
 
         if (!empty($school_id) && empty($campus_id) && empty($subject_id)) {
@@ -1315,6 +1315,154 @@ class WebinarManagerController extends Controller
         }
 
         return view('admin.webinar_ctv.lists', $data);
+    }
+
+    public function assignEdit(Request $request, $id)
+    {
+        $this->authorize('admin_webinars_ctv');
+
+        $webinar = Webinar::where('id', $id)
+            ->with([
+                'tickets',
+                'sessions',
+                'files',
+                'faqs',
+                'category' => function ($query) {
+                    $query->with([
+                        'filters' => function ($query) {
+                            $query->with('options');
+                        }
+                    ]);
+                },
+                'filterOptions',
+                'prerequisites',
+                'quizzes' => function ($query) {
+                    $query->with([
+                        'quizQuestions' => function ($query) {
+                            $query->orderBy('order', 'asc');
+                        }
+                    ]);
+                },
+                'webinarPartnerTeacher' => function ($query) {
+                    $query->with([
+                        'teacher' => function ($query) {
+                            $query->select('id', 'full_name');
+                        }
+                    ]);
+                },
+                'tags',
+                'textLessons',
+                'assignments',
+                'chapters' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                    $query->with([
+                        'chapterItems' => function ($query) {
+                            $query->orderBy('order', 'asc');
+
+                            $query->with([
+                                'quiz' => function ($query) {
+                                    $query->with([
+                                        'quizQuestions' => function ($query) {
+                                            $query->orderBy('order', 'asc');
+                                        }
+                                    ]);
+                                }
+                            ]);
+                        }
+                    ]);
+                },
+            ])
+            ->first();
+        if (empty($webinar)) {
+            abort(404);
+        }
+
+        $locale = $request->get('locale', app()->getLocale());
+        storeContentLocale($locale, $webinar->getTable(), $webinar->id);
+        $webinarTrans = WebinarTranslation::where([
+            'locale' => mb_strtolower($locale),
+            'webinar_id' => $id
+        ])->first();
+
+        $subject = Category::find($webinar->category_id);
+
+        $major = Category::where('id', $subject->parent_id)
+            ->with('subCategories')
+            ->first();
+
+        $school = Category::where('id', $major->parent_id)
+            ->with('subCategories')
+            ->first();
+
+        if ($school) {
+            $major_list = Category::where('parent_id', $school->id)
+                ->with('subCategories')
+                ->get();
+        }
+
+        $subject_list = Category::where('parent_id', $major->id)
+            ->with('subCategories')
+            ->get();
+
+        $categories = Category::where('parent_id', null)
+            ->with('subCategories')
+            ->get()
+            ->sortBy(function ($category) {
+                return $category->title;
+            });
+
+        $teacherQuizzes = Quiz::where('webinar_id', null)
+            ->where('creator_id', $webinar->teacher_id)
+            ->get();
+
+        $users = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->where('is_personalization', 1)
+            ->groupBy('user_id')
+            ->get();
+
+        $tags = $webinar->tags->pluck('title')->toArray();
+
+        $genres = WebinarType::where('status', 'active')
+            ->get();
+
+        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
+            ->groupBy('user_id')
+            ->get();
+
+
+        $data = [
+            'pageTitle' => trans('admin/main.edit') . ' | ' . $webinar->title,
+            'categories' => $categories,
+            'webinar' => $webinar,
+            'webinarCategoryFilters' => !empty($webinar->category) ? $webinar->category->filters : null,
+            'webinarFilterOptions' => $webinar->filterOptions->pluck('filter_option_id')->toArray(),
+            'tickets' => $webinar->tickets,
+            'chapters' => $webinar->chapters,
+            'sessions' => $webinar->sessions,
+            'files' => $webinar->files,
+            'textLessons' => $webinar->textLessons,
+            'faqs' => $webinar->faqs,
+            'assignments' => $webinar->assignments,
+            'teacherQuizzes' => $teacherQuizzes,
+            'prerequisites' => $webinar->prerequisites,
+            'webinarQuizzes' => $webinar->quizzes,
+            'webinarPartnerTeacher' => $webinar->webinarPartnerTeacher,
+            'webinarTags' => $tags,
+            'defaultLocale' => getDefaultLocale(),
+            'content' => $webinarTrans ? $webinarTrans->content : '',
+            'table_contents' => $webinarTrans ? $webinarTrans->table_contents : '',
+            'preview_content' => $webinarTrans ? $webinarTrans->preview_content : '',
+            'major' => $major,
+            'school' => $school,
+            'subject_list' => $subject_list,
+            'major_list' => $major_list ?? null,
+            'subject' => $subject,
+            'users' => $users,
+            'genres' => $genres,
+            'ctv' => $ctv
+        ];
+
+        return view('admin.webinar_ctv.create', $data);
     }
 
     public function publishIndex(Request $request)

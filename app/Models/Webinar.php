@@ -1098,4 +1098,9 @@ class Webinar extends Model implements TranslatableContract
         }
     }
 
+    public function assignCtv()
+    {
+        return $this->belongsTo('App\User', 'assigned_user', 'id');
+    }
+
 }

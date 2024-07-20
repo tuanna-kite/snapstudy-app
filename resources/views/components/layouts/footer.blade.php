@@ -179,8 +179,8 @@
 
 @push('scripts_bottom')
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbmMA0ywi7dvJCEzsWig3MrU-xkMbn7wI&callback=initMap" async
-        defer></script>
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbmMA0ywi7dvJCEzsWig3MrU-xkMbn7wI&callback=initMap" async
+        defer></script> --}}
     <script>
         function initMap() {
             var location = {

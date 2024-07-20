@@ -15,52 +15,52 @@
 </form>
 
 @push('scripts_bottom')
-    <script>
-        function removeVietnameseTones(str) {
-            str = str.toLowerCase();
-            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-            str = str.replace(/đ/g, "d");
-            return str;
-        }
+{{--    <script>--}}
+{{--        function removeVietnameseTones(str) {--}}
+{{--            str = str.toLowerCase();--}}
+{{--            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");--}}
+{{--            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");--}}
+{{--            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");--}}
+{{--            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");--}}
+{{--            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");--}}
+{{--            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");--}}
+{{--            str = str.replace(/đ/g, "d");--}}
+{{--            return str;--}}
+{{--        }--}}
 
-        function updateQueryParams(formId) {
-            const form = document.getElementById(formId);
-            const formData = new FormData(form);
+{{--        function updateQueryParams(formId) {--}}
+{{--            const form = document.getElementById(formId);--}}
+{{--            const formData = new FormData(form);--}}
 
-            // Normalize the 'search' input
-            if (formData.has('search')) {
-                const searchValue = formData.get('search');
-                formData.set('search', removeVietnameseTones(searchValue));
-            }
+{{--            // Normalize the 'search' input--}}
+{{--            if (formData.has('search')) {--}}
+{{--                const searchValue = formData.get('search');--}}
+{{--                formData.set('search', removeVietnameseTones(searchValue));--}}
+{{--            }--}}
 
-            const formParams = new URLSearchParams(formData);
+{{--            const formParams = new URLSearchParams(formData);--}}
 
-            // Get the existing query parameters
-            const existingParams = new URLSearchParams(window.location.search);
-            // Merge the existing query parameters with the new form data
-            for (const [key, value] of formParams.entries()) {
-                // Check for Filter Form
-                const currentValues = existingParams.getAll(key);
-                if (!currentValues.includes(value)) {
-                    existingParams.append(key, value);
-                }
-                // Check for Search Form
-                if (key === 'search') {
-                    existingParams.set(key, value);
-                }
-            }
-            // Redirect to the updated URL with merged query parameters
-            window.location.href = '{{ route('school', ['slug' => $school->slug]) }}?' + existingParams.toString();
-        }
+{{--            // Get the existing query parameters--}}
+{{--            const existingParams = new URLSearchParams(window.location.search);--}}
+{{--            // Merge the existing query parameters with the new form data--}}
+{{--            for (const [key, value] of formParams.entries()) {--}}
+{{--                // Check for Filter Form--}}
+{{--                const currentValues = existingParams.getAll(key);--}}
+{{--                if (!currentValues.includes(value)) {--}}
+{{--                    existingParams.append(key, value);--}}
+{{--                }--}}
+{{--                // Check for Search Form--}}
+{{--                if (key === 'search') {--}}
+{{--                    existingParams.set(key, value);--}}
+{{--                }--}}
+{{--            }--}}
+{{--            // Redirect to the updated URL with merged query parameters--}}
+{{--            window.location.href = '{{ route('school', ['slug' => $school->slug]) }}?' + existingParams.toString();--}}
+{{--        }--}}
 
-        document.getElementById('searchCourse').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            updateQueryParams('searchCourse'); // Call updateQueryParams with formId
-        });
-    </script>
+{{--        document.getElementById('searchCourse').addEventListener('submit', function(event) {--}}
+{{--            event.preventDefault(); // Prevent default form submission--}}
+{{--            updateQueryParams('searchCourse'); // Call updateQueryParams with formId--}}
+{{--        });--}}
+{{--    </script>--}}
 @endpush

@@ -35,7 +35,7 @@ return [
     'view' => 'View',
     'view_profile' => 'Xem hồ sơ',
     'review_or_edit' => 'Xem xét/Chỉnh sửa',
-    'review' => 'Đanh giá',
+    'review' => 'Đánh giá',
     'invited' => 'Đã mời',
     'try_again' => 'Thử lại',
     'you_can_try_again' => 'Đừng lo lắng, bạn có thể thử lại',
@@ -198,6 +198,7 @@ return [
     'done' => 'Done',
     'reject' => 'Từ chối',
     'rejected' => 'Bị từ chối',
+    'assign' => 'Đang triển khai',
 
     'close' => 'Đóng',
     'save' => 'Lưu',

@@ -198,6 +198,7 @@ return [
     'done' => 'Done',
     'reject' => 'Reject',
     'rejected' => 'Rejected',
+    'assign' => 'Assigned',
 
     'close' => 'Close',
     'save' => 'Save',

@@ -53,20 +53,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('Cộng tác viên')}}</label>
-                                    <select name="assigned_id[]" multiple="multiple" data-search-option="just_creator_role" class="form-control search-creator-select2"
-                                            data-placeholder="Tìm cộng tác viên">
-
-                                        @if(!empty($creators) and $creators->count() > 0)
-                                            @foreach($creators as $creator)
-                                                <option value="{{ $creator->id }}" selected>{{ $creator->full_name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
 
 
                             <div class="col-md-4">
@@ -94,11 +80,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>{{trans('admin/main.id')}}</th>
-                                        <th>{{trans('Cộng tác viên')}}</th>
                                         <th class="text-left">{{trans('admin/main.title')}}</th>
                                         <th>{{trans('admin/main.webinar_type')}}</th>
-                                        <th width="10%">{{trans('public.implementation_cost')}}</th>
                                         <th>{{trans('admin/main.status')}}</th>
+                                        <th width="10%">{{trans('Số lần chỉnh sửa')}}</th>
                                         <th width="120">{{trans('admin/main.actions')}}</th>
                                     </tr>
 
@@ -109,16 +94,7 @@
                                         <tr class="text-center">
                                             <td>{{$count}}</td>
                                             <td>{{ $webinar->id }}</td>
-                                            <td>
-                                                @if(!empty($webinar->assignCtv))
-                                                    <span class="mt-0 mb-1">
-                                                        {{ $webinar->assignCtv->full_name }}
-                                                    </span>
 
-                                                    <div class="text-small font-600-bold">{{ $webinar->assignCtv->email }}</div>
-
-                                                @endif
-                                            </td>
                                             <td width="18%" class="text-left">
                                                 <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
@@ -132,12 +108,6 @@
                                                     {{ $webinar->type }}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <span class="mt-0 mb-1">
-                                                    {{ !empty($webinar->implementation_cost) ? handlePrice($webinar->implementation_cost, true, true) :  handlePrice($webinar->price, true, true)}}
-                                                </span>
-                                            </td>
-
 
                                             <td>
                                                 @switch($webinar->status)
@@ -160,10 +130,23 @@
                                                         <span class="text-danger">{{ trans('admin/main.stop') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$inactive)
-                                                        <span class="text-danger">{{ trans('public.rejected') }}</span>
+                                                        <span class="text-info">{{ trans('public.rejected') }}</span>
+                                                        @break
+                                                    @case(\App\Models\Webinar::$assigned)
+                                                        <span class="text-warning">{{ trans('public.assign') }}</span>
+                                                        @break
+                                                    @case(\App\Models\Webinar::$reviewed)
+                                                        <span class="text-danger">{{ trans('public.review') }}</span>
                                                         @break
                                                 @endswitch
                                             </td>
+
+                                            <td>
+                                                <span class="mt-0 mb-1">
+                                                    {{ $webinar->revision_count ?? 0 }}
+                                                </span>
+                                            </td>
+
                                             <td width="200" class="">
                                                 <div class="btn-group dropdown table-actions">
                                                     <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -188,45 +171,18 @@
 
                                                                 @endcan
 
-                                                            @elseif($webinar->status == \App\Models\Webinar::$active)
-                                                                @can('admin_webinars_publish')
+                                                            @elseif($webinar->status == \App\Models\Webinar::$assigned)
+                                                                @can('admin_webinars_ctv')
                                                                     @include('admin.includes.delete_button',[
-                                                                        'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/unpublish',
+                                                                        'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/reviewed',
                                                                         'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
-                                                                        'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.unpublish") .'</span>'
+                                                                        'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.reviews") .'</span>'
                                                                         ])
                                                                 @endcan
                                                             @endif
                                                         @endcan
 
 
-                                                        @can('admin_webinar_notification_to_students')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/sendNotification" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 ">
-                                                                <i class="fa fa-bell"></i>
-                                                                <span class="ml-2">{{ trans('notification.send_notification') }}</span>
-                                                            </a>
-                                                        @endcan
-
-                                                        @can('admin_webinar_students_lists')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/students" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
-                                                                <i class="fa fa-users"></i>
-                                                                <span class="ml-2">{{ trans('admin/main.students') }}</span>
-                                                            </a>
-                                                        @endcan
-
-                                                        @can('admin_webinar_statistics')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/statistics" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
-                                                                <i class="fa fa-chart-pie"></i>
-                                                                <span class="ml-2">{{ trans('update.statistics') }}</span>
-                                                            </a>
-                                                        @endcan
-
-                                                        @can('admin_support_send')
-                                                            <a href="{{ getAdminPanelUrl() }}/supports/create?user_id={{ $webinar->teacher->id }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1" title="{{ trans('admin/main.send_message_to_teacher') }}">
-                                                                <i class="fa fa-comment"></i>
-                                                                <span class="ml-2">{{ trans('site.send_message') }}</span>
-                                                            </a>
-                                                        @endcan
 
                                                         @can('admin_webinars_ctv')
                                                             <a href="{{ getAdminPanelUrl() }}/webinars/assign/{{ $webinar->id }}/edit" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
@@ -234,21 +190,7 @@
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>
                                                         @endcan
-                                                        @can('admin_webinars_edit')
 
-                                                            <a href="" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="Copy" id="copy" onclick="copyCourse({{ $webinar->id }});">
-                                                                <i class="fa fa-copy"></i>
-                                                                <span class="ml-2">Copy</span>
-                                                            </a>
-                                                        @endcan
-
-                                                        @can('admin_webinars_delete')
-                                                            @include('admin.includes.delete_button',[
-                                                                    'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/delete',
-                                                                    'btnClass' => 'd-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.delete") .'</span>'
-                                                                    ])
-                                                        @endcan
                                                     </div>
                                                 </div>
                                             </td>

@@ -167,6 +167,12 @@
                                                     @case(\App\Models\Webinar::$inactive)
                                                         <span class="text-danger">{{ trans('public.rejected') }}</span>
                                                         @break
+                                                    @case(\App\Models\Webinar::$assigned)
+                                                        <span class="text-warning">{{ trans('public.assign') }}</span>
+                                                        @break
+                                                    @case(\App\Models\Webinar::$reviewed)
+                                                        <span class="text-danger">{{ trans('public.review') }}</span>
+                                                        @break
                                                 @endswitch
                                             </td>
                                             <td width="200" class="">

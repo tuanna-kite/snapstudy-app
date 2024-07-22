@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="post" id="webinarForm" class="webinar-form"
-                                action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
+                                action="{{ getAdminPanelUrl() }}/webinars/assign/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -381,13 +381,14 @@
                                 {{-- Submit --}}
                                 <div class="row">
                                     <div class="col-12">
-                                        <button type="submit" id="saveAndPublish"
+                                        <input type="hidden" name="draft" value="no" id="forDraft" />
+                                        <button type="submit" id=""
                                             class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
-                                            @can('admin_webinars_publish')
-                                                <button type="button" id="saveReject"
-                                                    class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
+                                            @can('admin_webinars_ctv')
+                                                <button type="button" id="saveReview"
+                                                    class="btn btn-warning">Gửi phê duyệt</button>
                                             @endcan
                                             @include('admin.includes.delete_button', [
                                                 'url' =>

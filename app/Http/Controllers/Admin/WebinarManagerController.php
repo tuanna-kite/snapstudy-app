@@ -390,8 +390,7 @@ class WebinarManagerController extends Controller
             ->groupBy('user_id')
             ->get();
 
-        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
-            ->groupBy('user_id')
+        $ctv = User::where('status', 'active')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -606,8 +605,7 @@ class WebinarManagerController extends Controller
         $genres = WebinarType::where('status', 'active')
             ->get();
 
-        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
-            ->groupBy('user_id')
+        $ctv = User::where('status', 'active')
             ->get();
 
 
@@ -652,9 +650,8 @@ class WebinarManagerController extends Controller
         $data = $request->all();
 
         $webinar = Webinar::find($id);
-        $isDraft = (!empty($data['draft']) and $data['draft'] == 1);
         $reject = (!empty($data['draft']) and $data['draft'] == 'reject');
-        $publish = (!empty($data['draft']) and $data['draft'] == 'publish');
+        $assigned = (!empty($data['draft']) and $data['draft'] == 'assigned');
 
         $rules = [
             'title' => 'required|max:255',
@@ -682,7 +679,7 @@ class WebinarManagerController extends Controller
             }
         }
 
-        $data['status'] = $publish ? Webinar::$active : ($reject ? Webinar::$inactive : ($isDraft ? Webinar::$isDraft : Webinar::$pending));
+        $data['status'] = $assigned ? Webinar::$assigned : ($reject ? Webinar::$inactive : (Webinar::$assigned));
 
         $data['partner_instructor'] = !empty($data['partner_instructor']) ? true : false;
 
@@ -796,18 +793,7 @@ class WebinarManagerController extends Controller
             ]);
         }
 
-        if ($publish) {
-            // sendNotification('course_approve', ['[c.title]' => $webinar->title], $webinar->teacher_id);
-
-            $createClassesReward = RewardAccounting::calculateScore(Reward::CREATE_CLASSES);
-            RewardAccounting::makeRewardAccounting(
-                $webinar->creator_id,
-                $createClassesReward,
-                Reward::CREATE_CLASSES,
-                $webinar->id,
-                true
-            );
-        } elseif ($reject) {
+        if ($reject) {
             // sendNotification('course_reject', ['[c.title]' => $webinar->title], $webinar->teacher_id);
         }
 
@@ -1538,18 +1524,17 @@ class WebinarManagerController extends Controller
 
     public function assignUpdate(Request $request, $id)
     {
-        $this->authorize('admin_webinars_qlxb');
+        $this->authorize('admin_webinars_ctv');
         $data = $request->all();
 
         $webinar = Webinar::find($id);
-        $isDraft = (!empty($data['draft']) and $data['draft'] == 1);
-        $reject = (!empty($data['draft']) and $data['draft'] == 'reject');
-        $publish = (!empty($data['draft']) and $data['draft'] == 'publish');
+        $review = (!empty($data['draft']) and $data['draft'] == 'reviewed');
+//        $publish = (!empty($data['draft']) and $data['draft'] == 'publish');
 
         $rules = [
             'content' => 'required',
-            'preview_content' => 'required',
-            'table_contents' => 'required',
+//            'preview_content' => 'required',
+//            'table_contents' => 'required',
         ];
 
 
@@ -1580,7 +1565,7 @@ class WebinarManagerController extends Controller
         $lastTagPosition = strrpos(substr($data['content'], 0, $previewLength), '>');
         $data['preview_content'] = substr($data['content'], 0, $lastTagPosition + 1);
 
-        $data['status'] = $publish ? Webinar::$active : ($reject ? Webinar::$inactive : ($isDraft ? Webinar::$isDraft : Webinar::$pending));
+        $data['status'] = $review ? Webinar::$reviewed : Webinar::$assigned;
 
         unset(
             $data['_token'],
@@ -1595,6 +1580,7 @@ class WebinarManagerController extends Controller
 
         $webinar->update([
             'updated_at' => time(),
+            'revision_count' => $webinar->webinar + 1,
         ]);
 
         if ($webinar) {
@@ -1608,20 +1594,6 @@ class WebinarManagerController extends Controller
             ]);
         }
 
-        if ($publish) {
-            // sendNotification('course_approve', ['[c.title]' => $webinar->title], $webinar->teacher_id);
-
-            $createClassesReward = RewardAccounting::calculateScore(Reward::CREATE_CLASSES);
-            RewardAccounting::makeRewardAccounting(
-                $webinar->creator_id,
-                $createClassesReward,
-                Reward::CREATE_CLASSES,
-                $webinar->id,
-                true
-            );
-        } elseif ($reject) {
-            // sendNotification('course_reject', ['[c.title]' => $webinar->title], $webinar->teacher_id);
-        }
 
 
         removeContentLocale();

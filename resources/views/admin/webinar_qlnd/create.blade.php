@@ -297,13 +297,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <input type="hidden" name="draft" value="no" id="forDraft" />
-                                        <button type="submit" id="saveAndPublish"
+                                        <button type="submit" id="saveAssign"
                                             class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
                                             @can('admin_webinars_qlnd')
                                                 <button type="button" id="saveReject"
-                                                    class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
+                                                    class="btn btn-warning">{{ $webinar->status == 'reviewed' ? trans('update.reviewed') : trans('public.reject') }}</button>
                                             @endcan
                                             @include('admin.includes.delete_button', [
                                                 'url' =>

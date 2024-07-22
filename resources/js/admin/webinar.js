@@ -60,6 +60,18 @@
         $('#webinarForm').trigger('submit');
     });
 
+    $('body').on('click', '#saveAssign', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('assigned');
+        $('#webinarForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveReview', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('reviewed');
+        $('#webinarForm').trigger('submit');
+    });
+
     $('#partnerInstructorSwitch').on('change.bootstrapSwitch', function (e) {
         let isChecked = e.target.checked;
 

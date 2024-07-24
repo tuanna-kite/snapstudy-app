@@ -44,12 +44,13 @@
                                     <label class="input-label">{{trans('admin/main.status')}}</label>
                                     <select name="status" data-plugin-selectTwo class="form-control populate">
                                         <option value="">{{trans('admin/main.all_status')}}</option>
-                                        <option value="pending" @if(request()->get('status') == 'pending') selected @endif>{{trans('admin/main.pending_review')}}</option>
-                                        <option value="assigned" @if(request()->get('status') == 'assigned') selected @endif>{{trans('admin/main.assigned')}}</option>
-                                        <option value="reviewed" @if(request()->get('status') == 'reviewed') selected @endif>{{trans('admin/main.reviewed')}}</option>
-                                        <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{trans('admin/main.inactive')}}</option>
-                                        <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{trans('admin/main.rejected')}}</option>
-                                        <option value="is_draft" @if(request()->get('status') == 'is_draft') selected @endif>{{trans('admin/main.draft')}}</option>
+                                        <option value="">{{trans('admin/main.all_status')}}</option>
+                                        <option value="pending" @if(request()->get('status') == 'pending') selected @endif>{{trans('admin/main.stop')}}</option>
+                                        <option value="assigned" @if(request()->get('status') == 'assigned') selected @endif>{{trans('public.assign')}}</option>
+                                        <option value="reviewed" @if(request()->get('status') == 'reviewed') selected @endif>{{trans('public.review')}}</option>
+                                        <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{trans('public.rejected')}}</option>
+                                        <option value="active" @if(request()->get('status') == 'active') selected @endif>{{trans('public.active')}}</option>
+                                        <option value="is_draft" @if(request()->get('status') == 'is_draft') selected @endif>{{trans('admin/main.is_draft')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,16 +128,19 @@
                                                         <span class="text-dark">{{ trans('admin/main.is_draft') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$pending)
-                                                        <span class="text-danger">{{ trans('admin/main.stop') }}</span>
+                                                        <span class="text-info">{{ trans('admin/main.stop') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$inactive)
-                                                        <span class="text-info">{{ trans('public.rejected') }}</span>
+                                                        <span class="text-primary">{{ trans('public.rejected') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$assigned)
                                                         <span class="text-warning">{{ trans('public.assign') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$reviewed)
                                                         <span class="text-danger">{{ trans('public.review') }}</span>
+                                                        @break
+                                                    @case(\App\Models\Webinar::$active)
+                                                        <span class="text-success">{{ trans('public.active') }}</span>
                                                         @break
                                                 @endswitch
                                             </td>

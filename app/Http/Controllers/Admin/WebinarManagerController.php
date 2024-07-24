@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use function Symfony\Component\String\u;
 
 class WebinarManagerController extends Controller
 {
@@ -650,8 +651,10 @@ class WebinarManagerController extends Controller
         $data = $request->all();
 
         $webinar = Webinar::find($id);
-        $reject = (!empty($data['draft']) and $data['draft'] == 'reject');
+        $reject = (!empty($data['draft']) and $data['draft'] == 'inactive');
         $assigned = (!empty($data['draft']) and $data['draft'] == 'assigned');
+        $pending = (!empty($data['draft']) and $data['draft'] == 'pending');
+
 
         $rules = [
             'title' => 'required|max:255',
@@ -679,7 +682,11 @@ class WebinarManagerController extends Controller
             }
         }
 
-        $data['status'] = $assigned ? Webinar::$assigned : ($reject ? Webinar::$inactive : (Webinar::$assigned));
+        $data['status'] = $assigned ? Webinar::$assigned : ($reject ? Webinar::$inactive : ($pending ? Webinar::$pending : Webinar::$assigned));
+
+        if(!$reject) {
+            unset($data['message_for_reviewer']);
+        }
 
         $data['partner_instructor'] = !empty($data['partner_instructor']) ? true : false;
 
@@ -1465,6 +1472,7 @@ class WebinarManagerController extends Controller
         $totalSales = deepClone($query)->join('sales', 'webinars.id', '=', 'sales.webinar_id')
             ->select(DB::raw('count(sales.webinar_id) as sales_count'))
             ->where('sales.type', '<>', 'personalization')
+            ->whereIn('status', ['active', 'pending'])
             ->whereNotNull('sales.webinar_id')
             ->whereNull('sales.refund_at')
             ->first();
@@ -1478,6 +1486,7 @@ class WebinarManagerController extends Controller
         $inProgressWebinars = $this->getInProgressWebinarsCount();
 
         $query = $this->filterWebinar($query, $request)
+            ->whereIn('status', ['active', 'pending'])
             ->with([
                 'category',
                 'teacher' => function ($qu) {
@@ -1580,7 +1589,8 @@ class WebinarManagerController extends Controller
 
         $webinar->update([
             'updated_at' => time(),
-            'revision_count' => $webinar->webinar + 1,
+            'revision_count' => $webinar->revision_count + 1,
+            'status' => $data['status'],
         ]);
 
         if ($webinar) {

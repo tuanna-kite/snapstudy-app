@@ -282,15 +282,133 @@
                                                 </div>
                                                 @enderror
                                             </div>
-
-                                            <div class="form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}"
-                                                id="categoriesFiltersContainer">
-                                                <span
-                                                    class="input-label d-block">{{ trans('public.category_filters') }}</span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+
+                                    {{-- Table contents Field --}}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group mt-15">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <label class="input-label">Mục lục</label>
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="edit_table_contents">Edit</button>
+                                                </div>
+                                                <textarea name="table_contents" id="table_contents_mce" readonly='true' disabled
+                                                          class="form-control @error('table_contents')  is-invalid @enderror" rows="5"
+                                                          placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($table_contents) ? $table_contents : old('table_contents') !!}</textarea>
+                                                @error('table_contents')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- Preview Field --}}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group mt-15">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <label class="input-label">Preview</label>
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="edit_preview">Edit</button>
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" class="input-group-text admin-file-manager"
+                                                                data-input="thumbnail" data-preview="holder">
+                                                            <i class="fa fa-upload"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" name="thumbnail" id="thumbnail"
+                                                           value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
+                                                           class="form-control @error('thumbnail')  is-invalid @enderror" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="input-group-text admin-file-view"
+                                                                data-input="thumbnail">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                    @error('thumbnail')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <textarea name="preview_content" id="preview_content_mce" readonly='true' disabled
+                                                          class="form-control @error('preview_content')  is-invalid @enderror" rows="5"
+                                                          placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($preview_content) ? $preview_content : old('preview_content') !!}</textarea>
+                                                @error('preview_content')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Content Field --}}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group mt-15">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <label class="input-label">Nội dung tài liệu</label>
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="edit_content">Edit</button>
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" class="input-group-text admin-file-manager"
+                                                                data-input="content_thumbnail" data-preview="holder">
+                                                            <i class="fa fa-upload"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" name="content_thumbnail" id="content_thumbnail"
+                                                           value="{{ !empty($webinar) ? $webinar->thumbnail : old('thumbnail') }}"
+                                                           class="form-control @error('content_thumbnail')  is-invalid @enderror" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="input-group-text admin-file-view"
+                                                                data-input="content_thumbnail">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                    @error('content_thumbnail')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <textarea name="content" id="content_mce" class="form-control @error('content')  is-invalid @enderror" disabled
+                                                          placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) && !empty($content) ? $content : old('content') !!}</textarea>
+                                                @error('content')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                @endif
+
+
+                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+                                    <section class="mt-3">
+                                        <h2 class="section-title after-line">{{ trans('Lý do từ chối') }}</h2>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group mt-15">
+                                                    <textarea name="message_for_reviewer" rows="10" class="form-control">{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : old('message_for_reviewer') }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                @endif
 
 
                                 {{-- Submit --}}
@@ -302,8 +420,12 @@
 
                                         @if (!empty($webinar))
                                             @can('admin_webinars_qlnd')
+                                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+                                                <button type="button" id="savePending"
+                                                    class="btn btn-warning">Phê duyệt</button>
                                                 <button type="button" id="saveReject"
-                                                    class="btn btn-warning">{{ $webinar->status == 'reviewed' ? trans('update.reviewed') : trans('public.reject') }}</button>
+                                                        class="btn btn-warning">Từ chối</button>
+                                                @endif
                                             @endcan
                                             @include('admin.includes.delete_button', [
                                                 'url' =>

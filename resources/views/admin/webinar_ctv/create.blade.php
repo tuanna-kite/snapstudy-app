@@ -378,6 +378,19 @@
                                     </div>
                                 </div>
 
+                                @if ($webinar->status == \App\Models\Webinar::$inactive)
+                                    <section class="mt-3">
+                                        <h2 class="section-title after-line">{{ trans('Lý do từ chối') }}</h2>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group mt-15">
+                                                    <textarea name="message_for_reviewer" rows="10" class="form-control" disabled>{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : '' }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                @endif
+
                                 {{-- Submit --}}
                                 <div class="row">
                                     <div class="col-12">
@@ -390,13 +403,6 @@
                                                 <button type="button" id="saveReview"
                                                     class="btn btn-warning">Gửi phê duyệt</button>
                                             @endcan
-                                            @include('admin.includes.delete_button', [
-                                                'url' =>
-                                                    getAdminPanelUrl() . '/webinars/' . $webinar->id . '/delete',
-                                                'btnText' => trans('public.delete'),
-                                                'hideDefaultClass' => true,
-                                                'btnClass' => 'btn btn-danger',
-                                            ])
                                         @endif
                                     </div>
                                 </div>

@@ -928,19 +928,17 @@ class WebinarController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $this->authorize('admin_webinars_delete');
+//        $this->authorize('admin_webinars_delete');
 
         $webinar = Webinar::query()->findOrFail($id);
 
         $webinar->delete();
 
-        return redirect(getAdminPanelUrl() . '/webinars');
+        return back();
     }
 
     public function approve(Request $request, $id)
     {
-        $this->authorize('admin_webinars_edit');
-
         $webinar = Webinar::query()->findOrFail($id);
 
         $webinar->update([
@@ -953,12 +951,12 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
+        return back()->with(['toast' => $toastData]);
     }
 
     public function reject(Request $request, $id)
     {
-        $this->authorize('admin_webinars_edit');
+//        $this->authorize('admin_webinars_edit');
 
         $webinar = Webinar::query()->findOrFail($id);
 
@@ -972,12 +970,12 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
+        return back()->with(['toast' => $toastData]);
     }
 
     public function unpublish(Request $request, $id)
     {
-        $this->authorize('admin_webinars_edit');
+//        $this->authorize('admin_webinars_edit');
 
         $webinar = Webinar::query()->findOrFail($id);
 
@@ -991,7 +989,7 @@ class WebinarController extends Controller
             'status' => 'success'
         ];
 
-        return redirect(getAdminPanelUrl() . '/webinars')->with(['toast' => $toastData]);
+        return back()->with(['toast' => $toastData]);
     }
 
     public function search(Request $request)

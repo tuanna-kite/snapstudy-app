@@ -285,7 +285,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+                                @if (!empty($webinar) ? $webinar->status == \App\Models\Webinar::$reviewed : false)
 
                                     {{-- Table contents Field --}}
                                     <div class="row">
@@ -397,7 +397,7 @@
                                 @endif
 
 
-                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+                                @if (!empty($webinar) ? $webinar->status == \App\Models\Webinar::$reviewed : false)
                                     <section class="mt-3">
                                         <h2 class="section-title after-line">{{ trans('Lý do từ chối') }}</h2>
                                         <div class="row">
@@ -420,7 +420,7 @@
 
                                         @if (!empty($webinar))
                                             @can('admin_webinars_qlnd')
-                                                @if ($webinar->status == \App\Models\Webinar::$reviewed)
+                                                @if (!empty($webinar) ? $webinar->status == \App\Models\Webinar::$reviewed : false)
                                                 <button type="button" id="savePending"
                                                     class="btn btn-warning">Phê duyệt</button>
                                                 <button type="button" id="saveReject"

@@ -61,7 +61,7 @@ class WebinarManagerController extends Controller
         removeContentLocale();
 
         $type = $request->get('type', 'webinar');
-        $query = Webinar::where('webinars.type', '!=', 'quizz');
+        $query = Webinar::query();
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
@@ -1244,7 +1244,7 @@ class WebinarManagerController extends Controller
 
         removeContentLocale();
 
-        $query = Webinar::where('webinars.type', '!=', 'quizz');
+        $query = Webinar::query();
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
@@ -1418,8 +1418,7 @@ class WebinarManagerController extends Controller
         $genres = WebinarType::where('status', 'active')
             ->get();
 
-        $ctv = Accounting::join('users', 'users.id', '=', 'accounting.user_id')
-            ->groupBy('user_id')
+        $ctv = User::where('status', 'active')
             ->get();
 
 
@@ -1464,7 +1463,7 @@ class WebinarManagerController extends Controller
 
         removeContentLocale();
 
-        $query = Webinar::where('webinars.type', '!=', 'quizz');
+        $query = Webinar::query();
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();

@@ -26,7 +26,6 @@
         <div class="section-header">
             <h1>{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }} {{ trans('admin/main.class') }}
             </h1>
-
         </div>
         <div class="section-body">
             <div class="row">
@@ -34,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="post" id="webinarForm" class="webinar-form"
-                                action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
+                                action="{{ getAdminPanelUrl() }}/webinars/assign/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -61,18 +60,15 @@
 
                                         <div class="form-group mt-15 ">
                                             <label class="input-label d-block">{{ trans('panel.course_type') }}</label>
-                                            <select name="type"
-                                                class="custom-select @error('type')  is-invalid @enderror">
-                                                <option value="webinar" @if (!empty($webinar) and $webinar->isWebinar() or old('type') == \App\Models\Webinar::$webinar) selected @endif>
-                                                    {{ trans('admin/main.outline') }}</option>
-                                                <option value="course" @if (!empty($webinar) and $webinar->isCourse() or old('type') == \App\Models\Webinar::$course) selected @endif>
-                                                    {{ trans('admin/main.exam') }}</option>
-                                                <option value="text_lesson"
-                                                    @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>
-                                                    {{ trans('admin/main.question') }}</option>
+                                            <select name="genre"
+                                                    class="custom-select @error('genre')  is-invalid @enderror" disabled>
+                                                @foreach($genres as $genre)
+                                                    <option value="{{ $genre->id }}" @if (!empty($webinar) and $webinar->genre or old('genre') == $genre->id) selected @endif>
+                                                        {{ $genre->title }}</option>
+                                                @endforeach
                                             </select>
 
-                                            @error('type')
+                                            @error('genre')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -83,7 +79,7 @@
                                             <label class="input-label">{{ trans('public.title') }}</label>
                                             <input type="text" name="title"
                                                 value="{{ !empty($webinar) ? $webinar->title : old('title') }}"
-                                                class="form-control @error('title')  is-invalid @enderror" placeholder="" />
+                                                class="form-control @error('title')  is-invalid @enderror" placeholder="" disabled/>
                                             @error('title')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -95,7 +91,7 @@
                                             <label class="input-label">{{ trans('admin/main.class_url') }}</label>
                                             <input type="text" name="slug"
                                                 value="{{ !empty($webinar) ? $webinar->slug : old('slug') }}"
-                                                class="form-control @error('slug')  is-invalid @enderror" placeholder="" />
+                                                class="form-control @error('slug')  is-invalid @enderror" placeholder="" disabled/>
                                             <div class="text-muted text-small mt-1">
                                                 {{ trans('admin/main.class_url_hint') }}</div>
                                             @error('slug')
@@ -114,7 +110,7 @@
                                             <label class="input-label">{{ trans('public.seo_description') }}</label>
                                             <input type="text" name="seo_description"
                                                 value="{{ !empty($webinar) ? $webinar->seo_description : old('seo_description') }}"
-                                                class="form-control @error('seo_description')  is-invalid @enderror" />
+                                                class="form-control @error('seo_description')  is-invalid @enderror" disabled/>
                                             <div class="text-muted text-small mt-1">
                                                 {{ trans('admin/main.seo_description_hint') }}</div>
                                             @error('seo_description')
@@ -135,7 +131,7 @@
                                             </div>
 
                                             <textarea name="description" id="description_mce" class="form-control @error('description')  is-invalid @enderror"
-                                                placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
+                                                placeholder="{{ trans('forms.webinar_description_placeholder') }}" disabled>{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -155,7 +151,7 @@
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="enable_waitlist"
                                                         class="custom-control-input" id="enable_waitlistSwitch"
-                                                        {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }}>
+                                                        {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : '' }} disabled>
                                                     <label class="custom-control-label"
                                                         for="enable_waitlistSwitch"></label>
                                                 </div>
@@ -166,15 +162,15 @@
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="private" class="custom-control-input"
                                                         id="private"
-                                                        {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }}>
+                                                        {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }} disabled>
                                                     <label class="custom-control-label" for="private"></label>
                                                 </div>
                                             </div>
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('User') }}</label>
                                                 <select id="personalization_user" class="custom-select"
-                                                    name="personalization_user" required>
-                                                    <option {{ !empty($school) ? '' : 'selected' }} disabled>
+                                                    name="personalization_user" disabled>
+                                                    <option {{ !empty($school) ? '' : 'selected' }}>
                                                         {{ trans('Choose User') }}</option>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->id }}"
@@ -185,13 +181,13 @@
 
                                             </div>
                                             <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('public.price') }}
-                                                    ( AUD )</label>
-                                                <input type="text" name="price"
-                                                    value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}"
-                                                    class="form-control @error('price')  is-invalid @enderror"
-                                                    placeholder="{{ trans('public.0_for_free') }}" />
-                                                @error('price')
+                                                <label class="input-label">{{ trans('public.implementation_cost') }}
+                                                    ( VND )</label>
+                                                <input type="text" name="implementation_cost"
+                                                    value="{{ (!empty($webinar) and !empty($webinar->implementation_cost)) ? convertPriceToUserCurrency($webinar->implementation_cost) : old('implementation_cost') }}"
+                                                    class="form-control @error('implementation_cost')  is-invalid @enderror"
+                                                    placeholder="{{ trans('public.0_for_free') }}" disabled/>
+                                                @error('implementation_cost')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
@@ -202,13 +198,13 @@
                                                 <input type="text" name="tags" data-max-tag="5"
                                                     value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
                                                     class="form-control inputtags"
-                                                    placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)" />
+                                                    placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)" disabled/>
                                             </div>
                                             <div class="form-group mt-15">
                                                 <label class="input-label">{{ trans('public.choose_school') }}</label>
                                                 <select id="school"
                                                     class="custom-select @error('school_id')  is-invalid @enderror"
-                                                    name="school_id" required>
+                                                    name="school_id" required disabled>
                                                     <option {{ !empty($school) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_school') }}</option>
                                                     @foreach ($categories as $category)
@@ -228,7 +224,7 @@
                                                 <label class="input-label">{{ trans('public.choose_major') }}</label>
                                                 <select id="major"
                                                     class="custom-select @error('major_id')  is-invalid @enderror"
-                                                    name="major_id" required>
+                                                    name="major_id" required disabled>
                                                     @if (!empty($webinar) && $webinar->category_id)
                                                         <option value="{{ $major->id }}">
                                                             {{ $major->title }}</option>
@@ -249,7 +245,7 @@
                                                 <label class="input-label">{{ trans('public.choose_subject') }}</label>
                                                 <select id="subject"
                                                     class="custom-select @error('category_id')  is-invalid @enderror"
-                                                    name="category_id" required>
+                                                    name="category_id" required disabled>
                                                     @if (!empty($webinar) && $webinar->category_id)
                                                         <option value="{{ $subject->id }}">
                                                             {{ $subject->title }}</option>
@@ -382,24 +378,31 @@
                                     </div>
                                 </div>
 
+                                @if ($webinar->status == \App\Models\Webinar::$inactive)
+                                    <section class="mt-3">
+                                        <h2 class="section-title after-line">{{ trans('Lý do từ chối') }}</h2>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group mt-15">
+                                                    <textarea name="message_for_reviewer" rows="10" class="form-control" disabled>{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : '' }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                @endif
+
                                 {{-- Submit --}}
                                 <div class="row">
                                     <div class="col-12">
-                                        <button type="submit" id="saveAndPublish"
+                                        <input type="hidden" name="draft" value="no" id="forDraft" />
+                                        <button type="submit" id=""
                                             class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
-                                            @can('admin_webinars_publish')
-                                                <button type="button" id="saveReject"
-                                                    class="btn btn-warning">{{ $webinar->status == 'active' ? trans('update.unpublish') : trans('public.reject') }}</button>
+                                            @can('admin_webinars_ctv')
+                                                <button type="button" id="saveReview"
+                                                    class="btn btn-warning">Gửi phê duyệt</button>
                                             @endcan
-                                            @include('admin.includes.delete_button', [
-                                                'url' =>
-                                                    getAdminPanelUrl() . '/webinars/' . $webinar->id . '/delete',
-                                                'btnText' => trans('public.delete'),
-                                                'hideDefaultClass' => true,
-                                                'btnClass' => 'btn btn-danger',
-                                            ])
                                         @endif
                                     </div>
                                 </div>

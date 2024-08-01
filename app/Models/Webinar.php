@@ -22,10 +22,12 @@ class Webinar extends Model implements TranslatableContract
     protected $dateFormat = 'U';
     protected $guarded = ['id'];
 
-    static $active = 'active';
-    static $pending = 'pending';
-    static $isDraft = 'is_draft';
-    static $inactive = 'inactive';
+    static $active = 'active'; // đã duyệt
+    static $pending = 'pending'; // chờ duyệt
+    static $isDraft = 'is_draft'; // nháp
+    static $inactive = 'inactive'; // reject
+    static $assigned = 'assigned'; // đang triển khai
+    static $reviewed = 'reviewed'; // Chờ review
 
     static $webinar = 'webinar';
     static $course = 'course';
@@ -1094,6 +1096,11 @@ class Webinar extends Model implements TranslatableContract
                 RewardAccounting::makeRewardAccounting($userCertificate->student_id, $certificateReward, Reward::CERTIFICATE, $userCertificate->id, true);
             }
         }
+    }
+
+    public function assignCtv()
+    {
+        return $this->belongsTo('App\User', 'assigned_user', 'id');
     }
 
 }

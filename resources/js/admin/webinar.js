@@ -54,9 +54,27 @@
         $('#webinarForm').trigger('submit');
     });
 
+    $('body').on('click', '#savePending', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('pending');
+        $('#webinarForm').trigger('submit');
+    });
+
     $('body').on('click', '#saveReject', function (e) {
         e.preventDefault();
-        $('#forDraft').val('reject');
+        $('#forDraft').val('inactive');
+        $('#webinarForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveAssign', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('assigned');
+        $('#webinarForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveReview', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('reviewed');
         $('#webinarForm').trigger('submit');
     });
 

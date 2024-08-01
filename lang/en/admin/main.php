@@ -303,6 +303,8 @@ You can change all of the parameters and variables using the following cards.',
 'new_comment' => 'New Comment',
 'pending_review' => 'Pending Review',
 'pending_review_classes' => 'Pending Review Document',
+'assigned' => 'Đang xử lý',
+'reviewed' => 'reviewed',
 'sales_statistics' => 'Sales Statistics',
 'month' => 'Month',
 'year' => 'Year',
@@ -1543,4 +1545,7 @@ By enabling this feature, newly registered users will require approval using thi
 'campus' => 'Campus',
 'subject2' => 'Subject',
 'spoints' => 'Top up your wallet',
+
+    // webinar type
+    'webinar_type' => "Webinar Type"
 ];

@@ -302,6 +302,8 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'new_sale' => 'Bán mới',
 'new_comment' => 'Bình luận mới',
 'pending_review' => 'Đang chờ xem xét',
+'assigned' => 'Đang xử lý',
+'reviewed' => 'Chờ review',
 'pending_review_classes' => 'Số lượng tài liệu chờ duyệt',
 'sales_statistics' => 'Thống kê bán hàng',
 'month' => 'Tháng',
@@ -1544,5 +1546,8 @@ Bạn có thể thay đổi tất cả các tham số và biến bằng các th�
 'campus' => 'Campus',
 'subject' => 'Subject',
 'spoints' => 'Nạp tiền vào ví',
+
+// webinar type
+'webinar_type' => "Loại tài liệu"
 ];
 

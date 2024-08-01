@@ -72,6 +72,24 @@
                             </li> -->
                         @endcan()
 
+                            @can('admin_webinars_qlnd')
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/content', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/content">{{ trans('admin/main.live_classes') }}</a>
+                                </li>
+                            @endcan()
+
+                            @can('admin_webinars_ctv')
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/assign', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/assign">{{ trans('admin/main.live_classes') }}</a>
+                                </li>
+                            @endcan()
+
+                            @can('admin_webinars_qlxb')
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/publish', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/publish">{{ trans('admin/main.live_classes') }}</a>
+                                </li>
+                            @endcan()
+
                         @can('admin_webinars_create')
                             <li class="{{ (request()->is(getAdminPanelUrl('/webinars/create', false))) ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinars/create">{{ trans('admin/main.new') }}</a>
@@ -248,6 +266,27 @@
                     </a>
                 </li>
             @endcan --}}
+
+            @can('admin_categories')
+                <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/categories*', false))) ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                        <i class="fas fa-layer-group"></i>
+                        <span>{{ trans('admin/main.webinar_type') }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('admin_categories_list')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/webinar-type', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinar-type">{{ trans('admin/main.lists') }}</a>
+                            </li>
+                        @endcan()
+                        @can('admin_categories_create')
+                            <li class="{{ (request()->is(getAdminPanelUrl('/webinar_type/create', false))) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinar-type/create">{{ trans('admin/main.new') }}</a>
+                            </li>
+                        @endcan()
+                    </ul>
+                </li>
+            @endcan()
 
             @can('admin_categories')
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/categories*', false))) ? 'active' : '' }}">
@@ -1400,6 +1439,7 @@
                 <li class="nav-item dropdown {{ (request()->is(getAdminPanelUrl('/gifts*', false))) ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-gift"></i>
+                        <span>{{ trans('update.gifts') }}</span>
                         <span>{{ trans('update.gifts') }}</span>
                     </a>
                     <ul class="dropdown-menu">

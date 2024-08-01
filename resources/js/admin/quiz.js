@@ -397,6 +397,42 @@
         }
     });
 
+    $('body').on('click', '#saveAndPublish', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('publish');
+        $('#quizzForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveAsDraft', function (e) {
+        e.preventDefault();
+        $('#forDraft').val(1);
+        $('#quizzForm').trigger('submit');
+    });
+
+    $('body').on('click', '#savePending', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('pending');
+        $('#quizzForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveReject', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('inactive');
+        $('#quizzForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveAssign', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('assigned');
+        $('#quizzForm').trigger('submit');
+    });
+
+    $('body').on('click', '#saveReview', function (e) {
+        e.preventDefault();
+        $('#forDraft').val('reviewed');
+        $('#quizzForm').trigger('submit');
+    });
+
     /* feather icons */
     // **
     // **

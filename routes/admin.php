@@ -269,6 +269,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'WebinarController@approve');
             Route::get('/{id}/reject', 'WebinarController@reject');
             Route::get('/{id}/unpublish', 'WebinarController@unpublish');
+            Route::get('/{id}/reviewed', 'WebinarController@reviewed');
             Route::post('/search', 'WebinarController@search');
             Route::get('/excel', 'WebinarController@exportExcel');
             Route::get('/{id}/students', 'WebinarController@studentsLists');
@@ -278,6 +279,26 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/order-items', 'WebinarController@orderItems');
             Route::post('/{id}/getContentItemByLocale', 'WebinarController@getContentItemByLocale');
             Route::post('/courses/copy/{id}', 'WebinarController@copyCourse')->name('webinar.copy');
+
+            Route::group(['prefix' => 'content'], function (){
+                Route::get('/', 'WebinarManagerController@contentIndex')->name('webinar.content.index');
+                Route::get('/create', 'WebinarManagerController@contentCreate')->name('webinar.content.create');
+                Route::post('/store', 'WebinarManagerController@contentStore')->name('webinar.content.store');
+                Route::get('/{id}/edit', 'WebinarManagerController@contentEdit')->name('webinar.content.edit');
+                Route::post('/{id}/update', 'WebinarManagerController@contentUpdate')->name('webinar.content.update');
+            });
+
+            // ctv
+            Route::group(['prefix' => 'assign'], function (){
+                Route::get('/', 'WebinarManagerController@assignIndex')->name('webinar.assign.index');
+                Route::get('/{id}/edit', 'WebinarManagerController@assignEdit')->name('webinar.assign.edit');
+                Route::post('/{id}/update', 'WebinarManagerController@assignUpdate')->name('webinar.assign.update');
+            });
+
+            // qlxb
+            Route::group(['prefix' => 'publish'], function (){
+                Route::get('/', 'WebinarManagerController@publishIndex')->name('webinar.publish.index');
+            });
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');
 
@@ -321,6 +342,20 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'QuizController@approve')->name('quizzes.approve');
             Route::get('/{id}/reject', 'QuizController@reject')->name('quizzes.reject');
             Route::get('/{id}/unpublish', 'QuizController@unpublish')->name('quizzes.unpublish');
+
+            Route::group(['prefix' => 'content'], function () {
+                Route::get('/create', 'QuizController@contentCreate')->name('content.quizzes.create');
+                Route::post('/store', 'QuizController@contentStore');
+                Route::get('/{id}/edit', 'QuizController@contentEdit')->name('content.quizzes.edit');
+                Route::post('/{id}/update', 'QuizController@contentUpdate');
+
+            });
+
+            Route::group(['prefix' => 'assign'], function () {
+                Route::get('/{id}/edit', 'QuizController@assignEdit')->name('assign.quizzes.edit');
+                Route::post('/{id}/update', 'QuizController@assignUpdate');
+
+            });
         });
 
         Route::group(['prefix' => 'quizzes-questions'], function () {
@@ -1122,6 +1157,15 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
                 Route::get('/{id}/statusToggle', 'AIContentTemplatesController@statusToggle');
             });
 
+        });
+
+        Route::group(['prefix' => 'webinar-type'], function () {
+            Route::get('/', 'WebinarTypeController@index')->name('webinar.type');
+            Route::get('/create', 'WebinarTypeController@create')->name('webinar.type.create');
+            Route::post('/store', 'WebinarTypeController@store')->name('webinar.type.store');
+            Route::get('/{id}/edit', 'WebinarTypeController@edit')->name('webinar.type.edit');
+            Route::post('/{id}/update', 'WebinarTypeController@update')->name('webinar.type.update');
+            Route::get('/{id}/delete', 'WebinarTypeController@delete')->name('webinar.type.delete');
         });
 
         /* End Admin Middleware */

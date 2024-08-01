@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\QuizResultsExport;
 use App\Exports\QuizzesAdminExport;
 use App\Http\Controllers\Controller;
+use App\Models\Accounting;
 use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\QuizzesQuestion;
 use App\Models\QuizzesResult;
+use App\Models\Role;
 use App\Models\Translation\QuizTranslation;
 use App\Models\Translation\WebinarTranslation;
 use App\Models\Webinar;
 use App\Models\WebinarChapter;
 use App\Models\WebinarChapterItem;
+use App\Models\WebinarType;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -673,5 +676,423 @@ class QuizController extends Controller
         ];
 
         return redirect(getAdminPanelUrl().'/quizzes')->with(['toast' => $toastData]);
+    }
+
+    public function contentCreate()
+    {
+        $this->authorize('admin_quizzes_create');
+        $categories = Category::where('parent_id', null)
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
+
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
+
+        $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
+            ->get();
+
+        $genres = WebinarType::where('status', 'active')
+            ->get();
+        $data = [
+            'pageTitle' => trans('quiz.new_quiz'),
+            'categories' => $categories,
+            'ctv' => $ctv,
+            'genres' => $genres
+        ];
+
+        return view('admin.quizzes_qlnd.create', $data);
+    }
+
+    public function contentStore(Request $request)
+    {
+        $this->authorize('admin_webinars_qlnd');
+
+        $data = $request->all();
+        $locale = $data['locale'] ?? getDefaultLocale();
+
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'implementation_cost' => 'required',
+            'assigned_user' => 'required',
+            'genre' => 'required'
+        ];
+
+        $this->validate($request, $rules);
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Webinar::makeSlug($data['title']);
+        }
+        if (!empty($data['genre'])) {
+            $data['price'] = WebinarType::find($data['genre'])->price;
+        }
+
+        $webinar = Webinar::create([
+            'type' => Webinar::$quizz,
+            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '',
+                    str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
+            'teacher_id' => $data['teacher_id'],
+            'creator_id' => $data['creator_id'],
+            'category_id' => $data['category_id'],
+            'thumbnail' => $data['thumbnail'] ?? null,
+            'price' => $data['price'],
+            'status' => Webinar::$assigned,
+            'assigned_user' => $data['assigned_user'] ?? null,
+            'genre' => $data['genre'] ?? null,
+            'implementation_cost' => $data['implementation_cost'],
+            'created_at' => time(),
+            'updated_at' => time(),
+
+        ]);
+
+        if ($webinar) {
+            WebinarTranslation::updateOrCreate([
+                'webinar_id' => $webinar->id,
+                'locale' => mb_strtolower($data['locale']),
+                'title' => $data['title'],
+                'seo_description' => $data['seo_description'],
+            ]);
+        }
+
+
+        if (!empty($webinar)) {
+            $chapter = null;
+
+            if (!empty($data['chapter_id'])) {
+                $chapter = WebinarChapter::where('id', $data['chapter_id'])
+                    ->where('webinar_id', $webinar->id)
+                    ->first();
+            }
+
+            $quiz = Quiz::create([
+                'webinar_id' => $webinar->id,
+                'chapter_id' => !empty($chapter) ? $chapter->id : null,
+                'creator_id' => $webinar->creator_id,
+                'attempt' => $data['attempt'] ?? null,
+                'pass_mark' => $data['pass_mark'] ?? 1,
+                'time' => $data['time'] ?? null,
+                'status' => Quiz::INACTIVE,
+                'certificate' => (!empty($data['certificate']) and $data['certificate'] == 'on'),
+                'display_questions_randomly' => (!empty($data['display_questions_randomly']) and $data['display_questions_randomly'] == 'on'),
+                'expiry_days' => (!empty($data['expiry_days']) and $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
+                'created_at' => time(),
+            ]);
+
+            QuizTranslation::updateOrCreate([
+                'quiz_id' => $quiz->id,
+                'locale' => mb_strtolower($locale),
+            ], [
+                'title' => $data['title'],
+            ]);
+
+            if (!empty($quiz->chapter_id)) {
+                WebinarChapterItem::makeItem($webinar->creator_id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
+            }
+
+            // Send Notification To All Students
+//            $webinar->sendNotificationToAllStudentsForNewQuizPublished($quiz);
+
+            return redirect(route('webinar.content.index'));
+        } else {
+            return back()->withErrors([
+                'webinar_id' => trans('validation.exists', ['attribute' => trans('admin/main.course')])
+            ]);
+        }
+    }
+
+    public function contentEdit(Request $request, $id)
+    {
+        $this->authorize('admin_webinars_qlnd');
+
+        $quiz = Quiz::query()->where('id', $id)
+            ->with([
+                'quizQuestions' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                    $query->with('quizzesQuestionsAnswers');
+                },
+            ])
+            ->with('webinar')
+            ->first();
+        $webinar = $quiz->webinar;
+        if (empty($quiz)) {
+            abort(404);
+        }
+
+        $creator = $quiz->creator;
+
+        $webinars = Webinar::where('status', 'active')
+            ->where(function ($query) use ($creator) {
+                $query->where('teacher_id', $creator->id)
+                    ->orWhere('creator_id', $creator->id);
+            })->get();
+
+        $locale = $request->get('locale', app()->getLocale());
+        if (empty($locale)) {
+            $locale = app()->getLocale();
+        }
+        storeContentLocale($locale, $quiz->getTable(), $quiz->id);
+
+        $quiz->title = $quiz->getTitleAttribute();
+        $quiz->locale = mb_strtoupper($locale);
+
+        $chapters = collect();
+
+        if (!empty($quiz->webinar)) {
+            $chapters = $quiz->webinar->chapters;
+        }
+
+        $categories = Category::where('parent_id', null)
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
+
+        $ctv = User::where('status', 'active')
+            ->get();
+
+        $genres = WebinarType::where('status', 'active')
+            ->get();
+        $data = [
+            'pageTitle' => trans('public.edit') . ' ' . $quiz->title,
+            'webinars' => $webinars,
+            'webinar' => $webinar,
+            'quiz' => $quiz,
+            'quizQuestions' => $quiz->quizQuestions,
+            'creator' => $creator,
+            'chapters' => $chapters,
+            'locale' => mb_strtolower($locale),
+            'defaultLocale' => getDefaultLocale(),
+            'categories' => $categories,
+            'ctv' => $ctv,
+            'genres' => $genres
+        ];
+
+        return view('admin.quizzes_qlnd.edit', $data);
+    }
+
+    public function contentUpdate(Request $request, $id)
+    {
+        $quiz = Quiz::query()->findOrFail($id);
+        $user = $quiz->creator;
+
+        $data = $request->all();
+        $locale = $data['locale'] ?? getDefaultLocale();
+
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'implementation_cost' => 'required',
+            'assigned_user' => 'required',
+            'genre' => 'required'
+        ];
+        $this->validate($request, $rules);
+
+        $chapter = null;
+        if (empty($data['slug'])) {
+            $data['slug'] = Webinar::makeSlug($data['title']);
+        }
+
+        if ($quiz) {
+            $webinar = Webinar::where('id', $quiz->webinar_id)->first();
+
+            if (!empty($webinar) and !empty($data['chapter_id'])) {
+                $chapter = WebinarChapter::where('id', $data['chapter_id'])
+                    ->where('webinar_id', $webinar->id)
+                    ->first();
+            }
+        }
+
+        if (!empty($data['genre'])) {
+            $data['price'] = WebinarType::find($data['genre'])->price;
+        }
+
+
+        $reject = (!empty($data['draft']) and $data['draft'] == 'inactive');
+        $assigned = (!empty($data['draft']) and $data['draft'] == 'assigned');
+        $pending = (!empty($data['draft']) and $data['draft'] == 'pending');
+
+        $data['status'] = $assigned ? Webinar::$assigned : ($reject ? Webinar::$inactive : ($pending ? Webinar::$pending : Webinar::$assigned));
+
+
+        $webinar->update([
+            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '',
+                    str_replace(' ', '-', strtolower($data['slug']))).'-'.Str::random(5),
+            'price' => $data['price'],
+            'category_id' => $data['category_id'],
+            'updated_at' => time(),
+            'assigned_user' => $data['assigned_user'] ?? null,
+            'genre' => $data['genre'] ?? null,
+            'implementation_cost' => $data['implementation_cost'],
+            'status' => $data['status'],
+            'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
+        ]);
+
+        if ($webinar) {
+            WebinarTranslation::updateOrCreate([
+                'webinar_id' => $webinar->id,
+                'locale' => mb_strtolower($data['locale']),
+            ], [
+                'title' => $data['title'],
+                'seo_description' => $data['seo_description'],
+            ]);
+        }
+
+        $quiz->update([
+            'chapter_id' => !empty($chapter) ? $chapter->id : null,
+            'attempt' => $data['attempt'] ?? null,
+            'pass_mark' => $data['pass_mark'] ?? 1,
+            'time' => $data['time'] ?? null,
+            'status' => $data['status'],
+            'updated_at' => time(),
+        ]);
+
+        if (!empty($quiz)) {
+            QuizTranslation::updateOrCreate([
+                'quiz_id' => $quiz->id,
+                'locale' => mb_strtolower($locale),
+            ], [
+                'title' => $data['title'],
+            ]);
+
+            $checkChapterItem = WebinarChapterItem::where('user_id', $user->id)
+                ->where('item_id', $quiz->id)
+                ->where('type', WebinarChapterItem::$chapterQuiz)
+                ->first();
+
+            if (!empty($quiz->chapter_id)) {
+                if (empty($checkChapterItem)) {
+                    WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
+                } elseif ($checkChapterItem->chapter_id != $quiz->chapter_id) {
+                    $checkChapterItem->delete(); // remove quiz from old chapter and assign it to new chapter
+
+                    WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
+                }
+            } else if (!empty($checkChapterItem)) {
+                $checkChapterItem->delete();
+            }
+        }
+
+        removeContentLocale();
+
+        return redirect(route('webinar.content.index'));
+    }
+
+    public function assignEdit(Request $request, $id)
+    {
+        $this->authorize('admin_webinars_ctv');
+
+        $quiz = Quiz::query()->where('id', $id)
+            ->with([
+                'quizQuestions' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                    $query->with('quizzesQuestionsAnswers');
+                },
+            ])
+            ->with('webinar')
+            ->first();
+        $webinar = $quiz->webinar;
+        if (empty($quiz)) {
+            abort(404);
+        }
+
+        $creator = $quiz->creator;
+
+        $webinars = Webinar::where('status', 'active')
+            ->where(function ($query) use ($creator) {
+                $query->where('teacher_id', $creator->id)
+                    ->orWhere('creator_id', $creator->id);
+            })->get();
+
+        $locale = $request->get('locale', app()->getLocale());
+        if (empty($locale)) {
+            $locale = app()->getLocale();
+        }
+        storeContentLocale($locale, $quiz->getTable(), $quiz->id);
+
+        $quiz->title = $quiz->getTitleAttribute();
+        $quiz->locale = mb_strtoupper($locale);
+
+        $chapters = collect();
+
+        if (!empty($quiz->webinar)) {
+            $chapters = $quiz->webinar->chapters;
+        }
+
+        $categories = Category::where('parent_id', null)
+            ->get()
+            ->sortBy(function($category) {
+                return $category->title;
+            });
+
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
+
+        $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
+            ->get();
+
+        $genres = WebinarType::where('status', 'active')
+            ->get();
+        $data = [
+            'pageTitle' => trans('public.edit') . ' ' . $quiz->title,
+            'webinars' => $webinars,
+            'webinar' => $webinar,
+            'quiz' => $quiz,
+            'quizQuestions' => $quiz->quizQuestions,
+            'creator' => $creator,
+            'chapters' => $chapters,
+            'locale' => mb_strtolower($locale),
+            'defaultLocale' => getDefaultLocale(),
+            'categories' => $categories,
+            'ctv' => $ctv,
+            'genres' => $genres
+        ];
+
+        return view('admin.quizzes_ctv.edit', $data);
+    }
+
+    public function assignUpdate(Request $request, $id)
+    {
+        $quiz = Quiz::query()->findOrFail($id);
+        $user = $quiz->creator;
+
+        $data = $request->all();
+        $locale = $data['locale'] ?? getDefaultLocale();
+
+        if ($quiz) {
+            $webinar = Webinar::where('id', $quiz->webinar_id)->first();
+
+            if (!empty($webinar) and !empty($data['chapter_id'])) {
+                $chapter = WebinarChapter::where('id', $data['chapter_id'])
+                    ->where('webinar_id', $webinar->id)
+                    ->first();
+            }
+        }
+
+        $review = (!empty($data['draft']) and $data['draft'] == 'reviewed');
+        $data['status'] = $review ? Webinar::$reviewed : Webinar::$assigned;
+
+        $data['revision_count'] = $webinar->revision_count;
+        if($review) {
+            $data['revision_count'] = $webinar->revision_count + 1;
+        }
+
+
+        $webinar->update([
+            'status' => $data['status'],
+            'revision_count' => $data['revision_count'],
+            'updated_at' => time(),
+        ]);
+
+        $quiz->update([
+            'status' => $data['status'],
+            'updated_at' => time(),
+        ]);
+
+
+        return redirect(route('webinar.assign.index'));
     }
 }

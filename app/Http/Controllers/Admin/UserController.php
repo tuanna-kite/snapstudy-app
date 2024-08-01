@@ -116,6 +116,9 @@ class UserController extends Controller
     public function purchasedsSum()
     {
         $data = Sale::whereNull('refund_at')
+            ->whereHas('buyer', function ($query) {
+                $query->where('test_mode', false);
+            })
             ->whereNotNull('webinar_id')
             ->whereNull('meeting_id')
             ->whereNull('promotion_id')
@@ -185,8 +188,13 @@ class UserController extends Controller
         $queryUser = User::where('role_name', Role::$user);
 
         if (!empty($sort_order)) {
-            $queryUser = $queryUser->select('users.*', DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM accounting WHERE user_id = users.id AND type = "addiction") -
-            (SELECT COALESCE(SUM(amount), 0) FROM accounting WHERE user_id = users.id AND type = "deduction") AS balance'));
+            $balanceSubquery = DB::table('accounting')
+                ->selectRaw('user_id, COALESCE(SUM(CASE WHEN type = "addiction" THEN amount ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN type = "deduction" THEN amount ELSE 0 END), 0) as balance')
+                ->groupBy('user_id');
+
+            $queryUser = $queryUser->leftJoinSub($balanceSubquery, 'balances', function($join) {
+                $join->on('users.id', '=', 'balances.user_id');
+            })->addSelect('users.*', 'balances.balance');
         }
 
         $queryUser = $this->filters($queryUser, $request);
@@ -195,6 +203,7 @@ class UserController extends Controller
                 ->orderBy('balance', $sort_order);
         }
 
+//        dd($queryUser->toSql());
         if ($is_export_excel) {
             $users = $queryUser->orderBy('users.created_at', 'desc')->get();
         } else {
@@ -1038,6 +1047,8 @@ class UserController extends Controller
         $user->access_content = (!empty($data['access_content']) and $data['access_content'] == '1');
 
         $user->enable_ai_content = (!empty($data['enable_ai_content']) and $data['enable_ai_content'] == '1');
+
+        $user->test_mode = !empty($data['test_mode']) ? 1 : 0;
 
         $user->save();
 

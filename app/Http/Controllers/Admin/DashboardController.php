@@ -27,6 +27,15 @@ class DashboardController extends Controller
         $totalSales = [
             'count' => deepClone($query)->count(),
             'amount' => deepClone($query)->sum('total_amount'),
+            'webinar' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$webinar);
+            })->sum('total_amount'),
+            'exam' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$course);
+            })->sum('total_amount'),
+            'quizzes' => deepClone($query)->whereHas('webinar', function ($query) {
+                $query->where('type', Webinar::$quizz);
+            })->sum('total_amount'),
         ];
 
         if (Gate::allows('admin_general_dashboard_daily_sales_statistics')) {
@@ -82,7 +91,7 @@ class DashboardController extends Controller
             $usersStatisticsChart = $this->usersStatisticsChart();
         }
         $data = [
-             'totalSales' =>$totalSales,
+            'totalSales' => $totalSales,
             'pageTitle' => trans('admin/main.general_dashboard_title'),
             'dailySalesTypeStatistics' => $dailySalesTypeStatistics ?? null,
             'getIncomeStatistics' => $getIncomeStatistics ?? null,
@@ -143,7 +152,7 @@ class DashboardController extends Controller
         $getTopSellingOrganizations = $this->getTopSellingTeachersAndOrganizations('organizations');
 
         $getMostActiveStudents = $this->getMostActiveStudents();
-        $getClassesStatistics['labels'] = array_map(function($label) {
+        $getClassesStatistics['labels'] = array_map(function ($label) {
             switch ($label) {
                 case 'webinar':
                     return 'Outline';
@@ -155,13 +164,13 @@ class DashboardController extends Controller
                     return $label;
             }
         }, $getClassesStatistics['labels']);
-        
+
         $revenueByCategory = DB::table('categories')
-                            ->select('categories.slug', DB::raw('SUM(order_items.total_amount) as total_revenue'))
-                            ->join('webinars', 'categories.id', '=', 'webinars.category_id')
-                            ->join('order_items', 'webinars.id', '=', 'order_items.webinar_id')
-                            ->groupBy('categories.slug')
-                            ->get();
+            ->select('categories.slug', DB::raw('SUM(order_items.total_amount) as total_revenue'))
+            ->join('webinars', 'categories.id', '=', 'webinars.category_id')
+            ->join('order_items', 'webinars.id', '=', 'order_items.webinar_id')
+            ->groupBy('categories.slug')
+            ->get();
         $data = [
             'pageTitle' => trans('admin/main.marketing_dashboard_title'),
             'usersWithoutPurchases' => $usersWithoutPurchases,

@@ -11,6 +11,7 @@
     <title>{{ $pageTitle ?? '' }} </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- General CSS File -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="/assets/admin/vendor/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="/assets/vendors/fontawesome/css/all.min.css"/>
     <link rel="stylesheet" href="/assets/default/vendors/toast/jquery.toast.min.css">

@@ -1,19 +1,18 @@
 @extends('web_v2.layouts.index')
 @section('title', 'Course Page')
 @section('content')
-
     <x-layouts.home-layout>
         <div class="container mx-auto py-24">
             {{-- Search Bar --}}
-            <div class="flex w-full justify-center">
-                <div class="items-center gap-2 mb-12 md:mb-24 md:w-1/2">
-                    <x-search.search-doc/>
+            <div class="flex w-full gap-2 justify-center items-center">
+                <div class="items-center gap-2  md:w-1/2">
+                    <x-search.search-course formId="searchForm" :school="$school" />
                 </div>
                 <div class="block lg:hidden">
-                    <x-pages.course-list.filter-button :majors="$majors" :school="$school"/>
+                    <x-pages.course-list.filter-button :majors="$majors" :school="$school" />
                 </div>
             </div>
-            <div class="flex gap-6">
+            <div class="flex gap-6 mt-24">
                 <div class="w-1/4 hidden lg:block">
                     <x-pages.course-list.form formId="filterForm1" :majors="$majors" :school="$school">
                         <div class="flex items-center justify-between">
@@ -22,11 +21,11 @@
                             </h2>
                             <div>
                                 <button type="button" id='clearOptionBtn' onclick="clearQueryParams()"
-                                        class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
+                                    class="flex items-center gap-1 rounded-full border py-0.5 px-1 border-border-disabled text-text.light.disabled">
                                     <span class="font-medium text-xs">
                                         {{ trans('course.Clear All') }}
                                     </span>
-                                    <x-component.material-icon name="close" style="font-size:18px !important"/>
+                                    <x-component.material-icon name="close" style="font-size:18px !important" />
                                 </button>
                             </div>
                         </div>

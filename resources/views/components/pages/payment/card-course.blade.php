@@ -27,14 +27,14 @@
             </div>
             <div class="w-full flex justify-between">
                 <p class="text-sm text-text.light.secondary">Discount</p>
-                <p class="text-sm text-success.main" id="discount-amount">0 VNĐ</p>
+                <p class="text-sm text-red-500" id="discount-amount">0 VNĐ</p>
             </div>
         </div>
     </div>
     <hr class="border-t-1 border-gray-300 w-full">
     <div class="flex justify-between items-center p-6">
         <p class="font-bold text-lg text-text.light.primary">Total:</p>
-        <p class="font-bold text-lg text-primary.main">
+        <p class="font-bold text-lg text-primary.main" id="total">
             {{ handlePrice($webinar->price) }}
         </p>
     </div>
@@ -58,8 +58,8 @@
                     $('#promo-code-message').text(response.message);
                     if (response.success) {
                         // Cập nhật giá trị giảm giá và tổng tiền nếu cần
-                        $('#discount-amount').text(response.discount);
-                        $('#total-amount').text(response.total);
+                        $('#discount-amount').text('-' + response.discount);
+                        $('#total').text(response.total);
                     }
                 },
                 error: function(xhr) {

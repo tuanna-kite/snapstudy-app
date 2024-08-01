@@ -173,6 +173,14 @@
 
                 <div class="form-group custom-switches-stacked mt-2">
                     <label class="custom-switch pl-0">
+                        <input type="checkbox" name="test_mode" id="test_mode" {{ (!empty($user) and $user->test_mode) ? 'checked="checked"' : '' }} class="custom-switch-input"/>
+                        <span class="custom-switch-indicator"></span>
+                        <label class="custom-switch-description mb-0 cursor-pointer" for="test_mode">{{ trans('Test mode') }}</label>
+                    </label>
+                </div>
+
+                <div class="form-group custom-switches-stacked mt-2">
+                    <label class="custom-switch pl-0">
                         <input type="hidden" name="ban" value="0">
                         <input type="checkbox" name="ban" id="banSwitch" value="1" {{ (!empty($user) and $user->ban) ? 'checked="checked"' : '' }} class="custom-switch-input"/>
                         <span class="custom-switch-indicator"></span>

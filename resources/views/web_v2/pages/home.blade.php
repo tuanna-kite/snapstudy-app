@@ -20,7 +20,7 @@
         {{-- Search Document --}}
         <div class="flex flex-col gap-8 p-4 md:p-12 md:flex-row">
             <div class="w-full flex flex-col">
-                <div class="w-full mx-auto">
+                <div class="w-full mx-auto max-w-3xl">
                     <x-search.search-doc />
                 </div>
                 <h1

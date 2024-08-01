@@ -23,10 +23,27 @@
 
 @pushOnce('scripts_bottom')
     <script>
+        function removeVietnameseTones(str) {
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            return str;
+        }
         // Function to merge and update query parameters
         function updateQueryParams(formId) {
             const form = document.getElementById(formId);
             const formData = new FormData(form);
+
+            if (formData.has('search')) {
+                const searchValue = formData.get('search');
+                formData.set('search', removeVietnameseTones(searchValue));
+            }
+
             const formParams = new URLSearchParams(formData);
 
             // Get the existing query parameters
@@ -51,15 +68,19 @@
         // Event listener for filter form submission
 
         const listForm = [
-            'filterForm1', 'filterForm2', 'searchForm'
+            'filterForm1', 'filterForm2',
+            'searchForm'
         ]
 
         listForm.forEach(formId => {
             // Add event listener for form submission
-            document.getElementById(formId).addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
-                updateQueryParams(formId); // Call updateQueryParams with formId
-            });
+            const doc = document.getElementById(formId)
+            if (doc) {
+                doc.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    updateQueryParams(formId); // Call updateQueryParams with formId
+                });
+            }
         });
 
         function clearQueryParams() {

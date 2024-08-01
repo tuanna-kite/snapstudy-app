@@ -11,6 +11,7 @@ use App\Models\Webinar;
 use App\Models\WebinarFilterOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Normalizer;
 
 class ClassesController extends Controller
 {
@@ -298,6 +299,7 @@ class ClassesController extends Controller
         $search = $request->get('search', '');
         $majors_search = $request->query('majors', []);
 
+        $search = Normalizer::normalize($search, Normalizer::FORM_C);
         $school = Category::where('slug', $slug)->first();
         if (is_null($school)) {
             abort(404);

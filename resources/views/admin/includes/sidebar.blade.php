@@ -76,9 +76,6 @@
                                 <li class="{{ (request()->is(getAdminPanelUrl('/webinars/content', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
                                     <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/content">{{ trans('admin/main.live_classes') }}</a>
                                 </li>
-                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/create', false))) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ getAdminPanelUrl() }}/webinars/content/create">{{ trans('admin/main.new') }}</a>
-                                </li>
                             @endcan()
 
                             @can('admin_webinars_ctv')

@@ -390,8 +390,11 @@ class WebinarManagerController extends Controller
             ->where('is_personalization', 1)
             ->groupBy('user_id')
             ->get();
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -1241,10 +1244,12 @@ class WebinarManagerController extends Controller
     public function assignIndex(Request $request)
     {
         $this->authorize('admin_webinars_ctv');
+        $user = auth()->user();
 
         removeContentLocale();
 
-        $query = Webinar::query();
+        $query = Webinar::query()
+            ->where('assigned_user', $user->id);
 
         $totalWebinars = $query->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
@@ -1418,7 +1423,11 @@ class WebinarManagerController extends Controller
         $genres = WebinarType::where('status', 'active')
             ->get();
 
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
+
         $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
             ->get();
 
 
@@ -1537,7 +1546,6 @@ class WebinarManagerController extends Controller
 
         $webinar = Webinar::find($id);
         $review = (!empty($data['draft']) and $data['draft'] == 'reviewed');
-//        $publish = (!empty($data['draft']) and $data['draft'] == 'publish');
 
         $rules = [
             'content' => 'required',
@@ -1575,6 +1583,11 @@ class WebinarManagerController extends Controller
 
         $data['status'] = $review ? Webinar::$reviewed : Webinar::$assigned;
 
+        $data['revision_count'] = $webinar->revision_count;
+        if($review) {
+            $data['revision_count'] = $webinar->revision_count + 1;
+        }
+
         unset(
             $data['_token'],
             $data['current_step'],
@@ -1588,7 +1601,7 @@ class WebinarManagerController extends Controller
 
         $webinar->update([
             'updated_at' => time(),
-            'revision_count' => $webinar->revision_count + 1,
+            'revision_count' => $data['revision_count'],
             'status' => $data['status'],
         ]);
 

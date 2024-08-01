@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\QuizzesQuestion;
 use App\Models\QuizzesResult;
+use App\Models\Role;
 use App\Models\Translation\QuizTranslation;
 use App\Models\Translation\WebinarTranslation;
 use App\Models\Webinar;
@@ -686,7 +687,11 @@ class QuizController extends Controller
                 return $category->title;
             });
 
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
+
         $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -705,7 +710,7 @@ class QuizController extends Controller
     {
         $this->authorize('admin_webinars_qlnd');
 
-        $data = $request->get('ajax')['new'];
+        $data = $request->all();
         $locale = $data['locale'] ?? getDefaultLocale();
 
         $rules = [
@@ -716,14 +721,7 @@ class QuizController extends Controller
             'genre' => 'required'
         ];
 
-        $validate = Validator::make($data, $rules);
-
-        if ($validate->fails()) {
-            return response()->json([
-                'code' => 422,
-                'errors' => $validate->errors()
-            ], 422);
-        }
+        $this->validate($request, $rules);
 
         if (empty($data['slug'])) {
             $data['slug'] = Webinar::makeSlug($data['title']);
@@ -795,23 +793,9 @@ class QuizController extends Controller
             }
 
             // Send Notification To All Students
-            $webinar->sendNotificationToAllStudentsForNewQuizPublished($quiz);
+//            $webinar->sendNotificationToAllStudentsForNewQuizPublished($quiz);
 
-            if ($request->ajax()) {
-
-                $redirectUrl = '';
-
-                if (empty($data['is_webinar_page'])) {
-                    $redirectUrl = getAdminPanelUrl('/quizzes/' . $quiz->id . '/edit');
-                }
-
-                return response()->json([
-                    'code' => 200,
-                    'redirect_url' => $redirectUrl
-                ]);
-            } else {
-                return redirect()->route('adminEditQuiz', ['id' => $quiz->id]);
-            }
+            return redirect(route('webinar.content.index'));
         } else {
             return back()->withErrors([
                 'webinar_id' => trans('validation.exists', ['attribute' => trans('admin/main.course')])
@@ -894,27 +878,17 @@ class QuizController extends Controller
         $quiz = Quiz::query()->findOrFail($id);
         $user = $quiz->creator;
 
-        $data = $request->get('ajax')[$id];
+        $data = $request->all();
         $locale = $data['locale'] ?? getDefaultLocale();
 
         $rules = [
             'title' => 'required|max:255',
-            'seo_description' => 'required|max:500',
-            'price' => 'required',
             'category_id' => 'required',
             'implementation_cost' => 'required',
             'assigned_user' => 'required',
-            'genres' => 'required'
+            'genre' => 'required'
         ];
-
-        $validate = Validator::make($data, $rules);
-
-        if ($validate->fails()) {
-            return response()->json([
-                'code' => 422,
-                'errors' => $validate->errors()
-            ], 422);
-        }
+        $this->validate($request, $rules);
 
         $chapter = null;
         if (empty($data['slug'])) {
@@ -1003,13 +977,7 @@ class QuizController extends Controller
 
         removeContentLocale();
 
-        if ($request->ajax()) {
-            return response()->json([
-                'code' => 200
-            ]);
-        } else {
-            return redirect()->back();
-        }
+        return redirect(route('webinar.content.index'));
     }
 
     public function assignEdit(Request $request, $id)
@@ -1059,7 +1027,11 @@ class QuizController extends Controller
                 return $category->title;
             });
 
+        $staffsRoles = Role::where('is_admin', true)->get();
+        $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
+
         $ctv = User::where('status', 'active')
+            ->whereIn('role_id', $staffsRoleIds)
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -1080,5 +1052,47 @@ class QuizController extends Controller
         ];
 
         return view('admin.quizzes_ctv.edit', $data);
+    }
+
+    public function assignUpdate(Request $request, $id)
+    {
+        $quiz = Quiz::query()->findOrFail($id);
+        $user = $quiz->creator;
+
+        $data = $request->all();
+        $locale = $data['locale'] ?? getDefaultLocale();
+
+        if ($quiz) {
+            $webinar = Webinar::where('id', $quiz->webinar_id)->first();
+
+            if (!empty($webinar) and !empty($data['chapter_id'])) {
+                $chapter = WebinarChapter::where('id', $data['chapter_id'])
+                    ->where('webinar_id', $webinar->id)
+                    ->first();
+            }
+        }
+
+        $review = (!empty($data['draft']) and $data['draft'] == 'reviewed');
+        $data['status'] = $review ? Webinar::$reviewed : Webinar::$assigned;
+
+        $data['revision_count'] = $webinar->revision_count;
+        if($review) {
+            $data['revision_count'] = $webinar->revision_count + 1;
+        }
+
+
+        $webinar->update([
+            'status' => $data['status'],
+            'revision_count' => $data['revision_count'],
+            'updated_at' => time(),
+        ]);
+
+        $quiz->update([
+            'status' => $data['status'],
+            'updated_at' => time(),
+        ]);
+
+
+        return redirect(route('webinar.assign.index'));
     }
 }

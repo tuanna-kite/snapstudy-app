@@ -189,7 +189,7 @@
 
 
                                                         @can('admin_webinars_ctv')
-                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.assign.edit', ['id' => $webinar->id]) : route('assign.quizzes.create', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
+                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.assign.edit', ['id' => $webinar->id]) : route('assign.quizzes.edit', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
                                                                 <i class="fa fa-edit"></i>
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>

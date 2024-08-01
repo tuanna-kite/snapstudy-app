@@ -10,8 +10,8 @@
             ->first();
     }
 @endphp
-<div data-action="{{ getAdminPanelUrl() }}/quizzes/{{ !empty($quiz) ? $quiz->id . '/update' : 'store' }}"
-    class="js-content-form quiz-form webinar-form">
+<form action="{{ getAdminPanelUrl() }}/quizzes/assign/{{ !empty($quiz) ? $quiz->id . '/update' : 'store' }}" method="POST" id="quizzForm"
+      class="js-content-form quiz-form webinar-form">
     {{ csrf_field() }}
     <section>
         <div class="row">
@@ -32,7 +32,7 @@
                 @if (!empty(getGeneralSettings('content_translate')))
                     <div class="form-group">
                         <label class="input-label">{{ trans('auth.language') }}</label>
-                        <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][locale]" disabled
+                        <select name="locale" disabled
                                 class="form-control {{ !empty($quiz) ? 'js-edit-content-locale' : '' }}">
                             @foreach ($userLanguages as $lang => $language)
                                 <option value="{{ $lang }}" @if (mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>
@@ -42,13 +42,13 @@
                         <div class="invalid-feedback"></div>
                     </div>
                 @else
-                    <input type="hidden" name="[{{ !empty($quiz) ? $quiz->id : 'new' }}][locale]"
+                    <input type="hidden" name="locale"
                            value="{{ getDefaultLocale() }}">
                 @endif
 
                 <div class="form-group mt-15 ">
                     <label class="input-label d-block">{{ trans('panel.course_type') }}</label>
-                    <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][genre]" disabled
+                    <select name="genre" disabled
                             class="custom-select @error('genre')  is-invalid @enderror">
                         @foreach($genres as $genre)
                             <option value="{{ $genre->id }}" @if (!empty($quiz) ? $quiz->webinar->genre : old('genre') == $genre->id) selected @endif>
@@ -63,21 +63,25 @@
                     @enderror
                 </div>
 
-                <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][teacher_id]"
+                <input type="hidden" name="teacher_id"
                        value="{{ Auth::user()->id }}" id="">
-                <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][creator_id]"
+                <input type="hidden" name="creator_id"
                        value="{{ Auth::user()->id }}" id="">
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('quiz.quiz_title') }}</label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][title]" disabled
-                           value="{{ !empty($quiz) ? $quiz->title : old('title') }}" class="js-ajax-title form-control "
+                    <input type="text" name="title" disabled
+                           value="{{ !empty($quiz) ? $quiz->title : old('title') }}" class="form-control @error('title')  is-invalid @enderror"
                            placeholder="" />
-                    <div class="invalid-feedback"></div>
+                    @error('title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.seo_description') }}</label>
-                    <textarea type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][seo_description]" rows="5" disabled
+                    <textarea type="text" name="seo_description" rows="5" disabled
                               class="js-ajax-seo_description form-control " placeholder="">{{ !empty($quiz) ? $quiz->webinar->seo_description : old('seo_description') }}</textarea>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -85,7 +89,7 @@
                 <div class="form-group mt-15">
                     <label class="input-label">{{ trans('public.implementation_cost') }}
                         ( VND )</label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][implementation_cost]" disabled
+                    <input type="text" name="implementation_cost" disabled
                            value="{{ (!empty($quiz)) ? convertPriceToUserCurrency($quiz->webinar->implementation_cost) : old('implementation_cost') }}"
                            class="form-control @error('implementation_cost')  is-invalid @enderror"
                            placeholder="{{ trans('public.0_for_free') }}"/>
@@ -98,7 +102,7 @@
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_school') }}</label>
-                    <select id="school" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][school_id]" disabled
+                    <select id="school" name="school_id" disabled
                             class="form-control {{ !empty($quiz) ? 'js-edit-content-school_id' : '' }}">
                         <option {{ !empty($school) ? '' : 'selected' }}>
                             {{ trans('public.choose_school') }}</option>
@@ -113,7 +117,7 @@
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_major') }}</label>
-                    <select id="major" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][major_id]" disabled
+                    <select id="major" name="major_id" disabled
                             class="form-control {{ !empty($quiz) ? 'js-edit-content-major_id' : '' }}">
                         @if (!empty($quiz) && $quiz->webinar->category_id)
                             <option value="{{ $major->id }}">
@@ -128,8 +132,8 @@
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('public.choose_subject') }}</label>
-                    <select id="subject" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][category_id]" disabled
-                            class="form-control js-ajax-category_id {{ !empty($quiz) ? 'js-edit-content-category_id' : '' }}">
+                    <select id="subject" name="category_id" disabled
+                            class="form-control @error('category_id')  is-invalid @enderror">
                         @if (!empty($quiz) && $quiz->webinar->category_id)
                             <option value="{{ $subject->id }}">
                                 {{ $subject->title }}</option>
@@ -138,52 +142,17 @@
                                 {{ trans('public.choose_subject') }}</option>
                         @endif
                     </select>
-                    <div class="invalid-feedback"></div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="input-label">{{ trans('public.time') }} <span
-                            class="braces">({{ trans('public.minutes') }})</span></label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][time]" disabled
-                           value="{{ !empty($quiz) ? $quiz->time : old('time') }}" class="js-ajax-time form-control "
-                           placeholder="{{ trans('forms.empty_means_unlimited') }}" />
-                    <div class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <label class="input-label">{{ trans('quiz.number_of_attemps') }}</label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][attempt]" disabled
-                           value="{{ !empty($quiz) ? $quiz->attempt : old('attempt') }}"
-                           class="js-ajax-attempt form-control "
-                           placeholder="{{ trans('forms.empty_means_unlimited') }}" />
-                    <div class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <label class="input-label">{{ trans('quiz.pass_mark') }}</label>
-                    <input type="text" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][pass_mark]" disabled
-                           value="{{ !empty($quiz) ? $quiz->pass_mark : old('pass_mark') }}"
-                           class="js-ajax-pass_mark form-control @error('pass_mark')  is-invalid @enderror"
-                           placeholder="" />
-                    <div class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <label class="input-label">{{ trans('update.expiry_days') }}</label>
-                    <input type="number" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][expiry_days]" disabled
-                           value="{{ !empty($quiz) ? $quiz->expiry_days : old('expiry_days') }}"
-                           class="js-ajax-expiry_days form-control @error('expiry_days')  is-invalid @enderror"
-                           min="0" />
-                    <div class="invalid-feedback"></div>
-
-                    <p class="font-12 text-gray mt-1">{{ trans('update.quiz_expiry_days_hint') }}</p>
+                    @error('category_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class="form-group mt-15">
                     <label class="input-label">{{ trans('Cộng tác viên') }}</label>
-                    <select id="assigned_user" class="custom-select" disabled
-                            name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][assigned_user]" required>
+                    <select id="assigned_user" class="form-control @error('assigned_user')  is-invalid @enderror"
+                            name="assigned_user" required disabled>
                         <option {{ !empty($webinar->assigned_user) ? '' : 'selected' }} disabled>
                             {{ trans('Choose User') }}</option>
                         @foreach ($ctv as $user)
@@ -253,26 +222,20 @@
         </section>
     @endif
 
-    <input type="hidden" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][is_webinar_page]"
-        value="@if (!empty($inWebinarPage) and $inWebinarPage) 1 @else 0 @endif">
 
     <input type="hidden" name="draft" value="no" id="forDraft" />
 
     <div class="mt-20 mb-20">
-        <button type="button"
-            class="js-submit-quiz-form btn btn-sm btn-primary">{{ !empty($quiz) ? trans('public.save_change') : trans('public.create') }}</button>
+        <button type="button" id="saveAssign"
+            class="js-submit-quiz-form btn btn-sm btn-primary">Lưu</button>
 
-        @if (empty($quiz) and !empty($inWebinarPage))
-            <button type="button"
-                class="btn btn-sm btn-danger ml-10 cancel-accordion">{{ trans('public.close') }}</button>
-        @endif
         @if (!empty($webinar))
                 <button type="button" id="saveReview"
                         class="btn btn-sm btn-warning">Gửi phê duyệt</button>
         @endif
     </div>
 
-</div>
+</form>
 
 @if ($webinar->status == \App\Models\Webinar::$inactive)
     <section class="mt-3">
@@ -295,7 +258,7 @@
 @endif --}}
 
 @push('scripts_bottom')
-    <script src="https://cdn.tiny.cloud/1/8mkg9v8whf8cy0r8589h2cvrm67v8gw6xzf1k9ey6c4shsea/tinymce/7/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/8xk85wmn4362fr0m3iy2yb46zb634hhd7upi6ejitzxbb435/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         function initTinymce() {

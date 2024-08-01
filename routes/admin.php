@@ -342,6 +342,20 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'QuizController@approve')->name('quizzes.approve');
             Route::get('/{id}/reject', 'QuizController@reject')->name('quizzes.reject');
             Route::get('/{id}/unpublish', 'QuizController@unpublish')->name('quizzes.unpublish');
+
+            Route::group(['prefix' => 'content'], function () {
+                Route::get('/create', 'QuizController@contentCreate')->name('content.quizzes.create');
+                Route::post('/store', 'QuizController@contentStore');
+                Route::get('/{id}/edit', 'QuizController@contentEdit')->name('content.quizzes.edit');
+                Route::post('/{id}/update', 'QuizController@contentUpdate');
+
+            });
+
+            Route::group(['prefix' => 'assign'], function () {
+                Route::get('/{id}/edit', 'QuizController@assignEdit')->name('assign.quizzes.edit');
+                Route::post('/{id}/update', 'QuizController@assignUpdate');
+
+            });
         });
 
         Route::group(['prefix' => 'quizzes-questions'], function () {

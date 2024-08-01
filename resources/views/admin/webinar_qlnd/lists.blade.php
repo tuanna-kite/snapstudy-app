@@ -217,7 +217,7 @@
                                                         @endcan
 
                                                         @can('admin_webinars_qlnd')
-                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.content.edit', ['id' => $webinar->id]) : route('content.quizzes.create', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
+                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.content.edit', ['id' => $webinar->id]) : route('content.quizzes.edit', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
                                                                 <i class="fa fa-edit"></i>
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>

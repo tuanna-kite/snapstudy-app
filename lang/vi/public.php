@@ -35,7 +35,7 @@ return [
     'view' => 'View',
     'view_profile' => 'Xem hồ sơ',
     'review_or_edit' => 'Xem xét/Chỉnh sửa',
-    'review' => 'Đánh giá',
+    'review' => 'Chờ đánh giá',
     'invited' => 'Đã mời',
     'try_again' => 'Thử lại',
     'you_can_try_again' => 'Đừng lo lắng, bạn có thể thử lại',

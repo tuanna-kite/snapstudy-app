@@ -21,7 +21,7 @@
 
     // interface answers: [quesId => choiceId]
     $answers = [];
-    if ($isSubmit && !empty($userQuiz->results)) {
+    if ($isSubmit && !empty($userQuiz->results) && $userQuiz->results != 'null') {
         foreach (json_decode($userQuiz->results) as $question => $result) {
             $answers[$question] = $result;
         }

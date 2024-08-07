@@ -32,6 +32,14 @@
                 'value' => '9PAY',
                 'checked' => false,
             ],
+            [
+                'name' => 'gateway',
+                'img' => asset('img/vnpay.png'),
+                'title' => trans('Pay with Vnpay'),
+                'sub' => trans('Vnpay'),
+                'value' => 'VNPAY',
+                'checked' => false,
+            ],
         ];
 
 //        $spoint = [

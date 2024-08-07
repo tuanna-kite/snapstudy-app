@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateways\NinePayController;
+use App\Http\Controllers\Gateways\VnpayController;
 use App\Mixins\Cashback\CashbackAccounting;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
@@ -34,9 +35,12 @@ class PaymentController extends Controller
     protected $order_session_key = 'payment.order_id';
     protected $ninepaycontroller;
 
-    public function __construct(NinePayController $ninepaycontroller)
+    protected $vnpayController;
+
+    public function __construct(NinePayController $ninepaycontroller, VnpayController $vnpayController)
     {
         $this->ninepaycontroller = $ninepaycontroller;
+        $this->vnpayController = $vnpayController;
     }
 
     public function paymentRequest(Request $request)
@@ -130,6 +134,9 @@ class PaymentController extends Controller
             return $this->paypalPayment($order);
         } elseif ($gateway == '9PAY' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
             $this->ninepaycontroller->createPayment($orderId, $order->total_amount, $gateway);
+        }
+        elseif ($gateway == 'VNPAY') {
+            $vpnUrl = $this->vnpayController->renderPaymentLink($orderId, $order->total_amount);
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)

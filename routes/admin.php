@@ -342,6 +342,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'QuizController@approve')->name('quizzes.approve');
             Route::get('/{id}/reject', 'QuizController@reject')->name('quizzes.reject');
             Route::get('/{id}/unpublish', 'QuizController@unpublish')->name('quizzes.unpublish');
+            Route::get('/{id}/preview', 'QuizController@quizzPreview')->name('quizzes.preview');
 
             Route::group(['prefix' => 'content'], function () {
                 Route::get('/create', 'QuizController@contentCreate')->name('content.quizzes.create');

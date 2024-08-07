@@ -194,7 +194,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>{{trans('admin/main.id')}}</th>
-                                        <th class="text-left">{{ trans('admin/main.title') }}</th>
+                                        <th class="text-left" width="10%">{{ trans('admin/main.title') }}</th>
                                         <th class="text-left">{{ trans('admin/main.school') }}</th>
                                         <th class="text-left">{{ trans('admin/main.campus') }}</th>
                                         <th class="text-left">{{ trans('admin/main.subject2') }}</th>
@@ -216,7 +216,7 @@
                                             <td>{{$count}}</td>
                                             <td>{{ $quiz->webinar->id }}</td>
                                             <td>
-                                                <span>{{ $quiz->title }}</span>
+                                                <span><a href="{{ route('quizzes.preview', ['id' => $quiz->webinar->id]) }}">{{ $quiz->webinar->title }}</a></span>
                                             </td>
 
                                             <td>

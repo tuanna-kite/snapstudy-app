@@ -1095,4 +1095,43 @@ class QuizController extends Controller
 
         return redirect(route('webinar.assign.index'));
     }
+
+    public function quizzPreview($id)
+    {
+        $webinar = Webinar::where('id', $id)
+            ->with('one_quizzes')
+            ->first();
+
+        $quiz = Quiz::where('id', $webinar->one_quizzes->id)->first();
+            if ($quiz) {
+                $quizQuestionsQuery = QuizzesQuestion::query()
+                    ->where('quiz_id', $quiz->id)
+                    ->with('quizzesQuestionsAnswers');
+
+                if ($quiz->display_questions_randomly) {
+                    $quizQuestionsQuery->inRandomOrder();
+                } else {
+                    $quizQuestionsQuery->orderBy('order', 'asc');
+                }
+
+                if (($quiz->display_limited_questions and !empty($quiz->display_number_of_questions))) {
+                    $totalQuestionsCount = $quiz->display_number_of_questions;
+
+                    $quizQuestions = $quizQuestionsQuery->take($totalQuestionsCount)->get();
+                } else {
+                    $quizQuestions = $quizQuestionsQuery->get();
+                    $totalQuestionsCount = $quizQuestions->count();
+                }
+
+                $data = [
+                    'pageTitle' => trans('quiz.quiz_start'),
+                    'quiz' => $quiz,
+                    'webinar' => $webinar,
+                    'quizQuestions' => $quizQuestions,
+                    'totalQuestionsCount' => $totalQuestionsCount,
+                ];
+
+                return view('admin.quizzes.question-preview', $data);
+            }
+        }
 }

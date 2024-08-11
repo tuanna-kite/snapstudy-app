@@ -89,6 +89,10 @@ class QuizController extends Controller
             $query->whereTranslationLike('title', '%' . $title . '%');
         }
 
+        if (!empty($title)) {
+            $query->orWhere('id', $title);
+        }
+
         if (!empty($sort)) {
             switch ($sort) {
                 case 'have_certificate':

@@ -298,6 +298,12 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             // qlxb
             Route::group(['prefix' => 'publish'], function (){
                 Route::get('/', 'WebinarManagerController@publishIndex')->name('webinar.publish.index');
+                Route::get('/excel', 'WebinarManagerController@exportExcel');
+            });
+
+            Route::group(['prefix' => 'accept'], function (){
+                Route::get('/', 'WebinarManagerController@acceptIndex')->name('webinar.accept.index');
+                Route::get('/excel', 'WebinarManagerController@exportAcceptExcel');
             });
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');

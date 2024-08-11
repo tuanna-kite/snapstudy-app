@@ -54,7 +54,6 @@ class SaleController extends Controller
             ])
             ->paginate(10);
 
-//        dd($sales);
 
         foreach ($sales as $sale) {
             $sale = $this->makeTitle($sale);

@@ -156,7 +156,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="input-label">{{ trans('admin/main.status') }}</label>
-                                <select name="statue" data-plugin-selectTwo class="form-control populate">
+                                <select name="status" data-plugin-selectTwo class="form-control populate">
                                     <option value="">{{ trans('admin/main.all_status') }}</option>
                                     <option value="active" @if(request()->get('status') == 'active') selected @endif>{{ trans('admin/main.active') }}</option>
                                     <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{ trans('admin/main.inactive') }}</option>
@@ -214,7 +214,7 @@
                                         @endphp
                                         <tr>
                                             <td>{{$count}}</td>
-                                            <td>{{ $quiz->webinar->id }}</td>
+                                            <td>{{ $quiz->id }}</td>
                                             <td>
                                                 <span><a href="{{ route('quizzes.preview', ['id' => $quiz->webinar->id]) }}">{{ $quiz->webinar->title }}</a></span>
                                             </td>

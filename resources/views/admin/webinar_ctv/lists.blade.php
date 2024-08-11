@@ -97,7 +97,7 @@
                                             <td>{{ $webinar->id }}</td>
 
                                             <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
+                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $webinar->type == \App\Models\Webinar::$quizz ? route('quizzes.preview', ['id' => $webinar->id]) : route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
                                                 @else
@@ -106,7 +106,7 @@
                                             </td>
                                             <td>
                                                 <span class="mt-0 mb-1">
-                                                    {{ $webinar->type }}
+                                                    {{ $webinar->type == \App\Models\Webinar::$course ? 'exam' : $webinar->type }}
                                                 </span>
                                             </td>
 
@@ -189,7 +189,7 @@
 
 
                                                         @can('admin_webinars_ctv')
-                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.assign.edit', ['id' => $webinar->id]) : route('assign.quizzes.edit', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
+                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$quizz ? route('content.quizzes.edit', ['id' => $webinar->id]) : route('webinar.content.edit', ['id' => $webinar->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
                                                                 <i class="fa fa-edit"></i>
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>

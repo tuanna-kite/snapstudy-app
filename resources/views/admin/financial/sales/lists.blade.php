@@ -212,11 +212,11 @@
                                         <th>#</th>
                                         <th class="text-left">{{ trans('admin/main.student') }}</th>
                                         <th class="text-left">{{ trans('admin/main.email') }}</th>
-                                        <th class="text-left">{{ trans('admin/main.instructor') }}</th>
+{{--                                        <th class="text-left">{{ trans('admin/main.instructor') }}</th>--}}
                                         <th>{{ trans('admin/main.paid_amount') }}</th>
                                         <th>{{ trans('admin/main.discount') }}</th>
                                         <th>{{ trans('admin/main.promotion') }}</th>
-                                        <th>{{ trans('admin/main.tax') }}</th>
+{{--                                        <th>{{ trans('admin/main.tax') }}</th>--}}
                                         <th class="text-left">{{ trans('admin/main.item') }}</th>
                                         <th>{{ trans('admin/main.sale_type') }}</th>
                                         <th>{{ trans('admin/main.date') }}</th>
@@ -239,10 +239,10 @@
                                                 {{ !empty($sale->buyer) ? $sale->buyer->email : ''}}
                                             </td>
 
-                                            <td class="text-left">
-                                                {{ $sale->item_seller }}
-                                                <div class="text-primary text-small font-600-bold">ID : {{  $sale->seller_id }}</div>
-                                            </td>
+{{--                                            <td class="text-left">--}}
+{{--                                                {{ $sale->item_seller }}--}}
+{{--                                                <div class="text-primary text-small font-600-bold">ID : {{  $sale->seller_id }}</div>--}}
+{{--                                            </td>--}}
 
                                             <td>
                                                 @if($sale->payment_method == \App\Models\Sale::$subscribe)
@@ -261,9 +261,9 @@
                                             <td>
                                                 <span class="">{{ $sale->order->promotion_code ?? '' }}</span>
                                             </td>
-                                            <td>
-                                                <span class="">{{ handlePrice($sale->tax ?? 0) }}</span>
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                <span class="">{{ handlePrice($sale->tax ?? 0) }}</span>--}}
+{{--                                            </td>--}}
                                             <td class="text-left">
                                                 <div class="media-body">
                                                     <div>{{ $sale->item_title }}</div>
@@ -272,19 +272,27 @@
                                             </td>
 
                                             <td>
+{{--                                                @dd($sale->webinar)--}}
                                                 <span class="font-weight-bold">
-                                                    @if($sale->type == \App\Models\Sale::$registrationPackage)
-                                                        {{ trans('update.registration_package') }}
-                                                    @elseif($sale->type == \App\Models\Sale::$product)
-                                                        {{ trans('update.product') }}
-                                                    @elseif($sale->type == \App\Models\Sale::$bundle)
-                                                        {{ trans('update.bundle') }}
-                                                    @elseif($sale->type == \App\Models\Sale::$gift)
-                                                        {{ trans('update.gift') }}
-                                                    @elseif($sale->type == \App\Models\Sale::$installmentPayment)
-                                                        {{ trans('update.installment_payment') }}
-                                                    @else
-                                                        {{ trans('admin/main.'.$sale->type) }}
+{{--                                                    @if($sale->type == \App\Models\Sale::$registrationPackage)--}}
+{{--                                                        {{ trans('update.registration_package') }}--}}
+{{--                                                    @elseif($sale->type == \App\Models\Sale::$product)--}}
+{{--                                                        {{ trans('update.product') }}--}}
+{{--                                                    @elseif($sale->type == \App\Models\Sale::$bundle)--}}
+{{--                                                        {{ trans('update.bundle') }}--}}
+{{--                                                    @elseif($sale->type == \App\Models\Sale::$gift)--}}
+{{--                                                        {{ trans('update.gift') }}--}}
+{{--                                                    @elseif($sale->type == \App\Models\Sale::$installmentPayment)--}}
+{{--                                                        {{ trans('update.installment_payment') }}--}}
+{{--                                                    @else--}}
+{{--                                                        {{ trans('admin/main.'.$sale->type) }}--}}
+{{--                                                    @endif--}}
+                                                    @if($sale->webinar->type = \App\Models\Webinar::$webinar)
+                                                        {{ trans('admin/main.outline') }}
+                                                    @elseif($sale->webinar->type = \App\Models\Webinar::$quizz)
+                                                        {{ trans('admin/main.outline') }}
+                                                    @elseif($sale->webinar->type = \App\Models\Webinar::$course)
+                                                        {{ trans('admin/main.exam') }}
                                                     @endif
                                                 </span>
                                             </td>

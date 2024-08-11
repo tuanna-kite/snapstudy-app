@@ -84,13 +84,16 @@
                 <div class="col-12 col-md-12">
                     <div class="card">
                         <div class="card-header">
-{{--                            @can('admin_webinars_export_excel')--}}
-{{--                                <div class="text-right">--}}
-{{--                                    <a href="{{ getAdminPanelUrl() }}/webinars/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>--}}
-{{--                                </div>--}}
-{{--                            @endcan--}}
+                                <div class="text-right">
+                                    <a href="{{ getAdminPanelUrl() }}/webinars/publish/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                                </div>
                              <div class="h-10"></div>
-
+                            <div class="ml-3">
+                                @php
+                                    $countWebinar = $webinars->total();
+                                @endphp
+                                <strong> {{__('home.Total results') }} : {{$countWebinar}}</strong>
+                            </div>
                         </div>
 
                         <div class="card-body">
@@ -103,6 +106,7 @@
                                         <th class="text-left">{{trans('admin/main.title')}}</th>
                                         <th>{{trans('admin/main.webinar_type')}}</th>
                                         <th width="10%">{{trans('public.implementation_cost')}}</th>
+                                        <th width="10%">{{trans('public.price')}}</th>
                                         <th>{{trans('admin/main.status')}}</th>
                                         <th width="120">{{trans('admin/main.actions')}}</th>
                                     </tr>
@@ -125,7 +129,7 @@
                                                 @endif
                                             </td>
                                             <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
+                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $webinar->type == \App\Models\Webinar::$quizz ? route('quizzes.preview', ['id' => $webinar->id]) : route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
                                                 @else
@@ -134,7 +138,7 @@
                                             </td>
                                             <td>
                                                 <span class="mt-0 mb-1">
-                                                    {{ $webinar->type }}
+                                                    {{ $webinar->type == \App\Models\Webinar::$course ? 'exam' : $webinar->type }}
                                                 </span>
                                             </td>
                                             <td>
@@ -143,6 +147,11 @@
                                                 </span>
                                             </td>
 
+                                            <td>
+                                                <span class="mt-0 mb-1">
+                                                    {{ handlePrice($webinar->price, true, true) }}
+                                                </span>
+                                            </td>
 
                                             <td>
                                                 @switch($webinar->status)

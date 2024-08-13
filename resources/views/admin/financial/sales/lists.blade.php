@@ -287,12 +287,16 @@
 {{--                                                    @else--}}
 {{--                                                        {{ trans('admin/main.'.$sale->type) }}--}}
 {{--                                                    @endif--}}
-                                                    @if($sale->webinar->type = \App\Models\Webinar::$webinar)
-                                                        {{ trans('admin/main.outline') }}
-                                                    @elseif($sale->webinar->type = \App\Models\Webinar::$quizz)
-                                                        {{ trans('admin/main.outline') }}
-                                                    @elseif($sale->webinar->type = \App\Models\Webinar::$course)
-                                                        {{ trans('admin/main.exam') }}
+                                                    @if($sale->type == \App\Models\Sale::$personalization)
+                                                        {{ trans('admin/main.personalization') }}
+                                                    @else
+                                                        @if($sale->webinar->type == \App\Models\Webinar::$webinar)
+                                                            {{ trans('admin/main.outline') }}
+                                                        @elseif($sale->webinar->type == \App\Models\Webinar::$quizz)
+                                                            {{ trans('admin/main.outline') }}
+                                                        @elseif($sale->webinar->type == \App\Models\Webinar::$course)
+                                                            {{ trans('admin/main.exam') }}
+                                                        @endif
                                                     @endif
                                                 </span>
                                             </td>

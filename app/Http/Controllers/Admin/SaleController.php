@@ -21,7 +21,7 @@ class SaleController extends Controller
         $this->authorize('admin_sales_list');
 
         $query = Sale::whereNull('product_order_id')
-            ->where('type', '<>' ,'personalization')
+//            ->where('type', '<>' ,'personalization')
             ->whereHas('buyer', function ($query) {
                 $query->where('test_mode', false);
             });

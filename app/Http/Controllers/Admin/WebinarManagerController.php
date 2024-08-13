@@ -1256,7 +1256,7 @@ class WebinarManagerController extends Controller
         $query = Webinar::query()
             ->where('assigned_user', $user->id);
 
-        $totalWebinars = $query->count();
+        $totalWebinars = deepClone($query)->where('webinars.status', 'active')->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
         $totalDurations = deepClone($query)->sum('duration');
         $totalSales = deepClone($query)->join('sales', 'webinars.id', '=', 'sales.webinar_id')
@@ -1295,6 +1295,16 @@ class WebinarManagerController extends Controller
             }
         }
 
+        $query2 = Webinar::where('assigned_user', $user->id);
+        $totalWage = $query2->where('status', Webinar::$active)
+            ->sum('implementation_cost');
+        $totalWageMount = $query2->where('status', Webinar::$active)
+            ->sum('implementation_cost');
+//        $totalPending = $query2->where('status', Webinar::$pending)
+//            ->count();
+//        $totalActive = $query2->where('status', Webinar::$active)
+//            ->count();
+
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),
@@ -1306,6 +1316,10 @@ class WebinarManagerController extends Controller
             'categories' => $categories,
             'inProgressWebinars' => $inProgressWebinars ?? 0,
             'classesType' => 'webinar',
+            'totalWage' => $totalWage,
+            'totalWageMount' => $totalWageMount,
+//            'totalPending' => $totalPending,
+//            'totalActive' => $totalActive
         ];
 
         $teacher_ids = $request->get('teacher_ids', null);

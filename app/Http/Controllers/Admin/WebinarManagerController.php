@@ -396,7 +396,8 @@ class WebinarManagerController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -612,6 +613,8 @@ class WebinarManagerController extends Controller
             ->get();
 
         $ctv = User::where('status', 'active')
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
 
@@ -1429,7 +1432,8 @@ class WebinarManagerController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
 

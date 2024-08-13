@@ -272,7 +272,7 @@
                                                     @foreach ($ctv as $user)
                                                         <option value="{{ $user->id }}"
                                                             {{ (!empty($webinar) and $webinar->assigned_user == $user->id) ? 'selected' : '' }}>
-                                                            {{ $user->full_name }}</option>
+                                                            {{ $user->full_name . ' - ' . $user->email }}</option>
                                                     @endforeach
                                                 </select>
 

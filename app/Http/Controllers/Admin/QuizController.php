@@ -695,7 +695,8 @@ class QuizController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -855,6 +856,8 @@ class QuizController extends Controller
             });
 
         $ctv = User::where('status', 'active')
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -1035,7 +1038,8 @@ class QuizController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')

@@ -122,7 +122,7 @@ class PersonalizationController extends Controller
         $user = auth()->user();
         $userId = $user->id;
         $gateway = $request->input('gateway');
-        $amount = $request->input('amount', 999000);
+        $amount = 999000;
         $orderId = $request->input('order_id')."-".time();
 
         $order = Order::where('id', $orderId)
@@ -408,6 +408,25 @@ class PersonalizationController extends Controller
                 if (!empty($orderItem->product_id)) {
                     $this->updateProductOrder($sale, $orderItem);
                 }
+
+                $sellerId = OrderItem::getSeller($orderItem);
+
+                Accounting::create([
+                    'user_id' => $sellerId,
+                    'order_item_id' => $orderItem->id,
+                    'installment_order_id' => $orderItem->installment_order_id ?? null,
+                    'amount' => 999000,
+                    'webinar_id' => $orderItem->webinar_id,
+                    'bundle_id' => $orderItem->bundle_id,
+                    'meeting_time_id' => $orderItem->reserveMeeting ? $orderItem->reserveMeeting->meeting_time_id : null,
+                    'subscribe_id' => $orderItem->subscribe_id ?? null,
+                    'promotion_id' => $orderItem->promotion_id ?? null,
+                    'product_id' => $orderItem->product_id ?? null,
+                    'type_account' => Accounting::$income,
+                    'type' => Accounting::$addiction,
+                    'description' => trans('public.income_sale'),
+                    'created_at' => time()
+                ]);
             }
 
         Cart::emptyCart($order->user_id);
@@ -527,7 +546,7 @@ class PersonalizationController extends Controller
             }
             return redirect('/payments/status');
 
-            return response()->json(['message' => 'Payment successful']);
+//            return response()->json(['message' => 'Payment successful']);
         } else {
             return view('web.default.pages.failCheckout');
         }

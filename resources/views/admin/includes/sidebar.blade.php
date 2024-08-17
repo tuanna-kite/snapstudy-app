@@ -74,19 +74,22 @@
 
                             @can('admin_webinars_qlnd')
                                 <li class="{{ (request()->is(getAdminPanelUrl('/webinars/content', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/content">{{ trans('admin/main.live_classes') }}</a>
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/content">{{ trans('Quản lý nội dung') }}</a>
                                 </li>
                             @endcan()
 
                             @can('admin_webinars_ctv')
                                 <li class="{{ (request()->is(getAdminPanelUrl('/webinars/assign', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/assign">{{ trans('admin/main.live_classes') }}</a>
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/assign">{{ trans('Quản lý nội dung ctv') }}</a>
                                 </li>
                             @endcan()
 
                             @can('admin_webinars_qlxb')
                                 <li class="{{ (request()->is(getAdminPanelUrl('/webinars/publish', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
-                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/publish">{{ trans('admin/main.live_classes') }}</a>
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/publish">{{ trans('Quản lý xuất bản') }}</a>
+                                </li>
+                                <li class="{{ (request()->is(getAdminPanelUrl('/webinars/accept', false)) and request()->get('type') == 'webinar') ? 'active' : '' }}">
+                                    <a class="nav-link @if(!empty($sidebarBeeps['webinars']) and $sidebarBeeps['webinars']) beep beep-sidebar @endif" href="{{ getAdminPanelUrl() }}/webinars/accept">{{ trans('Quản lý nghiệm thu') }}</a>
                                 </li>
                             @endcan()
 

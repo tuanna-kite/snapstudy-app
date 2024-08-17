@@ -1247,7 +1247,11 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user) {
-            $user->delete();
+            $user->is_delete = true;
+            $user->status = User::$inactive;
+            $user->delete_by = auth()->user()->id;
+            $user->save();
+//            $user->delete();
         }
 
         return redirect()->back();

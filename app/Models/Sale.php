@@ -16,6 +16,7 @@ class Sale extends Model
     public static $bundle = 'bundle';
     public static $gift = 'gift';
     public static $installmentPayment = 'installment_payment';
+    public static $personalization = 'personalization';
 
     public static $credit = 'credit';
     public static $paymentChannel = 'payment_channel';

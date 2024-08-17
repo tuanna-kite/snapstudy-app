@@ -89,6 +89,10 @@ class QuizController extends Controller
             $query->whereTranslationLike('title', '%' . $title . '%');
         }
 
+        if (!empty($title)) {
+            $query->orWhere('id', $title);
+        }
+
         if (!empty($sort)) {
             switch ($sort) {
                 case 'have_certificate':
@@ -691,7 +695,8 @@ class QuizController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -851,6 +856,8 @@ class QuizController extends Controller
             });
 
         $ctv = User::where('status', 'active')
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -1031,7 +1038,8 @@ class QuizController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -1095,4 +1103,43 @@ class QuizController extends Controller
 
         return redirect(route('webinar.assign.index'));
     }
+
+    public function quizzPreview($id)
+    {
+        $webinar = Webinar::where('id', $id)
+            ->with('one_quizzes')
+            ->first();
+
+        $quiz = Quiz::where('id', $webinar->one_quizzes->id)->first();
+            if ($quiz) {
+                $quizQuestionsQuery = QuizzesQuestion::query()
+                    ->where('quiz_id', $quiz->id)
+                    ->with('quizzesQuestionsAnswers');
+
+                if ($quiz->display_questions_randomly) {
+                    $quizQuestionsQuery->inRandomOrder();
+                } else {
+                    $quizQuestionsQuery->orderBy('order', 'asc');
+                }
+
+                if (($quiz->display_limited_questions and !empty($quiz->display_number_of_questions))) {
+                    $totalQuestionsCount = $quiz->display_number_of_questions;
+
+                    $quizQuestions = $quizQuestionsQuery->take($totalQuestionsCount)->get();
+                } else {
+                    $quizQuestions = $quizQuestionsQuery->get();
+                    $totalQuestionsCount = $quizQuestions->count();
+                }
+
+                $data = [
+                    'pageTitle' => trans('quiz.quiz_start'),
+                    'quiz' => $quiz,
+                    'webinar' => $webinar,
+                    'quizQuestions' => $quizQuestions,
+                    'totalQuestionsCount' => $totalQuestionsCount,
+                ];
+
+                return view('admin.quizzes.question-preview', $data);
+            }
+        }
 }

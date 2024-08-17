@@ -67,9 +67,9 @@
                                                     {{ trans('admin/main.outline') }}</option>
                                                 <option value="course" @if (!empty($webinar) and $webinar->isCourse() or old('type') == \App\Models\Webinar::$course) selected @endif>
                                                     {{ trans('admin/main.exam') }}</option>
-                                                <option value="text_lesson"
-                                                    @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>
-                                                    {{ trans('admin/main.question') }}</option>
+{{--                                                <option value="text_lesson"--}}
+{{--                                                    @if (!empty($webinar) and $webinar->isTextCourse() or old('type') == \App\Models\Webinar::$textLesson) selected @endif>--}}
+{{--                                                    {{ trans('admin/main.question') }}</option>--}}
                                             </select>
 
                                             @error('type')

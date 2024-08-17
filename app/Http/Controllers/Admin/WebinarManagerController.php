@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\WebinarsAcceptExport;
 use App\Exports\WebinarsExport;
+use App\Exports\WebinarsXbExport;
 use App\Http\Controllers\Admin\traits\WebinarChangeCreator;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Panel\WebinarStatisticController;
@@ -394,7 +396,8 @@ class WebinarManagerController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
         $genres = WebinarType::where('status', 'active')
@@ -610,6 +613,8 @@ class WebinarManagerController extends Controller
             ->get();
 
         $ctv = User::where('status', 'active')
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
 
@@ -887,7 +892,7 @@ class WebinarManagerController extends Controller
 
     public function exportExcel(Request $request)
     {
-        $this->authorize('admin_webinars_export_excel');
+//        $this->authorize('admin_webinars_export_excel');
 
         $query = Webinar::query();
 
@@ -901,7 +906,7 @@ class WebinarManagerController extends Controller
 
         $webinars = $query->get();
 
-        $webinarExport = new WebinarsExport($webinars);
+        $webinarExport = new WebinarsXbExport($webinars);
 
         return Excel::download($webinarExport, 'webinars.xlsx');
     }
@@ -1251,7 +1256,7 @@ class WebinarManagerController extends Controller
         $query = Webinar::query()
             ->where('assigned_user', $user->id);
 
-        $totalWebinars = $query->count();
+        $totalWebinars = deepClone($query)->where('webinars.status', 'active')->count();
         $totalPendingWebinars = deepClone($query)->where('webinars.status', 'pending')->count();
         $totalDurations = deepClone($query)->sum('duration');
         $totalSales = deepClone($query)->join('sales', 'webinars.id', '=', 'sales.webinar_id')
@@ -1290,6 +1295,16 @@ class WebinarManagerController extends Controller
             }
         }
 
+        $query2 = Webinar::where('assigned_user', $user->id);
+        $totalWage = $query2->where('status', Webinar::$active)
+            ->sum('implementation_cost');
+        $totalWageMount = $query2->where('status', Webinar::$active)
+            ->sum('implementation_cost');
+//        $totalPending = $query2->where('status', Webinar::$pending)
+//            ->count();
+//        $totalActive = $query2->where('status', Webinar::$active)
+//            ->count();
+
 
         $data = [
             'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),
@@ -1301,6 +1316,10 @@ class WebinarManagerController extends Controller
             'categories' => $categories,
             'inProgressWebinars' => $inProgressWebinars ?? 0,
             'classesType' => 'webinar',
+            'totalWage' => $totalWage,
+            'totalWageMount' => $totalWageMount,
+//            'totalPending' => $totalPending,
+//            'totalActive' => $totalActive
         ];
 
         $teacher_ids = $request->get('teacher_ids', null);
@@ -1427,7 +1446,8 @@ class WebinarManagerController extends Controller
         $staffsRoleIds = $staffsRoles->pluck('id')->toArray();
 
         $ctv = User::where('status', 'active')
-            ->whereIn('role_id', $staffsRoleIds)
+            ->where('role_id', 12)
+            ->orderBy('full_name')
             ->get();
 
 
@@ -1621,5 +1641,72 @@ class WebinarManagerController extends Controller
         removeContentLocale();
 
         return back();
+    }
+
+    public function acceptIndex(Request $request)
+    {
+
+        $query = User::join('webinars', 'users.id', '=', 'webinars.assigned_user')
+            ->select('users.id', 'users.full_name', 'users.email', DB::raw('COUNT(webinars.id) as webinar_count'), DB::raw('SUM(webinars.implementation_cost) as total_amount'))
+            ->where('webinars.status', Webinar::$active);
+
+        $title = $request->get('title', null);
+        $from = $request->get('from', null);
+        $to = $request->get('to', null);
+
+        if (!empty($title)) {
+            $query->where(function($query) use ($title) {
+                $query->where('users.full_name', 'like', "%$title%")
+                    ->orWhere('users.email', 'like', "%$title%");
+            });
+        }
+
+        $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
+
+
+        $implementation_cost = $query->sum('webinars.implementation_cost');
+        $total = $query->count();
+
+
+        $query = $query->groupBy('users.id');
+
+
+        $assignUser = $query->paginate(10);
+
+        $data = [
+            'pageTitle' => trans('admin/pages/webinars.webinars_list_page_title'),
+            'classesType' => 'webinar',
+            'implementation_cost' => $implementation_cost,
+            'total' => $total,
+            'assignUser' => $assignUser
+        ];
+        return view('admin.webinar_qlxb.list_accept', $data);
+    }
+
+    public function exportAcceptExcel(Request $request)
+    {
+
+        $query = User::join('webinars', 'users.id', '=', 'webinars.assigned_user')
+            ->select('users.id', 'users.full_name', 'users.email', DB::raw('COUNT(webinars.id) as webinar_count'), DB::raw('SUM(webinars.implementation_cost) as total_amount'))
+            ->where('webinars.status', Webinar::$active);
+
+        $title = $request->get('title', null);
+        $from = $request->get('from', null);
+        $to = $request->get('to', null);
+
+        if (!empty($title)) {
+            $query->where(function($query) use ($title) {
+                $query->where('users.full_name', 'like', "%$title%")
+                    ->orWhere('users.email', 'like', "%$title%");
+            });
+        }
+
+        $query = fromAndToDateFilter($from, $to, $query, 'webinars.created_at');
+
+        $webinars = $query->get();
+
+        $webinarExport = new WebinarsAcceptExport($webinars);
+
+        return Excel::download($webinarExport, 'webinars_accept.xlsx');
     }
 }

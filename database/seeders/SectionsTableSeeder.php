@@ -85,6 +85,7 @@ class SectionsTableSeeder extends Seeder
         Section::updateOrCreate(['id' => 167], ['name' => 'admin_webinars_ctv', 'section_group_id' => 150, 'caption' => 'Webinar CTV']);
         Section::updateOrCreate(['id' => 168], ['name' => 'admin_webinars_qlxb', 'section_group_id' => 150, 'caption' => 'Webinar QLXB']);
         Section::updateOrCreate(['id' => 169], ['name' => 'admin_webinars_qlnd', 'section_group_id' => 150, 'caption' => 'Webinar QLND']);
+        Section::updateOrCreate(['id' => 170], ['name' => 'admin_webinars_accept', 'section_group_id' => 150, 'caption' => 'Quản lý nghiệm thu']);
 
 
         // Categories 200 - 149

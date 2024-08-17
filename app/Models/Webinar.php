@@ -744,7 +744,8 @@ class Webinar extends Model implements TranslatableContract
 
     public function getUrl()
     {
-        return url('/course/' . $this->slug);
+        $url = $this->type == 'quizz' ? ('/quizzes/' . $this->slug) : ('/course/' . $this->slug);
+        return url($url);
     }
 
     public function getLearningPageUrl()

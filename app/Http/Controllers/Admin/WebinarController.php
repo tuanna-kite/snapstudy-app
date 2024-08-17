@@ -170,7 +170,8 @@ class WebinarController extends Controller
         }
 
         if (!empty($title)) {
-            $query->orWhere('id', $title);
+            $query->orWhere('id', $title)
+            ->where('webinars.type', '!=', 'quizz');
         }
 
         if (!empty($teacher_ids) and count($teacher_ids)) {

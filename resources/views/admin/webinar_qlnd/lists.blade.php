@@ -128,7 +128,7 @@
                                                 @endif
                                             </td>
                                             <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
+                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $webinar->type == \App\Models\Webinar::$quizz ? route('quizzes.preview', ['id' => $webinar->id]) : route('webinar.preview', ['id' => $webinar->id]) }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
                                                     <div class="text-small">{{ $webinar->category->title }}</div>
                                                 @else
@@ -137,7 +137,7 @@
                                             </td>
                                             <td>
                                                 <span class="mt-0 mb-1">
-                                                    {{ $webinar->type }}
+                                                    {{ $webinar->type == \App\Models\Webinar::$course ? 'exam' : $webinar->type }}
                                                 </span>
                                             </td>
                                             <td>
@@ -188,55 +188,47 @@
                                                     </button>
                                                     <div class="dropdown-menu text-left webinars-lists-dropdown">
 
-                                                        @can('admin_webinars_edit')
-                                                            @if($webinar->status == \App\Models\Webinar::$pending)
-                                                                @can('admin_webinars_publish')
-                                                                    @include('admin.includes.delete_button',[
-                                                                        'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/approve',
-                                                                        'btnClass' => 'd-flex align-items-center text-success text-decoration-none btn-transparent btn-sm mt-1',
-                                                                        'btnText' => '<i class="fa fa-check"></i><span class="ml-2">'. trans("admin/main.approve") .'</span>'
-                                                                        ])
+                                                        @if($webinar->status == \App\Models\Webinar::$pending)
+{{--                                                            @can('admin_webinars_publish')--}}
+{{--                                                                @include('admin.includes.delete_button',[--}}
+{{--                                                                    'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/approve',--}}
+{{--                                                                    'btnClass' => 'd-flex align-items-center text-success text-decoration-none btn-transparent btn-sm mt-1',--}}
+{{--                                                                    'btnText' => '<i class="fa fa-check"></i><span class="ml-2">'. trans("admin/main.approve") .'</span>'--}}
+{{--                                                                    ])--}}
 
-                                                                    @include('admin.includes.delete_button',[
-                                                                        'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/reject',
-                                                                        'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
-                                                                        'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.reject") .'</span>'
-                                                                        ])
+{{--                                                                @include('admin.includes.delete_button',[--}}
+{{--                                                                    'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/reject',--}}
+{{--                                                                    'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',--}}
+{{--                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.reject") .'</span>'--}}
+{{--                                                                    ])--}}
 
-                                                                @endcan
+{{--                                                            @endcan--}}
 
-                                                            @elseif($webinar->status == \App\Models\Webinar::$active)
-                                                                @can('admin_webinars_publish')
-                                                                    @include('admin.includes.delete_button',[
-                                                                        'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/unpublish',
-                                                                        'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
-                                                                        'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.unpublish") .'</span>'
-                                                                        ])
-                                                                @endcan
-                                                            @endif
-                                                        @endcan
+                                                        @elseif($webinar->status == \App\Models\Webinar::$active)
+                                                            @can('admin_webinars_publish')
+                                                                @include('admin.includes.delete_button',[
+                                                                    'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/unpublish',
+                                                                    'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
+                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.unpublish") .'</span>'
+                                                                    ])
+                                                            @endcan
+                                                        @endif
 
-                                                        @can('admin_webinars_qlnd')
-                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$webinar ? route('webinar.content.edit', ['id' => $webinar->id]) : route('content.quizzes.edit', ['id' => $webinar->one_quizzes->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
+                                                            <a href="{{ $webinar->type == \App\Models\Webinar::$quizz ? route('content.quizzes.edit', ['id' => $webinar->id]) : route('webinar.content.edit', ['id' => $webinar->id]) }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
                                                                 <i class="fa fa-edit"></i>
                                                                 <span class="ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>
-                                                        @endcan
-                                                        @can('admin_webinars_qlnd')
+{{--                                                            <a href="" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="Copy" id="copy" onclick="copyCourse({{ $webinar->id }});">--}}
+{{--                                                                <i class="fa fa-copy"></i>--}}
+{{--                                                                <span class="ml-2">Copy</span>--}}
+{{--                                                            </a>--}}
 
-                                                                <a href="" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="Copy" id="copy" onclick="copyCourse({{ $webinar->id }});">
-                                                                    <i class="fa fa-copy"></i>
-                                                                    <span class="ml-2">Copy</span>
-                                                                </a>
-                                                        @endcan
+                                                        @include('admin.includes.delete_button',[
+                                                                'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/delete',
+                                                                'btnClass' => 'd-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm mt-1',
+                                                                'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.delete") .'</span>'
+                                                                ])
 
-                                                        @can('admin_webinars_qlnd')
-                                                            @include('admin.includes.delete_button',[
-                                                                    'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/delete',
-                                                                    'btnClass' => 'd-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.delete") .'</span>'
-                                                                    ])
-                                                        @endcan
                                                     </div>
                                                 </div>
                                             </td>

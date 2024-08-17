@@ -298,6 +298,12 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             // qlxb
             Route::group(['prefix' => 'publish'], function (){
                 Route::get('/', 'WebinarManagerController@publishIndex')->name('webinar.publish.index');
+                Route::get('/excel', 'WebinarManagerController@exportExcel');
+            });
+
+            Route::group(['prefix' => 'accept'], function (){
+                Route::get('/', 'WebinarManagerController@acceptIndex')->name('webinar.accept.index');
+                Route::get('/excel', 'WebinarManagerController@exportAcceptExcel');
             });
 
             Route::get('/{id}/statistics', 'WebinarStatisticController@index')->name('webinar.monitoring');
@@ -342,6 +348,7 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::get('/{id}/approve', 'QuizController@approve')->name('quizzes.approve');
             Route::get('/{id}/reject', 'QuizController@reject')->name('quizzes.reject');
             Route::get('/{id}/unpublish', 'QuizController@unpublish')->name('quizzes.unpublish');
+            Route::get('/{id}/preview', 'QuizController@quizzPreview')->name('quizzes.preview');
 
             Route::group(['prefix' => 'content'], function () {
                 Route::get('/create', 'QuizController@contentCreate')->name('content.quizzes.create');

@@ -21,7 +21,7 @@ class SaleController extends Controller
         $this->authorize('admin_sales_list');
 
         $query = Sale::whereNull('product_order_id')
-            ->where('type', '<>' ,'personalization')
+//            ->where('type', '<>' ,'personalization')
             ->whereHas('buyer', function ($query) {
                 $query->where('test_mode', false);
             });
@@ -54,7 +54,6 @@ class SaleController extends Controller
             ])
             ->paginate(10);
 
-//        dd($sales);
 
         foreach ($sales as $sale) {
             $sale = $this->makeTitle($sale);
@@ -165,6 +164,7 @@ class SaleController extends Controller
         $webinar_ids = $request->get('webinar_ids', []);
         $teacher_ids = $request->get('teacher_ids', []);
         $student_ids = $request->get('student_ids', []);
+        $sale_type = $request->get('sale_type');
         $userIds = array_merge($teacher_ids, $student_ids);
 
         if (!empty($item_title)) {
@@ -173,6 +173,12 @@ class SaleController extends Controller
         }
 
         $query = fromAndToDateFilter($from, $to, $query, 'created_at');
+
+        if (!empty($sale_type)) {
+            $query = $query->whereHas('webinar', function ($query) use ($sale_type) {
+                $query->where('type', $sale_type);
+            });
+        }
 
         if (!empty($status)) {
             if ($status == 'success') {

@@ -46,7 +46,7 @@
             <div class="container mx-auto">
                 <div class="max-w-[960px] mx-auto space-y-6">
                     <h1 class="font-normal text-3xl text-text.light.primary">
-                        {{ $course->category->slug }}
+                        {{ $course->category->title }}
                     </h1>
                     <h2 class="font-bold text-5xl text-primary.main">
                         {{ $course->title }}

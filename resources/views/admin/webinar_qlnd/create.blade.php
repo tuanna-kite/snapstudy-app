@@ -185,7 +185,7 @@
                                                     ( VND )</label>
                                                 <input type="text" name="implementation_cost"
                                                     value="{{ (!empty($webinar) and !empty($webinar->implementation_cost)) ? convertPriceToUserCurrency($webinar->implementation_cost) : old('implementation_cost') }}"
-                                                    class="form-control @error('price')  is-invalid @enderror"
+                                                    class="form-control @error('implementation_cost')  is-invalid @enderror"
                                                     placeholder="{{ trans('public.0_for_free') }}" />
                                                 @error('implementation_cost')
                                                     <div class="invalid-feedback">

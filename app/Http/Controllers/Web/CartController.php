@@ -498,7 +498,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function createOrderAndOrderItems($carts, $calculate, $user, $discountCoupon = null)
+    public function createOrderAndOrderItems($carts, $calculate, $user, $discountCoupon = null, $amount = null)
     {
         $totalCouponDiscount = 0;
 
@@ -511,10 +511,10 @@ class CartController extends Controller
         $order = Order::create([
             'user_id' => $user->id,
             'status' => Order::$pending,
-            'amount' => $calculate["sub_total"],
+            'amount' => $amount ? $amount : $calculate["sub_total"],
             'tax' => $calculate["tax_price"],
             'total_discount' => $calculate["total_discount"] + $totalCouponDiscount,
-            'total_amount' => ($totalAmount > 0) ? $totalAmount : 0,
+            'total_amount' => $amount ? $amount : (($totalAmount > 0) ? $totalAmount : 0),
             'product_delivery_fee' => $calculate["product_delivery_fee"] ?? null,
             'created_at' => time(),
         ]);
@@ -525,7 +525,7 @@ class CartController extends Controller
         foreach ($carts as $cart) {
 
             $orderPrices = $this->handleOrderPrices($cart, $user);
-            $price = $orderPrices['sub_total'];
+            $price = $amount ? $amount : $orderPrices['sub_total'];
             $totalDiscount = $orderPrices['total_discount'];
             $tax = $orderPrices['tax'];
             $taxPrice = $orderPrices['tax_price'];
@@ -574,8 +574,8 @@ class CartController extends Controller
                 'installment_payment_id' => $cart->installment_payment_id ?? null,
                 'ticket_id' => !empty($ticket) ? $ticket->id : null,
                 'discount_id' => $discountCoupon ? $discountCoupon->id : null,
-                'amount' => $price,
-                'total_amount' => $totalAmount,
+                'amount' => $amount ? $amount : $price,
+                'total_amount' => $amount ? $amount : $totalAmount,
                 'tax' => $tax,
                 'tax_price' => $taxPrice,
                 'commission' => $commission,
@@ -809,7 +809,7 @@ class CartController extends Controller
         if (!empty($carts) and !$carts->isEmpty()) {
             $calculate = $this->calculatePrice($carts, $user);
 
-            $order = $this->createOrderAndOrderItems($carts, $calculate, $user, $discountCoupon);
+            $order = $this->createOrderAndOrderItems($carts, $calculate, $user, $discountCoupon, $data['amount']);
 
             if (!empty($discountCoupon)) {
                 $totalCouponDiscount = $this->handleDiscountPrice($discountCoupon, $carts, $calculate['sub_total']);

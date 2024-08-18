@@ -368,7 +368,7 @@ class PersonalizationController extends Controller
     public function setPaymentAccounting($order, $type = null, $requestId = null)
     {
         foreach ($order->orderItems as $orderItem) {
-                $sale = Sale::createSales($orderItem, $order->payment_method);
+                $sale = Sale::createSales($orderItem, $order->payment_method, Sale::$personalization);
                 Accounting::create([
                     'user_id' => $orderItem->user_id,
                     'order_item_id' => $orderItem->id,

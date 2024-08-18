@@ -95,7 +95,7 @@ class Sale extends Model
         return $this->belongsTo('App\Models\InstallmentOrderPayment', 'installment_payment_id', 'id');
     }
 
-    public static function createSales($orderItem, $payment_method)
+    public static function createSales($orderItem, $payment_method, $type = null)
     {
         $orderType = Order::$webinar;
         if (!empty($orderItem->reserve_meeting_id)) {
@@ -116,6 +116,10 @@ class Sale extends Model
 
         if (!empty($orderItem->gift_id)) {
             $orderType = Order::$gift;
+        }
+
+        if ($type) {
+            $orderType = Sale::$personalization;
         }
 
         $seller_id = OrderItem::getSeller($orderItem);

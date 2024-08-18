@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateways\NinePayController;
+use App\Http\Controllers\Gateways\VnpayController;
 use App\Mixins\Cashback\CashbackAccounting;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
@@ -33,10 +34,12 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 class PersonalizationController extends Controller
 {
     protected $ninepaycontroller;
+    protected $vnpayController;
 
-    public function __construct(NinePayController $ninepaycontroller)
+    public function __construct(NinePayController $ninepaycontroller, VnpayController $vnpayController)
     {
         $this->ninepaycontroller = $ninepaycontroller;
+        $this->vnpayController = $vnpayController;
     }
     public function createSupport(Request $request)
     {
@@ -178,6 +181,8 @@ class PersonalizationController extends Controller
             return $this->paypalPayment($order, $amount);
         } elseif ($gateway == '9PAY' || $gateway == 'CREDIT_CARD' || $gateway === 'ATM_CARD') {
             $this->ninepaycontroller->createPaymentPersonalization($orderId, $amount, $gateway);
+        } elseif ($gateway == 'VNPAY') {
+            $this->vnpayController->createPaymentPersonalization($orderId, $amount);
         }
 
         $paymentChannel = PaymentChannel::where('id', $gateway)
@@ -362,7 +367,6 @@ class PersonalizationController extends Controller
 
     public function setPaymentAccounting($order, $type = null, $requestId = null)
     {
-        $cashbackAccounting = new CashbackAccounting();
         foreach ($order->orderItems as $orderItem) {
                 $sale = Sale::createSales($orderItem, $order->payment_method);
                 Accounting::create([
@@ -550,5 +554,53 @@ class PersonalizationController extends Controller
         } else {
             return view('web.default.pages.failCheckout');
         }
+    }
+
+    public function vnpayResult(Request $request)
+    {
+        Log::info($request->all());
+        $orderId = $request->vnp_TxnRef;
+
+        if ($request->vnp_ResponseCode != "00") {
+            return view('web.default.pages.failCheckout');
+        }
+
+            $id = explode("-", $orderId);
+            $order = Order::where('id', $id)
+                ->first();
+            $user = auth()->user();
+            $userId = !empty($user) ? $user->id : $order->user_id;
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+            $this->setPaymentAccounting($order, '9pay', $orderId);
+            $order->update([
+                'status' => Order::$paid
+            ]);
+            $getUser = User::find($userId);
+            $score = RewardAccounting::where('user_id', $userId)->sum('score');
+            $groups = Group::where('min_score', '<=', $score)
+                ->where('max_score', '>=', $score)
+                ->get();
+            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+
+            Log::info('Payment checkout order: ' . json_encode($order));
+            if ($groupUser != null) {
+                $groupUser->group_id = $groups->first()->id;
+                $groupUser->save();
+            } else {
+                GroupUser::create([
+                    'group_id' => $groups->first()->id,
+                    'user_id' => $getUser->id,
+                ]);
+            }
+
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if ($orderItem) {
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
+            }
+            return redirect('/payments/status');
+
     }
 }

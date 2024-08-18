@@ -226,12 +226,14 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::get('/status', 'PaymentController@payStatus');
         Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
         Route::get('/ninepay/result', 'PaymentController@ninePayResult')->name('ninepay.result');
+        Route::get('/vnpay/result', 'PaymentController@vnpayResult')->name('vnpay.result');
     });
 
     Route::group(['prefix' => 'personalization'], function () {
         Route::post('/payment-request', 'PersonalizationController@paymentRequest')->name('personalization.request');
         Route::get('/payment/success/{gateway}/{orderId}', 'PersonalizationController@checkout')->name('personalization.success');
         Route::get('/ninepay/result', 'PersonalizationController@ninePayResult')->name('personalization.result');
+        Route::get('/vnpay/result', 'PersonalizationController@vnpayResult')->name('vnpay.personalization.result');
     });
 
     Route::group(['prefix' => 'subscribes'], function () {

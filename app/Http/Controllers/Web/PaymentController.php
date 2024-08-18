@@ -724,4 +724,58 @@ class PaymentController extends Controller
             return view('web.default.pages.failCheckout');
         }
     }
+
+    public function vnpayResult(Request $request) {
+        Log::info($request->all());
+        $orderId = $request->vnp_TxnRef;
+
+        if ($request->vnp_ResponseCode != "00") {
+            return view('web.default.pages.failCheckout');
+        }
+
+            $id = explode("-", $orderId);
+            $order = Order::where('id', $id)
+                ->first();
+            $user = auth()->user();
+            $userId = !empty($user) ? $user->id : $order->user_id;
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+            $this->setPaymentAccounting($order, '9pay', $orderId);
+            $order->update([
+                'status' => Order::$paid
+            ]);
+            if (!empty($order->promotion_code)){
+                $promo_code = PromotionCode::where('code', $order->promotion_code)->first();
+                $promo_code->is_used = 1;
+                $promo_code->save();
+            }
+            $getUser = User::find($userId);
+            $score = RewardAccounting::where('user_id', $userId)->sum('score');
+            $groups = Group::where('min_score', '<=', $score)
+                ->where('max_score', '>=', $score)
+                ->get();
+            $groupUser = GroupUser::where('user_id', $getUser->id)->first();
+
+            Log::info('Payment checkout order: ' . json_encode($order));
+            if ($groupUser != null) {
+                $groupUser->group_id = $groups->first()->id;
+                $groupUser->save();
+            } else {
+                GroupUser::create([
+                    'group_id' => $groups->first()->id,
+                    'user_id' => $getUser->id,
+                ]);
+            }
+
+            session()->put($this->order_session_key, $order->id);
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            if ($orderItem) {
+                $webinar = Webinar::find($orderItem->webinar_id);
+                return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
+            }
+            return redirect('/payments/status');
+
+
+    }
 }

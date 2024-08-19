@@ -727,6 +727,7 @@ class PaymentController extends Controller
 
     public function vnpayResult(Request $request) {
         Log::info($request->all());
+        dd($request->all());
         $orderId = $request->vnp_TxnRef;
 
         if ($request->vnp_ResponseCode != "00") {
@@ -775,7 +776,55 @@ class PaymentController extends Controller
                 return redirect( $webinar->type == 'quizz' ? route('quizzes', ['slug' => $webinar->slug]) : route('course', ['slug' => $webinar->slug]));
             }
             return redirect('/payments/status');
+    }
+
+    public function handleIPN(Request $request)
+    {
+        $vnp_HashSecret = env('VNP_HASH_SECRET');
+        $inputData = $request->except(['vnp_SecureHash']);
+
+        // Sắp xếp dữ liệu theo thứ tự alphabet
+        ksort($inputData);
+
+        $hashData = '';
+        foreach ($inputData as $key => $value) {
+            $hashData .= ($hashData ? '&' : '') . urlencode($key) . '=' . urlencode($value);
+        }
+
+        // Tạo chữ ký từ dữ liệu đã sắp xếp
+        $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+        $vnp_SecureHash = $request->input('vnp_SecureHash');
+
+        // Khởi tạo dữ liệu trả về
+        $returnData = ['RspCode' => '99', 'Message' => 'Unknown error'];
+
+        try {
+            if ($secureHash == $vnp_SecureHash) {
+                // Kiểm tra đơn hàng
+                $orderId = $request->input('vnp_TxnRef');
+
+                $id = explode("-", $orderId);
+                $order = Order::where('id', $id)
+                    ->first();
+                $order->update([
+                    'payment_method' => Order::$credit
+                ]);
+                $this->setPaymentAccounting($order, '9pay', $orderId);
+                $order->update([
+                    'status' => Order::$paid
+                ]);
+                $returnData = ['RspCode' => '00', 'Message' => 'Confirm Success'];
 
 
+            } else {
+                $returnData = ['RspCode' => '97', 'Message' => 'Invalid signature'];
+            }
+        } catch (\Exception $e) {
+            Log::error('Error processing VNPAY IPN: ' . $e->getMessage());
+            $returnData = ['RspCode' => '99', 'Message' => 'Unknown error'];
+        }
+
+        // Trả về kết quả dưới dạng JSON
+        return response()->json($returnData);
     }
 }

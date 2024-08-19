@@ -227,6 +227,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
         Route::get('/ninepay/result', 'PaymentController@ninePayResult')->name('ninepay.result');
         Route::get('/vnpay/result', 'PaymentController@vnpayResult')->name('vnpay.result');
+        Route::get('/vnpay/ipn', 'PaymentController@handleIPN')->name('vnpay.ipn');
     });
 
     Route::group(['prefix' => 'personalization'], function () {
